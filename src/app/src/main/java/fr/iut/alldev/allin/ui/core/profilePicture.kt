@@ -14,17 +14,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import fr.iut.alldev.allin.ui.theme.AllInTheme
 
 @Composable
 @Preview
-fun ProfilePicture() {
+fun ProfilePicture(
+    borderWidth: Dp? = null,
+    size: Dp = 80.dp,
+    modifier: Modifier = Modifier
+) {
     Card(
-        modifier = Modifier.size(80.dp),
+        modifier = modifier.size(size),
         shape = RoundedCornerShape(100),
         colors = CardDefaults.cardColors(containerColor = AllInTheme.colors.allIn_DarkerGrey),
-        border = BorderStroke(1.dp, AllInTheme.colors.allIn_DarkGrey)
+        border = borderWidth?.let{BorderStroke(it, AllInTheme.colors.allIn_DarkGrey)}
     ) {
         Box(Modifier.fillMaxSize()) {
             Icon(imageVector = Icons.Filled.Camera,

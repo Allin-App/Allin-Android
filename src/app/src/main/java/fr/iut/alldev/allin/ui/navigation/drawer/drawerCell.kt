@@ -1,4 +1,4 @@
-package fr.iut.alldev.allin.ui.core
+package fr.iut.alldev.allin.ui.navigation.drawer
 
 import android.media.Image
 import androidx.compose.foundation.BorderStroke

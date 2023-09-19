@@ -1,4 +1,4 @@
-package fr.iut.alldev.allin.ui.core
+package fr.iut.alldev.allin.ui.core.topbar
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -21,7 +21,7 @@ fun AllInTopBar(
     coinAmount: Int
 ) {
     Box(modifier = Modifier.height(86.dp).fillMaxWidth()
-        .background(brush = AllInTheme.colors.allIn_gradient)) {
+        .background(brush = AllInTheme.colors.allIn_MainGradient)) {
         IconButton(onClick = onMenuClicked,
             modifier = Modifier.align(Alignment.CenterStart)) {
             Icon(Icons.Default.Menu,

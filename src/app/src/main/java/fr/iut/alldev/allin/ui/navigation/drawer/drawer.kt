@@ -1,5 +1,6 @@
-package fr.iut.alldev.allin.ui.core
+package fr.iut.alldev.allin.ui.navigation.drawer
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
@@ -15,6 +16,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import fr.iut.alldev.allin.ui.core.topbar.AllInTopBar
+import fr.iut.alldev.allin.ui.core.ProfilePicture
+import fr.iut.alldev.allin.ui.navigation.AllInNavHost
+import fr.iut.alldev.allin.ui.navigation.Routes
 import fr.iut.alldev.allin.ui.theme.AllInTheme
 import kotlinx.coroutines.launch
 import kotlin.math.abs
@@ -25,10 +30,10 @@ sealed class TopLevelDestination(
     val title: String,
     val subtitle: String,
 ) {
-    object BET : TopLevelDestination(route = "BET", title = "CREER UN BET", subtitle = "Créez un nouveau BET et faites participer vos amis.")
-    object BET_HISTORY : TopLevelDestination(route = "BET_HISTORY", title = "HISTORIQUE DES BETS", subtitle = "Consultez vos paris en cours et terminés.")
-    object FRIENDS : TopLevelDestination(route = "FRIENDS", title = "AMIS", subtitle = "Défiez vos porches en les ajoutant en amis.")
-    object CURRENT_BETS : TopLevelDestination(route = "CURRENT_BETS", title = "BETS EN COURS", subtitle = "Gérez vos bets et récompensez les gagnants.")
+    object BET : TopLevelDestination(route = Routes.BET, title = "CREER UN BET", subtitle = "Créez un nouveau BET et faites participer vos amis.")
+    object BET_HISTORY : TopLevelDestination(route = Routes.BET_HISTORY, title = "HISTORIQUE DES BETS", subtitle = "Consultez vos paris en cours et terminés.")
+    object FRIENDS : TopLevelDestination(route = Routes.FRIENDS, title = "AMIS", subtitle = "Défiez vos porches en les ajoutant en amis.")
+    object CURRENT_BETS : TopLevelDestination(route = Routes.CURRENT_BETS, title = "BETS EN COURS", subtitle = "Gérez vos bets et récompensez les gagnants.")
 }
 
 val topLevelDestinations = listOf(
@@ -41,18 +46,19 @@ val topLevelDestinations = listOf(
 @Composable
 fun AllInDrawer(
     navController: NavHostController = rememberNavController(),
-    drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
+    startDestination: String = Routes.BET
+
 ) {
     val scope = rememberCoroutineScope()
     val drawerOffset = derivedStateOf { drawerState.offset.value }
-
     var drawerWidth by remember {
         mutableStateOf(drawerState.offset.value)
     }
-
     LaunchedEffect(drawerWidth == 0f) {
         drawerWidth = drawerState.offset.value
     }
+
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
@@ -65,7 +71,9 @@ fun AllInDrawer(
                         .padding(top = 39.dp, bottom = 26.dp)
                         .fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally){
-                    ProfilePicture()
+                    ProfilePicture(
+                        borderWidth = 1.dp
+                    )
                     Spacer(modifier = Modifier.height(12.dp))
                     Text(text = "Pseudo",
                         fontSize = 20.sp,
@@ -78,7 +86,18 @@ fun AllInDrawer(
                         title = item.title,
                         subtitle = item.subtitle,
                         emoji = null,
-                        onClick = { scope.launch { drawerState.close() } },
+                        onClick = { scope.launch { drawerState.close() }
+                                    navController.navigate(item.route){
+                                        launchSingleTop = true
+                                        popUpTo(
+                                            startDestination
+                                        ) {
+                                            saveState = true
+                                            inclusive = true
+                                        }
+                                        restoreState = true
+                                    }
+                                  },
                         modifier = Modifier.padding(vertical = 5.dp, horizontal = 13.dp)
                     )
                 }
@@ -106,9 +125,15 @@ fun AllInDrawer(
             Column(
                 modifier = Modifier
                     .padding(it)
-                    .fillMaxSize(),
+                    .fillMaxSize()
+                    .background(AllInTheme.colors.allIn_White),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                AllInNavHost(
+                    modifier = Modifier.fillMaxSize(),
+                    navController = navController,
+                    startDestination = startDestination
+                )
             }
         }
     }

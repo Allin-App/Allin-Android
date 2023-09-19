@@ -14,10 +14,14 @@ data class AllInColors(
     val allIn_Grey: Color,
     val allIn_LightGrey: Color,
     val allIn_LighterGrey: Color,
+    val allIn_LightestGrey: Color,
+    val allIn_LightestestGrey: Color,
     val allIn_White: Color,
     val white: Color,
     val allIn_Pink: Color,
-    val allIn_gradient: Brush
+    val allIn_Purple: Color,
+    val allIn_MainGradient: Brush,
+    val allIn_TextGradient: Brush
 )
 
 internal val LocalColors = staticCompositionLocalOf {
@@ -28,15 +32,23 @@ internal val LocalColors = staticCompositionLocalOf {
         allIn_Grey = Color(0xFF525252),
         allIn_LightGrey = Color(0XFFAAAAAA),
         allIn_LighterGrey = Color(0XFFC5C5C5),
+        allIn_LightestGrey = Color(0XFFEBEBEB),
+        allIn_LightestestGrey = Color(0XFFF7F7F7),
         allIn_White = Color(0xFFEBEBF6),
         white = Color(0xFFFFFFFF),
         allIn_Pink = Color(0xFFFF2A89),
-        allIn_gradient = Brush.linearGradient(
+        allIn_Purple = Color(0xFF7D79FF),
+
+        allIn_MainGradient = Brush.linearGradient(
             0.0f to Color(0xFFf951a8),
             0.5f to Color(0xFFaa7ef3),
             1.1f to Color(0xFF199fee),
             start = Offset(0f, Float.POSITIVE_INFINITY),
             end = Offset(Float.POSITIVE_INFINITY, 0f)
+        ),
+        allIn_TextGradient = Brush.horizontalGradient(
+            0.0f to Color(0xFFF876C1),
+            1.1f to Color(0xFF2399F8)
         )
     )
 }
