@@ -1,0 +1,37 @@
+package fr.iut.alldev.allin.ui.navigation.drawer
+
+import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.tooling.preview.Preview
+import fr.iut.alldev.allin.ui.theme.AllInTheme
+
+@Composable
+fun DrawerHeaderStat(
+    label: String,
+    value: Int
+) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = value.toString(),
+            color = AllInTheme.colors.white,
+            style = AllInTheme.typography.h1
+        )
+        Text(
+            text = label,
+            color = AllInTheme.colors.allIn_LightGrey300,
+            style = AllInTheme.typography.r
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun DrawerHeaderStatPreview() {
+    AllInTheme {
+        DrawerHeaderStat(label = "Amis", value = 5)
+    }
+}

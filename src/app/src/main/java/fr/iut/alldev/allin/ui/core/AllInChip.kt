@@ -10,7 +10,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -28,7 +27,7 @@ fun AllInChip(
         modifier = modifier.wrapContentSize(),
         shape = RoundedCornerShape(50),
         onClick = onClick,
-        border = if(!isSelected) BorderStroke(1.dp, AllInTheme.colors.allIn_LightestGrey) else null,
+        border = if(!isSelected) BorderStroke(1.dp, AllInTheme.colors.allIn_LightGrey100) else null,
         colors = CardDefaults.cardColors(containerColor = with(AllInTheme.colors){
             if(isSelected) allIn_Purple else white
         })
@@ -37,9 +36,11 @@ fun AllInChip(
             text = text,
             modifier = Modifier.padding(vertical = 8.dp, horizontal = 22.dp),
             textAlign = TextAlign.Center,
-            fontWeight = if(isSelected) FontWeight.W800 else null,
+            style = with(AllInTheme.typography) {
+                if (isSelected) h1 else r
+            },
             color = with(AllInTheme.colors){
-                if(isSelected) white else allIn_LightGrey
+                if(isSelected) white else allIn_LightGrey300
             }
 
         )
@@ -49,11 +50,15 @@ fun AllInChip(
 @Preview
 @Composable
 private fun AllInChipPreviewUnselected() {
-    AllInChip("Public", false)
+    AllInTheme {
+        AllInChip("Public", false)
+    }
 }
 
 @Preview
 @Composable
 private fun AllInChipPreviewSelected() {
-    AllInChip("Public", true)
+    AllInTheme {
+        AllInChip("Public", true)
+    }
 }

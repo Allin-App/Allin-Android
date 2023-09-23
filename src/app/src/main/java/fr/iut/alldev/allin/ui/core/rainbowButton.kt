@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -23,10 +21,13 @@ fun RainbowButton(
         Text(
             text = text,
             textAlign = TextAlign.Center,
-            fontWeight = FontWeight.W700,
+            style = AllInTheme.typography.h2.copy(
+                brush = AllInTheme.colors.allIn_TextGradient
+            ),
             fontSize = 30.sp,
-            style = TextStyle(brush = AllInTheme.colors.allIn_TextGradient),
-            modifier = Modifier.padding(vertical = 20.dp).fillMaxWidth(),
+            modifier = Modifier
+                .padding(vertical = 20.dp)
+                .fillMaxWidth(),
             )
     }
 }
@@ -34,5 +35,7 @@ fun RainbowButton(
 @Preview
 @Composable
 private fun RainbowButtonPreview() {
-    RainbowButton(text = "Participer", onClick = { })
+    AllInTheme {
+        RainbowButton(text = "Participer", onClick = { })
+    }
 }

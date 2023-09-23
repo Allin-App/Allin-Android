@@ -2,7 +2,7 @@ package fr.iut.alldev.allin.ui.core
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -21,7 +21,7 @@ fun AllInCard(
     radius: Int = 15,
     backgroundColor: Color = AllInTheme.colors.white,
     borderWidth: Dp? = null,
-    borderColor: Color = AllInTheme.colors.allIn_LightestGrey,
+    borderColor: Color = AllInTheme.colors.allIn_LightGrey100,
     borderBrush: Brush? = null,
     content: @Composable ()->Unit
 ) {
@@ -29,7 +29,7 @@ fun AllInCard(
         Card(
             modifier = modifier.fillMaxWidth(),
             onClick = it,
-            shape = RoundedCornerShape(radius),
+            shape = AbsoluteRoundedCornerShape(radius),
             border = borderWidth?.let{ width -> borderBrush?.let{BorderStroke(width, it)} ?: BorderStroke(width, borderColor)},
             colors = CardDefaults.cardColors(containerColor = backgroundColor)
         ) {
@@ -38,7 +38,7 @@ fun AllInCard(
     } ?: run {
         Card(
             modifier = modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(radius),
+            shape = AbsoluteRoundedCornerShape(radius),
             border = borderWidth?.let{ width -> borderBrush?.let{BorderStroke(width, it)} ?: BorderStroke(width, borderColor)},
             colors = CardDefaults.cardColors(containerColor = backgroundColor)
         ) {

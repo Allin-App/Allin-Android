@@ -2,9 +2,11 @@ package fr.iut.alldev.allin.ui.home.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.ripple.LocalRippleTheme
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterEnd
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
@@ -17,6 +19,7 @@ import androidx.compose.ui.zIndex
 import fr.iut.alldev.allin.ui.core.AllInCard
 import fr.iut.alldev.allin.ui.core.ProfilePicture
 import fr.iut.alldev.allin.ui.core.RainbowButton
+import fr.iut.alldev.allin.ui.theme.AllInRippleTheme
 import fr.iut.alldev.allin.ui.theme.AllInTheme
 
 @Composable
@@ -31,6 +34,7 @@ fun HomeBetCard(
     onClickParticipate: ()->Unit
 ) {
     AllInCard(
+        modifier = modifier,
         radius = 7
     ){
         Column(Modifier.fillMaxWidth()) {
@@ -39,27 +43,29 @@ fun HomeBetCard(
                     .align(Alignment.End)
                     .padding(top = 12.dp, end = 10.dp)) {
                 Text(
-                    fontSize = 10.sp,
+                    fontSize = 12.sp,
                     text = "proposé par ",
-                    color = AllInTheme.colors.allIn_LightGrey
+                    style = AllInTheme.typography.s,
+                    color = AllInTheme.colors.allIn_LightGrey300
                 )
                 Text(
-                    fontSize = 10.sp,
+                    fontSize = 12.sp,
                     text = creator,
-                    fontWeight = FontWeight.W600
-
+                    fontWeight = FontWeight.W600,
+                    style = AllInTheme.typography.m
                 )
             }
             Column(Modifier.padding(horizontal = 19.dp, vertical = 11.dp)) {
                 Text(
                     text = category,
                     fontSize = 15.sp,
-                    color = AllInTheme.colors.allIn_LightGrey,
+                    color = AllInTheme.colors.allIn_LightGrey300,
+                    style = AllInTheme.typography.m
                 )
                 Text(
                     text = title,
                     fontSize = 20.sp,
-                    fontWeight = FontWeight.W800
+                    style = AllInTheme.typography.h1
                 )
                 Spacer(modifier = Modifier.height(11.dp))
                 Row(
@@ -68,7 +74,8 @@ fun HomeBetCard(
                     Text(
                         text = "Commence le",
                         fontSize = 15.sp,
-                        color = AllInTheme.colors.allIn_LightGrey,
+                        style = AllInTheme.typography.m,
+                        color = AllInTheme.colors.allIn_LightGrey300,
                     )
                     HomeBetCardDateTimeChip(
                         text = date,
@@ -79,11 +86,11 @@ fun HomeBetCard(
             }
             HorizontalDivider(
                 thickness = 1.dp,
-                color = AllInTheme.colors.allIn_LightestGrey
+                color = AllInTheme.colors.allIn_LightGrey100
             )
             Column(
                 Modifier
-                    .background(AllInTheme.colors.allIn_LightestestGrey)
+                    .background(AllInTheme.colors.allIn_LightGrey50)
             ) {
                 Row(
                     modifier = Modifier
@@ -108,31 +115,36 @@ fun HomeBetCard(
                     Spacer(modifier = Modifier.width(12.dp))
                     Text(
                         text = "$nbPlayer joueurs en attente",
-                        color = AllInTheme.colors.allIn_LightGrey
+                        style = AllInTheme.typography.m,
+                        color = AllInTheme.colors.allIn_LightGrey300
                     )
                 }
-                RainbowButton(
-                    modifier = Modifier.padding(6.dp),
-                    text = "Participer",
-                    onClick = onClickParticipate
-                )
+                CompositionLocalProvider(
+                    LocalRippleTheme provides AllInRippleTheme,
+                ){
+                    RainbowButton(
+                        modifier = Modifier.padding(6.dp),
+                        text = "Participer",
+                        onClick = onClickParticipate
+                    )
+                }
             }
-            
         }
-
     }
 }
 
 @Preview
 @Composable
 private fun HomeBetCardPreview() {
-    HomeBetCard(
-        creator = "Lucas",
-        category = "Études",
-        title = "Emre va réussir son TP de CI/CD mercredi?",
-        date = "12 Sept.",
-        time = "13:00",
-        nbPlayer = 4,
-        onClickParticipate = {}
-    )
+    AllInTheme {
+        HomeBetCard(
+            creator = "Lucas",
+            category = "Études",
+            title = "Emre va réussir son TP de CI/CD mercredi?",
+            date = "12 Sept.",
+            time = "13:00",
+            nbPlayer = 4,
+            onClickParticipate = {}
+        )
+    }
 }

@@ -22,12 +22,13 @@ fun HomeBetCardDateTimeChip(
     Card(
         modifier = modifier.wrapContentSize(),
         shape = RoundedCornerShape(50),
-        border = BorderStroke(1.dp, AllInTheme.colors.allIn_LightestGrey),
+        border = BorderStroke(1.dp, AllInTheme.colors.allIn_LightGrey100),
         colors = CardDefaults.cardColors(containerColor = AllInTheme.colors.white)
     ) {
         Text(
             text = text,
             modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
+            style = AllInTheme.typography.h3,
             textAlign = TextAlign.Center,
             color = AllInTheme.colors.allIn_Purple
         )
@@ -37,5 +38,7 @@ fun HomeBetCardDateTimeChip(
 @Preview
 @Composable
 private fun HomeBetCardDateTimeChipPreview() {
-    HomeBetCardDateTimeChip("11 Sept.")
+    AllInTheme {
+        HomeBetCardDateTimeChip("11 Sept.")
+    }
 }
