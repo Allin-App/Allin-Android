@@ -8,7 +8,7 @@ trigger:
 
 steps:
   - name: build
-    image: gradle
+    image: cangol/android-gradle
     commands:
       - cd src
       - chmod +x gradlew
