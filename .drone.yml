@@ -1,10 +1,10 @@
-# kind: pipeline
-# type: docker
-# name: CICD
+ kind: pipeline
+ type: docker
+ name: CICD
 
-# trigger:
-#   event:
-#     - push
+ trigger:
+   event:
+     - push
 
 # steps:
 #   - name: build
