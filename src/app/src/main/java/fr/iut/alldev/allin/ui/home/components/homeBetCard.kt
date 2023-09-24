@@ -11,12 +11,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterEnd
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
+import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.ui.core.AllInCard
+import fr.iut.alldev.allin.ui.core.HighlightedText
 import fr.iut.alldev.allin.ui.core.ProfilePicture
 import fr.iut.alldev.allin.ui.core.RainbowButton
 import fr.iut.alldev.allin.ui.theme.AllInRippleTheme
@@ -42,17 +47,13 @@ fun HomeBetCard(
                 Modifier
                     .align(Alignment.End)
                     .padding(top = 12.dp, end = 10.dp)) {
-                Text(
+                HighlightedText(
+                    text = stringResource(id = R.string.Proposed_by_x, creator),
+                    query = creator,
+                    highlightStyle = SpanStyle(fontWeight = FontWeight.Bold, color = AllInTheme.colors.allIn_Dark),
                     fontSize = 12.sp,
-                    text = "proposé par ",
                     style = AllInTheme.typography.s,
                     color = AllInTheme.colors.allIn_LightGrey300
-                )
-                Text(
-                    fontSize = 12.sp,
-                    text = creator,
-                    fontWeight = FontWeight.W600,
-                    style = AllInTheme.typography.m
                 )
             }
             Column(Modifier.padding(horizontal = 19.dp, vertical = 11.dp)) {
@@ -72,7 +73,7 @@ fun HomeBetCard(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Text(
-                        text = "Commence le",
+                        text = stringResource(id = R.string.Starting),
                         fontSize = 15.sp,
                         style = AllInTheme.typography.m,
                         color = AllInTheme.colors.allIn_LightGrey300,
@@ -114,7 +115,11 @@ fun HomeBetCard(
                     }
                     Spacer(modifier = Modifier.width(12.dp))
                     Text(
-                        text = "$nbPlayer joueurs en attente",
+                        text = pluralStringResource(
+                            id = R.plurals.n_players_waiting,
+                            nbPlayer,
+                            nbPlayer
+                        ),
                         style = AllInTheme.typography.m,
                         color = AllInTheme.colors.allIn_LightGrey300
                     )
@@ -124,7 +129,7 @@ fun HomeBetCard(
                 ){
                     RainbowButton(
                         modifier = Modifier.padding(6.dp),
-                        text = "Participer",
+                        text = stringResource(id = R.string.Participate),
                         onClick = onClickParticipate
                     )
                 }

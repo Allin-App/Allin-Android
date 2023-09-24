@@ -5,10 +5,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.ui.core.ProfilePicture
 import fr.iut.alldev.allin.ui.theme.AllInTheme
 
@@ -37,12 +39,14 @@ fun DrawerHeader(
         )
         Spacer(modifier = Modifier.height(28.dp))
         Row(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 69.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 69.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            DrawerHeaderStat(label = "Bets", value = nbBets)
-            DrawerHeaderStat(label = "Meilleur gain", value = bestWin)
-            DrawerHeaderStat(label = "Amis", value = nbFriends)
+            DrawerHeaderStat(label = stringResource(id = R.string.bets), value = nbBets)
+            DrawerHeaderStat(label = stringResource(id = R.string.best_win), value = bestWin)
+            DrawerHeaderStat(label = stringResource(id = R.string.friends), value = nbFriends)
         }
     }
 }

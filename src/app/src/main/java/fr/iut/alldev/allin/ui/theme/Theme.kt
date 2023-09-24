@@ -30,6 +30,8 @@ fun AllInTheme(
         white = Color(0xFFFFFFFF),
         allIn_Pink = Color(0xFFFF2A89),
         allIn_Purple = Color(0xFF7D79FF),
+        allIn_BarPurple = Color(0xFF846AC9),
+        allIn_BarPink = Color(0xFFFE2B8A),
         allIn_Blue = Color(0xFF6a89fa),
 
         allIn_MainGradient = Brush.linearGradient(
@@ -38,6 +40,14 @@ fun AllInTheme(
             1.0f to Color(0xFF199fee),
             start = Offset(0f, Float.POSITIVE_INFINITY),
             end = Offset(Float.POSITIVE_INFINITY, 0f)
+        ),
+        allIn_Bar1stGradient = Brush.horizontalGradient(
+            0.0f to Color(0xFF2599F8),
+            1.0f to Color(0xFF846AC9)
+        ),
+        allIn_Bar2ndGradient = Brush.horizontalGradient(
+            0.0f to Color(0xFFFE2B8A),
+            1.0f to Color(0xFFC249A8)
         ),
         allIn_TextGradient = Brush.horizontalGradient(
             0.0f to Color(0xFFF876C1),

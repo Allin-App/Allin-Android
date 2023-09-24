@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -25,32 +26,32 @@ import kotlin.math.abs
 
 sealed class TopLevelDestination(
     val route: String,
-    val title: String,
-    val subtitle: String,
+    val title: Int,
+    val subtitle: Int,
     val emoji: Int
 ) {
     object BET : TopLevelDestination(
         route = Routes.BET,
-        title = "CREER UN BET",
-        subtitle = "Créez un nouveau BET et faites participer vos amis.",
+        title = R.string.create_a_bet,
+        subtitle = R.string.create_a_bet_subtitle,
         emoji = R.drawable.video_game
     )
     object BET_HISTORY : TopLevelDestination(
         route = Routes.BET_HISTORY,
-        title = "HISTORIQUE DES BETS",
-        subtitle = "Consultez vos paris en cours et terminés.",
+        title = R.string.bet_history,
+        subtitle = R.string.bet_history_subtitle,
         emoji = R.drawable.eyes
     )
     object FRIENDS : TopLevelDestination(
         route = Routes.FRIENDS,
-        title = "AMIS",
-        subtitle = "Défiez vos porches en les ajoutant en amis.",
+        title = R.string.friends,
+        subtitle = R.string.friends_subtitle,
         emoji = R.drawable.holding_hands
     )
     object CURRENT_BETS : TopLevelDestination(
         route = Routes.CURRENT_BETS,
-        title = "BETS EN COURS",
-        subtitle = "Gérez vos bets et récompensez les gagnants.",
+        title = R.string.current_bets,
+        subtitle = R.string.current_bets_subtitle,
         emoji = R.drawable.money_with_wings
     )
 }
@@ -103,8 +104,8 @@ fun AllInDrawer(
                 )
                 topLevelDestinations.forEach { item ->
                     DrawerCell(
-                        title = item.title,
-                        subtitle = item.subtitle,
+                        title = stringResource(item.title).uppercase(),
+                        subtitle = stringResource(item.subtitle),
                         emoji = painterResource(id = item.emoji),
                         onClick = { scope.launch { drawerState.close() }
                                     navController.navigate(item.route){

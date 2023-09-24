@@ -1,3 +1,38 @@
 <resources>
-    <string name="app_name">allin</string>
+    <!--Core-->
+    <string name="app_name" translatable="false">Allin</string>
+    <string name="float_and_unit" translatable="false">%.2g%s</string>
+    <string name="int_and_unit" translatable="false">%d%s</string>
+    <!--Drawer-->
+    <string name="bets">Bets</string>
+    <string name="best_win">Best win</string>
+    <string name="friends">Friends</string>
+    <string name="create_a_bet">Create a bet</string>
+    <string name="create_a_bet_subtitle">Create a net bet and get your friends participating.</string>
+    <string name="bet_history">Bet history</string>
+    <string name="bet_history_subtitle">View your current and finished bets.</string>
+    <string name="friends_subtitle">Challenge your folks by adding them as friends.</string>
+    <string name="current_bets">Current bets</string>
+    <string name="current_bets_subtitle">Manage your bets and reward the winners.</string>
+    <!--Main Page-->
+    <string name="Popular">Popular</string>
+    <string name="Public">Public</string>
+    <string name="Invitation">Invitation</string>
+    <string name="Current">Current</string>
+    <string name="Finished">Finished</string>
+    <string name="Starting">Starting</string>
+    <string name="Participate">Participate</string>
+    <string name="Proposed_by_x">Proposed by %1$s</string>
+    <plurals name="n_players_waiting">
+        <item quantity="one">%d player waiting</item>
+        <item quantity="other">%d players waiting</item>
+    </plurals>
+    <plurals name="n_players">
+        <item quantity="one">%d player</item>
+        <item quantity="other">%d players</item>
+    </plurals>
+    <plurals name="n_points_at_stake">
+        <item quantity="one">%s point at stake</item>
+        <item quantity="other">%s points at stake</item>
+    </plurals>
 </resources>

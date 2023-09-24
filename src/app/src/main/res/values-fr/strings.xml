@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Drawer-->
+    <string name="bets">Bets</string>
+    <string name="best_win">Meilleur gain</string>
+    <string name="friends">Amis</string>
+    <string name="create_a_bet">Créer un bet</string>
+    <string name="create_a_bet_subtitle">Créez un nouveau bet et faites participer vos amis.</string>
+    <string name="bet_history">Historique des bets</string>
+    <string name="bet_history_subtitle">Consultez vos paris en cours et terminés.</string>
+    <string name="friends_subtitle">Défiez vos porches en les ajoutant en amis.</string>
+    <string name="current_bets">Bets en cours</string>
+    <string name="current_bets_subtitle">Gérez vos bets et récompensez les gagnants.</string>
+    <!--Main Page-->
+    <string name="Popular">Populaire</string>
+    <string name="Public">Public</string>
+    <string name="Invitation">Invitation</string>
+    <string name="Current">En cours</string>
+    <string name="Finished">Terminés</string>
+    <string name="Starting">Commence le</string>
+    <string name="Participate">Participer</string>
+    <string name="Proposed_by_x">Proposé par %1$s</string>
+    <plurals name="n_players_waiting">
+        <item quantity="one">%d joueur en attente</item>
+        <item quantity="other">%d joueurs en attente</item>
+        <item quantity="many">%d joueurs en attente</item>
+    </plurals>
+    <plurals name="n_players">
+        <item quantity="one">%d joueur</item>
+        <item quantity="other">%d joueurs</item>
+        <item quantity="many">%d joueurs</item>
+    </plurals>
+    <plurals name="n_points_at_stake">
+        <item quantity="one">%s point en jeu</item>
+        <item quantity="other">%s points en jeu</item>
+        <item quantity="many">%s points en jeu</item>
+    </plurals>
+</resources>

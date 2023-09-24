@@ -10,7 +10,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.ui.core.AllInChip
 import fr.iut.alldev.allin.ui.home.components.HomeBetCard
 import fr.iut.alldev.allin.ui.home.components.HomePopularCards
@@ -29,7 +31,8 @@ fun Home(){
                     .padding(horizontal = horizontalPadding)
                     .padding(top = 23.dp),
                 nbPlayers = 12,
-                points = "2.35k",
+                points = 2.35f,
+                pointUnit = "k",
                 title = "Emre va réussir son TP de CI/CD mercredi?"
             )
         }
@@ -51,7 +54,7 @@ fun Home(){
                     items(items) {
                         var isSelected by remember { mutableStateOf(false) }
                         AllInChip(
-                            text = it,
+                            text = stringResource(id = it),
                             isSelected = isSelected,
                             onClick = { isSelected = !isSelected })
                     }
@@ -77,8 +80,8 @@ fun Home(){
 }
 
 val items = listOf(
-    "Public",
-    "En cours",
-    "Invitation",
-    "Terminés"
+    R.string.Public,
+    R.string.Invitation,
+    R.string.Current,
+    R.string.Finished
 )
