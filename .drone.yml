@@ -1,18 +1,18 @@
-kind: pipeline
-type: docker
-name: CICD
+# kind: pipeline
+# type: docker
+# name: CICD
 
-trigger:
-  event:
-    - push
+# trigger:
+#   event:
+#     - push
 
-steps:
-  - name: build
-    image: androidsdk/android-30
-    commands:
-      - cd src
-      - chmod +x gradlew
-      - ./gradlew build
-    when:
-      branch:
-      - master
+# steps:
+#   - name: build
+#     image: androidsdk/android-30
+#     commands:
+#       - cd src
+#       - chmod +x gradlew
+#       - ./gradlew build
+#     when:
+#       branch:
+#       - master
