@@ -1,0 +1,17 @@
+kind: pipeline
+type: docker
+name: CICD
+
+trigger:
+  event:
+    - push
+
+steps:
+  - name: build
+    image: android-gradle
+    commands:
+      - cd src
+      - gradlew build
+    when:
+      branch:
+      - master
