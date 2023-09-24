@@ -11,7 +11,7 @@ steps:
     image: gradle
     commands:
       - cd src
-      - gradlew build
+      - ./gradlew build
     when:
       branch:
       - master
