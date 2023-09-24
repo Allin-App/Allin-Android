@@ -11,6 +11,7 @@ steps:
     image: gradle
     commands:
       - cd src
+      - chmod +x gradlew
       - ./gradlew build
     when:
       branch:
