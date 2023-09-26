@@ -1,11 +1,13 @@
 package fr.iut.alldev.allin.ui.bet.components
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
@@ -15,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import fr.iut.alldev.allin.R
+import fr.iut.alldev.allin.ext.shadow
 import fr.iut.alldev.allin.ui.core.AllInCard
 import fr.iut.alldev.allin.ui.core.HighlightedText
 import fr.iut.alldev.allin.ui.theme.AllInTheme
@@ -29,7 +32,26 @@ fun BetScreenPopularCard(
     modifier: Modifier = Modifier
 ) {
     AllInCard(
-        modifier = modifier,
+        modifier = modifier.let {
+            if(isSystemInDarkTheme()){
+                it.shadow(
+                    colors = listOf(
+                        AllInTheme.colors.allIn_Pink,
+                        AllInTheme.colors.allIn_Blue
+                    ),
+                    blurRadius = 10.dp,
+                    alpha = .5f,
+                    cornerRadius = 15.dp
+                )
+            }else{
+                it.shadow(
+                    color = Color.Black,
+                    blurRadius = 10.dp,
+                    alpha = .3f,
+                    cornerRadius = 15.dp
+                )
+            }
+        },
         backgroundColor = AllInTheme.colors.allIn_Dark,
         borderWidth = 2.dp,
         borderBrush = AllInTheme.colors.allIn_MainGradient

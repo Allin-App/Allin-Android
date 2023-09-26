@@ -1,7 +1,6 @@
 package fr.iut.alldev.allin.ext
 
 import android.graphics.BlurMaskFilter
-import android.graphics.Shader
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
@@ -61,19 +60,17 @@ fun Modifier.shadow(
 ) = then(
     drawBehind {
         drawIntoCanvas { canvas ->
-            val shader: Shader =
-                LinearGradientShader(
-                    Offset(0f, 0f),
-                    Offset(size.width, 0f),
-                    colors
-                )
             val paint = Paint()
             val frameworkPaint = paint.asFrameworkPaint()
             if (blurRadius != 0.dp) {
                 frameworkPaint.maskFilter =
                     BlurMaskFilter(blurRadius.toPx(), BlurMaskFilter.Blur.NORMAL)
             }
-            frameworkPaint.shader = shader
+            frameworkPaint.shader = LinearGradientShader(
+                Offset(0f, 0f),
+                Offset(size.width, 0f),
+                colors
+            )
             frameworkPaint.alpha = (255*alpha).toInt()
             val leftPixel = offsetX.toPx()
             val topPixel = offsetY.toPx()

@@ -138,12 +138,12 @@ fun AllInDrawer(
         }
     ) {
         Scaffold(
-            modifier = Modifier.offset( x = contentOffset),
+            modifier = Modifier.offset( x = contentOffset ),
             topBar = { AllInTopBar(onMenuClicked = { scope.launch { drawerState.open() } }, coinAmount = 541) }// TODO: CoinAmount
         ) {
             Column(
                 modifier = Modifier
-                    .padding(it)
+                    .padding(top = it.calculateTopPadding())
                     .fillMaxSize()
                     .background(AllInTheme.themeColors.main_surface),
                 horizontalAlignment = Alignment.CenterHorizontally

@@ -66,6 +66,4 @@ dependencies {
     implementation("androidx.core:core-splashscreen:1.0.1")
 
     implementation 'com.github.racra:smooth-corner-rect-android-compose:v1.0.0'
-
-    implementation "com.google.accompanist:accompanist-systemuicontroller:$accompanist_version"
 }

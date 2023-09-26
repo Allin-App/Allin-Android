@@ -18,6 +18,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import fr.iut.alldev.allin.ui.theme.AllInTheme
@@ -74,7 +75,9 @@ fun AllInTextField(
                 text = placeholder,
                 fontSize = 18.sp,
                 style = AllInTheme.typography.r,
-                color = AllInTheme.colors.allIn_LightGrey300
+                color = AllInTheme.colors.allIn_LightGrey300,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
         },
         trailingIcon = trailingContent ?: trailingIcon?.let{

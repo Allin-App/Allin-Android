@@ -68,7 +68,7 @@ fun RegisterScreen(
                 color = AllInTheme.themeColors.on_main_surface,
                 style = AllInTheme.typography.r,
                 textAlign = TextAlign.Center,
-                fontSize = 30.sp
+                fontSize = 23.sp
             )
             Spacer(modifier = Modifier.height(83.dp))
             Column(
@@ -119,8 +119,7 @@ fun RegisterScreen(
             Spacer(modifier = Modifier.height(30.dp))
             Row(
                 horizontalArrangement = Arrangement.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
+                modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
                     text = stringResource(id = R.string.already_have_account),

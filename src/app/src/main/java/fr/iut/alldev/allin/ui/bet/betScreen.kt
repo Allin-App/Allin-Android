@@ -2,7 +2,6 @@ package fr.iut.alldev.allin.ui.bet
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -14,7 +13,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import fr.iut.alldev.allin.R
-import fr.iut.alldev.allin.ext.shadow
 import fr.iut.alldev.allin.ui.bet.components.BetScreenCard
 import fr.iut.alldev.allin.ui.bet.components.BetScreenPopularCard
 import fr.iut.alldev.allin.ui.core.AllInChip
@@ -30,29 +28,8 @@ fun BetScreen(){
         item {
             BetScreenPopularCard(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = horizontalPadding)
-                    .padding(top = 23.dp, bottom = 10.dp)
-                    .let {
-                        if(isSystemInDarkTheme()){
-                            it.shadow(
-                                colors = listOf(
-                                    AllInTheme.colors.allIn_Pink,
-                                    AllInTheme.colors.allIn_Blue
-                                ),
-                                blurRadius = 10.dp,
-                                alpha = .5f,
-                                cornerRadius = 15.dp
-                            )
-                        }else{
-                            it.shadow(
-                                color = Color.Black,
-                                blurRadius = 10.dp,
-                                alpha = .3f,
-                                cornerRadius = 15.dp
-                            )
-                        }
-                    },
+                    .padding(top = 13.dp, bottom = 10.dp)
+                    .padding(horizontal = 13.dp),
                 nbPlayers = 12,
                 points = 2.35f,
                 pointUnit = "k",

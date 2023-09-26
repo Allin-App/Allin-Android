@@ -33,7 +33,7 @@ fun AllInTopBar(
         ) {
             Icon(
                 painterResource(id = R.drawable.allin_menu),
-                modifier = Modifier.size(32.dp),
+                modifier = Modifier.size(30.dp),
                 contentDescription = null,
                 tint = Color.White)
         }
