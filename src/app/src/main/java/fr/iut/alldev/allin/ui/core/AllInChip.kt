@@ -1,8 +1,8 @@
 package fr.iut.alldev.allin.ui.core
 
+import android.content.res.Configuration
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -24,12 +24,12 @@ fun AllInChip(
     modifier: Modifier = Modifier
 ) {
     Card(
-        modifier = modifier.wrapContentSize(),
+        modifier = modifier,
         shape = RoundedCornerShape(50),
         onClick = onClick,
-        border = if(!isSelected) BorderStroke(1.dp, AllInTheme.colors.allIn_LightGrey100) else null,
-        colors = CardDefaults.cardColors(containerColor = with(AllInTheme.colors){
-            if(isSelected) allIn_Purple else white
+        border = if(!isSelected) BorderStroke(1.dp, AllInTheme.themeColors.border) else null,
+        colors = CardDefaults.cardColors(containerColor = with(AllInTheme){
+            if(isSelected) colors.allIn_Purple else themeColors.background
         })
     ) {
         Text(
@@ -39,8 +39,8 @@ fun AllInChip(
             style = with(AllInTheme.typography) {
                 if (isSelected) h1 else r
             },
-            color = with(AllInTheme.colors){
-                if(isSelected) white else allIn_LightGrey300
+            color = with(AllInTheme){
+                if(isSelected) colors.white else themeColors.on_background_2
             }
 
         )
@@ -48,6 +48,7 @@ fun AllInChip(
 }
 
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun AllInChipPreviewUnselected() {
     AllInTheme {

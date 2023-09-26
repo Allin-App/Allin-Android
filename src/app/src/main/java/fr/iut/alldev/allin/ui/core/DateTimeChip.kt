@@ -1,5 +1,6 @@
-package fr.iut.alldev.allin.ui.home.components
+package fr.iut.alldev.allin.ui.bet.components
 
+import android.content.res.Configuration
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
@@ -15,15 +16,15 @@ import androidx.compose.ui.unit.dp
 import fr.iut.alldev.allin.ui.theme.AllInTheme
 
 @Composable
-fun HomeBetCardDateTimeChip(
+fun DateTimeChip(
     text: String,
     modifier: Modifier = Modifier
 ) {
     Card(
         modifier = modifier.wrapContentSize(),
         shape = RoundedCornerShape(50),
-        border = BorderStroke(1.dp, AllInTheme.colors.allIn_LightGrey100),
-        colors = CardDefaults.cardColors(containerColor = AllInTheme.colors.white)
+        border = BorderStroke(1.dp, AllInTheme.themeColors.border),
+        colors = CardDefaults.cardColors(containerColor = AllInTheme.themeColors.background)
     ) {
         Text(
             text = text,
@@ -36,9 +37,10 @@ fun HomeBetCardDateTimeChip(
 }
 
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun HomeBetCardDateTimeChipPreview() {
     AllInTheme {
-        HomeBetCardDateTimeChip("11 Sept.")
+        DateTimeChip("11 Sept.")
     }
 }

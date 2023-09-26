@@ -1,7 +1,8 @@
-package fr.iut.alldev.allin.ui.home
+package fr.iut.alldev.allin.ui.bet
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -13,23 +14,45 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import fr.iut.alldev.allin.R
+import fr.iut.alldev.allin.ext.shadow
+import fr.iut.alldev.allin.ui.bet.components.BetScreenCard
+import fr.iut.alldev.allin.ui.bet.components.BetScreenPopularCard
 import fr.iut.alldev.allin.ui.core.AllInChip
-import fr.iut.alldev.allin.ui.home.components.HomeBetCard
-import fr.iut.alldev.allin.ui.home.components.HomePopularCards
 import fr.iut.alldev.allin.ui.theme.AllInTheme
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun Home(){
+fun BetScreen(){
 
     val horizontalPadding = 23.dp
 
     LazyColumn{
         item {
-            HomePopularCards(
+            BetScreenPopularCard(
                 modifier = Modifier
+                    .fillMaxWidth()
                     .padding(horizontal = horizontalPadding)
-                    .padding(top = 23.dp),
+                    .padding(top = 23.dp, bottom = 10.dp)
+                    .let {
+                        if(isSystemInDarkTheme()){
+                            it.shadow(
+                                colors = listOf(
+                                    AllInTheme.colors.allIn_Pink,
+                                    AllInTheme.colors.allIn_Blue
+                                ),
+                                blurRadius = 10.dp,
+                                alpha = .5f,
+                                cornerRadius = 15.dp
+                            )
+                        }else{
+                            it.shadow(
+                                color = Color.Black,
+                                blurRadius = 10.dp,
+                                alpha = .3f,
+                                cornerRadius = 15.dp
+                            )
+                        }
+                    },
                 nbPlayers = 12,
                 points = 2.35f,
                 pointUnit = "k",
@@ -41,11 +64,11 @@ fun Home(){
                     modifier = Modifier
                         .background(
                             Brush.verticalGradient(
-                                0.5f to AllInTheme.colors.allIn_White,
+                                0.5f to AllInTheme.themeColors.main_surface,
                                 1f to Color.Transparent
                             )
                         )
-                        .padding(vertical = 19.dp),
+                        .padding(top = 5.dp, bottom = 19.dp),
                     horizontalArrangement = Arrangement.spacedBy(9.dp)
                 ) {
                     item {
@@ -64,7 +87,7 @@ fun Home(){
             }
         }
         items(5){
-            HomeBetCard(
+            BetScreenCard(
                 creator = "Lucas",
                 category = "Études",
                 title = "Emre va réussir son TP de CI/CD mercredi?",

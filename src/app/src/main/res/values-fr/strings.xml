@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="username">Pseudo</string>
+    <string name="email">Email</string>
+    <string name="password">Mot de passe</string>
+    <string name="confirm_password">Confirmation du mot de passe</string>
+    <string name="Login">Se connecter</string>
+    <string name="already_have_account">Tu as déjà un compte ?</string>
+    <string name="forgot_password">Mot de passe oublié ?</string>
+    <string name="no_account">Pas encore inscrit ?</string>
+    <string name="Register">S\'inscrire</string>
     <!--Drawer-->
     <string name="bets">Bets</string>
     <string name="best_win">Meilleur gain</string>
@@ -11,7 +20,18 @@
     <string name="friends_subtitle">Défiez vos porches en les ajoutant en amis.</string>
     <string name="current_bets">Bets en cours</string>
     <string name="current_bets_subtitle">Gérez vos bets et récompensez les gagnants.</string>
-    <!--Main Page-->
+    <!--Welcome Page-->
+    <string name="welcome_title">Bienvenue sur</string>
+    <string name="welcome_subtitle">Récupère tes Allcoins et viens parier avec tes amis pour prouver qui est le meilleur.</string>
+    <string name="join">Rejoindre</string>
+    <!--Register Page-->
+    <string name="Hello_x">Bonjour, %s</string>
+    <string name="Register_title">On a besoins de ça!</string>
+    <string name="Register_subtitle">Promis c\'est rapide.</string>
+    <!--Login Page-->
+    <string name="Login_title">Te revoilà !</string>
+    <string name="Login_subtitle">Bon retour parmis nous tu nous as manqué !</string>
+    <!--Bet Page-->
     <string name="Popular">Populaire</string>
     <string name="Public">Public</string>
     <string name="Invitation">Invitation</string>

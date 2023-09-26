@@ -3,6 +3,16 @@
     <string name="app_name" translatable="false">Allin</string>
     <string name="float_and_unit" translatable="false">%.2g%s</string>
     <string name="int_and_unit" translatable="false">%d%s</string>
+    <string name="username">Username</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="Login">Login</string>
+    <string name="already_have_account">Already have an account ?</string>
+    <string name="forgot_password">Forgot password ?</string>
+    <string name="no_account">Don\'t have an account ?</string>
+    <string name="Register">Register</string>
+
     <!--Drawer-->
     <string name="bets">Bets</string>
     <string name="best_win">Best win</string>
@@ -14,7 +24,19 @@
     <string name="friends_subtitle">Challenge your folks by adding them as friends.</string>
     <string name="current_bets">Current bets</string>
     <string name="current_bets_subtitle">Manage your bets and reward the winners.</string>
-    <!--Main Page-->
+    <!--Welcome Page-->
+    <string name="welcome_title">Welcome to</string>
+    <string name="welcome_appname" translatable="false">Allin.</string>
+    <string name="welcome_subtitle">Collect your Allcoins and come bet with your friend to prove who\'s best.</string>
+    <string name="join">Join</string>
+    <!--Register Page-->
+    <string name="Hello_x">Hello, %s</string>
+    <string name="Register_title">We need this!</string>
+    <string name="Register_subtitle">Don\'t worry it\'s fast.</string>
+    <!--Login Page-->
+    <string name="Login_title">Welcome back !</string>
+    <string name="Login_subtitle">We missed you.</string>
+    <!--Bet Page-->
     <string name="Popular">Popular</string>
     <string name="Public">Public</string>
     <string name="Invitation">Invitation</string>

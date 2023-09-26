@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import fr.iut.alldev.allin.ui.navigation.drawer.AllInDrawer
+import fr.iut.alldev.allin.ui.navigation.AllInNavHost
 import fr.iut.alldev.allin.ui.theme.AllInTheme
 
 class MainActivity : ComponentActivity() {
@@ -16,11 +16,11 @@ class MainActivity : ComponentActivity() {
             AllInTheme{
 
                 systemUiController.setStatusBarColor(AllInTheme.colors.allIn_Dark)
-                systemUiController.setNavigationBarColor(AllInTheme.colors.allIn_White)
+                systemUiController.setNavigationBarColor(AllInTheme.themeColors.main_surface)
                 systemUiController.isNavigationBarVisible = false
                 systemUiController.isStatusBarVisible = false
 
-                AllInDrawer()
+                AllInNavHost()
             }
         }
     }

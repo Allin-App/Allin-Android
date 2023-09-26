@@ -17,7 +17,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.ui.core.topbar.AllInTopBar
-import fr.iut.alldev.allin.ui.navigation.AllInNavHost
+import fr.iut.alldev.allin.ui.navigation.AllInDashboard
 import fr.iut.alldev.allin.ui.navigation.Routes
 import fr.iut.alldev.allin.ui.theme.AllInTheme
 import kotlinx.coroutines.launch
@@ -145,13 +145,11 @@ fun AllInDrawer(
                 modifier = Modifier
                     .padding(it)
                     .fillMaxSize()
-                    .background(AllInTheme.colors.allIn_White),
+                    .background(AllInTheme.themeColors.main_surface),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                AllInNavHost(
-                    modifier = Modifier.fillMaxSize(),
-                    navController = navController,
-                    startDestination = startDestination
+                AllInDashboard(
+                    navController = navController
                 )
             }
         }

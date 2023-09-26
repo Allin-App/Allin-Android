@@ -1,5 +1,6 @@
-package fr.iut.alldev.allin.ui.home.components
+package fr.iut.alldev.allin.ui.bet.components
 
+import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.ripple.LocalRippleTheme
@@ -7,6 +8,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterEnd
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
@@ -28,7 +30,7 @@ import fr.iut.alldev.allin.ui.theme.AllInRippleTheme
 import fr.iut.alldev.allin.ui.theme.AllInTheme
 
 @Composable
-fun HomeBetCard(
+fun BetScreenCard(
     creator: String,
     category: String,
     title: String,
@@ -40,7 +42,7 @@ fun HomeBetCard(
 ) {
     AllInCard(
         modifier = modifier,
-        radius = 7
+        radius = 16.dp
     ){
         Column(Modifier.fillMaxWidth()) {
             Row(
@@ -50,22 +52,26 @@ fun HomeBetCard(
                 HighlightedText(
                     text = stringResource(id = R.string.Proposed_by_x, creator),
                     query = creator,
-                    highlightStyle = SpanStyle(fontWeight = FontWeight.Bold, color = AllInTheme.colors.allIn_Dark),
+                    highlightStyle = SpanStyle(
+                        fontWeight = FontWeight.Bold,
+                        color = AllInTheme.themeColors.on_main_surface
+                    ),
                     fontSize = 12.sp,
                     style = AllInTheme.typography.s,
-                    color = AllInTheme.colors.allIn_LightGrey300
+                    color = AllInTheme.themeColors.on_background_2
                 )
             }
             Column(Modifier.padding(horizontal = 19.dp, vertical = 11.dp)) {
                 Text(
                     text = category,
                     fontSize = 15.sp,
-                    color = AllInTheme.colors.allIn_LightGrey300,
+                    color = AllInTheme.themeColors.on_background_2,
                     style = AllInTheme.typography.m
                 )
                 Text(
                     text = title,
                     fontSize = 20.sp,
+                    color = AllInTheme.themeColors.on_main_surface,
                     style = AllInTheme.typography.h1
                 )
                 Spacer(modifier = Modifier.height(11.dp))
@@ -76,22 +82,22 @@ fun HomeBetCard(
                         text = stringResource(id = R.string.Starting),
                         fontSize = 15.sp,
                         style = AllInTheme.typography.m,
-                        color = AllInTheme.colors.allIn_LightGrey300,
+                        color = AllInTheme.themeColors.on_background_2
                     )
-                    HomeBetCardDateTimeChip(
+                    DateTimeChip(
                         text = date,
                         modifier = Modifier.padding(horizontal = 8.dp)
                     )
-                    HomeBetCardDateTimeChip(time)
+                    DateTimeChip(time)
                 }
             }
             HorizontalDivider(
                 thickness = 1.dp,
-                color = AllInTheme.colors.allIn_LightGrey100
+                color = AllInTheme.themeColors.border
             )
             Column(
                 Modifier
-                    .background(AllInTheme.colors.allIn_LightGrey50)
+                    .background(AllInTheme.themeColors.background_2)
             ) {
                 Row(
                     modifier = Modifier
@@ -99,16 +105,19 @@ fun HomeBetCard(
                         .padding(7.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ){
-                    val nRepeat = if (nbPlayer > 5) 5 else nbPlayer
+                    val nRepeat = remember{
+                        if (nbPlayer > 5) 5 else nbPlayer
+                    }
+
                     Box(
-                        Modifier.width((nRepeat*15).dp)
+                        Modifier.width((nRepeat*17).dp)
                     ){
                         repeat(nRepeat) {
                             ProfilePicture(
-                                size = 30.dp,
+                                size = 35.dp,
                                 modifier = Modifier
                                     .align(CenterEnd)
-                                    .offset(x = (it * -15).dp)
+                                    .offset(x = (it * -17).dp)
                                     .zIndex(-it.toFloat())
                             )
                         }
@@ -121,7 +130,7 @@ fun HomeBetCard(
                             nbPlayer
                         ),
                         style = AllInTheme.typography.m,
-                        color = AllInTheme.colors.allIn_LightGrey300
+                        color = AllInTheme.themeColors.on_background_2
                     )
                 }
                 CompositionLocalProvider(
@@ -139,10 +148,11 @@ fun HomeBetCard(
 }
 
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-private fun HomeBetCardPreview() {
+private fun BetScreenCardPreview() {
     AllInTheme {
-        HomeBetCard(
+        BetScreenCard(
             creator = "Lucas",
             category = "Études",
             title = "Emre va réussir son TP de CI/CD mercredi?",
