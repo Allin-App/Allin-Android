@@ -70,7 +70,7 @@ fun BetScreen(){
                 title = "Emre va réussir son TP de CI/CD mercredi?",
                 date = "11 Sept.",
                 time = "13:00",
-                nbPlayer = 4,
+                players = List(3){ null },
                 onClickParticipate = { /* TODO */ },
                 modifier = Modifier.padding(horizontal = horizontalPadding)
             )

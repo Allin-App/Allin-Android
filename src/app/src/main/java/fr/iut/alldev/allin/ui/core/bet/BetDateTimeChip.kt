@@ -1,4 +1,4 @@
-package fr.iut.alldev.allin.ui.bet.components
+package fr.iut.alldev.allin.ui.core.bet
 
 import android.content.res.Configuration
 import androidx.compose.foundation.BorderStroke
@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import fr.iut.alldev.allin.ui.theme.AllInTheme
 
 @Composable
-fun DateTimeChip(
+fun BetDateTimeChip(
     text: String,
     modifier: Modifier = Modifier
 ) {
@@ -39,8 +39,8 @@ fun DateTimeChip(
 @Preview
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-private fun HomeBetCardDateTimeChipPreview() {
+private fun BetDateTimeChipPreview() {
     AllInTheme {
-        DateTimeChip("11 Sept.")
+        BetDateTimeChip("11 Sept.")
     }
 }

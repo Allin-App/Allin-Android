@@ -14,10 +14,13 @@ import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.ui.theme.AllInTheme
 
 @Composable
@@ -27,9 +30,10 @@ fun ProfilePicture(
     size: Dp = 80.dp,
     modifier: Modifier = Modifier
 ) {
+    val shape = RoundedCornerShape(100)
     Card(
         modifier = modifier.size(size),
-        shape = RoundedCornerShape(100),
+        shape = shape,
         colors = CardDefaults.cardColors(containerColor = AllInTheme.colors.allIn_DarkGrey100),
         border = borderWidth?.let{BorderStroke(it, AllInTheme.colors.allIn_DarkGrey50)}
     ) {
@@ -38,14 +42,20 @@ fun ProfilePicture(
                 Image(
                     painter = it,
                     contentDescription = null,
-                    modifier = Modifier.align(Alignment.Center).fillMaxSize()
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .fillMaxSize()
+                        .clip(shape)
                 )
             } ?: run{
                 Icon(
                     imageVector = Icons.Default.PhotoCamera,
                     tint = AllInTheme.colors.white,
                     contentDescription = null,
-                    modifier = Modifier.align(Alignment.Center).fillMaxSize(0.5f)
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .fillMaxSize(0.5f)
+                        .clip(shape)
                 )
             }
         }
@@ -58,5 +68,15 @@ fun ProfilePicture(
 private fun ProfilePictureDefaultPreview() {
     AllInTheme {
         ProfilePicture()
+    }
+}
+
+@Preview
+@Composable
+private fun ProfilePicturePreview() {
+    AllInTheme {
+        ProfilePicture(
+            painterResource(id = R.drawable.money_with_wings)
+        )
     }
 }
