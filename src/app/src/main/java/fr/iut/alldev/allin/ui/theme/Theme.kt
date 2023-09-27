@@ -107,7 +107,9 @@ fun AllInTheme(
             tint_1 = customColors.white,
             background_2 = customColors.allIn_Dark,
             on_background_2 = customColors.allIn_LightGrey200,
-            border = customColors.allIn_DarkGrey100
+            border = customColors.allIn_DarkGrey100,
+            disabled = customColors.allIn_DarkGrey200,
+            disabled_border = customColors.allIn_DarkGrey100
         )
     }else{
         AllInThemeColors(
@@ -118,7 +120,10 @@ fun AllInTheme(
             tint_1 = customColors.allIn_LoginPurple,
             background_2 = customColors.allIn_LightGrey50,
             on_background_2 = customColors.allIn_LightGrey300,
-            border = customColors.allIn_LightGrey100
+            border = customColors.allIn_LightGrey100,
+            disabled = customColors.allIn_LightGrey100,
+            disabled_border = customColors.allIn_LightGrey200
+
         )
     }
 
@@ -126,7 +131,6 @@ fun AllInTheme(
         LocalColors provides customColors,
         LocalTypography provides customTypography,
         LocalThemeColors provides customTheme
-
     ){
         content()
     }

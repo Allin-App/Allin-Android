@@ -22,10 +22,13 @@ fun AllInCard(
     modifier: Modifier = Modifier,
     onClick: (()->Unit)? = null,
     radius: Dp = 15.dp,
+    enabled: Boolean = true,
     backgroundColor: Color = AllInTheme.themeColors.background,
+    disabledBackgroundColor: Color = AllInTheme.themeColors.disabled,
     backgroundBrush: Brush? = null,
     borderWidth: Dp? = null,
     borderColor: Color = AllInTheme.themeColors.border,
+    disabledBorderColor: Color = AllInTheme.themeColors.disabled_border,
     borderBrush: Brush? = null,
     content: @Composable ()->Unit
 ) {
@@ -39,14 +42,16 @@ fun AllInCard(
     }
     val cardBorders = borderWidth?.let{
             width -> borderBrush?.let{BorderStroke(width, it)}
-        ?: BorderStroke(width, borderColor)
+        ?: BorderStroke(width, if(enabled) borderColor else disabledBorderColor)
     }
     val cardColors = CardDefaults.cardColors(
-        containerColor = if(backgroundBrush!=null) Color.Transparent else backgroundColor
+        containerColor = if(backgroundBrush!=null) Color.Transparent else backgroundColor,
+        disabledContainerColor = disabledBackgroundColor
     )
     onClick?.let {
         Card(
             modifier = cardModifier,
+            enabled = enabled,
             onClick = it,
             shape = cardShape,
             border = cardBorders,

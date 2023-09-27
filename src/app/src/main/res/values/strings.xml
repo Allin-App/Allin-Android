@@ -17,6 +17,8 @@
     <string name="bets">Bets</string>
     <string name="best_win">Best win</string>
     <string name="friends">Friends</string>
+    <string name="public_bets">Public bets</string>
+    <string name="public_bets_subtitle">Browse the most popular bets of the moment.</string>
     <string name="create_a_bet">Create a bet</string>
     <string name="create_a_bet_subtitle">Create a net bet and get your friends participating.</string>
     <string name="bet_history">Bet history</string>
@@ -36,6 +38,10 @@
     <!--Login Page-->
     <string name="Login_title">Welcome back !</string>
     <string name="Login_subtitle">We missed you.</string>
+    <!--Bet Creation Page-->
+    <string name="Question">Question</string>
+    <string name="Answer">Answer</string>
+    <string name="Publish">Publish the bet</string>
     <!--Bet Page-->
     <string name="Popular">Popular</string>
     <string name="Public">Public</string>

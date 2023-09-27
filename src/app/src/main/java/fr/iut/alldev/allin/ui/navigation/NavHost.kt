@@ -6,14 +6,15 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import fr.iut.alldev.allin.ui.bet.BetScreen
+import fr.iut.alldev.allin.ui.betcreation.BetCreationScreen
 import fr.iut.alldev.allin.ui.login.LoginScreen
 import fr.iut.alldev.allin.ui.navigation.drawer.AllInDrawer
-import fr.iut.alldev.allin.ui.profile.Profile
 import fr.iut.alldev.allin.ui.register.RegisterScreen
 import fr.iut.alldev.allin.ui.theme.AllInTheme
 import fr.iut.alldev.allin.ui.welcome.WelcomeScreen
@@ -22,15 +23,16 @@ object Routes {
     const val WELCOME = "WELCOME"
     const val REGISTER = "REGISTER"
     const val LOGIN = "LOGIN"
-    const val BET = "BET"
+    const val DASHBOARD = "DASHBOARD"
+    const val PUBLIC_BETS = "PUBLIC_BETS"
+    const val BET_CREATION = "BET_CREATION"
     const val BET_HISTORY = "BET_HISTORY"
     const val FRIENDS = "FRIENDS"
     const val CURRENT_BETS = "CURRENT_BETS"
-    const val DASHBOARD = "DASHBOARD"
 
 }
 
-private fun NavHostController.popUpTo(route: String, baseRoute: String){
+internal fun NavHostController.popUpTo(route: String, baseRoute: String){
     this.navigate(route) {
         launchSingleTop = true
         popUpTo(baseRoute) {
@@ -64,53 +66,21 @@ fun AllInNavHost(modifier: Modifier = Modifier,
                 fadeOut(
                     animationSpec = tween(1500)
                 )
-
         },
         modifier = modifier.fillMaxSize().background(AllInTheme.themeColors.main_surface),
     ) {
-
-        composable(route = Routes.WELCOME){
-            WelcomeScreen(
-                onClickJoin = {
-                    navController.popUpTo(Routes.REGISTER, Routes.WELCOME)
-                },
-                onClickLogin = {
-                    navController.popUpTo(Routes.LOGIN, Routes.WELCOME)
-                }
-            )
-        }
-        composable(route = Routes.REGISTER){
-            RegisterScreen(
-                onClickRegister = {
-                    navController.popUpTo(Routes.DASHBOARD, Routes.REGISTER)
-                },
-                onClickLogin = {
-                    navController.popUpTo(Routes.LOGIN, Routes.REGISTER)
-                }
-            )
-        }
-        composable(route = Routes.LOGIN){
-            LoginScreen(
-                onClickRegister = {
-                    navController.popUpTo(Routes.REGISTER, Routes.LOGIN)
-                },
-                onClickLogin = {
-                    navController.popUpTo(Routes.DASHBOARD, Routes.LOGIN)
-                }
-            )
-        }
-        composable(
-            route = Routes.DASHBOARD,
-        ){
-            AllInDrawer()
-        }
+        allInWelcomeScreen(navController)
+        allInRegisterScreen(navController)
+        allInLoginScreen(navController)
+        allInDashboard()
     }
 }
+
 @Composable
-fun AllInDashboard(
-     modifier: Modifier = Modifier,
-     navController: NavHostController = rememberNavController(),
-     startDestination: String = Routes.BET
+internal fun AllInDrawerNavHost(
+    modifier: Modifier = Modifier,
+    navController: NavHostController,
+    startDestination: String = Routes.PUBLIC_BETS
 ) {
     NavHost(
         navController = navController,
@@ -119,7 +89,59 @@ fun AllInDashboard(
         enterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None }
     ) {
-        composable(route = Routes.BET) { BetScreen() }
-        composable(route = Routes.BET_HISTORY) { Profile() }
+        composable(route = Routes.PUBLIC_BETS) { BetScreen() }
+        composable(route = Routes.BET_CREATION) { BetCreationScreen() }
+    }
+}
+private fun NavGraphBuilder.allInWelcomeScreen(
+    navController: NavHostController
+){
+    composable(route = Routes.WELCOME){
+        WelcomeScreen(
+            onClickJoin = {
+                navController.popUpTo(Routes.REGISTER, Routes.WELCOME)
+            },
+            onClickLogin = {
+                navController.popUpTo(Routes.LOGIN, Routes.WELCOME)
+            }
+        )
+    }
+}
+
+private fun NavGraphBuilder.allInRegisterScreen(
+    navController: NavHostController
+){
+    composable(route = Routes.REGISTER){
+        RegisterScreen(
+            onClickRegister = {
+                navController.popUpTo(Routes.DASHBOARD, Routes.REGISTER)
+            },
+            onClickLogin = {
+                navController.popUpTo(Routes.LOGIN, Routes.REGISTER)
+            }
+        )
+    }
+}
+
+private fun NavGraphBuilder.allInLoginScreen(
+    navController: NavHostController
+){
+    composable(route = Routes.LOGIN){
+        LoginScreen(
+            onClickRegister = {
+                navController.popUpTo(Routes.REGISTER, Routes.LOGIN)
+            },
+            onClickLogin = {
+                navController.popUpTo(Routes.DASHBOARD, Routes.LOGIN)
+            }
+        )
+    }
+}
+
+private fun NavGraphBuilder.allInDashboard() {
+    composable(
+        route = Routes.DASHBOARD,
+    ){
+        AllInDrawer()
     }
 }

@@ -1,5 +1,6 @@
 package fr.iut.alldev.allin.ui.core
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
@@ -15,15 +16,31 @@ import fr.iut.alldev.allin.ui.theme.AllInTheme
 fun RainbowButton(
     text: String,
     onClick: ()->Unit,
+    enabled: Boolean = true,
     modifier: Modifier = Modifier
 ) {
-    AllInCard(borderWidth = 1.dp, onClick = onClick, modifier = modifier) {
+    AllInCard(
+        borderWidth = if(enabled) 1.dp else 2.dp,
+        onClick = onClick,
+        modifier = modifier,
+        enabled = enabled
+    ) {
+        val textStyle =
+            with(AllInTheme.typography.h2){
+                if(enabled){
+                    copy(
+                        brush = AllInTheme.colors.allIn_TextGradient
+                    )
+                }else{
+                    copy(
+                        color = AllInTheme.themeColors.disabled_border
+                    )
+                }
+            }
         Text(
             text = text,
             textAlign = TextAlign.Center,
-            style = AllInTheme.typography.h2.copy(
-                brush = AllInTheme.colors.allIn_TextGradient
-            ),
+            style = textStyle,
             fontSize = 30.sp,
             modifier = Modifier
                 .padding(vertical = 20.dp)
@@ -33,9 +50,19 @@ fun RainbowButton(
 }
 
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun RainbowButtonPreview() {
     AllInTheme {
         RainbowButton(text = "Participer", onClick = { })
+    }
+}
+
+@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+private fun RainbowButtonDisabledPreview() {
+    AllInTheme {
+        RainbowButton(text = "Participer", onClick = { }, enabled = false)
     }
 }

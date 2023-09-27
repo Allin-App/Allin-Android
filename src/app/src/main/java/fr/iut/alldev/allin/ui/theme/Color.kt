@@ -95,7 +95,9 @@ data class AllInThemeColors(
     val tint_1: Color,
     val background_2: Color,
     val on_background_2: Color,
-    val border: Color
+    val border: Color,
+    val disabled: Color,
+    val disabled_border: Color
 )
 
 internal val LocalThemeColors = staticCompositionLocalOf {
@@ -107,6 +109,8 @@ internal val LocalThemeColors = staticCompositionLocalOf {
         tint_1 = Color.Unspecified,
         background_2 = Color.Unspecified,
         on_background_2 = Color.Unspecified,
-        border = Color.Unspecified
+        border = Color.Unspecified,
+        disabled = Color.Unspecified,
+        disabled_border = Color.Unspecified
     )
 }

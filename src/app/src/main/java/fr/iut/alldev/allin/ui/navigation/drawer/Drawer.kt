@@ -17,8 +17,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.ui.core.topbar.AllInTopBar
-import fr.iut.alldev.allin.ui.navigation.AllInDashboard
+import fr.iut.alldev.allin.ui.navigation.AllInDrawerNavHost
 import fr.iut.alldev.allin.ui.navigation.Routes
+import fr.iut.alldev.allin.ui.navigation.popUpTo
 import fr.iut.alldev.allin.ui.theme.AllInTheme
 import kotlinx.coroutines.launch
 import kotlin.math.abs
@@ -30,8 +31,14 @@ sealed class TopLevelDestination(
     val subtitle: Int,
     val emoji: Int
 ) {
-    object BET : TopLevelDestination(
-        route = Routes.BET,
+    object PUBLIC_BETS : TopLevelDestination(
+        route = Routes.PUBLIC_BETS,
+        title = R.string.public_bets,
+        subtitle = R.string.public_bets_subtitle,
+        emoji = R.drawable.globe
+    )
+    object BET_CREATION : TopLevelDestination(
+        route = Routes.BET_CREATION,
         title = R.string.create_a_bet,
         subtitle = R.string.create_a_bet_subtitle,
         emoji = R.drawable.video_game
@@ -57,7 +64,8 @@ sealed class TopLevelDestination(
 }
 
 val topLevelDestinations = listOf(
-    TopLevelDestination.BET,
+    TopLevelDestination.PUBLIC_BETS,
+    TopLevelDestination.BET_CREATION,
     TopLevelDestination.BET_HISTORY,
     TopLevelDestination.FRIENDS,
     TopLevelDestination.CURRENT_BETS
@@ -67,8 +75,7 @@ val topLevelDestinations = listOf(
 fun AllInDrawer(
     navController: NavHostController = rememberNavController(),
     drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
-    startDestination: String = Routes.BET
-
+    startDestination: String = Routes.PUBLIC_BETS
 ) {
     val scope = rememberCoroutineScope()
     val drawerOffset = derivedStateOf { drawerState.offset.value }
@@ -107,18 +114,10 @@ fun AllInDrawer(
                         title = stringResource(item.title).uppercase(),
                         subtitle = stringResource(item.subtitle),
                         emoji = painterResource(id = item.emoji),
-                        onClick = { scope.launch { drawerState.close() }
-                                    navController.navigate(item.route){
-                                        launchSingleTop = true
-                                        popUpTo(
-                                            startDestination
-                                        ) {
-                                            saveState = true
-                                            inclusive = true
-                                        }
-                                        restoreState = true
-                                    }
-                                  },
+                        onClick = {
+                            scope.launch { drawerState.close() }
+                            navController.popUpTo(item.route, startDestination)
+                          },
                         modifier = Modifier.padding(vertical = 5.dp, horizontal = 13.dp)
                     )
                 }
@@ -148,7 +147,7 @@ fun AllInDrawer(
                     .background(AllInTheme.themeColors.main_surface),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                AllInDashboard(
+                AllInDrawerNavHost(
                     navController = navController
                 )
             }

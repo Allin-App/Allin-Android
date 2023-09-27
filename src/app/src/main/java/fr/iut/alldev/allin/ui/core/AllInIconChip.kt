@@ -2,61 +2,64 @@ package fr.iut.alldev.allin.ui.core
 
 import android.content.res.Configuration
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Public
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import fr.iut.alldev.allin.ui.theme.AllInTheme
 import racra.compose.smooth_corner_rect_library.AbsoluteSmoothCornerShape
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AllInChip(
+fun AllInIconChip(
     text: String,
     isSelected: Boolean = false,
     onClick: ()->Unit = {},
     modifier: Modifier = Modifier,
-    radius: Dp = 50.dp,
+    radius: Dp = 15.dp,
     selectedColor: Color = AllInTheme.colors.allIn_Purple,
     unselectedColor: Color = AllInTheme.themeColors.background,
+    leadingIcon: ImageVector
 ) {
+    val contentColor = if(isSelected) AllInTheme.colors.white else selectedColor
     Card(
         modifier = modifier,
         shape = AbsoluteSmoothCornerShape(radius, 100),
         onClick = onClick,
         border = if(!isSelected) BorderStroke(1.dp, AllInTheme.themeColors.border) else null,
         colors = CardDefaults.cardColors(
-        containerColor = if(isSelected) selectedColor else unselectedColor
+            containerColor = if(isSelected) selectedColor else unselectedColor
         )
     ) {
-        Box {
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(7.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(vertical = 15.dp, horizontal = 18.dp)
+        ) {
+            Icon(
+                imageVector = leadingIcon,
+                contentDescription = null,
+                tint = contentColor
+            )
             Text(
                 text = text,
-                modifier = Modifier
-                    .align(Alignment.Center)
-                    .padding(vertical = 8.dp, horizontal = 22.dp)
-                    .alpha(if (isSelected) 0f else 1f),
                 textAlign = TextAlign.Center,
-                style = AllInTheme.typography.r,
-                color = AllInTheme.themeColors.on_background_2
+                style = AllInTheme.typography.h1,
+                color = contentColor,
+                fontSize = 18.sp
             )
-            if (isSelected) {
-                Text(
-                    text = text,
-                    modifier = modifier.align(Alignment.Center),
-                    textAlign = TextAlign.Center,
-                    style = AllInTheme.typography.h1,
-                    color = AllInTheme.colors.white
-
-                )
-            }
         }
     }
 }
@@ -64,16 +67,24 @@ fun AllInChip(
 @Preview
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-private fun AllInChipPreviewUnselected() {
+private fun AllInIconChipPreviewUnselected() {
     AllInTheme {
-        AllInChip("Public", false)
+        AllInIconChip(
+            text = "Public",
+            isSelected = false,
+            leadingIcon = Icons.Default.Public
+        )
     }
 }
 
 @Preview
 @Composable
-private fun AllInChipPreviewSelected() {
+private fun AllInIconChipPreviewSelected() {
     AllInTheme {
-        AllInChip("Public", true)
+        AllInIconChip(
+            text = "Public",
+            isSelected = true,
+            leadingIcon = Icons.Default.Public
+        )
     }
 }
