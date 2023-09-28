@@ -37,9 +37,25 @@
     <string name="Question">Question</string>
     <string name="Answer">Réponse</string>
     <string name="Publish">Publier le bet</string>
+    <string name="Theme">Thème</string>
+    <string name="Theme_placeholder">Études, sport, soirée…</string>
+    <string name="Bet_Phrase">Phrase du bet</string>
+    <string name="Bet_Phrase_placeholder">David sera-il absent lundi matin en cours ?</string>
+    <string name="End_registration_date">Date de fin des inscriptions</string>
+    <string name="End_bet_date">Date de fin du BET</string>
+    <string name="Bet_privacy">Confidentialité du bet</string>
+    <string name="n_friends_available">%d amis disponibles</string>
+    <string name="public_bottom_text_1">Votre bet sera visible par tous les utilisateurs.</string>
+    <string name="public_bottom_text_2">Tout le monde pourra rejoindre le BET.</string>
+    <string name="private_bottom_text_1">Votre bet sera visible uniquement par vos amis.</string>
+    <string name="private_bottom_text_2">Seulement vos amis pourront rejoindre le bet.</string>
+    <string name="private_bottom_text_3">Vous pourrez inviter des amis à tout moment pendant la période d’inscription.</string>
+    <string name="yes_no">Oui / Non</string>
+    <string name="custom_answers">Réponses personnalisées</string>
     <!--Bet Page-->
     <string name="Popular">Populaire</string>
     <string name="Public">Public</string>
+    <string name="Private">Privé</string>
     <string name="Invitation">Invitation</string>
     <string name="Current">En cours</string>
     <string name="Finished">Terminés</string>

@@ -154,9 +154,11 @@ object AllInTheme {
 }
 
 
-object AllInRippleTheme : RippleTheme {
+class AllInRippleTheme(
+    val color: Color,
+) : RippleTheme {
     @Composable
-    override fun defaultColor(): Color = AllInTheme.colors.allIn_Blue
+    override fun defaultColor(): Color = color
 
     @Composable
     override fun rippleAlpha(): RippleAlpha = RippleTheme.defaultRippleAlpha(

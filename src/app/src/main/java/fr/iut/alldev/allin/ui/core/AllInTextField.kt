@@ -2,7 +2,6 @@ package fr.iut.alldev.allin.ui.core
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.relocation.BringIntoViewRequester
-import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -12,6 +11,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.KeyboardType
@@ -20,9 +20,12 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import fr.iut.alldev.allin.ui.theme.AllInTheme
 import kotlinx.coroutines.launch
+import racra.compose.smooth_corner_rect_library.AbsoluteSmoothCornerShape
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -34,11 +37,14 @@ fun AllInTextField(
     enabled: Boolean = true,
     trailingIcon: ImageVector? = null,
     trailingContent: @Composable (() -> Unit)? = null,
+    placeholderFontSize: TextUnit = 18.sp,
+    multiLine: Boolean = false,
     onValueChange: (String)->Unit,
     bringIntoViewRequester: BringIntoViewRequester,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardType: KeyboardType = KeyboardType.Text,
-    keyboardActions: KeyboardActions = KeyboardActions.Default
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
+    borderColor: Color = AllInTheme.colors.allIn_LightGrey300
 ) {
     val scope = rememberCoroutineScope()
     var hasFocus by remember { mutableStateOf(false) }
@@ -51,8 +57,8 @@ fun AllInTextField(
         textFieldValue = TextFieldValue(text = value, selection = TextRange(value.length))
     })
 
-
     OutlinedTextField(
+        value = textFieldValue,
         modifier = modifier
             .onFocusChanged {
             hasFocus = it.hasFocus
@@ -63,7 +69,7 @@ fun AllInTextField(
             }
         },
         visualTransformation = visualTransformation,
-        value = textFieldValue,
+        singleLine = !multiLine,
         onValueChange = {
             if(maxChar==null || it.text.length<=maxChar) {
                 textFieldValue = it
@@ -73,10 +79,10 @@ fun AllInTextField(
         placeholder = {
             Text(
                 text = placeholder,
-                fontSize = 18.sp,
+                fontSize = placeholderFontSize,
                 style = AllInTheme.typography.r,
                 color = AllInTheme.colors.allIn_LightGrey300,
-                maxLines = 1,
+                maxLines = if(multiLine) 3 else 1,
                 overflow = TextOverflow.Ellipsis
             )
         },
@@ -90,20 +96,18 @@ fun AllInTextField(
             }
         },
         textStyle = AllInTheme.typography.r,
-        singleLine = true,
         enabled = enabled,
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
         keyboardActions = keyboardActions,
-        shape = AbsoluteRoundedCornerShape(20),
+        shape = AbsoluteSmoothCornerShape(10.dp, 100),
         colors =  OutlinedTextFieldDefaults.colors(
             cursorColor = AllInTheme.colors.allIn_Dark,
-            focusedBorderColor = AllInTheme.colors.allIn_LightGrey300,
-            unfocusedBorderColor = AllInTheme.colors.allIn_LightGrey300,
+            focusedBorderColor = borderColor,
+            unfocusedBorderColor = borderColor,
             focusedTextColor = AllInTheme.colors.allIn_Dark,
             unfocusedTextColor = AllInTheme.colors.allIn_Dark,
             focusedContainerColor = AllInTheme.colors.white,
             unfocusedContainerColor = AllInTheme.colors.white
-
         )
     )
 }
@@ -185,6 +189,21 @@ private fun AllInTextFieldPasswordPreview() {
             placeholder = "Password",
             value = value,
             onValueChange = setValue,
+            bringIntoViewRequester = BringIntoViewRequester()
+        )
+    }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Preview
+@Composable
+private fun AllInTextFieldMultilinePreview() {
+    AllInTheme {
+        AllInTextField(
+            placeholder = "David sera il absent le Lundi matin en cours ?",
+            value = "",
+            onValueChange = { },
+            multiLine = true,
             bringIntoViewRequester = BringIntoViewRequester()
         )
     }

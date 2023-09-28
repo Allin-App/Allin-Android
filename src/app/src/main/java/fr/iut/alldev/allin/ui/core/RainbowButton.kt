@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -17,35 +18,38 @@ fun RainbowButton(
     text: String,
     onClick: ()->Unit,
     enabled: Boolean = true,
+    rippleColor: Color = AllInTheme.colors.allIn_Blue,
     modifier: Modifier = Modifier
 ) {
-    AllInCard(
-        borderWidth = if(enabled) 1.dp else 2.dp,
-        onClick = onClick,
-        modifier = modifier,
-        enabled = enabled
-    ) {
-        val textStyle =
-            with(AllInTheme.typography.h2){
-                if(enabled){
-                    copy(
-                        brush = AllInTheme.colors.allIn_TextGradient
-                    )
-                }else{
-                    copy(
-                        color = AllInTheme.themeColors.disabled_border
-                    )
+    AllInRipple(rippleColor) {
+        AllInCard(
+            borderWidth = if (enabled) 1.dp else 2.dp,
+            onClick = onClick,
+            modifier = modifier,
+            enabled = enabled
+        ) {
+            val textStyle =
+                with(AllInTheme.typography.h2) {
+                    if (enabled) {
+                        copy(
+                            brush = AllInTheme.colors.allIn_TextGradient
+                        )
+                    } else {
+                        copy(
+                            color = AllInTheme.themeColors.disabled_border
+                        )
+                    }
                 }
-            }
-        Text(
-            text = text,
-            textAlign = TextAlign.Center,
-            style = textStyle,
-            fontSize = 30.sp,
-            modifier = Modifier
-                .padding(vertical = 20.dp)
-                .fillMaxWidth(),
+            Text(
+                text = text,
+                textAlign = TextAlign.Center,
+                style = textStyle,
+                fontSize = 30.sp,
+                modifier = Modifier
+                    .padding(vertical = 20.dp)
+                    .fillMaxWidth(),
             )
+        }
     }
 }
 

@@ -3,7 +3,7 @@ package fr.iut.alldev.allin.ui.betcreation
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -16,11 +16,23 @@ import fr.iut.alldev.allin.ui.core.RainbowButton
 import fr.iut.alldev.allin.ui.core.SectionElement
 
 @Composable
-fun BetCreationScreen() {
+fun BetCreationScreen(
+
+) {
+
+    var theme by remember{
+        mutableStateOf("")
+    }
+    var phrase by remember{
+        mutableStateOf("")
+    }
+    var isPublic by remember{
+        mutableStateOf(true)
+    }
     Box(
         Modifier
             .fillMaxSize()
-            .padding(horizontal = 30.dp, vertical = 20.dp)
+            .padding(20.dp)
     ) {
         AllInSections(
             modifier = Modifier
@@ -28,7 +40,14 @@ fun BetCreationScreen() {
                 .fillMaxSize(),
             sections = listOf(
                 SectionElement(stringResource(id = R.string.Question)){
-                    BetCreationScreenQuestionTab()
+                    BetCreationScreenQuestionTab(
+                        isPublic = isPublic,
+                        setIsPublic = { isPublic = it },
+                        betPhrase = phrase,
+                        setBetPhrase = { phrase = it },
+                        betTheme = theme,
+                        setBetTheme = { theme = it }
+                    )
                 },
                 SectionElement(stringResource(id = R.string.Answer)){
                     BetCreationScreenAnswerTab()

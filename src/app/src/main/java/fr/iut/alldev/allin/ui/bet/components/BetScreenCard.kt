@@ -3,11 +3,9 @@ package fr.iut.alldev.allin.ui.bet.components
 import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.ripple.LocalRippleTheme
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
@@ -22,7 +20,6 @@ import fr.iut.alldev.allin.ui.core.RainbowButton
 import fr.iut.alldev.allin.ui.core.bet.BetDateTimeRow
 import fr.iut.alldev.allin.ui.core.bet.BetProfilePictureRow
 import fr.iut.alldev.allin.ui.core.bet.BetTitleHeader
-import fr.iut.alldev.allin.ui.theme.AllInRippleTheme
 import fr.iut.alldev.allin.ui.theme.AllInTheme
 
 @Composable
@@ -78,15 +75,11 @@ fun BetScreenCard(
                     color = AllInTheme.themeColors.on_background_2
                 )
             }
-            CompositionLocalProvider(
-                LocalRippleTheme provides AllInRippleTheme,
-            ){
-                RainbowButton(
-                    modifier = Modifier.padding(6.dp),
-                    text = stringResource(id = R.string.Participate),
-                    onClick = onClickParticipate
-                )
-            }
+            RainbowButton(
+                modifier = Modifier.padding(6.dp),
+                text = stringResource(id = R.string.Participate),
+                onClick = onClickParticipate
+            )
         }
     }
 }
