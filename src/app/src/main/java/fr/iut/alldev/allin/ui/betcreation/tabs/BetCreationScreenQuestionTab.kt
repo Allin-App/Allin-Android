@@ -2,11 +2,13 @@ package fr.iut.alldev.allin.ui.betcreation.tabs
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.relocation.BringIntoViewRequester
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.HelpOutline
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Public
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -14,7 +16,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.ui.betcreation.components.BetCreationScreenBottomText
+import fr.iut.alldev.allin.ui.betcreation.components.BetCreationScreenFriendLine
 import fr.iut.alldev.allin.ui.core.AllInIconChip
+import fr.iut.alldev.allin.ui.core.AllInRetractableCard
 import fr.iut.alldev.allin.ui.core.AllInTextAndIcon
 import fr.iut.alldev.allin.ui.core.AllInTextField
 import fr.iut.alldev.allin.ui.theme.AllInTheme
@@ -22,19 +26,18 @@ import fr.iut.alldev.allin.ui.theme.AllInTheme
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun BetCreationScreenQuestionTab(
+    modifier: Modifier = Modifier,
+    nbFriends: Int,
     betTheme: String,
     setBetTheme: (String)->Unit,
     betPhrase: String,
     setBetPhrase: (String)->Unit,
     isPublic: Boolean,
-    setIsPublic: (Boolean)->Unit
+    setIsPublic: (Boolean)->Unit,
+    selectedFriends: MutableList<Int>
 ) {
     val bringIntoViewRequester = remember { BringIntoViewRequester() }
-    Column(
-        Modifier
-            .fillMaxSize()
-            .padding(20.dp)
-    ){
+    Column(modifier){
         AllInTextAndIcon(
             text = stringResource(id = R.string.Theme),
             icon = Icons.AutoMirrored.Outlined.HelpOutline,
@@ -79,6 +82,7 @@ fun BetCreationScreenQuestionTab(
             onClick = {}
         )
         Row(
+            modifier = Modifier.padding(bottom = 10.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ){
             AllInIconChip(
@@ -99,17 +103,71 @@ fun BetCreationScreenQuestionTab(
             )
         }
 
-        Spacer(modifier = Modifier.height(52.dp))
         Column(
             verticalArrangement = Arrangement.spacedBy(17.dp)
         ) {
+            var isOpen by remember{
+                mutableStateOf(false)
+            }
+
             if(isPublic){
-                BetCreationScreenBottomText(text = stringResource(id = R.string.public_bottom_text_1))
-                BetCreationScreenBottomText(text = stringResource(id = R.string.public_bottom_text_2))
+                Column(
+                    modifier = Modifier.padding(vertical = 20.dp),
+                    verticalArrangement = Arrangement.spacedBy(17.dp)
+                ) {
+                    BetCreationScreenBottomText(text = stringResource(id = R.string.public_bottom_text_1))
+                    BetCreationScreenBottomText(text = stringResource(id = R.string.public_bottom_text_2))
+                }
             }else{
-                BetCreationScreenBottomText(text = stringResource(id = R.string.private_bottom_text_1))
-                BetCreationScreenBottomText(text = stringResource(id = R.string.private_bottom_text_2))
-                BetCreationScreenBottomText(text = stringResource(id = R.string.private_bottom_text_3))
+                AllInRetractableCard(
+                    text = stringResource(
+                        id = R.string.n_friends_available,
+                        nbFriends,
+                        nbFriends
+                    ),
+                    borderWidth = 1.dp,
+                    boldText = nbFriends.toString(),
+                    isOpen = isOpen,
+                    setIsOpen = { isOpen = it }
+                ) {
+                    LazyColumn(
+                        modifier = Modifier.height(172.dp)
+                    ){
+                        items(nbFriends){
+                            val isSelected = remember{
+                                selectedFriends.contains(it)
+                            }
+
+                            var wasClicked by remember{
+                                mutableStateOf(isSelected)
+                            }
+
+                            if(it!=0){
+                                HorizontalDivider(color = AllInTheme.themeColors.border)
+                            }
+                            BetCreationScreenFriendLine(
+                                username = "Dave",
+                                allCoinsAmount = 542,
+                                isSelected = wasClicked
+                            ) {
+                                wasClicked = ! wasClicked
+                                if (isSelected) {
+                                    selectedFriends.remove(it)
+                                } else {
+                                    selectedFriends.add(it)
+                                }
+                            }
+                        }
+                    }
+                }
+                Column(
+                    modifier = Modifier.padding(vertical = 20.dp),
+                    verticalArrangement = Arrangement.spacedBy(17.dp)
+                ) {
+                    BetCreationScreenBottomText(text = stringResource(id = R.string.private_bottom_text_1))
+                    BetCreationScreenBottomText(text = stringResource(id = R.string.private_bottom_text_2))
+                    BetCreationScreenBottomText(text = stringResource(id = R.string.private_bottom_text_3))
+                }
             }
         }
     }

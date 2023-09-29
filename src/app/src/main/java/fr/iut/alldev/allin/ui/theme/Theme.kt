@@ -37,6 +37,7 @@ fun AllInTheme(
         allIn_BarPurple = Color(0xFF846AC9),
         allIn_BarPink = Color(0xFFFE2B8A),
         allIn_Blue = Color(0xFF6a89fa),
+        allIn_Mint = Color(0xFFC4DEE9),
         allIn_DarkBlue = Color(0xFF323078),
 
         allIn_MainGradient = Brush.linearGradient(

@@ -55,6 +55,7 @@ dependencies {
     implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
     implementation 'androidx.compose.material3:material3:1.2.0-alpha08'
     implementation "androidx.navigation:navigation-compose:2.7.3"
+    implementation project(path: ':data')
     testImplementation 'junit:junit:4.13.2'
     implementation 'androidx.compose.material:material-icons-core'
     implementation 'androidx.compose.material:material-icons-extended'

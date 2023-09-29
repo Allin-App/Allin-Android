@@ -1,6 +1,7 @@
 package fr.iut.alldev.allin.ui.core.topbar
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
@@ -21,19 +22,22 @@ import fr.iut.alldev.allin.ui.theme.AllInTheme
 @Composable
 fun CoinCounter(amount:Int, modifier: Modifier = Modifier) {
     Card(modifier = modifier.wrapContentSize(), shape = RoundedCornerShape(topStartPercent = 50, bottomStartPercent = 50)) {
-        Row(modifier = Modifier
+        Row(
+            modifier = Modifier
             .background(AllInTheme.colors.white)
             .padding(horizontal = 13.dp, vertical = 5.dp),
-            verticalAlignment = Alignment.CenterVertically) {
-            Icon(
-                painter = painterResource(R.drawable.allcoin),
-                tint = AllInTheme.colors.allIn_Blue,
-                contentDescription = null,
-                modifier = Modifier.padding(end = 8.dp))
+            horizontalArrangement = Arrangement.spacedBy(7.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             Text(text = amount.toString(),
                 color = AllInTheme.colors.allIn_Dark,
                 style = AllInTheme.typography.h1,
                 fontSize = 20.sp)
+            Icon(
+                painter = painterResource(R.drawable.allcoin),
+                tint = AllInTheme.colors.allIn_Blue,
+                contentDescription = null,
+            )
         }
     }
 }

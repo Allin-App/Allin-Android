@@ -56,6 +56,9 @@
     <string name="private_bottom_text_2">Only your friends will be able to join the bet.</string>
     <string name="private_bottom_text_3">You can invite friends at any moment during the registration period.</string>
     <string name="yes_no">Yes / No</string>
+    <string name="yes_no_bottom_text_1">The participants will have to respond with either YES or NO.</string>
+    <string name="yes_no_bottom_text_2">No other answer will be accepted.</string>
+    <string name="sport_match">Sport match</string>
     <string name="custom_answers">Custom answers</string>
     <!--Bet Page-->
     <string name="Popular">Popular</string>

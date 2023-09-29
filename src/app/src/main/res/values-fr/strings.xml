@@ -51,6 +51,9 @@
     <string name="private_bottom_text_2">Seulement vos amis pourront rejoindre le bet.</string>
     <string name="private_bottom_text_3">Vous pourrez inviter des amis à tout moment pendant la période d’inscription.</string>
     <string name="yes_no">Oui / Non</string>
+    <string name="sport_match">Match sportif</string>
+    <string name="yes_no_bottom_text_1">Les utilisateurs devront répondre au pari avec OUI ou NON.</string>
+    <string name="yes_no_bottom_text_2">Aucune autre réponse ne sera acceptée.</string>
     <string name="custom_answers">Réponses personnalisées</string>
     <!--Bet Page-->
     <string name="Popular">Populaire</string>

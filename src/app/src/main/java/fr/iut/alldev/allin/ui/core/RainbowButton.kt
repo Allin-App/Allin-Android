@@ -46,7 +46,7 @@ fun RainbowButton(
                 style = textStyle,
                 fontSize = 30.sp,
                 modifier = Modifier
-                    .padding(vertical = 20.dp)
+                    .padding(vertical = 15.dp)
                     .fillMaxWidth(),
             )
         }

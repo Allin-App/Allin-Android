@@ -22,6 +22,7 @@ data class AllInColors(
     val white: Color,
     val black: Color,
     val allIn_Pink: Color,
+    val allIn_Mint: Color,
     val allIn_Purple: Color,
     val allIn_LoginPurple: Color,
     val allIn_Blue: Color,
@@ -56,6 +57,7 @@ internal val LocalColors = staticCompositionLocalOf {
         allIn_BarPurple = Color.Unspecified,
         allIn_BarPink = Color.Unspecified,
         allIn_Blue = Color.Unspecified,
+        allIn_Mint = Color.Unspecified,
         allIn_DarkBlue = Color.Unspecified,
 
         allIn_MainGradient = Brush.linearGradient(
