@@ -14,6 +14,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.ui.core.AllInGradientButton
 import fr.iut.alldev.allin.ui.core.AllInPasswordField
@@ -24,7 +25,8 @@ import fr.iut.alldev.allin.ui.theme.AllInTheme
 @Composable
 fun LoginScreen(
     onClickLogin: ()->Unit,
-    onClickRegister: ()->Unit
+    onClickRegister: ()->Unit,
+    loginViewModel: LoginViewModel = hiltViewModel()
 ) {
 
     val bringIntoViewRequester = BringIntoViewRequester()

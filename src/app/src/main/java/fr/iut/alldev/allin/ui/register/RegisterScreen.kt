@@ -16,6 +16,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.ui.core.AllInGradientButton
 import fr.iut.alldev.allin.ui.core.AllInPasswordField
@@ -25,12 +26,15 @@ import fr.iut.alldev.allin.ui.theme.AllInTheme
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun RegisterScreen(
-    onClickRegister: ()->Unit,
-    onClickLogin: ()->Unit
+    onClickRegister: () -> Unit,
+    onClickLogin: () -> Unit,
+    registerViewModel: RegisterViewModel = hiltViewModel(),
 ) {
-    var username by remember{
-        mutableStateOf("")
-    }
+    val (username, setUsername) = remember{ registerViewModel.username }
+    val (email, setEmail) = remember{ registerViewModel.email }
+    val (password, setPassword) = remember{ registerViewModel.password }
+    val (passwordValidation, setPasswordValidation) = remember{ registerViewModel.passwordValidation }
+
     val bringIntoViewRequester = remember { BringIntoViewRequester() }
 
     Box(
@@ -78,30 +82,30 @@ fun RegisterScreen(
                     modifier = Modifier.fillMaxWidth(),
                     placeholder = stringResource(id = R.string.username),
                     value = username,
-                    onValueChange = { username = it },
+                    onValueChange = setUsername,
                     maxChar = 20,
                     bringIntoViewRequester = bringIntoViewRequester
                 )
                 AllInTextField(
                     modifier = Modifier.fillMaxWidth(),
                     placeholder = stringResource(id = R.string.email),
-                    value = "",
-                    onValueChange = { },
+                    value = email,
+                    onValueChange = setEmail,
                     keyboardType = KeyboardType.Email,
                     bringIntoViewRequester = bringIntoViewRequester
                 )
                 AllInPasswordField(
                     modifier = Modifier.fillMaxWidth(),
                     placeholder = stringResource(id = R.string.password),
-                    value = "",
-                    onValueChange = { },
+                    value = password,
+                    onValueChange = setPassword,
                     bringIntoViewRequester = bringIntoViewRequester
                 )
                 AllInPasswordField(
                     modifier = Modifier.fillMaxWidth(),
                     placeholder = stringResource(id = R.string.confirm_password),
-                    value = "",
-                    onValueChange = { },
+                    value = passwordValidation,
+                    onValueChange = setPasswordValidation,
                     bringIntoViewRequester = bringIntoViewRequester
                 )
             }
