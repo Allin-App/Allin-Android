@@ -25,7 +25,7 @@ fun RainbowButton(
         AllInCard(
             borderWidth = if (enabled) 1.dp else 2.dp,
             onClick = onClick,
-            modifier = modifier,
+            modifier = modifier.fillMaxWidth(),
             enabled = enabled
         ) {
             val textStyle =

@@ -26,8 +26,8 @@ import fr.iut.alldev.allin.ui.theme.AllInTheme
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun RegisterScreen(
-    onClickRegister: () -> Unit,
-    onClickLogin: () -> Unit,
+    navigateToDashboard: () -> Unit,
+    navigateToLogin: () -> Unit,
     registerViewModel: RegisterViewModel = hiltViewModel(),
 ) {
     val (username, setUsername) = remember{ registerViewModel.username }
@@ -118,7 +118,7 @@ fun RegisterScreen(
         ) {
             AllInGradientButton(
                 text = stringResource(id = R.string.Register),
-                onClick = onClickRegister
+                onClick = navigateToDashboard
             )
             Spacer(modifier = Modifier.height(30.dp))
             Row(
@@ -140,7 +140,7 @@ fun RegisterScreen(
                         fontWeight = FontWeight.Bold
                     )
                 ) {
-                    onClickLogin()
+                    navigateToLogin()
                 }
             }
         }

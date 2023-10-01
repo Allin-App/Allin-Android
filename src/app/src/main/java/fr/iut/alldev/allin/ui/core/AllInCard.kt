@@ -2,7 +2,6 @@ package fr.iut.alldev.allin.ui.core
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -34,7 +33,7 @@ fun AllInCard(
 ) {
 
     val cardShape = AbsoluteSmoothCornerShape(radius, smoothnessAsPercent = 100)
-    val cardModifier = modifier.fillMaxWidth()
+    val cardModifier = modifier
         .run {
         backgroundBrush?.let{
             this.clip(cardShape).background(it)

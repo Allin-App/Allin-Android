@@ -98,10 +98,10 @@ private fun NavGraphBuilder.allInWelcomeScreen(
 ){
     composable(route = Routes.WELCOME){
         WelcomeScreen(
-            onClickJoin = {
+            navigateToRegister = {
                 navController.popUpTo(Routes.REGISTER, Routes.WELCOME)
             },
-            onClickLogin = {
+            navigateToLogin = {
                 navController.popUpTo(Routes.LOGIN, Routes.WELCOME)
             }
         )
@@ -113,10 +113,10 @@ private fun NavGraphBuilder.allInRegisterScreen(
 ){
     composable(route = Routes.REGISTER){
         RegisterScreen(
-            onClickRegister = {
+            navigateToDashboard = {
                 navController.popUpTo(Routes.DASHBOARD, Routes.REGISTER)
             },
-            onClickLogin = {
+            navigateToLogin = {
                 navController.popUpTo(Routes.LOGIN, Routes.REGISTER)
             }
         )
@@ -128,10 +128,10 @@ private fun NavGraphBuilder.allInLoginScreen(
 ){
     composable(route = Routes.LOGIN){
         LoginScreen(
-            onClickRegister = {
+            navigateToRegister = {
                 navController.popUpTo(Routes.REGISTER, Routes.LOGIN)
             },
-            onClickLogin = {
+            navigateToDashboard = {
                 navController.popUpTo(Routes.DASHBOARD, Routes.LOGIN)
             }
         )

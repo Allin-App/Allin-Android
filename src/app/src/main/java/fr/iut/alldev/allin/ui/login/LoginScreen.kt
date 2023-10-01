@@ -24,8 +24,8 @@ import fr.iut.alldev.allin.ui.theme.AllInTheme
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun LoginScreen(
-    onClickLogin: ()->Unit,
-    onClickRegister: ()->Unit,
+    navigateToDashboard: ()->Unit,
+    navigateToRegister: ()->Unit,
     loginViewModel: LoginViewModel = hiltViewModel()
 ) {
 
@@ -98,7 +98,7 @@ fun LoginScreen(
         ) {
             AllInGradientButton(
                 text = stringResource(id = R.string.Login),
-                onClick = onClickLogin,
+                onClick = navigateToDashboard,
                 modifier = Modifier
             )
             Spacer(modifier = Modifier.height(30.dp))
@@ -122,7 +122,7 @@ fun LoginScreen(
                         fontWeight = FontWeight.Bold
                     )
                 ) {
-                    onClickRegister()
+                    navigateToRegister()
                 }
             }
         }

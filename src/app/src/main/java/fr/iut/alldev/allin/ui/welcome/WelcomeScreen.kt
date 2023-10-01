@@ -24,8 +24,8 @@ import fr.iut.alldev.allin.ui.theme.AllInTheme
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun WelcomeScreen(
-    onClickJoin: ()->Unit,
-    onClickLogin: ()->Unit
+    navigateToRegister: ()->Unit,
+    navigateToLogin: ()->Unit
 ) {
     Box(
         Modifier
@@ -75,7 +75,7 @@ fun WelcomeScreen(
                 color = AllInTheme.themeColors.tint_1,
                 text = stringResource(id = R.string.join),
                 textColor = AllInTheme.themeColors.background,
-                onClick = onClickJoin,
+                onClick = navigateToRegister,
                 modifier = Modifier.padding(bottom = 13.dp)
             )
             Row(
@@ -97,7 +97,7 @@ fun WelcomeScreen(
                         fontWeight = FontWeight.Bold
                     )
                 ){
-                    onClickLogin()
+                    navigateToLogin()
                 }
             }
         }
@@ -109,6 +109,6 @@ fun WelcomeScreen(
 @Composable
 private fun WelcomeScreenPreview() {
     AllInTheme{
-        WelcomeScreen(onClickJoin = {}, onClickLogin = {})
+        WelcomeScreen(navigateToRegister = {}, navigateToLogin = {})
     }
 }

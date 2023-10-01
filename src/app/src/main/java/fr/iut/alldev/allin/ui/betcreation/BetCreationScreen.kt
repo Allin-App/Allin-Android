@@ -16,50 +16,43 @@ import fr.iut.alldev.allin.ext.getIcon
 import fr.iut.alldev.allin.ext.getTitle
 import fr.iut.alldev.allin.ui.betcreation.tabs.BetCreationScreenAnswerTab
 import fr.iut.alldev.allin.ui.betcreation.tabs.BetCreationScreenQuestionTab
-import fr.iut.alldev.allin.ui.core.AllInSections
-import fr.iut.alldev.allin.ui.core.RainbowButton
-import fr.iut.alldev.allin.ui.core.SectionElement
-import fr.iut.alldev.allin.ui.core.SelectionElement
+import fr.iut.alldev.allin.ui.core.*
+import java.time.Instant
+import java.time.ZoneId
+import java.time.ZonedDateTime
 
 @Composable
 fun BetCreationScreen(
 
 ) {
-    var theme by remember{
-        mutableStateOf("")
-    }
-    var phrase by remember{
-        mutableStateOf("")
-    }
-    var isPublic by remember{
-        mutableStateOf(true)
-    }
+    var theme by remember{ mutableStateOf("") }
+    var phrase by remember{ mutableStateOf("") }
+    val (registerDate, setRegisterDate) = remember { mutableStateOf<ZonedDateTime>(ZonedDateTime.now()) }
+    val (registerTime, setRegisterTime) = remember { mutableStateOf<ZonedDateTime>(ZonedDateTime.now()) }
+    val (betDate, setBetDate) = remember { mutableStateOf<ZonedDateTime>(ZonedDateTime.now()) }
+    val (betTime, setBetTime) = remember { mutableStateOf<ZonedDateTime>(ZonedDateTime.now()) }
+    var isPublic by remember{ mutableStateOf(true) }
+    val betTypes = remember { BetType.values().toList() }
+    val selectedFriends = remember { mutableListOf<Int>() }
+    val selectedBetType by remember { mutableStateOf(betTypes[0]) }
+    var selectionElements by remember { mutableStateOf(listOf<SelectionElement>()) }
+    var selectedBetTypeElement by remember { mutableStateOf<SelectionElement?>(null)}
 
-    val betTypes = remember {
-        BetType.values().toList()
-    }
-
-    val selectedFriends = remember {
-        mutableListOf<Int>()
-    }
-
-    val elements = betTypes.map {
+    LaunchedEffect(key1 = betTypes) {
+        selectionElements = betTypes.map {
             SelectionElement(
-                it.getTitle(),
-                it.getIcon()
+                textId = it.getTitle(),
+                imageVector = it.getIcon()
             )
         }
-
-
-    var selected by remember {
-        mutableStateOf(elements[0])
+        selectedBetTypeElement = selectionElements.getOrNull(0)
     }
 
-    val selectedBetType by remember {
-        derivedStateOf {
-            betTypes[elements.indexOf(selected)]
-        }
-    }
+    val (showRegisterDatePicker, setRegisterDatePicker) = remember { mutableStateOf(false) }
+    val (showEndDatePicker, setEndDatePicker) = remember { mutableStateOf(false) }
+
+    val (showRegisterTimePicker, setRegisterTimePicker) = remember { mutableStateOf(false) }
+    val (showEndTimePicker, setEndTimePicker) = remember { mutableStateOf(false) }
 
     Box(
         Modifier
@@ -82,6 +75,14 @@ fun BetCreationScreen(
                         setBetTheme = { theme = it },
                         nbFriends = 42,
                         selectedFriends = selectedFriends,
+                        registerDate = registerDate,
+                        betDate = betDate,
+                        registerTime = registerTime,
+                        betTime = betTime,
+                        setRegisterDateDialog = { setRegisterDatePicker(it) },
+                        setEndDateDialog = { setEndDatePicker(it) },
+                        setRegisterTimeDialog = { setRegisterTimePicker(it) },
+                        setEndTimeDialog = { setEndTimePicker(it) },
                         modifier = Modifier
                             .fillMaxSize()
                             .verticalScroll(rememberScrollState())
@@ -91,9 +92,9 @@ fun BetCreationScreen(
                 SectionElement(stringResource(id = R.string.Answer)){
                     BetCreationScreenAnswerTab(
                         selectedBetType = selectedBetType,
-                        selected = selected,
-                        setSelected = { selected = it },
-                        elements = elements,
+                        selected = selectedBetTypeElement,
+                        setSelected = { selectedBetTypeElement = it },
+                        elements = selectionElements,
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(vertical = 12.dp, horizontal = 20.dp)
@@ -111,4 +112,47 @@ fun BetCreationScreen(
             }
         )
     }
+    if (showRegisterDatePicker || showEndDatePicker) {
+        AllInDatePicker(
+            currentDate = if(showRegisterDatePicker) registerDate else betDate,
+            onSelectDate = { date ->
+                val selectedDate = ZonedDateTime.ofInstant(Instant.ofEpochMilli(date), ZoneId.systemDefault())
+                if(showRegisterDatePicker) {
+                    setRegisterDate(selectedDate)
+                } else {
+                    setBetDate(selectedDate)
+                }
+                setRegisterDatePicker(false)
+                setEndDatePicker(false)
+            },
+            onDismiss = {
+                setRegisterDatePicker(false)
+                setEndDatePicker(false)
+            }
+        )
+    }
+    if (showRegisterTimePicker || showEndTimePicker) {
+        val timeToEdit = if(showRegisterTimePicker) registerTime else betTime
+        AllInTimePicker(
+            hour = timeToEdit.hour,
+            minutes = timeToEdit.minute,
+            onSelectHour = { hour, min ->
+                val time = (timeToEdit)
+                    .withHour(hour)
+                    .withMinute(min)
+                if(showRegisterDatePicker) {
+                    setRegisterTime(time)
+                } else {
+                    setBetTime(time)
+                }
+                setRegisterTimePicker(false)
+                setEndTimePicker(false)
+            },
+            onDismiss = {
+                setRegisterTimePicker(false)
+                setEndTimePicker(false)
+            }
+        )
+    }
+
 }

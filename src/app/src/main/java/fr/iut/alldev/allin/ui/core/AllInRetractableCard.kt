@@ -31,7 +31,7 @@ fun AllInRetractableCard(
     content: @Composable ()->Unit
 ) {
     AllInCard(
-        modifier = modifier,
+        modifier = modifier.fillMaxWidth(),
         borderWidth = borderWidth,
         borderColor = AllInTheme.colors.allIn_Purple.copy(.5f)
     ){

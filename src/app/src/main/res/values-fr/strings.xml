@@ -9,6 +9,9 @@
     <string name="forgot_password">Mot de passe oublié ?</string>
     <string name="no_account">Pas encore inscrit ?</string>
     <string name="Register">S\'inscrire</string>
+    <string name="Validate">Valider</string>
+    <string name="Cancel">Annuler</string>
+
     <!--Drawer-->
     <string name="bets">Bets</string>
     <string name="best_win">Meilleur gain</string>

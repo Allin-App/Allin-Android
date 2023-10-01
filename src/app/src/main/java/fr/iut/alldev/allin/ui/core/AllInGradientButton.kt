@@ -20,15 +20,17 @@ fun AllInGradientButton(
 ) {
     AllInCard(
         onClick = onClick,
-        modifier = modifier.shadow(
-            colors = listOf(
-                AllInTheme.colors.allIn_Pink,
-                AllInTheme.colors.allIn_Blue
-            ),
-            blurRadius = 20.dp,
-            alpha = .5f,
-            cornerRadius = 15.dp
-        ),
+        modifier = modifier
+            .shadow(
+                colors = listOf(
+                    AllInTheme.colors.allIn_Pink,
+                    AllInTheme.colors.allIn_Blue
+                ),
+                blurRadius = 20.dp,
+                alpha = .5f,
+                cornerRadius = 15.dp
+            )
+            .fillMaxWidth(),
         radius = 10.dp,
         backgroundBrush = AllInTheme.colors.allIn_MainGradient
     ) {

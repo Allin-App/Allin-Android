@@ -15,7 +15,7 @@ import fr.iut.alldev.allin.ui.core.SelectionElement
 @Composable
 fun BetCreationScreenAnswerTab(
     modifier: Modifier = Modifier,
-    selected: SelectionElement,
+    selected: SelectionElement?,
     selectedBetType: BetType,
     setSelected: (SelectionElement)->Unit,
     elements: List<SelectionElement>
@@ -23,6 +23,7 @@ fun BetCreationScreenAnswerTab(
     var isOpen by remember{
         mutableStateOf(false)
     }
+
 
     Column(modifier) {
         AllInSelectionBox(
@@ -44,10 +45,14 @@ fun BetCreationScreenAnswerTab(
                 }
             }
             BetType.MATCH -> {
-                BetCreationScreenBottomText(text = selectedBetType.getTitle())
+                BetCreationScreenBottomText(
+                    text = stringResource(selectedBetType.getTitle())
+                )
             }
             BetType.CUSTOM -> {
-                BetCreationScreenBottomText(text = selectedBetType.getTitle())
+                BetCreationScreenBottomText(
+                    text = stringResource(selectedBetType.getTitle())
+                )
             }
         }
     }

@@ -12,6 +12,8 @@
     <string name="forgot_password">Forgot password ?</string>
     <string name="no_account">Don\'t have an account ?</string>
     <string name="Register">Register</string>
+    <string name="Validate">Validate</string>
+    <string name="Cancel">Cancel</string>
 
     <!--Drawer-->
     <string name="bets">Bets</string>

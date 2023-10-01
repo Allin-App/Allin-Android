@@ -34,7 +34,7 @@ fun BetScreenCard(
     onClickParticipate: ()->Unit
 ) {
     AllInCard(
-        modifier = modifier,
+        modifier = modifier.fillMaxWidth(),
         radius = 16.dp
     ){
         Column(

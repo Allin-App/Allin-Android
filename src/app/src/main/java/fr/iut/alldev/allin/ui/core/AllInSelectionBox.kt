@@ -16,21 +16,23 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.ui.theme.AllInTheme
 
 
 class SelectionElement(
-    val text: String,
-    val iconVector: ImageVector
+    val textId: Int,
+    val imageVector: ImageVector
 )
 
 @Composable
 fun AllInSelectionLine(
     text: String,
-    iconVector: ImageVector,
+    iconVector: ImageVector?,
     modifier: Modifier = Modifier,
     onClick: ()->Unit,
     trailingIcon: ImageVector? = null,
@@ -47,12 +49,14 @@ fun AllInSelectionLine(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(7.dp)
     ) {
-        Icon(
-            imageVector = iconVector,
-            contentDescription = null,
-            tint = AllInTheme.colors.allIn_Purple,
-            modifier = Modifier.size(20.dp)
-        )
+        iconVector?.let {
+            Icon(
+                imageVector = it,
+                contentDescription = null,
+                tint = AllInTheme.colors.allIn_Purple,
+                modifier = Modifier.size(20.dp)
+            )
+        }
         Text(
             text = text,
             color = AllInTheme.colors.allIn_Purple,
@@ -78,18 +82,22 @@ fun AllInSelectionBox(
     modifier: Modifier = Modifier,
     isOpen: Boolean,
     setIsOpen: (Boolean)->Unit,
-    selected: SelectionElement,
+    selected: SelectionElement?,
     setSelected: (SelectionElement)->Unit,
     elements: List<SelectionElement>
 ) {
     val interactionSource = remember { MutableInteractionSource() }
-    AllInCard(modifier){
+    AllInCard(modifier.fillMaxWidth()){
         Column(
             Modifier.animateContentSize()
         ) {
             AllInSelectionLine(
-                text = selected.text,
-                iconVector = selected.iconVector,
+                text = selected?.let{
+                    stringResource(id = it.textId)
+                } ?: "",
+                iconVector = selected?.let{
+                    selected.imageVector
+                },
                 onClick = { setIsOpen(!isOpen) },
                 interactionSource = interactionSource,
                 trailingIcon = with(Icons.Default){
@@ -101,8 +109,8 @@ fun AllInSelectionBox(
                 elements.filter { it != selected }.forEach{
                     element ->
                     AllInSelectionLine(
-                        text = element.text,
-                        iconVector = element.iconVector,
+                        text = stringResource(id = element.textId),
+                        iconVector = element.imageVector,
                         interactionSource = interactionSource,
                         onClick = {
                             setSelected(element)
@@ -121,9 +129,9 @@ fun AllInSelectionBox(
 private fun AllInSelectionBoxClosedPreview() {
     AllInTheme {
         val elements = listOf(
-            SelectionElement("Oui/Non", Icons.AutoMirrored.Default.HelpOutline),
-            SelectionElement("Sport", Icons.Default.SportsFootball),
-            SelectionElement("Perso", Icons.Default.PinEnd)
+            SelectionElement(R.string.yes_no, Icons.AutoMirrored.Default.HelpOutline),
+            SelectionElement(R.string.sport_match, Icons.Default.SportsFootball),
+            SelectionElement(R.string.custom_answers, Icons.Default.PinEnd)
         )
         AllInSelectionBox(
             isOpen = false,
@@ -141,9 +149,9 @@ private fun AllInSelectionBoxClosedPreview() {
 private fun AllInSelectionBoxOpenPreview() {
     AllInTheme {
         val elements = listOf(
-            SelectionElement("Oui/Non", Icons.AutoMirrored.Default.HelpOutline),
-            SelectionElement("Sport", Icons.Default.SportsFootball),
-            SelectionElement("Perso", Icons.Default.Edit)
+            SelectionElement(R.string.yes_no, Icons.AutoMirrored.Default.HelpOutline),
+            SelectionElement(R.string.sport_match, Icons.Default.SportsFootball),
+            SelectionElement(R.string.custom_answers, Icons.Default.Edit)
         )
         AllInSelectionBox(
             isOpen = true,

@@ -32,26 +32,29 @@ fun BetScreenPopularCard(
     modifier: Modifier = Modifier
 ) {
     AllInCard(
-        modifier = modifier.let {
-            if(isSystemInDarkTheme()){
-                it.shadow(
-                    colors = listOf(
-                        AllInTheme.colors.allIn_Pink,
-                        AllInTheme.colors.allIn_Blue
-                    ),
-                    blurRadius = 10.dp,
-                    alpha = .5f,
-                    cornerRadius = 15.dp
-                )
-            }else{
-                it.shadow(
-                    color = Color.Black,
-                    blurRadius = 10.dp,
-                    alpha = .3f,
-                    cornerRadius = 15.dp
-                )
+        modifier = modifier
+            .let {
+                if(isSystemInDarkTheme()){
+                    it.shadow(
+                        colors = listOf(
+                            AllInTheme.colors.allIn_Pink,
+                            AllInTheme.colors.allIn_Blue
+                        ),
+                        blurRadius = 10.dp,
+                        alpha = .5f,
+                        cornerRadius = 15.dp
+                    )
+                }else{
+                    it.shadow(
+                        color = Color.Black,
+                        blurRadius = 10.dp,
+                        alpha = .3f,
+                        cornerRadius = 15.dp
+                    )
+                }
             }
-        },
+            .fillMaxWidth()
+        ,
         backgroundColor = AllInTheme.colors.allIn_Dark,
         borderWidth = 2.dp,
         borderBrush = AllInTheme.colors.allIn_MainGradient
