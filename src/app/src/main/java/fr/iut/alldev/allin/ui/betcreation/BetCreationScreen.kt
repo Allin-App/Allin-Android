@@ -8,6 +8,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import fr.iut.alldev.allin.R
@@ -37,6 +38,7 @@ fun BetCreationScreen(
     var selectedBetType by remember { mutableStateOf(betTypes[0]) }
     var selectionElements by remember { mutableStateOf(listOf<SelectionElement>()) }
     var selectedBetTypeElement by remember { mutableStateOf<SelectionElement?>(null)}
+    val focus = LocalFocusManager.current
 
     LaunchedEffect(key1 = betTypes) {
         selectionElements = betTypes.map {
@@ -64,6 +66,9 @@ fun BetCreationScreen(
             .padding(top = 20.dp)
     ) {
         AllInSections(
+            onLoadSection = {
+                focus.clearFocus()
+            },
             modifier = Modifier
                 .align(Alignment.TopCenter)
                 .fillMaxSize()

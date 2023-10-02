@@ -28,7 +28,8 @@ class SectionElement(
 fun AllInSections(
     sections: List<SectionElement>,
     interSectionsPadding: Dp = 56.dp,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onLoadSection: ()->Unit = {}
 ) {
     val pagerState = rememberPagerState(pageCount = {
         sections.size
@@ -54,6 +55,9 @@ fun AllInSections(
                 }
             }
         HorizontalPager(state = pagerState) { page ->
+            LaunchedEffect(key1 = page){
+                onLoadSection()
+            }
             sections[page].content()
         }
     }
