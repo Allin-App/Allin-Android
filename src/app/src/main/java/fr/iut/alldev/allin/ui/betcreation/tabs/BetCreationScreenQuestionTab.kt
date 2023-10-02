@@ -54,7 +54,7 @@ fun BetCreationScreenQuestionTab(
             setRegisterTimeDialog = setRegisterTimeDialog,
             setEndTimeDialog = setEndTimeDialog
         )
-        Spacer(modifier = Modifier.height(44.dp))
+        Spacer(modifier = Modifier.height(35.dp))
         QuestionTabPrivacySection(
             isPublic = isPublic,
             setIsPublic = setIsPublic,

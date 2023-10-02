@@ -5,7 +5,7 @@ import java.time.format.DateTimeFormatter
 
 fun ZonedDateTime.formatToMediumDate(): String {
     return this.format(
-        DateTimeFormatter.ofPattern("dd MMM. yyyy")
+        DateTimeFormatter.ofPattern("dd MMM yyyy")
     ).replaceFirstChar { it.uppercase() }
 }
 

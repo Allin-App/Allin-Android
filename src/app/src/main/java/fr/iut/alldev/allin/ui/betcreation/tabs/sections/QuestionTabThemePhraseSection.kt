@@ -14,7 +14,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import fr.iut.alldev.allin.R
-import fr.iut.alldev.allin.ui.core.AllInTextAndIcon
+import fr.iut.alldev.allin.ui.core.AllInTitleInfo
 import fr.iut.alldev.allin.ui.core.AllInTextField
 import fr.iut.alldev.allin.ui.theme.AllInTheme
 
@@ -27,11 +27,11 @@ internal fun QuestionTabThemePhraseSection(
     setBetPhrase: (String)->Unit,
     bringIntoViewRequester: BringIntoViewRequester
 ) {
-    AllInTextAndIcon(
+    AllInTitleInfo(
         text = stringResource(id = R.string.Theme),
         icon = Icons.AutoMirrored.Outlined.HelpOutline,
         modifier = Modifier.padding(start = 11.dp, bottom = 8.dp),
-        onClick = {}
+        tooltipText = "Bonjour"
     )
     AllInTextField(
         placeholder = stringResource(id = R.string.Theme_placeholder),
@@ -43,12 +43,12 @@ internal fun QuestionTabThemePhraseSection(
         placeholderFontSize = 13.sp,
         modifier = Modifier.fillMaxWidth()
     )
-    Spacer(modifier = Modifier.height(12.dp))
-    AllInTextAndIcon(
+    Spacer(modifier = Modifier.height(10.dp))
+    AllInTitleInfo(
         text = stringResource(id = R.string.Bet_Phrase),
         icon = Icons.AutoMirrored.Outlined.HelpOutline,
         modifier = Modifier.padding(start = 11.dp, bottom = 8.dp),
-        onClick = {}
+        tooltipText = "Généralement une question qui sera répondu par les utilisateurs."
     )
     AllInTextField(
         placeholder = stringResource(id = R.string.Bet_Phrase_placeholder),

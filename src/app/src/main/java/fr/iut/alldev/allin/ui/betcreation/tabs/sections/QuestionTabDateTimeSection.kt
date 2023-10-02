@@ -11,7 +11,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.ui.betcreation.components.BetCreationScreenDateTimeRow
-import fr.iut.alldev.allin.ui.core.AllInTextAndIcon
+import fr.iut.alldev.allin.ui.core.AllInTitleInfo
 
 @Composable
 internal fun QuestionTabDateTimeSection(
@@ -24,11 +24,11 @@ internal fun QuestionTabDateTimeSection(
     endDate: String,
     endTime: String
 ) {
-    AllInTextAndIcon(
+    AllInTitleInfo(
         text = stringResource(id = R.string.End_registration_date),
         icon = Icons.AutoMirrored.Outlined.HelpOutline,
         modifier = Modifier.padding(start = 11.dp, bottom = 8.dp),
-        onClick = {}
+        tooltipText = "Bonjour"
     )
     BetCreationScreenDateTimeRow(
         date = registerDate,
@@ -37,11 +37,11 @@ internal fun QuestionTabDateTimeSection(
         onClickTime = { setRegisterTimeDialog(true) },
     )
     Spacer(modifier = Modifier.height(12.dp))
-    AllInTextAndIcon(
+    AllInTitleInfo(
         text = stringResource(id = R.string.End_bet_date),
         icon = Icons.AutoMirrored.Outlined.HelpOutline,
         modifier = Modifier.padding(start = 11.dp, bottom = 8.dp),
-        onClick = {}
+        tooltipText = "Bonjour"
     )
     BetCreationScreenDateTimeRow(
         date = endDate,

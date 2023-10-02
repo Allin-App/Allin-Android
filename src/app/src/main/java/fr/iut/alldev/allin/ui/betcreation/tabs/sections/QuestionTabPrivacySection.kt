@@ -16,7 +16,7 @@ import fr.iut.alldev.allin.ui.betcreation.components.BetCreationScreenBottomText
 import fr.iut.alldev.allin.ui.betcreation.components.BetCreationScreenFriendLine
 import fr.iut.alldev.allin.ui.core.AllInIconChip
 import fr.iut.alldev.allin.ui.core.AllInRetractableCard
-import fr.iut.alldev.allin.ui.core.AllInTextAndIcon
+import fr.iut.alldev.allin.ui.core.AllInTitleInfo
 import fr.iut.alldev.allin.ui.theme.AllInTheme
 
 @Composable
@@ -26,11 +26,11 @@ fun QuestionTabPrivacySection(
     nbFriends: Int,
     selectedFriends: MutableList<Int>
 ) {
-    AllInTextAndIcon(
+    AllInTitleInfo(
         text = stringResource(id = R.string.Bet_privacy),
         icon = Icons.AutoMirrored.Outlined.HelpOutline,
         modifier = Modifier.padding(start = 11.dp, bottom = 8.dp),
-        onClick = {}
+        tooltipText = "Généralement une question qui sera répondu par les utilisateurs."
     )
     Row(
         modifier = Modifier.padding(bottom = 10.dp),
@@ -85,12 +85,8 @@ fun QuestionTabPrivacySection(
                     modifier = Modifier.height(165.dp)
                 ){
                     items(nbFriends){
-                        val isSelected = remember{
-                            selectedFriends.contains(it)
-                        }
-
-                        var wasClicked by remember{
-                            mutableStateOf(isSelected)
+                        var isSelected by remember{
+                            mutableStateOf(selectedFriends.contains(it))
                         }
 
                         if(it!=0){
@@ -99,14 +95,14 @@ fun QuestionTabPrivacySection(
                         BetCreationScreenFriendLine(
                             username = "Dave",
                             allCoinsAmount = 542,
-                            isSelected = wasClicked
+                            isSelected = isSelected
                         ) {
-                            wasClicked = ! wasClicked
                             if (isSelected) {
                                 selectedFriends.remove(it)
                             } else {
                                 selectedFriends.add(it)
                             }
+                            isSelected = ! isSelected
                         }
                     }
                 }

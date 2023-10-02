@@ -27,7 +27,7 @@ import fr.iut.alldev.allin.ui.theme.AllInTheme
 import kotlinx.coroutines.launch
 import racra.compose.smooth_corner_rect_library.AbsoluteSmoothCornerShape
 
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun AllInTextField(
     placeholder: String,

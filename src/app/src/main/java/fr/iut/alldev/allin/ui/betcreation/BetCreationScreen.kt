@@ -34,7 +34,7 @@ fun BetCreationScreen(
     var isPublic by remember{ mutableStateOf(true) }
     val betTypes = remember { BetType.values().toList() }
     val selectedFriends = remember { mutableListOf<Int>() }
-    val selectedBetType by remember { mutableStateOf(betTypes[0]) }
+    var selectedBetType by remember { mutableStateOf(betTypes[0]) }
     var selectionElements by remember { mutableStateOf(listOf<SelectionElement>()) }
     var selectedBetTypeElement by remember { mutableStateOf<SelectionElement?>(null)}
 
@@ -46,6 +46,10 @@ fun BetCreationScreen(
             )
         }
         selectedBetTypeElement = selectionElements.getOrNull(0)
+    }
+
+    LaunchedEffect(key1 = selectedBetTypeElement){
+        selectedBetType = betTypes[selectionElements.indexOf(selectedBetTypeElement)]
     }
 
     val (showRegisterDatePicker, setRegisterDatePicker) = remember { mutableStateOf(false) }
