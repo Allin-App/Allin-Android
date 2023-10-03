@@ -11,6 +11,6 @@ fun ZonedDateTime.formatToMediumDate(): String {
 
 fun ZonedDateTime.formatToTime(): String {
     return this.format(
-        DateTimeFormatter.ofPattern("hh:mm")
+        DateTimeFormatter.ofPattern("HH:mm")
     ).replaceFirstChar { it.uppercase() }
 }
