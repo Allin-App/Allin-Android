@@ -1,6 +1,7 @@
 package fr.iut.alldev.allin.ui.betcreation.tabs.sections
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -14,8 +15,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import fr.iut.alldev.allin.R
-import fr.iut.alldev.allin.ui.core.AllInTitleInfo
 import fr.iut.alldev.allin.ui.core.AllInTextField
+import fr.iut.alldev.allin.ui.core.AllInTitleInfo
 import fr.iut.alldev.allin.ui.theme.AllInTheme
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -25,13 +26,15 @@ internal fun QuestionTabThemePhraseSection(
     setBetTheme: (String)->Unit,
     betPhrase: String,
     setBetPhrase: (String)->Unit,
-    bringIntoViewRequester: BringIntoViewRequester
+    bringIntoViewRequester: BringIntoViewRequester,
+    interactionSource: MutableInteractionSource
 ) {
     AllInTitleInfo(
         text = stringResource(id = R.string.Theme),
         icon = Icons.AutoMirrored.Outlined.HelpOutline,
         modifier = Modifier.padding(start = 11.dp, bottom = 8.dp),
-        tooltipText = "Bonjour"
+        tooltipText = stringResource(id = R.string.Theme_tooltip),
+        interactionSource = interactionSource
     )
     AllInTextField(
         placeholder = stringResource(id = R.string.Theme_placeholder),
@@ -48,7 +51,8 @@ internal fun QuestionTabThemePhraseSection(
         text = stringResource(id = R.string.Bet_Phrase),
         icon = Icons.AutoMirrored.Outlined.HelpOutline,
         modifier = Modifier.padding(start = 11.dp, bottom = 8.dp),
-        tooltipText = "Généralement une question qui sera répondu par les utilisateurs."
+        tooltipText = stringResource(id = R.string.Phrase_tooltip),
+        interactionSource = interactionSource
     )
     AllInTextField(
         placeholder = stringResource(id = R.string.Bet_Phrase_placeholder),

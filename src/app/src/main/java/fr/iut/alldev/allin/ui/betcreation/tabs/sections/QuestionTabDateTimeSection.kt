@@ -1,5 +1,6 @@
 package fr.iut.alldev.allin.ui.betcreation.tabs.sections
 
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -22,13 +23,15 @@ internal fun QuestionTabDateTimeSection(
     registerDate: String,
     registerTime: String,
     endDate: String,
-    endTime: String
+    endTime: String,
+    interactionSource: MutableInteractionSource
 ) {
     AllInTitleInfo(
         text = stringResource(id = R.string.End_registration_date),
         icon = Icons.AutoMirrored.Outlined.HelpOutline,
         modifier = Modifier.padding(start = 11.dp, bottom = 8.dp),
-        tooltipText = "Bonjour"
+        tooltipText = stringResource(id = R.string.Register_tooltip),
+        interactionSource = interactionSource
     )
     BetCreationScreenDateTimeRow(
         date = registerDate,
@@ -41,7 +44,8 @@ internal fun QuestionTabDateTimeSection(
         text = stringResource(id = R.string.End_bet_date),
         icon = Icons.AutoMirrored.Outlined.HelpOutline,
         modifier = Modifier.padding(start = 11.dp, bottom = 8.dp),
-        tooltipText = "Bonjour"
+        tooltipText = stringResource(id = R.string.BetEnd_tooltip),
+        interactionSource = interactionSource
     )
     BetCreationScreenDateTimeRow(
         date = endDate,

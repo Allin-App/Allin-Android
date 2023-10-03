@@ -44,6 +44,11 @@
     <string name="Question">Question</string>
     <string name="Answer">Answer</string>
     <string name="Publish">Publish the bet</string>
+    <string name="Theme_tooltip">The subject of the bet.</string>
+    <string name="Phrase_tooltip">Generally the question the participants will answer to.</string>
+    <string name="Register_tooltip">After this date, nobody will be able to register anymore.</string>
+    <string name="BetEnd_tooltip">After this date, the result will be announced.</string>
+    <string name="Privacy_tooltip">Determines who will be able to see the bet.</string>
     <string name="Theme">Theme</string>
     <string name="Theme_placeholder">Studies, sports, party…</string>
     <string name="Bet_Phrase">Bet phrase</string>

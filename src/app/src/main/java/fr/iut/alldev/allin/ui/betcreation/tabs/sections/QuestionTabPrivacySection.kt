@@ -1,5 +1,6 @@
 package fr.iut.alldev.allin.ui.betcreation.tabs.sections
 
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
@@ -24,13 +25,15 @@ fun QuestionTabPrivacySection(
     isPublic: Boolean,
     setIsPublic: (Boolean)->Unit,
     nbFriends: Int,
-    selectedFriends: MutableList<Int>
+    selectedFriends: MutableList<Int>,
+    interactionSource: MutableInteractionSource
 ) {
     AllInTitleInfo(
         text = stringResource(id = R.string.Bet_privacy),
         icon = Icons.AutoMirrored.Outlined.HelpOutline,
         modifier = Modifier.padding(start = 11.dp, bottom = 8.dp),
-        tooltipText = "Généralement une question qui sera répondu par les utilisateurs."
+        tooltipText = stringResource(id = R.string.Privacy_tooltip),
+        interactionSource = interactionSource
     )
     Row(
         modifier = Modifier.padding(bottom = 10.dp),

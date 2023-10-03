@@ -44,7 +44,10 @@ fun AllInTextField(
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardType: KeyboardType = KeyboardType.Text,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
-    borderColor: Color = AllInTheme.colors.allIn_LightGrey300
+    borderColor: Color = AllInTheme.themeColors.on_background_2,
+    containerColor: Color = AllInTheme.themeColors.background,
+    textColor: Color = AllInTheme.themeColors.on_main_surface,
+    placeholderColor: Color = AllInTheme.themeColors.on_background_2
 ) {
     val scope = rememberCoroutineScope()
     var hasFocus by remember { mutableStateOf(false) }
@@ -81,7 +84,7 @@ fun AllInTextField(
                 text = placeholder,
                 fontSize = placeholderFontSize,
                 style = AllInTheme.typography.r,
-                color = AllInTheme.colors.allIn_LightGrey300,
+                color = placeholderColor,
                 maxLines = if(multiLine) 3 else 1,
                 overflow = TextOverflow.Ellipsis
             )
@@ -101,13 +104,13 @@ fun AllInTextField(
         keyboardActions = keyboardActions,
         shape = AbsoluteSmoothCornerShape(10.dp, 100),
         colors =  OutlinedTextFieldDefaults.colors(
-            cursorColor = AllInTheme.colors.allIn_Dark,
+            cursorColor = textColor,
             focusedBorderColor = borderColor,
             unfocusedBorderColor = borderColor,
-            focusedTextColor = AllInTheme.colors.allIn_Dark,
-            unfocusedTextColor = AllInTheme.colors.allIn_Dark,
-            focusedContainerColor = AllInTheme.colors.white,
-            unfocusedContainerColor = AllInTheme.colors.white
+            focusedTextColor = textColor,
+            unfocusedTextColor = textColor,
+            focusedContainerColor = containerColor,
+            unfocusedContainerColor = containerColor
         )
     )
 }

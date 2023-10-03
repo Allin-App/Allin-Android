@@ -1,6 +1,7 @@
 package fr.iut.alldev.allin.ui.betcreation.tabs
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.relocation.BringIntoViewRequester
 import androidx.compose.runtime.*
@@ -26,13 +27,12 @@ fun BetCreationScreenQuestionTab(
     setIsPublic: (Boolean)->Unit,
     registerDate: ZonedDateTime,
     betDate: ZonedDateTime,
-    registerTime: ZonedDateTime,
-    betTime: ZonedDateTime,
     selectedFriends: MutableList<Int>,
     setRegisterDateDialog: (Boolean)->Unit,
     setEndDateDialog: (Boolean)->Unit,
     setRegisterTimeDialog: (Boolean)->Unit,
-    setEndTimeDialog: (Boolean)->Unit
+    setEndTimeDialog: (Boolean)->Unit,
+    interactionSource: MutableInteractionSource
 ) {
     val bringIntoViewRequester = remember { BringIntoViewRequester() }
     Column(modifier){
@@ -41,25 +41,28 @@ fun BetCreationScreenQuestionTab(
             setBetTheme = setBetTheme,
             betPhrase = betPhrase,
             setBetPhrase = setBetPhrase,
-            bringIntoViewRequester = bringIntoViewRequester
+            bringIntoViewRequester = bringIntoViewRequester,
+            interactionSource = interactionSource
         )
         Spacer(modifier = Modifier.height(35.dp))
         QuestionTabDateTimeSection(
             registerDate = registerDate.formatToMediumDate(),
-            registerTime = registerTime.formatToTime(),
+            registerTime = registerDate.formatToTime(),
             endDate = betDate.formatToMediumDate(),
-            endTime = betTime.formatToTime(),
+            endTime = betDate.formatToTime(),
             setEndDateDialog = setEndDateDialog,
             setRegisterDateDialog = setRegisterDateDialog,
             setRegisterTimeDialog = setRegisterTimeDialog,
-            setEndTimeDialog = setEndTimeDialog
+            setEndTimeDialog = setEndTimeDialog,
+            interactionSource = interactionSource,
         )
         Spacer(modifier = Modifier.height(35.dp))
         QuestionTabPrivacySection(
             isPublic = isPublic,
             setIsPublic = setIsPublic,
             nbFriends = nbFriends,
-            selectedFriends = selectedFriends
+            selectedFriends = selectedFriends,
+            interactionSource = interactionSource
         )
     }
 }

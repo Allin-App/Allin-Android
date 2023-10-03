@@ -1,5 +1,6 @@
 package fr.iut.alldev.allin.ui.betcreation
 
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -26,12 +27,12 @@ import java.time.ZonedDateTime
 fun BetCreationScreen(
 
 ) {
+    val interactionSource = remember { MutableInteractionSource() }
+
     var theme by remember{ mutableStateOf("") }
     var phrase by remember{ mutableStateOf("") }
     val (registerDate, setRegisterDate) = remember { mutableStateOf<ZonedDateTime>(ZonedDateTime.now()) }
-    val (registerTime, setRegisterTime) = remember { mutableStateOf<ZonedDateTime>(ZonedDateTime.now()) }
     val (betDate, setBetDate) = remember { mutableStateOf<ZonedDateTime>(ZonedDateTime.now()) }
-    val (betTime, setBetTime) = remember { mutableStateOf<ZonedDateTime>(ZonedDateTime.now()) }
     var isPublic by remember{ mutableStateOf(true) }
     val betTypes = remember { BetType.values().toList() }
     val selectedFriends = remember { mutableListOf<Int>() }
@@ -86,12 +87,11 @@ fun BetCreationScreen(
                         selectedFriends = selectedFriends,
                         registerDate = registerDate,
                         betDate = betDate,
-                        registerTime = registerTime,
-                        betTime = betTime,
                         setRegisterDateDialog = { setRegisterDatePicker(it) },
                         setEndDateDialog = { setEndDatePicker(it) },
                         setRegisterTimeDialog = { setRegisterTimePicker(it) },
                         setEndTimeDialog = { setEndTimePicker(it) },
+                        interactionSource = interactionSource,
                         modifier = Modifier
                             .fillMaxSize()
                             .verticalScroll(rememberScrollState())
@@ -122,14 +122,20 @@ fun BetCreationScreen(
         )
     }
     if (showRegisterDatePicker || showEndDatePicker) {
+        val dateToEdit = if(showRegisterDatePicker) registerDate else betDate
         AllInDatePicker(
             currentDate = if(showRegisterDatePicker) registerDate else betDate,
             onSelectDate = { date ->
                 val selectedDate = ZonedDateTime.ofInstant(Instant.ofEpochMilli(date), ZoneId.systemDefault())
+                val newDate = dateToEdit
+                    .withYear(selectedDate.year)
+                    .withMonth(selectedDate.month.value)
+                    .withDayOfMonth(selectedDate.dayOfMonth)
+                    .withDayOfYear(selectedDate.dayOfYear)
                 if(showRegisterDatePicker) {
-                    setRegisterDate(selectedDate)
+                    setRegisterDate(newDate)
                 } else {
-                    setBetDate(selectedDate)
+                    setBetDate(newDate)
                 }
                 setRegisterDatePicker(false)
                 setEndDatePicker(false)
@@ -141,7 +147,7 @@ fun BetCreationScreen(
         )
     }
     if (showRegisterTimePicker || showEndTimePicker) {
-        val timeToEdit = if(showRegisterTimePicker) registerTime else betTime
+        val timeToEdit = if(showRegisterTimePicker) registerDate else betDate
         AllInTimePicker(
             hour = timeToEdit.hour,
             minutes = timeToEdit.minute,
@@ -149,10 +155,10 @@ fun BetCreationScreen(
                 val time = (timeToEdit)
                     .withHour(hour)
                     .withMinute(min)
-                if(showRegisterDatePicker) {
-                    setRegisterTime(time)
+                if(showRegisterTimePicker) {
+                    setRegisterDate(time)
                 } else {
-                    setBetTime(time)
+                    setBetDate(time)
                 }
                 setRegisterTimePicker(false)
                 setEndTimePicker(false)

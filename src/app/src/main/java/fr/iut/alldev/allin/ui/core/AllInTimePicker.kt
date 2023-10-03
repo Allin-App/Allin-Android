@@ -24,7 +24,8 @@ fun AllInTimePicker(
         initialMinute = minutes ?: calendar.get(Calendar.MINUTE)
     )
 
-    DatePickerDialog(
+
+    AlertDialog(
         onDismissRequest = onDismiss,
         confirmButton = {
             TextButton(
@@ -49,18 +50,21 @@ fun AllInTimePicker(
                 )
             }
         },
-        colors = DatePickerDefaults.colors(
-            containerColor = AllInTheme.themeColors.main_surface
-        )
-    ){
-        TimePicker(
-            state = timePickerState,
-            colors = TimePickerDefaults.colors(
-                selectorColor = AllInTheme.colors.allIn_Pink,
-                containerColor = AllInTheme.themeColors.background,
+        text = {
+            TimePicker(
+                state = timePickerState,
+                colors = TimePickerDefaults.colors(
+                    selectorColor = AllInTheme.colors.allIn_Purple,
+                    containerColor = AllInTheme.themeColors.background,
+                    clockDialColor = AllInTheme.themeColors.background_2,
+                    clockDialUnselectedContentColor = AllInTheme.themeColors.on_main_surface,
+                    clockDialSelectedContentColor = AllInTheme.themeColors.background_2,
+
+                )
             )
-        )
-    }
+        },
+        containerColor = AllInTheme.themeColors.main_surface
+    )
 }
 
 @Preview

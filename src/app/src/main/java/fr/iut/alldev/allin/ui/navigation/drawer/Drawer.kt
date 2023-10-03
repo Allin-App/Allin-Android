@@ -1,5 +1,6 @@
 package fr.iut.alldev.allin.ui.navigation.drawer
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
@@ -151,6 +152,14 @@ fun AllInDrawer(
                     navController = navController
                 )
             }
+        }
+    }
+
+    BackHandler(
+        enabled = drawerState.isOpen
+    ) {
+        scope.launch {
+            drawerState.close()
         }
     }
 }

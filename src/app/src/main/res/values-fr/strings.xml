@@ -37,6 +37,11 @@
     <string name="Login_title">Te revoilà !</string>
     <string name="Login_subtitle">Bon retour parmis nous tu nous as manqué !</string>
     <!--Bet Creation Page-->
+    <string name="Theme_tooltip">Le sujet du bet.</string>
+    <string name="Phrase_tooltip">Généralement la question à laquelle les participants devront répondre.</string>
+    <string name="Register_tooltip">Après cette date, plus personne ne pourra s\'inscrire.</string>
+    <string name="BetEnd_tooltip">Après cette date, les résultats seront annoncés.</string>
+    <string name="Privacy_tooltip">Détermine qui pourra voir le bet.</string>
     <string name="Question">Question</string>
     <string name="Answer">Réponse</string>
     <string name="Publish">Publier le bet</string>

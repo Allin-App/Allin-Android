@@ -54,6 +54,8 @@ fun AllInSections(
                     )
                 }
             }
+
+
         HorizontalPager(state = pagerState) { page ->
             LaunchedEffect(key1 = page){
                 onLoadSection()
