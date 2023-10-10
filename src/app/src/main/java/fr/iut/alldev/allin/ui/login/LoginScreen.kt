@@ -1,5 +1,6 @@
 package fr.iut.alldev.allin.ui.login
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.relocation.BringIntoViewRequester
@@ -17,6 +18,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.ui.core.AllInGradientButton
+import fr.iut.alldev.allin.ui.core.AllInLoading
 import fr.iut.alldev.allin.ui.core.AllInPasswordField
 import fr.iut.alldev.allin.ui.core.AllInTextField
 import fr.iut.alldev.allin.ui.theme.AllInTheme
@@ -30,6 +32,7 @@ fun LoginScreen(
 ) {
 
     val bringIntoViewRequester = BringIntoViewRequester()
+    val loading by remember{ loginViewModel.loading }
 
     Box(
         Modifier
@@ -98,7 +101,9 @@ fun LoginScreen(
         ) {
             AllInGradientButton(
                 text = stringResource(id = R.string.Login),
-                onClick = navigateToDashboard,
+                onClick = {
+                    loginViewModel.onLogin(navigateToDashboard)
+                },
                 modifier = Modifier
             )
             Spacer(modifier = Modifier.height(30.dp))
@@ -126,5 +131,8 @@ fun LoginScreen(
                 }
             }
         }
+    }
+    AnimatedVisibility(visible = loading) {
+        AllInLoading()
     }
 }
