@@ -1,5 +1,6 @@
 package fr.iut.alldev.allin.ui.register
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.relocation.BringIntoViewRequester
@@ -19,6 +20,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.ui.core.AllInGradientButton
+import fr.iut.alldev.allin.ui.core.AllInLoading
 import fr.iut.alldev.allin.ui.core.AllInPasswordField
 import fr.iut.alldev.allin.ui.core.AllInTextField
 import fr.iut.alldev.allin.ui.theme.AllInTheme
@@ -30,6 +32,8 @@ fun RegisterScreen(
     navigateToLogin: () -> Unit,
     registerViewModel: RegisterViewModel = hiltViewModel(),
 ) {
+    val loading by remember{ registerViewModel.loading }
+
     val (username, setUsername) = remember{ registerViewModel.username }
     val (email, setEmail) = remember{ registerViewModel.email }
     val (password, setPassword) = remember{ registerViewModel.password }
@@ -118,7 +122,9 @@ fun RegisterScreen(
         ) {
             AllInGradientButton(
                 text = stringResource(id = R.string.Register),
-                onClick = navigateToDashboard
+                onClick = {
+                    registerViewModel.onRegister(navigateToDashboard)
+                }
             )
             Spacer(modifier = Modifier.height(30.dp))
             Row(
@@ -144,5 +150,8 @@ fun RegisterScreen(
                 }
             }
         }
+    }
+    AnimatedVisibility(visible = loading) {
+        AllInLoading()
     }
 }

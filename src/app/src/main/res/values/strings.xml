@@ -14,6 +14,7 @@
     <string name="Register">Register</string>
     <string name="Validate">Validate</string>
     <string name="Cancel">Cancel</string>
+    <string name="Ok">OK</string>
 
     <!--Drawer-->
     <string name="bets">Bets</string>
@@ -40,6 +41,8 @@
     <!--Login Page-->
     <string name="Login_title">Welcome back !</string>
     <string name="Login_subtitle">We missed you.</string>
+    <string name="Login_Error_Title">Connection error</string>
+    <string name="Login_Error_Content">Failed to login\nPlease try again.</string>
     <!--Bet Creation Page-->
     <string name="Question">Question</string>
     <string name="Answer">Answer</string>

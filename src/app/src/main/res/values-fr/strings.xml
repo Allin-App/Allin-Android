@@ -11,6 +11,7 @@
     <string name="Register">S\'inscrire</string>
     <string name="Validate">Valider</string>
     <string name="Cancel">Annuler</string>
+    <string name="Ok">OK</string>
 
     <!--Drawer-->
     <string name="bets">Bets</string>
@@ -36,6 +37,8 @@
     <!--Login Page-->
     <string name="Login_title">Te revoilà !</string>
     <string name="Login_subtitle">Bon retour parmis nous tu nous as manqué !</string>
+    <string name="Login_Error_Title">Erreur de connexion</string>
+    <string name="Login_Error_Content">La connexion a échoué\nVeuillez réessayer.</string>
     <!--Bet Creation Page-->
     <string name="Theme_tooltip">Le sujet du bet.</string>
     <string name="Phrase_tooltip">Généralement la question à laquelle les participants devront répondre.</string>
