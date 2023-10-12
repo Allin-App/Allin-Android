@@ -7,7 +7,6 @@ import androidx.compose.foundation.relocation.BringIntoViewRequester
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
@@ -34,22 +33,34 @@ fun RegisterScreen(
 ) {
     val loading by remember{ registerViewModel.loading }
 
+    val usernameError by remember{ registerViewModel.usernameError }
+    val emailError by remember{ registerViewModel.emailError }
+    val passwordError by remember{ registerViewModel.passwordError }
+    val passwordValidationError by remember{ registerViewModel.passwordValidationError }
+
     val (username, setUsername) = remember{ registerViewModel.username }
     val (email, setEmail) = remember{ registerViewModel.email }
     val (password, setPassword) = remember{ registerViewModel.password }
     val (passwordValidation, setPasswordValidation) = remember{ registerViewModel.passwordValidation }
 
     val bringIntoViewRequester = remember { BringIntoViewRequester() }
+    val scrollState = rememberScrollState()
 
-    Box(
+    val usernameFieldName = stringResource(id = R.string.username)
+    val emailFieldName = stringResource(id = R.string.email)
+    val passwordFieldName = stringResource(id = R.string.password)
+
+    Column(
         Modifier
             .fillMaxSize()
             .background(AllInTheme.themeColors.main_surface)
             .padding(horizontal = 44.dp)
-            .verticalScroll(rememberScrollState())
     ) {
         Column(
-            Modifier.align(Alignment.Center)
+            Modifier
+                .weight(1f)
+                .verticalScroll(scrollState),
+            verticalArrangement = Arrangement.Center
         ) {
             Text(
                 modifier = Modifier.fillMaxWidth(),
@@ -84,24 +95,27 @@ fun RegisterScreen(
             ) {
                 AllInTextField(
                     modifier = Modifier.fillMaxWidth(),
-                    placeholder = stringResource(id = R.string.username),
+                    placeholder = usernameFieldName,
                     value = username,
                     onValueChange = setUsername,
                     maxChar = 20,
+                    errorText = usernameError.errorResource(),
                     bringIntoViewRequester = bringIntoViewRequester
                 )
                 AllInTextField(
                     modifier = Modifier.fillMaxWidth(),
-                    placeholder = stringResource(id = R.string.email),
+                    placeholder = emailFieldName,
                     value = email,
                     onValueChange = setEmail,
+                    errorText = emailError.errorResource(),
                     keyboardType = KeyboardType.Email,
                     bringIntoViewRequester = bringIntoViewRequester
                 )
                 AllInPasswordField(
                     modifier = Modifier.fillMaxWidth(),
-                    placeholder = stringResource(id = R.string.password),
+                    placeholder = passwordFieldName,
                     value = password,
+                    errorText = passwordError.errorResource(),
                     onValueChange = setPassword,
                     bringIntoViewRequester = bringIntoViewRequester
                 )
@@ -109,21 +123,25 @@ fun RegisterScreen(
                     modifier = Modifier.fillMaxWidth(),
                     placeholder = stringResource(id = R.string.confirm_password),
                     value = passwordValidation,
+                    errorText = passwordValidationError.errorResource(),
                     onValueChange = setPasswordValidation,
                     bringIntoViewRequester = bringIntoViewRequester
                 )
             }
-            Spacer(modifier = Modifier.height(67.dp))
         }
         Column(
             Modifier
-                .align(Alignment.BottomCenter)
                 .padding(bottom = 32.dp)
         ) {
             AllInGradientButton(
                 text = stringResource(id = R.string.Register),
                 onClick = {
-                    registerViewModel.onRegister(navigateToDashboard)
+                    registerViewModel.onRegister(
+                        usernameFieldName,
+                        emailFieldName,
+                        passwordFieldName,
+                        navigateToDashboard
+                    )
                 }
             )
             Spacer(modifier = Modifier.height(30.dp))

@@ -40,6 +40,7 @@ fun AllInTextField(
     placeholderFontSize: TextUnit = 18.sp,
     multiLine: Boolean = false,
     onValueChange: (String)->Unit,
+    errorText: String? = null,
     bringIntoViewRequester: BringIntoViewRequester,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardType: KeyboardType = KeyboardType.Text,
@@ -62,6 +63,7 @@ fun AllInTextField(
 
     OutlinedTextField(
         value = textFieldValue,
+        isError = errorText!=null,
         modifier = modifier
             .onFocusChanged {
             hasFocus = it.hasFocus
@@ -69,6 +71,17 @@ fun AllInTextField(
                 scope.launch {
                     bringIntoViewRequester.bringIntoView()
                 }
+            }
+        },
+        supportingText = errorText?.let {
+            {
+                Text(
+                    text = it,
+                    style = AllInTheme.typography.r,
+                    color = Color.Red,
+                    fontSize = 10.sp,
+                    overflow = TextOverflow.Ellipsis
+                )
             }
         },
         visualTransformation = visualTransformation,
@@ -109,8 +122,10 @@ fun AllInTextField(
             unfocusedBorderColor = borderColor,
             focusedTextColor = textColor,
             unfocusedTextColor = textColor,
+            errorTextColor = textColor,
             focusedContainerColor = containerColor,
-            unfocusedContainerColor = containerColor
+            unfocusedContainerColor = containerColor,
+            errorContainerColor = containerColor,
         )
     )
 }
@@ -123,6 +138,7 @@ fun AllInPasswordField(
     modifier: Modifier = Modifier,
     keyboardType: KeyboardType = KeyboardType.Password,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
+    errorText: String? = null,
     onValueChange: (String)->Unit,
     bringIntoViewRequester: BringIntoViewRequester,
     isHiddenByDefault: Boolean = true
@@ -132,6 +148,7 @@ fun AllInPasswordField(
     }
         AllInTextField(
             modifier = modifier,
+            errorText = errorText,
             placeholder = placeholder,
             keyboardActions = keyboardActions,
             visualTransformation = if (hidden) PasswordVisualTransformation() else VisualTransformation.None,
@@ -176,6 +193,21 @@ private fun AllInTextFieldValuePreview() {
         AllInTextField(
             placeholder = "Email",
             value = "JohnDoe@mail.com",
+            onValueChange = { },
+            bringIntoViewRequester = BringIntoViewRequester()
+        )
+    }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Preview
+@Composable
+private fun AllInTextFieldErrorPreview() {
+    AllInTheme {
+        AllInTextField(
+            placeholder = "Email",
+            value = "JohnDoe@mail.com",
+            errorText = "This is an error.",
             onValueChange = { },
             bringIntoViewRequester = BringIntoViewRequester()
         )

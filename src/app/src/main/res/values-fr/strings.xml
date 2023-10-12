@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--Core-->
     <string name="username">Pseudo</string>
     <string name="email">Email</string>
     <string name="password">Mot de passe</string>
@@ -12,6 +13,10 @@
     <string name="Validate">Valider</string>
     <string name="Cancel">Annuler</string>
     <string name="Ok">OK</string>
+    <string name="FieldError_TooShort">Le %s doit contenir au moins %d caractères.</string>
+    <string name="FieldError_BadFormat">Le %s a un mauvais format : %s.</string>
+    <string name="FieldError_NotIdentical">Les champs ne sont pas identiques.</string>
+    <string name="FieldError_NoSpecialCharacter">Le %s doit contenir au moins un caractère spécial : %s.</string>
 
     <!--Drawer-->
     <string name="bets">Bets</string>
