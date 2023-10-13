@@ -39,6 +39,12 @@ fun AllInTheme(
         allIn_Blue = Color(0xFF6a89fa),
         allIn_Mint = Color(0xFFC4DEE9),
         allIn_DarkBlue = Color(0xFF323078),
+        allIn_BetFinish = Color(0xFF353535),
+        allIn_BetInProgress = Color(0xFF604BDB),
+        allIn_BetWaiting = Color(0xFFDF3B9A),
+        allIn_BetFinishText = Color(0xFFA7A7A7),
+        allIn_BetInProgressText = Color(0xFF4636A3),
+        allIn_BetWaitingText = Color(0xFF852E6C),
 
         allIn_MainGradient = Brush.linearGradient(
             0.0f to Color(0xFFf951a8),

@@ -1,5 +1,6 @@
 package fr.iut.alldev.allin.ui.core
 
+import android.content.res.Configuration
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.relocation.BringIntoViewRequester
 import androidx.compose.foundation.text.KeyboardActions
@@ -187,6 +188,7 @@ private fun AllInTextFieldPlaceholderPreview() {
 
 @OptIn(ExperimentalFoundationApi::class)
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun AllInTextFieldValuePreview() {
     AllInTheme {

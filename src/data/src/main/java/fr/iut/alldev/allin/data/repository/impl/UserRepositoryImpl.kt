@@ -9,24 +9,24 @@ import javax.inject.Inject
 class UserRepositoryImpl @Inject constructor(
     private val api: AllInApi,
 ) : UserRepository() {
+
     override suspend fun login(username: String, password: String) {
-        api.login(
+        currentUser = api.login(
             CheckUser(
                 username = username,
                 password = password
             )
-        )
+        ).toUser()
     }
 
     override suspend fun register(username: String, email: String, password: String) {
-        api.register(
+        currentUser = api.register(
             ResponseUser(
                 username = username,
                 email = email,
                 password = password,
                 nbCoins = 0
             )
-        )
+        ).toUser()
     }
-
 }

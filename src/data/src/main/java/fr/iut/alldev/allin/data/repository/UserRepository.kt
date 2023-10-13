@@ -1,6 +1,9 @@
 package fr.iut.alldev.allin.data.repository
 
+import fr.iut.alldev.allin.data.model.User
+
 abstract class UserRepository {
+    lateinit var currentUser: User
     abstract suspend fun login(
         username: String,
         password: String

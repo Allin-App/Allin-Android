@@ -26,10 +26,12 @@ import fr.iut.alldev.allin.ui.bet.components.BetScreenPopularCard
 import fr.iut.alldev.allin.ui.core.AllInChip
 import fr.iut.alldev.allin.ui.theme.AllInTheme
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterialApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterialApi::class
+)
 @Composable
 fun BetScreen(
     viewModel: BetViewModel = hiltViewModel(),
+    showBetStatus: ()->Unit
 ){
 
     val horizontalPadding = 23.dp
@@ -89,7 +91,9 @@ fun BetScreen(
                         AllInChip(
                             text = stringResource(id = it),
                             isSelected = isSelected,
-                            onClick = { isSelected = !isSelected })
+                            onClick = {
+                                isSelected = !isSelected
+                            })
                     }
                     item {
                         Spacer(modifier = Modifier.width(horizontalPadding))
@@ -104,7 +108,7 @@ fun BetScreen(
                 date = "11 Sept.",
                 time = "13:00",
                 players = List(3){ null },
-                onClickParticipate = { /* TODO */ },
+                onClickParticipate = showBetStatus,
                 modifier = Modifier.padding(horizontal = horizontalPadding)
             )
             Spacer(modifier = Modifier.height(24.dp))

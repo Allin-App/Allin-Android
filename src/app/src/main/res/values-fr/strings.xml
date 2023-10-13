@@ -96,4 +96,10 @@
         <item quantity="other">%s points en jeu</item>
         <item quantity="many">%s points en jeu</item>
     </plurals>
+
+    <!--Bet status-->
+    <string name="bet_status_finished">Terminé !</string>
+    <string name="bet_status_in_progress">En cours…</string>
+    <string name="bet_status_waiting">En attente…</string>
+
 </resources>

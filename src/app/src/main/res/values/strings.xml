@@ -96,4 +96,8 @@
         <item quantity="one">%s point at stake</item>
         <item quantity="other">%s points at stake</item>
     </plurals>
+    <!--Bet status-->
+    <string name="bet_status_finished">Finished !</string>
+    <string name="bet_status_in_progress">In progress…</string>
+    <string name="bet_status_waiting">Waiting…</string>
 </resources>

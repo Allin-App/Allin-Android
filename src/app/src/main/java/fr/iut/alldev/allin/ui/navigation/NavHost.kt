@@ -14,7 +14,7 @@ import androidx.navigation.compose.rememberNavController
 import fr.iut.alldev.allin.ui.bet.BetScreen
 import fr.iut.alldev.allin.ui.betcreation.BetCreationScreen
 import fr.iut.alldev.allin.ui.login.LoginScreen
-import fr.iut.alldev.allin.ui.navigation.drawer.AllInDrawer
+import fr.iut.alldev.allin.ui.main.MainScreen
 import fr.iut.alldev.allin.ui.register.RegisterScreen
 import fr.iut.alldev.allin.ui.theme.AllInTheme
 import fr.iut.alldev.allin.ui.welcome.WelcomeScreen
@@ -80,6 +80,7 @@ fun AllInNavHost(modifier: Modifier = Modifier,
 internal fun AllInDrawerNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController,
+    setStatusVisibility: (Boolean) -> Unit,
     startDestination: String = Routes.PUBLIC_BETS
 ) {
     NavHost(
@@ -89,8 +90,14 @@ internal fun AllInDrawerNavHost(
         enterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None }
     ) {
-        composable(route = Routes.PUBLIC_BETS) { BetScreen() }
-        composable(route = Routes.BET_CREATION) { BetCreationScreen() }
+        composable(route = Routes.PUBLIC_BETS) {
+            BetScreen(
+                showBetStatus = { setStatusVisibility(true) }
+            )
+        }
+        composable(route = Routes.BET_CREATION) {
+            BetCreationScreen()
+        }
     }
 }
 private fun NavGraphBuilder.allInWelcomeScreen(
@@ -142,6 +149,6 @@ private fun NavGraphBuilder.allInDashboard() {
     composable(
         route = Routes.DASHBOARD,
     ){
-        AllInDrawer()
+        MainScreen()
     }
 }

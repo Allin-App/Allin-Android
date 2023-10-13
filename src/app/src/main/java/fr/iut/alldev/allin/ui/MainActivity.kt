@@ -28,11 +28,11 @@ class MainActivity : ComponentActivity() {
                         with((view.context as Activity)) {
                             window.statusBarColor = Color.Transparent.toArgb()
                             window.navigationBarColor = Color.Transparent.toArgb()
-                            WindowCompat.setDecorFitsSystemWindows(window, false)
 
                             if (Build.VERSION.SDK_INT > 30) {
                                 window.insetsController?.hide(WindowInsetsCompat.Type.statusBars())
                                 window.insetsController?.hide(WindowInsetsCompat.Type.navigationBars())
+                                WindowCompat.setDecorFitsSystemWindows(window, false)
                             }
                         }
                     }
