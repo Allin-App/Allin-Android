@@ -13,7 +13,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import fr.iut.alldev.allin.R
-import fr.iut.alldev.allin.data.model.BetType
+import fr.iut.alldev.allin.data.model.bet.BetType
 import fr.iut.alldev.allin.ext.getIcon
 import fr.iut.alldev.allin.ext.getTitle
 import fr.iut.alldev.allin.ui.betcreation.tabs.BetCreationScreenAnswerTab

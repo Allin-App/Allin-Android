@@ -23,6 +23,6 @@ data class ResponseUser(
 @Keep
 @Serializable
 data class CheckUser(
-    val username: String,
+    val login: String,
     val password: String,
 )

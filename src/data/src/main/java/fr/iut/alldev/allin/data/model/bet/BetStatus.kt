@@ -1,4 +1,4 @@
-package fr.iut.alldev.allin.data.model
+package fr.iut.alldev.allin.data.model.bet
 
 enum class BetStatus {
     FINISHED,

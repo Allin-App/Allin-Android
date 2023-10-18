@@ -5,6 +5,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrl
@@ -32,10 +33,13 @@ internal object NetworkModule {
     @Provides
     fun provideUrl(): HttpUrl = "https://codefirst.iut.uca.fr/containers/AllDev-api/".toHttpUrl()
 
+    @OptIn(ExperimentalSerializationApi::class)
     fun createRetrofit(url: HttpUrl, okHttpClient: OkHttpClient): Retrofit =
         Retrofit.Builder()
             .client(okHttpClient)
-            .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
+            .addConverterFactory(
+                json.asConverterFactory("application/json".toMediaType())
+            )
             .baseUrl(url)
             .build()
 }

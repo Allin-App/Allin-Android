@@ -15,10 +15,7 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextRange
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.input.*
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
@@ -45,6 +42,7 @@ fun AllInTextField(
     bringIntoViewRequester: BringIntoViewRequester,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardType: KeyboardType = KeyboardType.Text,
+    imeAction: ImeAction = ImeAction.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     borderColor: Color = AllInTheme.themeColors.on_background_2,
     containerColor: Color = AllInTheme.themeColors.background,
@@ -114,7 +112,7 @@ fun AllInTextField(
         },
         textStyle = AllInTheme.typography.r,
         enabled = enabled,
-        keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
+        keyboardOptions = KeyboardOptions(keyboardType = keyboardType, imeAction = imeAction),
         keyboardActions = keyboardActions,
         shape = AbsoluteSmoothCornerShape(10.dp, 100),
         colors =  OutlinedTextFieldDefaults.colors(
@@ -137,6 +135,7 @@ fun AllInPasswordField(
     placeholder: String,
     value: String,
     modifier: Modifier = Modifier,
+    imeAction: ImeAction = ImeAction.Default,
     keyboardType: KeyboardType = KeyboardType.Password,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     errorText: String? = null,
@@ -151,6 +150,7 @@ fun AllInPasswordField(
             modifier = modifier,
             errorText = errorText,
             placeholder = placeholder,
+            imeAction = imeAction,
             keyboardActions = keyboardActions,
             visualTransformation = if (hidden) PasswordVisualTransformation() else VisualTransformation.None,
             value = value,

@@ -21,17 +21,31 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import fr.iut.alldev.allin.R
+import fr.iut.alldev.allin.data.model.bet.Bet
+import fr.iut.alldev.allin.data.model.bet.BetStatus
+import fr.iut.alldev.allin.data.model.bet.YesNoBet
 import fr.iut.alldev.allin.ui.bet.components.BetScreenCard
 import fr.iut.alldev.allin.ui.bet.components.BetScreenPopularCard
 import fr.iut.alldev.allin.ui.core.AllInChip
 import fr.iut.alldev.allin.ui.theme.AllInTheme
+import java.time.ZonedDateTime
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterialApi::class
+private val bets = listOf(
+    YesNoBet(
+        "Études",
+        "Emre va t'il finir son TP de MAUI?",
+        ZonedDateTime.now(),
+        ZonedDateTime.now(),
+        true,
+        BetStatus.IN_PROGRESS
+    ),
 )
+
+@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterialApi::class)
 @Composable
 fun BetScreen(
     viewModel: BetViewModel = hiltViewModel(),
-    showBetStatus: ()->Unit
+    selectBet: (Bet)->Unit
 ){
 
     val horizontalPadding = 23.dp
@@ -100,7 +114,7 @@ fun BetScreen(
                     }
             }
         }
-        items(5){
+        items(bets){
             BetScreenCard(
                 creator = "Lucas",
                 category = "Études",
@@ -108,7 +122,7 @@ fun BetScreen(
                 date = "11 Sept.",
                 time = "13:00",
                 players = List(3){ null },
-                onClickParticipate = showBetStatus,
+                onClickParticipate = { selectBet(it) },
                 modifier = Modifier.padding(horizontal = horizontalPadding)
             )
             Spacer(modifier = Modifier.height(24.dp))

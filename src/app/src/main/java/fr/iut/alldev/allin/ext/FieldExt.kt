@@ -25,6 +25,10 @@ sealed class FieldErrorState(
     data class NoSpecialCharacter(val fieldName: String, val characters: String = ALLOWED_SYMBOLS) :
         FieldErrorState(R.string.FieldError_NoSpecialCharacter, arrayOf(fieldName, characters))
 
+    data class AlreadyUsed(val value: String) :
+        FieldErrorState(R.string.FieldError_AlreadyUsed, arrayOf(value))
+
+
     @Composable
     fun errorResource() = stringResourceOrNull(id = messageId, messageArgs)
 }

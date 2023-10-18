@@ -17,6 +17,9 @@
     <string name="FieldError_BadFormat">Le %s a un mauvais format : %s.</string>
     <string name="FieldError_NotIdentical">Les champs ne sont pas identiques.</string>
     <string name="FieldError_NoSpecialCharacter">Le %s doit contenir au moins un caractère spécial : %s.</string>
+    <string name="FieldError_AlreadyUsed">%s est déjà utilisé.</string>
+    <string name="Yes">Oui</string>
+    <string name="No">Non</string>
 
     <!--Drawer-->
     <string name="bets">Bets</string>

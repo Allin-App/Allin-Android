@@ -10,7 +10,6 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import fr.iut.alldev.allin.data.model.BetStatus
 import fr.iut.alldev.allin.ui.betstatus.BetStatusBottomSheet
 import fr.iut.alldev.allin.ui.main.components.AllInScaffold
 import fr.iut.alldev.allin.ui.navigation.AllInDrawerNavHost
@@ -19,6 +18,7 @@ import fr.iut.alldev.allin.ui.navigation.TopLevelDestination
 import fr.iut.alldev.allin.ui.navigation.drawer.AllInDrawer
 import fr.iut.alldev.allin.ui.navigation.popUpTo
 import fr.iut.alldev.allin.ui.theme.AllInTheme
+import fr.iut.alldev.allin.vo.bet.factory.toBetVO
 import kotlinx.coroutines.launch
 
 private val topLevelDestinations = listOf(
@@ -57,6 +57,10 @@ fun MainScreen(
 
     val currentUser = remember{
         mainViewModel.currentUser
+    }
+
+    val (selectedBet, setSelectedBet) = remember{
+        mainViewModel.selectedBet
     }
 
     val scope = rememberCoroutineScope()
@@ -100,7 +104,10 @@ fun MainScreen(
             ) {
                 AllInDrawerNavHost(
                     navController = navController,
-                    setStatusVisibility = setStatusVisibility
+                    selectBet = {
+                        setSelectedBet(it)
+                        setStatusVisibility(true)
+                    }
                 )
             }
         }
@@ -113,9 +120,8 @@ fun MainScreen(
         onDismiss = {
             setStatusVisibility(false)
         },
-        betStatus = BetStatus.IN_PROGRESS
+        bet = selectedBet?.toBetVO()
     )
-
     BackHandler(
         enabled = drawerState.isOpen
     ) {

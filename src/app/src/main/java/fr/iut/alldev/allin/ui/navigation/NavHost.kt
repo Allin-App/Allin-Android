@@ -11,6 +11,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import fr.iut.alldev.allin.data.model.bet.Bet
 import fr.iut.alldev.allin.ui.bet.BetScreen
 import fr.iut.alldev.allin.ui.betcreation.BetCreationScreen
 import fr.iut.alldev.allin.ui.login.LoginScreen
@@ -80,7 +81,7 @@ fun AllInNavHost(modifier: Modifier = Modifier,
 internal fun AllInDrawerNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController,
-    setStatusVisibility: (Boolean) -> Unit,
+    selectBet: (Bet) -> Unit,
     startDestination: String = Routes.PUBLIC_BETS
 ) {
     NavHost(
@@ -92,7 +93,7 @@ internal fun AllInDrawerNavHost(
     ) {
         composable(route = Routes.PUBLIC_BETS) {
             BetScreen(
-                showBetStatus = { setStatusVisibility(true) }
+                selectBet = selectBet
             )
         }
         composable(route = Routes.BET_CREATION) {

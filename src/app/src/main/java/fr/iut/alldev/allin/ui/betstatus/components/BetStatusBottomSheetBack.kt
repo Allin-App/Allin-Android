@@ -16,7 +16,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import fr.iut.alldev.allin.R
-import fr.iut.alldev.allin.data.model.BetStatus
+import fr.iut.alldev.allin.data.model.bet.BetStatus
 import fr.iut.alldev.allin.ext.getColor
 import fr.iut.alldev.allin.ext.getTextColor
 import fr.iut.alldev.allin.ext.getTitle
@@ -45,7 +45,7 @@ fun BetStatusBottomSheetBack(
                 style = AllInTheme.typography.h2.copy(
                     fontStyle = FontStyle.Italic
                 ),
-                fontSize = 20.sp,
+                fontSize = 30.sp,
                 modifier = Modifier.weight(1f)
             )
             Icon(

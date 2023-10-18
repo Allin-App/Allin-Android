@@ -5,12 +5,16 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.relocation.BringIntoViewRequester
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -31,6 +35,9 @@ fun RegisterScreen(
     navigateToLogin: () -> Unit,
     registerViewModel: RegisterViewModel = hiltViewModel(),
 ) {
+
+    val focusManager = LocalFocusManager.current
+
     val loading by remember{ registerViewModel.loading }
 
     val usernameError by remember{ registerViewModel.usernameError }
@@ -49,6 +56,23 @@ fun RegisterScreen(
     val usernameFieldName = stringResource(id = R.string.username)
     val emailFieldName = stringResource(id = R.string.email)
     val passwordFieldName = stringResource(id = R.string.password)
+
+    val keyboardActions = remember {
+        KeyboardActions(
+            onDone = {
+                focusManager.clearFocus()
+                registerViewModel.onRegister(
+                    usernameFieldName,
+                    emailFieldName,
+                    passwordFieldName,
+                    navigateToDashboard
+                )
+            },
+            onNext = {
+                focusManager.moveFocus(FocusDirection.Down)
+            }
+        )
+    }
 
     Column(
         Modifier
@@ -100,7 +124,9 @@ fun RegisterScreen(
                     onValueChange = setUsername,
                     maxChar = 20,
                     errorText = usernameError.errorResource(),
-                    bringIntoViewRequester = bringIntoViewRequester
+                    bringIntoViewRequester = bringIntoViewRequester,
+                    imeAction = ImeAction.Next,
+                    keyboardActions = keyboardActions
                 )
                 AllInTextField(
                     modifier = Modifier.fillMaxWidth(),
@@ -109,7 +135,9 @@ fun RegisterScreen(
                     onValueChange = setEmail,
                     errorText = emailError.errorResource(),
                     keyboardType = KeyboardType.Email,
-                    bringIntoViewRequester = bringIntoViewRequester
+                    bringIntoViewRequester = bringIntoViewRequester,
+                    imeAction = ImeAction.Next,
+                    keyboardActions = keyboardActions
                 )
                 AllInPasswordField(
                     modifier = Modifier.fillMaxWidth(),
@@ -117,7 +145,9 @@ fun RegisterScreen(
                     value = password,
                     errorText = passwordError.errorResource(),
                     onValueChange = setPassword,
-                    bringIntoViewRequester = bringIntoViewRequester
+                    bringIntoViewRequester = bringIntoViewRequester,
+                    imeAction = ImeAction.Next,
+                    keyboardActions = keyboardActions
                 )
                 AllInPasswordField(
                     modifier = Modifier.fillMaxWidth(),
@@ -125,7 +155,9 @@ fun RegisterScreen(
                     value = passwordValidation,
                     errorText = passwordValidationError.errorResource(),
                     onValueChange = setPasswordValidation,
-                    bringIntoViewRequester = bringIntoViewRequester
+                    bringIntoViewRequester = bringIntoViewRequester,
+                    imeAction = ImeAction.Done,
+                    keyboardActions = keyboardActions
                 )
             }
         }

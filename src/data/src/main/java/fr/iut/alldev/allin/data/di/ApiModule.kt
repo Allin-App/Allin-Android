@@ -13,7 +13,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class ApiModule {
-
     @Provides
     @Singleton
     fun provideAllInApi(@AllInUrl url: HttpUrl, okHttpClient: OkHttpClient): AllInApi {

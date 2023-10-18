@@ -14,7 +14,6 @@ annotation class AllInCurrentUser
 @Module
 @InstallIn(SingletonComponent::class)
 internal object CurrentUserModule {
-
     @AllInCurrentUser
     @Provides
     fun provideUser(

@@ -4,6 +4,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import fr.iut.alldev.allin.data.api.interceptors.AllInAPIException
 import fr.iut.alldev.allin.data.repository.UserRepository
 import fr.iut.alldev.allin.ext.ALLOWED_SYMBOLS
 import fr.iut.alldev.allin.ext.FieldErrorState
@@ -89,11 +90,17 @@ class RegisterViewModel @Inject constructor(
                     passwordFieldName.lowercase()
                 )
                 if(!hasError.value) {
-                    userRepository.register(
-                        username.value,
-                        email.value,
-                        password.value
-                    )
+                    try {
+                        userRepository.register(
+                            username.value,
+                            email.value,
+                            password.value
+                        )
+                    }catch(e : AllInAPIException){
+                        usernameError.value = FieldErrorState.AlreadyUsed(username.value)
+                        emailError.value = FieldErrorState.AlreadyUsed(email.value)
+                        hasError.value = true
+                    }
                 }
             }
             if(!hasError.value){

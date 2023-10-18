@@ -13,11 +13,12 @@ class UserRepositoryImpl @Inject constructor(
     override suspend fun login(username: String, password: String) {
         currentUser = api.login(
             CheckUser(
-                username = username,
+                login = username,
                 password = password
             )
         ).toUser()
     }
+
 
     override suspend fun register(username: String, email: String, password: String) {
         currentUser = api.register(
@@ -28,5 +29,6 @@ class UserRepositoryImpl @Inject constructor(
                 nbCoins = 0
             )
         ).toUser()
+
     }
 }

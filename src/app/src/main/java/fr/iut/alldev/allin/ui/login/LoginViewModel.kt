@@ -4,6 +4,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import fr.iut.alldev.allin.data.api.interceptors.AllInAPIException
 import fr.iut.alldev.allin.data.repository.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -29,7 +30,7 @@ class LoginViewModel @Inject constructor(
             withContext(Dispatchers.IO) {
                 try{
                     userRepository.login(username.value, password.value)
-                } catch (e: retrofit2.HttpException){
+                } catch (e: AllInAPIException){
                     hasError.value = true
                 }
             }

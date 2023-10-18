@@ -6,7 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import fr.iut.alldev.allin.R
-import fr.iut.alldev.allin.data.model.BetType
+import fr.iut.alldev.allin.data.model.bet.BetType
 import fr.iut.alldev.allin.ext.getTitle
 import fr.iut.alldev.allin.ui.betcreation.components.BetCreationScreenBottomText
 import fr.iut.alldev.allin.ui.core.AllInSelectionBox

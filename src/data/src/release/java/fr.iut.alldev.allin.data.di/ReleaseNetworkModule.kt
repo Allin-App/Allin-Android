@@ -16,5 +16,6 @@ internal object ReleaseNetworkModule {
     @Singleton
     fun provideOkHttpClient(): OkHttpClient =
         OkHttpClient.Builder()
+            .addInterceptor(ErrorInterceptor())
             .build()
 }

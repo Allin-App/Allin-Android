@@ -6,7 +6,7 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.SportsSoccer
 import androidx.compose.ui.graphics.vector.ImageVector
 import fr.iut.alldev.allin.R
-import fr.iut.alldev.allin.data.model.BetType
+import fr.iut.alldev.allin.data.model.bet.BetType
 
 fun BetType.getTitle(): Int {
     return when (this) {

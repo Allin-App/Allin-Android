@@ -3,15 +3,19 @@ package fr.iut.alldev.allin.ui.betstatus
 import androidx.compose.animation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import fr.iut.alldev.allin.data.model.BetStatus
+import fr.iut.alldev.allin.data.model.bet.Bet
 import fr.iut.alldev.allin.ui.betstatus.components.BetStatusBottomSheetBack
+import fr.iut.alldev.allin.ui.betstatus.visitor.BetStatusBottomSheetDisplayBetVisitor
 import fr.iut.alldev.allin.ui.core.AllInBottomSheet
+import fr.iut.alldev.allin.vo.bet.BetVO
 
 
 internal const val SHEET_HEIGHT = .85f
+private val visitor = BetStatusBottomSheetDisplayBetVisitor()
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -19,7 +23,7 @@ fun BetStatusBottomSheet(
     state: SheetState,
     sheetVisibility: Boolean,
     sheetBackVisibility: Boolean,
-    betStatus: BetStatus,
+    bet: BetVO<Bet>?,
     onDismiss: ()->Unit
 ) {
     AnimatedVisibility(
@@ -31,9 +35,11 @@ fun BetStatusBottomSheet(
             targetOffsetY = { it }
         )
     ) {
-        BetStatusBottomSheetBack(
-            status = betStatus
-        )
+        bet?.let {
+            BetStatusBottomSheetBack(
+                status = it.bet.betStatus
+            )
+        }
     }
 
     AllInBottomSheet(
@@ -46,6 +52,7 @@ fun BetStatusBottomSheet(
             Modifier
                 .fillMaxHeight(SHEET_HEIGHT)
         ) {
+            bet?.accept(visitor)
         }
     }
 }
