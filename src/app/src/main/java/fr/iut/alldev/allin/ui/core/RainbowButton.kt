@@ -23,7 +23,7 @@ fun RainbowButton(
 ) {
     AllInRipple(rippleColor) {
         AllInCard(
-            borderWidth = if (enabled) 1.dp else 2.dp,
+            borderWidth = 1.dp,
             onClick = onClick,
             modifier = modifier.fillMaxWidth(),
             enabled = enabled

@@ -22,7 +22,10 @@
     <string name="FieldError_AlreadyUsed">%s is already used.</string>
     <string name="Yes">Yes</string>
     <string name="No">No</string>
-    
+    <string name="Details">Details</string>
+    <string name="Stake">Stake</string>
+    <string name="Possible_winnings">Possible winnings</string>
+
     <!--Drawer-->
     <string name="bets">Bets</string>
     <string name="best_win">Best win</string>
@@ -84,7 +87,10 @@
     <string name="Invitation">Invitation</string>
     <string name="Current">Current</string>
     <string name="Finished">Finished</string>
-    <string name="Starting">Starting</string>
+    <string name="Starting">Starting on</string>
+    <string name="Started">Started on</string>
+    <string name="Ends">Ends on</string>
+    <string name="Ended">Ended on</string>
     <string name="Participate">Participate</string>
     <string name="Proposed_by_x">Proposed by %1$s</string>
     <plurals name="n_players_waiting">
@@ -103,4 +109,5 @@
     <string name="bet_status_finished">Finished !</string>
     <string name="bet_status_in_progress">In progress…</string>
     <string name="bet_status_waiting">Waiting…</string>
+    <string name="place_your_bets">Place your bets</string>
 </resources>

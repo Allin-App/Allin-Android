@@ -2,7 +2,7 @@ package fr.iut.alldev.allin.data.repository.impl
 
 import fr.iut.alldev.allin.data.api.AllInApi
 import fr.iut.alldev.allin.data.api.model.CheckUser
-import fr.iut.alldev.allin.data.api.model.ResponseUser
+import fr.iut.alldev.allin.data.api.model.RequestUser
 import fr.iut.alldev.allin.data.repository.UserRepository
 import javax.inject.Inject
 
@@ -22,7 +22,7 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun register(username: String, email: String, password: String) {
         currentUser = api.register(
-            ResponseUser(
+            RequestUser(
                 username = username,
                 email = email,
                 password = password,

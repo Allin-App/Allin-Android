@@ -1,6 +1,5 @@
 package fr.iut.alldev.allin.ui.login
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -161,9 +160,7 @@ fun LoginScreen(
             }
         }
     }
-    AnimatedVisibility(visible = loading) {
-        AllInLoading()
-    }
+    AllInLoading(visible = loading)
     AllInAlertDialog(
         enabled = hasLoginError,
         title = stringResource(id = R.string.Login_Error_Title),

@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import fr.iut.alldev.allin.ui.theme.AllInTheme
@@ -17,10 +18,16 @@ fun AllInButton(
     color: Color,
     text: String,
     textColor: Color,
+    radius: Dp = 15.dp,
     modifier: Modifier = Modifier,
     onClick: ()->Unit
 ) {
-    AllInCard(onClick = onClick, modifier = modifier, radius = 50.dp, backgroundColor = color) {
+    AllInCard(
+        onClick = onClick,
+        modifier = modifier,
+        radius = radius,
+        backgroundColor = color
+    ) {
         Text(
             text = text,
             textAlign = TextAlign.Center,

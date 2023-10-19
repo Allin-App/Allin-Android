@@ -14,6 +14,20 @@ fun BetStatus.getTitle(): Int {
     }
 }
 
+fun BetStatus.getDateStartLabel(): Int {
+    return when (this) {
+        BetStatus.FINISHED -> R.string.Started
+        else -> R.string.Starting
+    }
+}
+
+fun BetStatus.getDateEndLabel(): Int {
+    return when (this) {
+        BetStatus.FINISHED -> R.string.Ended
+        else -> R.string.Ends
+    }
+}
+
 @Composable
 fun BetStatus.getColor(): Color {
     return when (this) {

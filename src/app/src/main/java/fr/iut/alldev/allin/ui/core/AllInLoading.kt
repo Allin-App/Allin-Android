@@ -1,7 +1,10 @@
 package fr.iut.alldev.allin.ui.core
 
 import android.content.res.Configuration
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.*
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -23,9 +26,13 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
+import androidx.compose.ui.window.DialogWindowProvider
 import fr.iut.alldev.allin.ui.theme.AllInTheme
 import kotlin.math.PI
 import kotlin.math.abs
@@ -34,26 +41,44 @@ import kotlin.math.max
 @Composable
 fun AllInLoading(
     modifier: Modifier = Modifier,
+    visible: Boolean,
     brush: Brush = AllInTheme.colors.allIn_MainGradient
 ) {
     val interactionSource = remember { MutableInteractionSource() }
-    Box(
-        modifier = modifier
-            .fillMaxSize()
-            .clickable(
-                interactionSource = interactionSource,
-                indication = null,
-                onClick = {}
-            )
-            .background(AllInTheme.themeColors.main_surface.copy(alpha = .4f))
+    AnimatedVisibility(
+        visible = visible,
+        enter = fadeIn(),
+        exit = fadeOut()
     ) {
-        AllInCircularProgressIndicator(
-            modifier = Modifier
-                .align(Alignment.Center)
-                .size(50.dp),
-            brush = brush,
-            strokeWidth = 7.dp
-        )
+        Dialog(
+            onDismissRequest = {},
+            properties = DialogProperties(
+                dismissOnBackPress = false,
+                dismissOnClickOutside = false,
+                decorFitsSystemWindows = false,
+                usePlatformDefaultWidth = false
+            )
+        ) {
+            (LocalView.current.parent as DialogWindowProvider).window.setDimAmount(0f)
+            Box(
+                modifier = modifier
+                    .fillMaxSize()
+                    .clickable(
+                        interactionSource = interactionSource,
+                        indication = null,
+                        onClick = {}
+                    )
+                    .background(AllInTheme.themeColors.main_surface.copy(alpha = .4f))
+            ) {
+                AllInCircularProgressIndicator(
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .size(50.dp),
+                    brush = brush,
+                    strokeWidth = 7.dp
+                )
+            }
+        }
     }
 }
 
@@ -204,6 +229,6 @@ private val CircularEasing = CubicBezierEasing(0.4f, 0f, 0.2f, 1f)
 @Composable
 private fun AllInLoadingPreview() {
     AllInTheme {
-        AllInLoading()
+        AllInLoading(visible = true)
     }
 }

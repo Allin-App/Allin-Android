@@ -1,5 +1,6 @@
 package fr.iut.alldev.allin.ui.core
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -71,9 +72,11 @@ fun AllInRetractableCard(
                     modifier = Modifier.size(30.dp)
                 )
             }
-            if(isOpen){
-                HorizontalDivider(color = AllInTheme.themeColors.border)
-                content()
+            AnimatedVisibility(isOpen){
+                Column{
+                    HorizontalDivider(color = AllInTheme.themeColors.border)
+                    content()
+                }
             }
         }
     }

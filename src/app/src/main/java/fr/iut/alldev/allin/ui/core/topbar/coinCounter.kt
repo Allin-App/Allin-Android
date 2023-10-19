@@ -12,30 +12,35 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.ui.theme.AllInTheme
 
 @Composable
-fun CoinCounter(amount:Int, modifier: Modifier = Modifier) {
+fun AllInTopBarCoinCounter(
+    amount:Int,
+    backgroundColor: Color = AllInTheme.colors.white,
+    textColor: Color = AllInTheme.colors.allIn_Dark,
+    iconColor: Color = AllInTheme.colors.allIn_Blue,
+    modifier: Modifier = Modifier
+) {
     Card(modifier = modifier.wrapContentSize(), shape = RoundedCornerShape(topStartPercent = 50, bottomStartPercent = 50)) {
         Row(
             modifier = Modifier
-            .background(AllInTheme.colors.white)
+            .background(backgroundColor)
             .padding(horizontal = 13.dp, vertical = 5.dp),
             horizontalArrangement = Arrangement.spacedBy(7.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(text = amount.toString(),
-                color = AllInTheme.colors.allIn_Dark,
+                color = textColor,
                 style = AllInTheme.typography.h1,
                 fontSize = 20.sp)
             Icon(
-                painter = painterResource(R.drawable.allcoin),
-                tint = AllInTheme.colors.allIn_Blue,
+                painter = AllInTheme.icons.allCoins(),
+                tint = iconColor,
                 contentDescription = null,
             )
         }
@@ -44,8 +49,8 @@ fun CoinCounter(amount:Int, modifier: Modifier = Modifier) {
 
 @Preview
 @Composable
-private fun CoinCounterPreview() {
+private fun AllInTopBarCoinCounterPreview() {
     AllInTheme {
-        CoinCounter(547)
+        AllInTopBarCoinCounter(547)
     }
 }

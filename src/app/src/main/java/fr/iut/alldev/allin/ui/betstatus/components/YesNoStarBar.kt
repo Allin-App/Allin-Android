@@ -9,7 +9,6 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.data.ext.toPercentageString
@@ -19,11 +18,10 @@ import fr.iut.alldev.allin.ui.theme.AllInTheme
 
 @Composable
 fun YesNoStatBar(
-    yesPercentage: Float
+    yesPercentage: Float,
+    modifier: Modifier = Modifier
 ) {
-    Column(
-        Modifier.padding(horizontal = 9.dp)
-    ){
+    Column(modifier){
         Row{
             Text(
                 text = stringResource(id = R.string.Yes).uppercase(),

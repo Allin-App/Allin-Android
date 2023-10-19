@@ -11,7 +11,6 @@ private val betTypeToVOMap = mapOf(
     YesNoBet::class.java to YesNoBetVOFactory(),
     MatchBet::class.java to MatchBetVOFactory()
 )
-
 abstract class BetVOFactory<out T : Bet> {
     abstract fun create(bet: @UnsafeVariance T): BetVO<@UnsafeVariance T>
 }
@@ -26,5 +25,6 @@ class MatchBetVOFactory : BetVOFactory<MatchBet>() {
         MatchBetVO(bet)
 }
 
-fun Bet.toBetVO() =
-    betTypeToVOMap[this.javaClass]?.create(this)
+fun Bet.toBetVO() = betTypeToVOMap[this.javaClass]?.create(this)
+
+

@@ -29,7 +29,7 @@ data class AllInTypography(
         val xs: TextStyle
 )
 
-val LocalTypography = staticCompositionLocalOf {
+internal val LocalTypography = staticCompositionLocalOf {
         AllInTypography(
                 h1 = TextStyle.Default,
                 h2 = TextStyle.Default,

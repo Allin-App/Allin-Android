@@ -9,8 +9,10 @@ import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import fr.iut.alldev.allin.R
 
 
 @Composable
@@ -134,8 +136,13 @@ fun AllInTheme(
         )
     }
 
+    val customIcons = AllInIcons(
+        allCoins = { painterResource(id = R.drawable.allcoin) }
+    )
+
     CompositionLocalProvider(
         LocalColors provides customColors,
+        LocalIcons provides customIcons,
         LocalTypography provides customTypography,
         LocalThemeColors provides customTheme
     ){
@@ -148,6 +155,11 @@ object AllInTheme {
         @Composable
         @ReadOnlyComposable
         get() = LocalColors.current
+
+    val icons: AllInIcons
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalIcons.current
 
     val typography: AllInTypography
         @Composable

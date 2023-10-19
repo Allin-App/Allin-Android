@@ -1,6 +1,7 @@
 package fr.iut.alldev.allin.ui.core
 
 import android.content.res.Configuration
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -104,19 +105,20 @@ fun AllInSelectionBox(
                     if(isOpen) ExpandLess else ExpandMore
                 }
             )
-            if(isOpen){
-                HorizontalDivider(color = AllInTheme.themeColors.border)
-                elements.filter { it != selected }.forEach{
-                    element ->
-                    AllInSelectionLine(
-                        text = stringResource(id = element.textId),
-                        iconVector = element.imageVector,
-                        interactionSource = interactionSource,
-                        onClick = {
-                            setSelected(element)
-                            setIsOpen(false)
-                        }
-                    )
+            AnimatedVisibility(isOpen){
+                Column {
+                    HorizontalDivider(color = AllInTheme.themeColors.border)
+                    elements.filter { it != selected }.forEach { element ->
+                        AllInSelectionLine(
+                            text = stringResource(id = element.textId),
+                            iconVector = element.imageVector,
+                            interactionSource = interactionSource,
+                            onClick = {
+                                setSelected(element)
+                                setIsOpen(false)
+                            }
+                        )
+                    }
                 }
             }
         }

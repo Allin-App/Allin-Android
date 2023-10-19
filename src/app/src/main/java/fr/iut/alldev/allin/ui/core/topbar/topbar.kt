@@ -45,7 +45,7 @@ fun AllInTopBar(
                 .size(40.dp)
                 .align(Alignment.Center)
         )
-        CoinCounter(
+        AllInTopBarCoinCounter(
             amount = coinAmount,
             modifier = Modifier
                 .align(Alignment.CenterEnd)

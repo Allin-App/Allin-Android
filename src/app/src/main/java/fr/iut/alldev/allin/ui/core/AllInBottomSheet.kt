@@ -7,6 +7,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.dp
+import fr.iut.alldev.allin.ui.theme.AllInTheme
 import racra.compose.smooth_corner_rect_library.AbsoluteSmoothCornerShape
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -16,6 +17,7 @@ fun AllInBottomSheet(
     onDismiss: ()->Unit,
     state: SheetState,
     scrimColor: Color = BottomSheetDefaults.ScrimColor,
+    containerColor: Color = AllInTheme.themeColors.background,
     content: @Composable ColumnScope.()->Unit
 ) {
     val localDensity = LocalDensity.current
@@ -25,6 +27,7 @@ fun AllInBottomSheet(
         ModalBottomSheet(
             onDismissRequest = onDismiss,
             sheetState = state,
+            containerColor = containerColor,
             scrimColor = scrimColor,
             shape = sheetShape,
             windowInsets = BottomSheetDefaults.windowInsets.let {

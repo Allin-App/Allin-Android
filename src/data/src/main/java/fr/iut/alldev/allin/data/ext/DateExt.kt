@@ -9,6 +9,12 @@ fun ZonedDateTime.formatToMediumDate(): String {
     ).replaceFirstChar { it.uppercase() }
 }
 
+fun ZonedDateTime.formatToMediumDateNoYear(): String {
+    return this.format(
+        DateTimeFormatter.ofPattern("dd MMM")
+    ).replaceFirstChar { it.uppercase() }
+}
+
 fun ZonedDateTime.formatToTime(): String {
     return this.format(
         DateTimeFormatter.ofPattern("HH:mm")

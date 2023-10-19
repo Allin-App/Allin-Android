@@ -20,6 +20,9 @@
     <string name="FieldError_AlreadyUsed">%s est déjà utilisé.</string>
     <string name="Yes">Oui</string>
     <string name="No">Non</string>
+    <string name="Details">Détails</string>
+    <string name="Stake">Mise</string>
+    <string name="Possible_winnings">Gains possibles</string>
 
     <!--Drawer-->
     <string name="bets">Bets</string>
@@ -82,6 +85,9 @@
     <string name="Current">En cours</string>
     <string name="Finished">Terminés</string>
     <string name="Starting">Commence le</string>
+    <string name="Started">A commencé le</string>
+    <string name="Ends">Prend fin le</string>
+    <string name="Ended">A pris fin le</string>
     <string name="Participate">Participer</string>
     <string name="Proposed_by_x">Proposé par %1$s</string>
     <plurals name="n_players_waiting">
@@ -104,5 +110,6 @@
     <string name="bet_status_finished">Terminé !</string>
     <string name="bet_status_in_progress">En cours…</string>
     <string name="bet_status_waiting">En attente…</string>
+    <string name="place_your_bets">Faites vos paris</string>
 
 </resources>

@@ -6,10 +6,18 @@ import kotlinx.serialization.Serializable
 
 @Keep
 @Serializable
-data class ResponseUser(
+data class RequestUser(
     val username: String,
     val email: String,
     val password: String,
+    var nbCoins: Int,
+)
+
+@Keep
+@Serializable
+data class ResponseUser(
+    val username: String,
+    val email: String,
     var nbCoins: Int,
 ){
     fun toUser() = User(

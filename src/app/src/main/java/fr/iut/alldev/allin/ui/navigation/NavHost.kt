@@ -81,7 +81,7 @@ fun AllInNavHost(modifier: Modifier = Modifier,
 internal fun AllInDrawerNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController,
-    selectBet: (Bet) -> Unit,
+    selectBet: (Bet, Boolean) -> Unit,
     startDestination: String = Routes.PUBLIC_BETS
 ) {
     NavHost(

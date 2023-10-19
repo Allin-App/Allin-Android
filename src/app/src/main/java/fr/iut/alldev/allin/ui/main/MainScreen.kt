@@ -11,6 +11,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import fr.iut.alldev.allin.ui.betstatus.BetStatusBottomSheet
+import fr.iut.alldev.allin.ui.betstatus.visitor.BetStatusBottomSheetDisplayBetVisitor
+import fr.iut.alldev.allin.ui.core.AllInLoading
 import fr.iut.alldev.allin.ui.main.components.AllInScaffold
 import fr.iut.alldev.allin.ui.navigation.AllInDrawerNavHost
 import fr.iut.alldev.allin.ui.navigation.Routes
@@ -28,8 +30,10 @@ private val topLevelDestinations = listOf(
     TopLevelDestination.FRIENDS,
     TopLevelDestination.CURRENT_BETS
 )
+
 @Composable
-private fun rememberBetStatusVisibilities(): Triple<MutableState<Boolean>, MutableState<Boolean>, (Boolean) -> Unit> {
+private fun rememberBetStatusVisibilities()
+: Triple<MutableState<Boolean>, MutableState<Boolean>, (Boolean) -> Unit> {
     val statusVisibility = remember {
         mutableStateOf(false)
     }
@@ -43,7 +47,11 @@ private fun rememberBetStatusVisibilities(): Triple<MutableState<Boolean>, Mutab
         statusVisibility.value = it
         if(it) sheetBackVisibility.value = true
     }
-    return Triple(statusVisibility, sheetBackVisibility, setStatusVisibility)
+    return Triple(
+        statusVisibility,
+        sheetBackVisibility,
+        setStatusVisibility,
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -54,13 +62,23 @@ fun MainScreen(
     startDestination: String = Routes.PUBLIC_BETS,
     mainViewModel: MainViewModel = hiltViewModel()
 ) {
+    val loading by remember{ mainViewModel.loading }
 
     val currentUser = remember{
-        mainViewModel.currentUser
+        mainViewModel.currentUserState
     }
 
     val (selectedBet, setSelectedBet) = remember{
         mainViewModel.selectedBet
+    }
+
+    val betStatusDisplayVisitor = remember {
+        BetStatusBottomSheetDisplayBetVisitor(
+            userCoinAmount = currentUser.userCoins,
+            onParticipate = {
+                mainViewModel.participateToBet(it)
+            }
+        )
     }
 
     val scope = rememberCoroutineScope()
@@ -82,7 +100,7 @@ fun MainScreen(
         drawerState = drawerState,
         destinations = topLevelDestinations,
         scope = scope,
-        username = currentUser.username,
+        username = currentUser.user.username,
         nbFriends = 5,
         nbBets = 35,
         bestWin = 362,
@@ -92,9 +110,12 @@ fun MainScreen(
     ){
         AllInScaffold(
             onMenuClicked = {  scope.launch { drawerState.open() } },
-            coinAmount = currentUser.coins,
+            coinAmount = currentUser.userCoins.value,
             drawerState = drawerState
         ) {
+            LaunchedEffect(key1 = it){
+                betStatusDisplayVisitor.paddingValues.value = it
+            }
             Column(
                 modifier = Modifier
                     .padding(top = it.calculateTopPadding())
@@ -104,8 +125,9 @@ fun MainScreen(
             ) {
                 AllInDrawerNavHost(
                     navController = navController,
-                    selectBet = {
-                        setSelectedBet(it)
+                    selectBet = { bet, participate ->
+                        setSelectedBet(bet)
+                        betStatusDisplayVisitor.participateBottomSheetVisibility.value = participate
                         setStatusVisibility(true)
                     }
                 )
@@ -120,8 +142,10 @@ fun MainScreen(
         onDismiss = {
             setStatusVisibility(false)
         },
-        bet = selectedBet?.toBetVO()
+        bet = selectedBet?.toBetVO(),
+        visitor = betStatusDisplayVisitor
     )
+    AllInLoading(visible = loading)
     BackHandler(
         enabled = drawerState.isOpen
     ) {
@@ -130,13 +154,6 @@ fun MainScreen(
         }
     }
 
-    BackHandler(
-        enabled = statusVisibility.value
-    ) {
-        scope.launch {
-            setStatusVisibility(false)
-        }
-    }
 }
 
 

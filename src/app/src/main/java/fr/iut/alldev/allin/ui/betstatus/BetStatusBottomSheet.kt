@@ -14,7 +14,6 @@ import fr.iut.alldev.allin.vo.bet.BetVO
 
 
 internal const val SHEET_HEIGHT = .85f
-private val visitor = BetStatusBottomSheetDisplayBetVisitor()
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -24,7 +23,8 @@ fun BetStatusBottomSheet(
     sheetVisibility: Boolean,
     sheetBackVisibility: Boolean,
     bet: BetVO<Bet>?,
-    onDismiss: ()->Unit
+    onDismiss: ()->Unit,
+    visitor: BetStatusBottomSheetDisplayBetVisitor
 ) {
     AnimatedVisibility(
         visible = sheetBackVisibility,
@@ -49,8 +49,7 @@ fun BetStatusBottomSheet(
         scrimColor = Color.Transparent
     ){
         Column(
-            Modifier
-                .fillMaxHeight(SHEET_HEIGHT)
+            Modifier.fillMaxHeight(SHEET_HEIGHT)
         ) {
             bet?.accept(visitor)
         }

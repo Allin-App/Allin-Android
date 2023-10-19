@@ -1,6 +1,7 @@
 package fr.iut.alldev.allin.ui.bet.components
 
 import android.content.res.Configuration
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.HorizontalDivider
@@ -8,6 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.pluralStringResource
@@ -15,13 +17,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import fr.iut.alldev.allin.R
-import fr.iut.alldev.allin.ui.core.AllInCard
+import fr.iut.alldev.allin.ui.core.AllInBouncyCard
 import fr.iut.alldev.allin.ui.core.RainbowButton
 import fr.iut.alldev.allin.ui.core.bet.BetDateTimeRow
 import fr.iut.alldev.allin.ui.core.bet.BetProfilePictureRow
 import fr.iut.alldev.allin.ui.core.bet.BetTitleHeader
 import fr.iut.alldev.allin.ui.theme.AllInTheme
 
+@OptIn(ExperimentalComposeUiApi::class, ExperimentalFoundationApi::class)
 @Composable
 fun BetScreenCard(
     creator: String,
@@ -31,11 +34,13 @@ fun BetScreenCard(
     time: String,
     players: List<Painter?>,
     modifier: Modifier = Modifier,
-    onClickParticipate: ()->Unit
+    onClickParticipate: ()->Unit,
+    onClickCard: ()->Unit
 ) {
-    AllInCard(
+    AllInBouncyCard(
         modifier = modifier.fillMaxWidth(),
-        radius = 16.dp
+        radius = 16.dp,
+        onClick = onClickCard
     ){
         Column(
             Modifier.padding(horizontal = 19.dp, vertical = 11.dp)
@@ -96,7 +101,8 @@ private fun BetScreenCardPreview() {
             date = "12 Sept.",
             time = "13:00",
             players = List(3){ null },
-            onClickParticipate = {}
+            onClickParticipate = {},
+            onClickCard = {}
         )
     }
 }

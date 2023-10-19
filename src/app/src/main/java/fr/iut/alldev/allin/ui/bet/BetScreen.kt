@@ -23,6 +23,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.data.model.bet.Bet
 import fr.iut.alldev.allin.data.model.bet.BetStatus
+import fr.iut.alldev.allin.data.model.bet.MatchBet
 import fr.iut.alldev.allin.data.model.bet.YesNoBet
 import fr.iut.alldev.allin.ui.bet.components.BetScreenCard
 import fr.iut.alldev.allin.ui.bet.components.BetScreenPopularCard
@@ -32,12 +33,38 @@ import java.time.ZonedDateTime
 
 private val bets = listOf(
     YesNoBet(
-        "Études",
-        "Emre va t'il finir son TP de MAUI?",
-        ZonedDateTime.now(),
-        ZonedDateTime.now(),
-        true,
-        BetStatus.IN_PROGRESS
+        theme = "Études",
+        phrase = "Emre va t'il finir son TP de MAUI?",
+        endRegisterDate = ZonedDateTime.now(),
+        endBetDate = ZonedDateTime.now(),
+        isPublic = true,
+        betStatus = BetStatus.WAITING
+    ),
+    YesNoBet(
+        theme = "Études",
+        phrase = "Emre va t'il finir son TP de MAUI?",
+        endRegisterDate = ZonedDateTime.now(),
+        endBetDate = ZonedDateTime.now(),
+        isPublic = true,
+        betStatus = BetStatus.IN_PROGRESS
+    ),
+    YesNoBet(
+        theme = "Études",
+        phrase = "Emre va t'il finir son TP de MAUI?",
+        endRegisterDate = ZonedDateTime.now(),
+        endBetDate = ZonedDateTime.now(),
+        isPublic = true,
+        betStatus = BetStatus.FINISHED
+    ),
+    MatchBet(
+        theme = "Études",
+        phrase = "Emre va t'il finir son TP de MAUI?",
+        endRegisterDate = ZonedDateTime.now(),
+        endBetDate = ZonedDateTime.now(),
+        isPublic = true,
+        betStatus = BetStatus.WAITING,
+        nameTeam1 = "Team 1",
+        nameTeam2 = "Team 2"
     ),
 )
 
@@ -45,7 +72,7 @@ private val bets = listOf(
 @Composable
 fun BetScreen(
     viewModel: BetViewModel = hiltViewModel(),
-    selectBet: (Bet)->Unit
+    selectBet: (Bet, Boolean)->Unit
 ){
 
     val horizontalPadding = 23.dp
@@ -122,7 +149,8 @@ fun BetScreen(
                 date = "11 Sept.",
                 time = "13:00",
                 players = List(3){ null },
-                onClickParticipate = { selectBet(it) },
+                onClickParticipate = { selectBet(it, true) },
+                onClickCard = { selectBet(it, false) },
                 modifier = Modifier.padding(horizontal = horizontalPadding)
             )
             Spacer(modifier = Modifier.height(24.dp))
