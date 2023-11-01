@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.data.model.bet.BetType
 import fr.iut.alldev.allin.ext.getIcon
@@ -19,27 +20,40 @@ import fr.iut.alldev.allin.ext.getTitle
 import fr.iut.alldev.allin.ui.betcreation.tabs.BetCreationScreenAnswerTab
 import fr.iut.alldev.allin.ui.betcreation.tabs.BetCreationScreenQuestionTab
 import fr.iut.alldev.allin.ui.core.*
+import fr.iut.alldev.allin.ui.main.MainViewModel
 import java.time.Instant
 import java.time.ZoneId
 import java.time.ZonedDateTime
 
 @Composable
 fun BetCreationScreen(
-
+    viewModel: BetCreationViewModel = hiltViewModel(),
+    mainViewModel: MainViewModel,
 ) {
     val interactionSource = remember { MutableInteractionSource() }
-
-    var theme by remember{ mutableStateOf("") }
-    var phrase by remember{ mutableStateOf("") }
-    val (registerDate, setRegisterDate) = remember { mutableStateOf<ZonedDateTime>(ZonedDateTime.now()) }
-    val (betDate, setBetDate) = remember { mutableStateOf<ZonedDateTime>(ZonedDateTime.now()) }
-    var isPublic by remember{ mutableStateOf(true) }
     val betTypes = remember { BetType.values().toList() }
+
+    var theme by remember{ viewModel.theme }
+    var phrase by remember{ viewModel.phrase }
+    val (registerDate, setRegisterDate) = remember { viewModel.registerDate  }
+    val (betDate, setBetDate) = remember { viewModel.betDate }
+    var isPublic by remember{ viewModel.isPublic }
+    var selectedBetType by remember{ viewModel.selectedBetType }
+
+    val themeError by remember{ viewModel.themeError }
+    val phraseError by remember{ viewModel.phraseError }
+    val registerDateError by remember{ viewModel.registerDateError }
+    val betDateError by remember{ viewModel.betDateError }
+
     val selectedFriends = remember { mutableListOf<Int>() }
-    var selectedBetType by remember { mutableStateOf(betTypes[0]) }
     var selectionElements by remember { mutableStateOf(listOf<SelectionElement>()) }
     var selectedBetTypeElement by remember { mutableStateOf<SelectionElement?>(null)}
     val focus = LocalFocusManager.current
+
+    val themeFieldName = stringResource(id = R.string.Theme)
+    val phraseFieldName = stringResource(id = R.string.Bet_Phrase)
+    val registerDateFieldName = stringResource(id = R.string.End_registration_date)
+    val betDateFieldName = stringResource(id = R.string.End_bet_date)
 
     LaunchedEffect(key1 = betTypes) {
         selectionElements = betTypes.map {
@@ -92,6 +106,10 @@ fun BetCreationScreen(
                         setRegisterTimeDialog = { setRegisterTimePicker(it) },
                         setEndTimeDialog = { setEndTimePicker(it) },
                         interactionSource = interactionSource,
+                        betThemeError = themeError.errorResource(),
+                        betPhraseError = phraseError.errorResource(),
+                        registerDateError = registerDateError.errorResource(),
+                        betDateError = betDateError.errorResource(),
                         modifier = Modifier
                             .fillMaxSize()
                             .verticalScroll(rememberScrollState())
@@ -111,6 +129,7 @@ fun BetCreationScreen(
                 }
             )
         )
+
         RainbowButton(
             text = stringResource(id = R.string.Publish),
             modifier = Modifier
@@ -118,6 +137,12 @@ fun BetCreationScreen(
                 .padding(bottom = 14.dp)
                 .padding(horizontal = 20.dp),
             onClick = {
+                viewModel.createBet(
+                    themeFieldName = themeFieldName,
+                    phraseFieldName = phraseFieldName,
+                    registerDateFieldName = registerDateFieldName,
+                    betDateFieldName = betDateFieldName
+                ){ mainViewModel.loading.value = it }
             }
         )
     }

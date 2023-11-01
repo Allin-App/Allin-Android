@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import fr.iut.alldev.allin.ui.core.AllInCoinCount
 import fr.iut.alldev.allin.ui.core.AllInRadioButton
 import fr.iut.alldev.allin.ui.core.ProfilePicture
-import fr.iut.alldev.allin.ui.theme.AllInTheme
+import fr.iut.alldev.allin.theme.AllInTheme
 
 @Composable
 fun BetCreationScreenFriendLine(

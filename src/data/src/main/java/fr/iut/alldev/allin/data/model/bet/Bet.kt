@@ -3,10 +3,10 @@ package fr.iut.alldev.allin.data.model.bet
 import java.time.ZonedDateTime
 
 abstract class Bet(
-    val theme: String,
-    val phrase: String,
-    val endRegisterDate: ZonedDateTime,
-    val endBetDate: ZonedDateTime,
-    val isPublic: Boolean,
-    val betStatus: BetStatus,
+    open val theme: String,
+    open val phrase: String,
+    open val endRegisterDate: ZonedDateTime,
+    open val endBetDate: ZonedDateTime,
+    open val isPublic: Boolean,
+    open val betStatus: BetStatus,
 )

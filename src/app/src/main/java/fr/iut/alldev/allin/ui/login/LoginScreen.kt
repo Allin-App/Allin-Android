@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.ui.core.*
-import fr.iut.alldev.allin.ui.theme.AllInTheme
+import fr.iut.alldev.allin.theme.AllInTheme
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable

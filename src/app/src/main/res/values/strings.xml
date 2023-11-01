@@ -20,6 +20,8 @@
     <string name="FieldError_NotIdentical">The fields are not identical.</string>
     <string name="FieldError_NoSpecialCharacter">The %s must contain at least one special character : %s.</string>
     <string name="FieldError_AlreadyUsed">%s is already used.</string>
+    <string name="FieldError_PastDate">The %s should be in the future.</string>
+    <string name="FieldError_DateOrder">The %s should come after the %s.</string>
     <string name="Yes">Yes</string>
     <string name="No">No</string>
     <string name="Details">Details</string>

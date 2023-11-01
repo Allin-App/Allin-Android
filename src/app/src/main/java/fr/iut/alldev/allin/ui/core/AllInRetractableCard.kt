@@ -18,7 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import fr.iut.alldev.allin.ui.theme.AllInTheme
+import fr.iut.alldev.allin.theme.AllInTheme
 
 @Composable
 fun AllInRetractableCard(

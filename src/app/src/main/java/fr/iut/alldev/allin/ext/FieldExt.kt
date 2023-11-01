@@ -28,6 +28,12 @@ sealed class FieldErrorState(
     data class AlreadyUsed(val value: String) :
         FieldErrorState(R.string.FieldError_AlreadyUsed, arrayOf(value))
 
+    data class PastDate(val fieldName: String)
+        : FieldErrorState(R.string.FieldError_PastDate, arrayOf(fieldName))
+    data class DateOrder(val fieldName1: String, val fieldName2: String)
+        : FieldErrorState(R.string.FieldError_DateOrder, arrayOf(fieldName1, fieldName2))
+
+
 
     @Composable
     fun errorResource() = stringResourceOrNull(id = messageId, messageArgs)

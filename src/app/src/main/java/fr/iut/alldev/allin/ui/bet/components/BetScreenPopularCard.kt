@@ -20,7 +20,7 @@ import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.ext.shadow
 import fr.iut.alldev.allin.ui.core.AllInCard
 import fr.iut.alldev.allin.ui.core.HighlightedText
-import fr.iut.alldev.allin.ui.theme.AllInTheme
+import fr.iut.alldev.allin.theme.AllInTheme
 import kotlin.math.ceil
 
 @Composable

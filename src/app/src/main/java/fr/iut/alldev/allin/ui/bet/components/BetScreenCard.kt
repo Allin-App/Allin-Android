@@ -22,7 +22,7 @@ import fr.iut.alldev.allin.ui.core.RainbowButton
 import fr.iut.alldev.allin.ui.core.bet.BetDateTimeRow
 import fr.iut.alldev.allin.ui.core.bet.BetProfilePictureRow
 import fr.iut.alldev.allin.ui.core.bet.BetTitleHeader
-import fr.iut.alldev.allin.ui.theme.AllInTheme
+import fr.iut.alldev.allin.theme.AllInTheme
 
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalFoundationApi::class)
 @Composable

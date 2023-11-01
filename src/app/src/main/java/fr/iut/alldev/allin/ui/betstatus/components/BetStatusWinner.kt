@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import fr.iut.alldev.allin.ui.core.AllInCoinCount
 import fr.iut.alldev.allin.ui.core.AllInTextIcon
 import fr.iut.alldev.allin.ui.core.IconPosition
-import fr.iut.alldev.allin.ui.theme.AllInTheme
+import fr.iut.alldev.allin.theme.AllInTheme
 
 @Composable
 fun BetStatusWinner(

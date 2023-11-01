@@ -1,4 +1,4 @@
-package fr.iut.alldev.allin.ui.theme
+package fr.iut.alldev.allin.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.ripple.RippleAlpha

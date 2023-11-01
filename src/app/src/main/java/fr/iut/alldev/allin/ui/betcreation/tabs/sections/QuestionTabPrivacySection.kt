@@ -18,7 +18,7 @@ import fr.iut.alldev.allin.ui.betcreation.components.BetCreationScreenFriendLine
 import fr.iut.alldev.allin.ui.core.AllInIconChip
 import fr.iut.alldev.allin.ui.core.AllInRetractableCard
 import fr.iut.alldev.allin.ui.core.AllInTitleInfo
-import fr.iut.alldev.allin.ui.theme.AllInTheme
+import fr.iut.alldev.allin.theme.AllInTheme
 
 @Composable
 fun QuestionTabPrivacySection(

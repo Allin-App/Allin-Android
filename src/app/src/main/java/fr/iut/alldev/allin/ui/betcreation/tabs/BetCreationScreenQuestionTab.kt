@@ -20,13 +20,17 @@ fun BetCreationScreenQuestionTab(
     modifier: Modifier = Modifier,
     nbFriends: Int,
     betTheme: String,
+    betThemeError: String?,
     setBetTheme: (String)->Unit,
     betPhrase: String,
+    betPhraseError: String?,
     setBetPhrase: (String)->Unit,
     isPublic: Boolean,
     setIsPublic: (Boolean)->Unit,
     registerDate: ZonedDateTime,
+    registerDateError: String?,
     betDate: ZonedDateTime,
+    betDateError: String?,
     selectedFriends: MutableList<Int>,
     setRegisterDateDialog: (Boolean)->Unit,
     setEndDateDialog: (Boolean)->Unit,
@@ -38,8 +42,10 @@ fun BetCreationScreenQuestionTab(
     Column(modifier){
         QuestionTabThemePhraseSection(
             betTheme = betTheme,
+            betThemeError = betThemeError,
             setBetTheme = setBetTheme,
             betPhrase = betPhrase,
+            betPhraseError = betPhraseError,
             setBetPhrase = setBetPhrase,
             bringIntoViewRequester = bringIntoViewRequester,
             interactionSource = interactionSource
@@ -48,6 +54,8 @@ fun BetCreationScreenQuestionTab(
         QuestionTabDateTimeSection(
             registerDate = registerDate.formatToMediumDate(),
             registerTime = registerDate.formatToTime(),
+            registerDateError = registerDateError,
+            betDateError = betDateError,
             endDate = betDate.formatToMediumDate(),
             endTime = betDate.formatToTime(),
             setEndDateDialog = setEndDateDialog,

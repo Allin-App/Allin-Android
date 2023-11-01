@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import fr.iut.alldev.allin.ui.navigation.TopLevelDestination
 import fr.iut.alldev.allin.ui.navigation.drawer.components.DrawerCell
 import fr.iut.alldev.allin.ui.navigation.drawer.components.DrawerHeader
-import fr.iut.alldev.allin.ui.theme.AllInTheme
+import fr.iut.alldev.allin.theme.AllInTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 

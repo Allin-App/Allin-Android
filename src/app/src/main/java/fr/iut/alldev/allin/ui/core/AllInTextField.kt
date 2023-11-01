@@ -21,7 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import fr.iut.alldev.allin.ui.theme.AllInTheme
+import fr.iut.alldev.allin.theme.AllInTheme
 import kotlinx.coroutines.launch
 import racra.compose.smooth_corner_rect_library.AbsoluteSmoothCornerShape
 
@@ -73,15 +73,7 @@ fun AllInTextField(
             }
         },
         supportingText = errorText?.let {
-            {
-                Text(
-                    text = it,
-                    style = AllInTheme.typography.r,
-                    color = Color.Red,
-                    fontSize = 10.sp,
-                    overflow = TextOverflow.Ellipsis
-                )
-            }
+            { AllInErrorLine(text = it) }
         },
         visualTransformation = visualTransformation,
         singleLine = !multiLine,

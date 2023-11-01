@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.ui.core.ProfilePicture
-import fr.iut.alldev.allin.ui.theme.AllInTheme
+import fr.iut.alldev.allin.theme.AllInTheme
 
 @Composable
 fun BetProfilePictureRow(

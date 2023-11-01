@@ -12,12 +12,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import fr.iut.alldev.allin.data.model.bet.Bet
+import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.bet.BetScreen
 import fr.iut.alldev.allin.ui.betcreation.BetCreationScreen
 import fr.iut.alldev.allin.ui.login.LoginScreen
 import fr.iut.alldev.allin.ui.main.MainScreen
+import fr.iut.alldev.allin.ui.main.MainViewModel
 import fr.iut.alldev.allin.ui.register.RegisterScreen
-import fr.iut.alldev.allin.ui.theme.AllInTheme
 import fr.iut.alldev.allin.ui.welcome.WelcomeScreen
 
 object Routes {
@@ -81,6 +82,7 @@ fun AllInNavHost(modifier: Modifier = Modifier,
 internal fun AllInDrawerNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController,
+    mainViewModel: MainViewModel,
     selectBet: (Bet, Boolean) -> Unit,
     startDestination: String = Routes.PUBLIC_BETS
 ) {
@@ -97,7 +99,9 @@ internal fun AllInDrawerNavHost(
             )
         }
         composable(route = Routes.BET_CREATION) {
-            BetCreationScreen()
+            BetCreationScreen(
+                mainViewModel = mainViewModel
+            )
         }
     }
 }

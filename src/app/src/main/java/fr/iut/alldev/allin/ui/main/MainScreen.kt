@@ -19,16 +19,16 @@ import fr.iut.alldev.allin.ui.navigation.Routes
 import fr.iut.alldev.allin.ui.navigation.TopLevelDestination
 import fr.iut.alldev.allin.ui.navigation.drawer.AllInDrawer
 import fr.iut.alldev.allin.ui.navigation.popUpTo
-import fr.iut.alldev.allin.ui.theme.AllInTheme
+import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.vo.bet.factory.toBetVO
 import kotlinx.coroutines.launch
 
 private val topLevelDestinations = listOf(
-    TopLevelDestination.PUBLIC_BETS,
-    TopLevelDestination.BET_CREATION,
-    TopLevelDestination.BET_HISTORY,
-    TopLevelDestination.FRIENDS,
-    TopLevelDestination.CURRENT_BETS
+    TopLevelDestination.PublicBets,
+    TopLevelDestination.BetCreation,
+    TopLevelDestination.BetHistory,
+    TopLevelDestination.Friends,
+    TopLevelDestination.CurrentBets
 )
 
 @Composable
@@ -125,6 +125,7 @@ fun MainScreen(
             ) {
                 AllInDrawerNavHost(
                     navController = navController,
+                    mainViewModel = mainViewModel,
                     selectBet = { bet, participate ->
                         setSelectedBet(bet)
                         betStatusDisplayVisitor.participateBottomSheetVisibility.value = participate

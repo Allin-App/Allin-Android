@@ -14,7 +14,7 @@ import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.data.ext.toPercentageString
 import fr.iut.alldev.allin.ui.core.PercentagePositionnedElement
 import fr.iut.alldev.allin.ui.core.StatBar
-import fr.iut.alldev.allin.ui.theme.AllInTheme
+import fr.iut.alldev.allin.theme.AllInTheme
 
 @Composable
 fun YesNoStatBar(

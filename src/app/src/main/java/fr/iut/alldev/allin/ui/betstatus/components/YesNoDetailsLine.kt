@@ -11,7 +11,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import fr.iut.alldev.allin.ui.core.AllInTextIcon
 import fr.iut.alldev.allin.ui.core.IconPosition
-import fr.iut.alldev.allin.ui.theme.AllInTheme
+import fr.iut.alldev.allin.theme.AllInTheme
 
 @Composable
 fun YesNoDetailsLine(

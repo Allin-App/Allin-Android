@@ -8,7 +8,7 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import fr.iut.alldev.allin.test.TestTags
 import fr.iut.alldev.allin.test.mock.Bets
 import fr.iut.alldev.allin.ui.MainActivity
-import fr.iut.alldev.allin.ui.theme.AllInTheme
+import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.vo.bet.factory.toBetVO
 import fr.iut.alldev.allin.vo.bet.visitor.BetTestVisitor
 import org.junit.Before

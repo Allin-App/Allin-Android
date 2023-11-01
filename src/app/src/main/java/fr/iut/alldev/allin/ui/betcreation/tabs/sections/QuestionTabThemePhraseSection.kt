@@ -15,16 +15,18 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import fr.iut.alldev.allin.R
+import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.core.AllInTextField
 import fr.iut.alldev.allin.ui.core.AllInTitleInfo
-import fr.iut.alldev.allin.ui.theme.AllInTheme
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun QuestionTabThemePhraseSection(
     betTheme: String,
+    betThemeError: String?,
     setBetTheme: (String)->Unit,
     betPhrase: String,
+    betPhraseError: String?,
     setBetPhrase: (String)->Unit,
     bringIntoViewRequester: BringIntoViewRequester,
     interactionSource: MutableInteractionSource
@@ -38,12 +40,13 @@ internal fun QuestionTabThemePhraseSection(
     )
     AllInTextField(
         placeholder = stringResource(id = R.string.Theme_placeholder),
-        value = betPhrase,
-        onValueChange = setBetPhrase,
+        value = betTheme,
+        onValueChange = setBetTheme,
         bringIntoViewRequester = bringIntoViewRequester,
         borderColor = AllInTheme.colors.white,
         maxChar = 20,
         placeholderFontSize = 13.sp,
+        errorText = betThemeError,
         modifier = Modifier.fillMaxWidth()
     )
     Spacer(modifier = Modifier.height(10.dp))
@@ -56,13 +59,14 @@ internal fun QuestionTabThemePhraseSection(
     )
     AllInTextField(
         placeholder = stringResource(id = R.string.Bet_Phrase_placeholder),
-        value = betTheme,
+        value = betPhrase,
         borderColor = AllInTheme.colors.white,
-        onValueChange = setBetTheme,
+        onValueChange = setBetPhrase,
         bringIntoViewRequester = bringIntoViewRequester,
         multiLine = true,
         maxChar = 100,
         placeholderFontSize = 13.sp,
+        errorText = betPhraseError,
         modifier = Modifier
             .fillMaxWidth()
             .height(100.dp)

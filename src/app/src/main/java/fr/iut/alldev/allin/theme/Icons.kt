@@ -1,4 +1,4 @@
-package fr.iut.alldev.allin.ui.theme
+package fr.iut.alldev.allin.theme
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable

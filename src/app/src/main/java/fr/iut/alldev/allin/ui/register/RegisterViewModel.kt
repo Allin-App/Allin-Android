@@ -49,20 +49,24 @@ class RegisterViewModel @Inject constructor(
         passwordFieldName:String
     ){
         if(username.value.length < MIN_USERNAME_SIZE){
-            usernameError.value = FieldErrorState.TooShort(usernameFieldName,MIN_USERNAME_SIZE)
+            usernameError.value =
+                FieldErrorState.TooShort(usernameFieldName.lowercase(), MIN_USERNAME_SIZE)
             hasError.value = true
         }
 
         if(password.value.length < MIN_PASSWORD_SIZE){
-            passwordError.value = FieldErrorState.TooShort(passwordFieldName, MIN_PASSWORD_SIZE)
+            passwordError.value =
+                FieldErrorState.TooShort(passwordFieldName.lowercase(), MIN_PASSWORD_SIZE)
             hasError.value = true
         }else if(!password.value.containsCharacter(ALLOWED_SYMBOLS)){
-            passwordError.value = FieldErrorState.NoSpecialCharacter(passwordFieldName)
+            passwordError.value =
+                FieldErrorState.NoSpecialCharacter(passwordFieldName.lowercase())
             hasError.value = true
         }
 
         if(!email.value.isEmail()){
-            emailError.value = FieldErrorState.BadFormat(emailFieldName, "john@doe.com")
+            emailError.value =
+                FieldErrorState.BadFormat(emailFieldName.lowercase(), "john@doe.com")
             hasError.value = true
         }
 
@@ -85,9 +89,9 @@ class RegisterViewModel @Inject constructor(
 
                 initErrorField()
                 verifyField(
-                    usernameFieldName.lowercase(),
-                    emailFieldName.lowercase(),
-                    passwordFieldName.lowercase()
+                    usernameFieldName,
+                    emailFieldName,
+                    passwordFieldName
                 )
                 if(!hasError.value) {
                     try {

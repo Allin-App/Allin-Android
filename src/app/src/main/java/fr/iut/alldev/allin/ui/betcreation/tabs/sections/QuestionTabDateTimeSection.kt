@@ -12,6 +12,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.ui.betcreation.components.BetCreationScreenDateTimeRow
+import fr.iut.alldev.allin.ui.core.AllInErrorLine
 import fr.iut.alldev.allin.ui.core.AllInTitleInfo
 
 @Composable
@@ -20,6 +21,8 @@ internal fun QuestionTabDateTimeSection(
     setEndDateDialog: (Boolean)->Unit,
     setRegisterTimeDialog: (Boolean)->Unit,
     setEndTimeDialog: (Boolean)->Unit,
+    registerDateError: String?,
+    betDateError: String?,
     registerDate: String,
     registerTime: String,
     endDate: String,
@@ -39,6 +42,9 @@ internal fun QuestionTabDateTimeSection(
         onClickDate = { setRegisterDateDialog(true) },
         onClickTime = { setRegisterTimeDialog(true) },
     )
+    registerDateError?.let{
+        AllInErrorLine(text = it)
+    }
     Spacer(modifier = Modifier.height(12.dp))
     AllInTitleInfo(
         text = stringResource(id = R.string.End_bet_date),
@@ -53,4 +59,7 @@ internal fun QuestionTabDateTimeSection(
         onClickDate = { setEndDateDialog(true) },
         onClickTime = { setEndTimeDialog(true) },
     )
+    betDateError?.let{
+        AllInErrorLine(text = it)
+    }
 }

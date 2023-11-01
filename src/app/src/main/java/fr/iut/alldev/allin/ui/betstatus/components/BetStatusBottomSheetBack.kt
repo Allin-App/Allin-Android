@@ -21,7 +21,7 @@ import fr.iut.alldev.allin.ext.getColor
 import fr.iut.alldev.allin.ext.getTextColor
 import fr.iut.alldev.allin.ext.getTitle
 import fr.iut.alldev.allin.ui.betstatus.SHEET_HEIGHT
-import fr.iut.alldev.allin.ui.theme.AllInTheme
+import fr.iut.alldev.allin.theme.AllInTheme
 
 @Composable
 fun BetStatusBottomSheetBack(

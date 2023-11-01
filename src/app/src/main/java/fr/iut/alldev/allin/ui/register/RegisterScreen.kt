@@ -25,7 +25,7 @@ import fr.iut.alldev.allin.ui.core.AllInGradientButton
 import fr.iut.alldev.allin.ui.core.AllInLoading
 import fr.iut.alldev.allin.ui.core.AllInPasswordField
 import fr.iut.alldev.allin.ui.core.AllInTextField
-import fr.iut.alldev.allin.ui.theme.AllInTheme
+import fr.iut.alldev.allin.theme.AllInTheme
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

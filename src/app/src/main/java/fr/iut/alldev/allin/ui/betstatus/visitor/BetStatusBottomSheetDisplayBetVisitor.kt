@@ -36,7 +36,7 @@ import fr.iut.alldev.allin.ui.core.AllInDetailsDrawer
 import fr.iut.alldev.allin.ui.core.RainbowButton
 import fr.iut.alldev.allin.ui.core.bet.BetDateTimeRow
 import fr.iut.alldev.allin.ui.core.bet.BetTitleHeader
-import fr.iut.alldev.allin.ui.theme.AllInTheme
+import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.vo.bet.factory.toBetVO
 import fr.iut.alldev.allin.vo.bet.visitor.DisplayBetVisitor
 import java.time.ZonedDateTime

@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.data.model.bet.BetStatus
-import fr.iut.alldev.allin.ui.theme.AllInTheme
+import fr.iut.alldev.allin.theme.AllInTheme
 
 fun BetStatus.getTitle(): Int {
     return when (this) {

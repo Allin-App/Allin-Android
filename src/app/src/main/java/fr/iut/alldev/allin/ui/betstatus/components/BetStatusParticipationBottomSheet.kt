@@ -18,7 +18,7 @@ import fr.iut.alldev.allin.ui.core.AllInBottomSheet
 import fr.iut.alldev.allin.ui.core.AllInButton
 import fr.iut.alldev.allin.ui.core.AllInCoinCount
 import fr.iut.alldev.allin.ui.core.topbar.AllInTopBarCoinCounter
-import fr.iut.alldev.allin.ui.theme.AllInTheme
+import fr.iut.alldev.allin.theme.AllInTheme
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)

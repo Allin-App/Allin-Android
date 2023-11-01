@@ -2,13 +2,13 @@ package fr.iut.alldev.allin.data.model.bet
 
 import java.time.ZonedDateTime
 
-class YesNoBet(
-    theme: String,
-    phrase: String,
-    endRegisterDate: ZonedDateTime,
-    endBetDate: ZonedDateTime,
-    isPublic: Boolean,
-    betStatus: BetStatus
+data class YesNoBet(
+    override val theme: String,
+    override val phrase: String,
+    override val endRegisterDate: ZonedDateTime,
+    override val endBetDate: ZonedDateTime,
+    override val isPublic: Boolean,
+    override val betStatus: BetStatus
 ) : Bet(
     theme,
     phrase,

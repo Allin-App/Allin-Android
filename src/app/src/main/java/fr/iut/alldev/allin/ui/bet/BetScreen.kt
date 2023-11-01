@@ -28,7 +28,7 @@ import fr.iut.alldev.allin.data.model.bet.YesNoBet
 import fr.iut.alldev.allin.ui.bet.components.BetScreenCard
 import fr.iut.alldev.allin.ui.bet.components.BetScreenPopularCard
 import fr.iut.alldev.allin.ui.core.AllInChip
-import fr.iut.alldev.allin.ui.theme.AllInTheme
+import fr.iut.alldev.allin.theme.AllInTheme
 import java.time.ZonedDateTime
 
 private val bets = listOf(
