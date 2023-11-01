@@ -40,7 +40,7 @@ class BetVOTest {
         //When
         composeTestRule.activity.setContent {
              AllInTheme{
-                 Bets.bets[0].toBetVO()?.accept(v = visitor)
+                 Bets.bets[0].toBetVO()?.Accept(v = visitor)
             }
         }
         //Expect
@@ -55,7 +55,7 @@ class BetVOTest {
         //When
         composeTestRule.activity.setContent {
             AllInTheme{
-                Bets.bets[1].toBetVO()?.accept(v = visitor)
+                Bets.bets[1].toBetVO()?.Accept(v = visitor)
             }
         }
         //Expect

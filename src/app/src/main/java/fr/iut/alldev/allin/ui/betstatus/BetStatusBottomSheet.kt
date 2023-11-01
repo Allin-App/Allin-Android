@@ -51,7 +51,7 @@ fun BetStatusBottomSheet(
         Column(
             Modifier.fillMaxHeight(SHEET_HEIGHT)
         ) {
-            bet?.accept(visitor)
+            bet?.Accept(visitor)
         }
     }
 }

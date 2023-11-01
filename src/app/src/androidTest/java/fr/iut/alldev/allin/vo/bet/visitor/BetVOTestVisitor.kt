@@ -10,12 +10,12 @@ import fr.iut.alldev.allin.test.TestTags
 
 class BetTestVisitor : DisplayBetVisitor {
     @Composable
-    override fun visitYesNoBet(b: YesNoBet) {
+    override fun VisitYesNoBet(b: YesNoBet) {
         Text("This is a YesNo Bet", Modifier.testTag(TestTags.YES_NO_BET.tag))
     }
 
     @Composable
-    override fun visitMatchBet(b: MatchBet) {
+    override fun VisitMatchBet(b: MatchBet) {
         Text("This is a Match Bet", Modifier.testTag(TestTags.MATCH_BET.tag))
     }
 }

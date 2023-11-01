@@ -8,8 +8,8 @@ import fr.iut.alldev.allin.vo.Visitor
 
 interface DisplayBetVisitor : Visitor {
     @Composable
-    fun visitYesNoBet(b: YesNoBet)
+    fun VisitYesNoBet(b: YesNoBet)
 
     @Composable
-    fun visitMatchBet(b: MatchBet)
+    fun VisitMatchBet(b: MatchBet)
 }

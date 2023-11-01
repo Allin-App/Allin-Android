@@ -1,5 +1,6 @@
 package fr.iut.alldev.allin.ui.main
 
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,7 +14,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class UserState(val user: User){
-    val userCoins = mutableStateOf(user.coins)
+    val userCoins = mutableIntStateOf(user.coins)
 }
 
 @HiltViewModel
@@ -32,7 +33,7 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 loading.value = true
-                currentUserState.userCoins.value += 50
+                currentUserState.userCoins.intValue += 50
                 Thread.sleep(1000)
                 loading.value = false
             }

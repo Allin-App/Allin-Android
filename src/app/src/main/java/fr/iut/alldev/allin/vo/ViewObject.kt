@@ -4,5 +4,5 @@ import androidx.compose.runtime.Composable
 
 interface ViewObject<V : Visitor>{
     @Composable
-    fun accept(v: V)
+    fun Accept(v: V)
 }

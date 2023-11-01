@@ -10,19 +10,19 @@ import fr.iut.alldev.allin.vo.bet.visitor.DisplayBetVisitor
 abstract class BetVO<T: Bet>(val bet: T)
 : ViewObject<DisplayBetVisitor> {
     @Composable
-    abstract override fun accept(v: DisplayBetVisitor)
+    abstract override fun Accept(v: DisplayBetVisitor)
 }
 
 class YesNoBetVO(bet: YesNoBet) : BetVO<YesNoBet>(bet){
     @Composable
-    override fun accept(v: DisplayBetVisitor){
-        v.visitYesNoBet(b = bet)
+    override fun Accept(v: DisplayBetVisitor){
+        v.VisitYesNoBet(b = bet)
     }
 }
 
 class MatchBetVO(bet: MatchBet) : BetVO<MatchBet>(bet){
     @Composable
-    override fun accept(v: DisplayBetVisitor){
-        v.visitMatchBet(b = bet)
+    override fun Accept(v: DisplayBetVisitor){
+        v.VisitMatchBet(b = bet)
     }
 }

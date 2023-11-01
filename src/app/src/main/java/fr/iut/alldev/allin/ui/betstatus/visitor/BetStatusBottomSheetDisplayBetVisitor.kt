@@ -11,10 +11,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -28,6 +25,7 @@ import fr.iut.alldev.allin.data.model.bet.MatchBet
 import fr.iut.alldev.allin.data.model.bet.YesNoBet
 import fr.iut.alldev.allin.ext.getDateEndLabel
 import fr.iut.alldev.allin.ext.getDateStartLabel
+import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.betstatus.components.BetStatusParticipationBottomSheet
 import fr.iut.alldev.allin.ui.betstatus.components.BetStatusWinner
 import fr.iut.alldev.allin.ui.betstatus.components.YesNoDetailsLine
@@ -36,13 +34,12 @@ import fr.iut.alldev.allin.ui.core.AllInDetailsDrawer
 import fr.iut.alldev.allin.ui.core.RainbowButton
 import fr.iut.alldev.allin.ui.core.bet.BetDateTimeRow
 import fr.iut.alldev.allin.ui.core.bet.BetTitleHeader
-import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.vo.bet.factory.toBetVO
 import fr.iut.alldev.allin.vo.bet.visitor.DisplayBetVisitor
 import java.time.ZonedDateTime
 
 class BetStatusBottomSheetDisplayBetVisitor(
-    val userCoinAmount: MutableState<Int>,
+    val userCoinAmount: MutableIntState,
     val onParticipate: (Int)->Unit
 ) : DisplayBetVisitor {
 
@@ -51,7 +48,7 @@ class BetStatusBottomSheetDisplayBetVisitor(
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    override fun visitYesNoBet(b: YesNoBet) {
+    override fun VisitYesNoBet(b: YesNoBet) {
 
         val (participateSheetVisibility, setParticipateSheetVisibility) = remember{
             this.participateBottomSheetVisibility
@@ -154,7 +151,7 @@ class BetStatusBottomSheetDisplayBetVisitor(
             sheetVisibility = participateSheetVisibility && b.betStatus == BetStatus.WAITING,
             safeBottomPadding = safeBottomPadding,
             betPhrase = b.phrase,
-            coinAmount = userCoinAmount.value,
+            coinAmount = userCoinAmount.intValue,
             onDismiss = { setParticipateSheetVisibility(false) },
             state = rememberModalBottomSheetState()
         ){
@@ -162,7 +159,7 @@ class BetStatusBottomSheetDisplayBetVisitor(
         }
     }
     @Composable
-    override fun visitMatchBet(b: MatchBet) {
+    override fun VisitMatchBet(b: MatchBet) {
         Text("This is a MATCH BET")
     }
 }
@@ -172,6 +169,7 @@ class BetStatusBottomSheetDisplayBetVisitor(
 @Composable
 private fun YesNoBetPreview() {
     AllInTheme {
+        val coins = remember { mutableIntStateOf(100) }
         YesNoBet(
             theme = "Theme",
             phrase = "Phrase",
@@ -179,20 +177,20 @@ private fun YesNoBetPreview() {
             endBetDate = ZonedDateTime.now(),
             isPublic = true,
             betStatus = BetStatus.IN_PROGRESS
-        ).toBetVO()?.accept(
+        ).toBetVO()?.Accept(
             BetStatusBottomSheetDisplayBetVisitor(
-                userCoinAmount = mutableStateOf(100),
+                userCoinAmount = coins,
                 onParticipate = {}
             )
         )
     }
 }
-
 @Preview
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun YesNoBetFinishedPreview() {
     AllInTheme {
+        val coins = remember { mutableIntStateOf(100) }
         YesNoBet(
             theme = "Theme",
             phrase = "Phrase",
@@ -200,9 +198,9 @@ private fun YesNoBetFinishedPreview() {
             endBetDate = ZonedDateTime.now(),
             isPublic = true,
             betStatus = BetStatus.FINISHED
-        ).toBetVO()?.accept(
+        ).toBetVO()?.Accept(
             BetStatusBottomSheetDisplayBetVisitor(
-                userCoinAmount = mutableStateOf(100),
+                userCoinAmount = coins,
                 onParticipate = {}
             )
         )
@@ -214,6 +212,7 @@ private fun YesNoBetFinishedPreview() {
 @Composable
 private fun MatchBetPreview() {
     AllInTheme {
+        val coins = remember { mutableIntStateOf(100) }
         MatchBet(
             theme = "Theme",
             phrase = "Phrase",
@@ -223,9 +222,9 @@ private fun MatchBetPreview() {
             betStatus = BetStatus.IN_PROGRESS,
             nameTeam1 = "Team 1",
             nameTeam2 = "Team 2"
-        ).toBetVO()?.accept(
+        ).toBetVO()?.Accept(
             BetStatusBottomSheetDisplayBetVisitor(
-                userCoinAmount = mutableStateOf(100),
+                userCoinAmount = coins,
                 onParticipate = {}
             )
         )

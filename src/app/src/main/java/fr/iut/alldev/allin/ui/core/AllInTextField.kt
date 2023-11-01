@@ -30,8 +30,8 @@ import racra.compose.smooth_corner_rect_library.AbsoluteSmoothCornerShape
 fun AllInTextField(
     placeholder: String,
     value: String,
-    maxChar: Int? = null,
     modifier: Modifier = Modifier,
+    maxChar: Int? = null,
     enabled: Boolean = true,
     trailingIcon: ImageVector? = null,
     trailingContent: @Composable (() -> Unit)? = null,
@@ -57,7 +57,10 @@ fun AllInTextField(
     }
 
     LaunchedEffect(key1 = value, block = {
-        textFieldValue = TextFieldValue(text = value, selection = TextRange(value.length))
+        textFieldValue = TextFieldValue(
+            text = value,
+            selection = textFieldValue.selection
+        )
     })
 
     OutlinedTextField(
@@ -71,7 +74,8 @@ fun AllInTextField(
                     bringIntoViewRequester.bringIntoView()
                 }
             }
-        },
+        }
+        ,
         supportingText = errorText?.let {
             { AllInErrorLine(text = it) }
         },
