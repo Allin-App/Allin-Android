@@ -15,7 +15,7 @@ import java.util.*
 fun AllInDatePicker(
     currentDate: ZonedDateTime?,
     onSelectDate: (Long) -> Unit,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
 ) {
     val calendar = Calendar.getInstance()
     val realDate = currentDate?.toEpochSecond()?.let {
@@ -41,7 +41,7 @@ fun AllInDatePicker(
                 Text(
                     text = stringResource(id = R.string.Validate),
                     style = AllInTheme.typography.h1.copy(
-                        brush = AllInTheme.colors.allIn_MainGradient
+                        brush = AllInTheme.colors.allInMainGradient
                     )
                 )
             }
@@ -50,36 +50,36 @@ fun AllInDatePicker(
             TextButton(onClick = onDismiss) {
                 Text(
                     text = stringResource(id = R.string.Cancel),
-                    color = AllInTheme.themeColors.on_background_2,
+                    color = AllInTheme.themeColors.onBackground2,
                     style = AllInTheme.typography.h3
                 )
             }
         },
         colors = DatePickerDefaults.colors(
-            containerColor = AllInTheme.themeColors.main_surface
+            containerColor = AllInTheme.themeColors.mainSurface
         )
-    ){
+    ) {
         DatePicker(
             state = datePickerState,
             colors = DatePickerDefaults.colors(
-                todayDateBorderColor = AllInTheme.colors.allIn_Blue,
-                selectedDayContainerColor = AllInTheme.colors.allIn_Blue,
-                todayContentColor = AllInTheme.colors.allIn_Blue,
-                dayContentColor = AllInTheme.colors.allIn_Blue,
+                todayDateBorderColor = AllInTheme.colors.allInBlue,
+                selectedDayContainerColor = AllInTheme.colors.allInBlue,
+                todayContentColor = AllInTheme.colors.allInBlue,
+                dayContentColor = AllInTheme.colors.allInBlue,
                 dividerColor = AllInTheme.themeColors.border,
                 containerColor = AllInTheme.themeColors.background,
-                titleContentColor = AllInTheme.themeColors.on_main_surface,
-                headlineContentColor = AllInTheme.themeColors.on_main_surface,
-                subheadContentColor = AllInTheme.themeColors.on_background_2,
+                titleContentColor = AllInTheme.themeColors.onMainSurface,
+                headlineContentColor = AllInTheme.themeColors.onMainSurface,
+                subheadContentColor = AllInTheme.themeColors.onBackground2,
                 dateTextFieldColors = OutlinedTextFieldDefaults.colors(
-                    focusedContainerColor = AllInTheme.themeColors.main_surface,
-                    unfocusedContainerColor = AllInTheme.themeColors.main_surface,
-                    focusedBorderColor = AllInTheme.colors.allIn_Purple,
+                    focusedContainerColor = AllInTheme.themeColors.mainSurface,
+                    unfocusedContainerColor = AllInTheme.themeColors.mainSurface,
+                    focusedBorderColor = AllInTheme.colors.allInPurple,
                     unfocusedBorderColor = AllInTheme.themeColors.border,
-                    focusedTextColor = AllInTheme.themeColors.on_main_surface,
-                    unfocusedTextColor = AllInTheme.themeColors.on_main_surface,
-                    focusedLabelColor = AllInTheme.colors.allIn_Purple,
-                    unfocusedLabelColor = AllInTheme.themeColors.on_main_surface,
+                    focusedTextColor = AllInTheme.themeColors.onMainSurface,
+                    unfocusedTextColor = AllInTheme.themeColors.onMainSurface,
+                    focusedLabelColor = AllInTheme.colors.allInPurple,
+                    unfocusedLabelColor = AllInTheme.themeColors.onMainSurface,
                 )
             )
         )

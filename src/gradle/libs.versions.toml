@@ -1,0 +1,100 @@
+[versions]
+
+# Android
+compileSdk = "34"
+targetSdk = "34"
+minSdk = "26"
+
+# Libraries
+kotlin = "1.9.20"
+
+androidxCore = "1.12.0"
+androidxActivity = "1.8.2"
+
+composeBom = "2023.10.01"
+composePreview = "1.6.0-beta03"
+composeCompiler = "1.5.5"
+composeNavigation = "2.7.6"
+
+hilt = "2.48"
+hiltNavigation = "1.1.0"
+
+timber = "5.0.1"
+lifecycle = "2.6.2"
+
+junit = "4.13.2"
+androidxTestExtJunit = "1.1.5"
+espressoCore = "3.5.1"
+
+room = "2.6.1"
+okHttp = "4.11.0"
+
+# Plugins
+gradlePlugin = "8.1.2"
+publishPlugin = "1.1"
+resgenPlugin = "2.5"
+
+[libraries]
+
+# Android
+androidx-core = { module = "androidx.core:core-ktx", version.ref = "androidxCore" }
+androidx-activity = { module = "androidx.activity:activity-compose", version.ref = "androidxActivity" }
+
+# Lifecycle
+androidx-lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle" }
+androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
+androidx-lifecycle-process = { module = "androidx.lifecycle:lifecycle-process", version.ref = "lifecycle" }
+androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycle" }
+
+# Tests
+test-junit = { group = "junit", name = "junit", version.ref = "junit" }
+test-androidx-junit = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "androidxTestExtJunit" }
+test-espresso = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+
+
+# Compose
+compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
+compose-ui = { module = "androidx.compose.ui:ui" }
+compose-ui-graphics = { module = "androidx.compose.ui:ui-graphics" }
+compose-foundation = { module = "androidx.compose.foundation:foundation", version = "1.6.0-beta03" }
+compose-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "composePreview" }
+compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
+compose-ui-googlefonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts" }
+compose-material = { module = "androidx.compose.material:material" }
+compose-material3 = { group = "androidx.compose.material3", name = "material3", version = "1.2.0-beta01" }
+compose-material-icons = { group = "androidx.compose.material", name = "material-icons-core" }
+compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
+compose-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "composeNavigation" }
+
+# Hilt
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
+hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
+hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigation" }
+
+# Timber
+timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
+
+# Retrofit
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version = "2.9.0" }
+okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okHttp" }
+okhttpLogging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okHttp" }
+
+# Serialization
+kotlinSerialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version = "1.6.2" }
+kotlinSerialization-retrofit = { group = "com.jakewharton.retrofit", name = "retrofit2-kotlinx-serialization-converter", version = "0.8.0" }
+
+# Squicle
+smoothCornerRect = { module = "com.github.racra:smooth-corner-rect-android-compose", version = "v1.0.0" }
+
+# Plugins
+plugin-gradle = { module = "com.android.tools.build:gradle", version.ref = "gradlePlugin" }
+plugin-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+plugin-kotlinSerialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
+plugin-hilt = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt" }
+
+
+[bundles]
+
+android = ["androidx-core", "androidx-activity"]
+androidx-lifecycle = ["androidx-lifecycle-runtime", "androidx-lifecycle-viewmodel", "androidx-lifecycle-process", "androidx-lifecycle-runtime-compose"]
+compose = ["compose-ui", "compose-ui-graphics", "compose-tooling-preview", "compose-ui-tooling", "compose-foundation", "compose-material", "compose-material3", "compose-material-icons", "compose-material-icons-extended", "compose-navigation", "compose-ui-googlefonts"]

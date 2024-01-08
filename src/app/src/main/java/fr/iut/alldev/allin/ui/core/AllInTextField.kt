@@ -37,17 +37,17 @@ fun AllInTextField(
     trailingContent: @Composable (() -> Unit)? = null,
     placeholderFontSize: TextUnit = 18.sp,
     multiLine: Boolean = false,
-    onValueChange: (String)->Unit,
+    onValueChange: (String) -> Unit,
     errorText: String? = null,
     bringIntoViewRequester: BringIntoViewRequester,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardType: KeyboardType = KeyboardType.Text,
     imeAction: ImeAction = ImeAction.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
-    borderColor: Color = AllInTheme.themeColors.on_background_2,
+    borderColor: Color = AllInTheme.themeColors.onBackground2,
     containerColor: Color = AllInTheme.themeColors.background,
-    textColor: Color = AllInTheme.themeColors.on_main_surface,
-    placeholderColor: Color = AllInTheme.themeColors.on_background_2
+    textColor: Color = AllInTheme.themeColors.onMainSurface,
+    placeholderColor: Color = AllInTheme.themeColors.onBackground2,
 ) {
     val scope = rememberCoroutineScope()
     var hasFocus by remember { mutableStateOf(false) }
@@ -65,24 +65,23 @@ fun AllInTextField(
 
     OutlinedTextField(
         value = textFieldValue,
-        isError = errorText!=null,
+        isError = errorText != null,
         modifier = modifier
             .onFocusChanged {
-            hasFocus = it.hasFocus
-            if (it.isFocused) {
-                scope.launch {
-                    bringIntoViewRequester.bringIntoView()
+                hasFocus = it.hasFocus
+                if (it.isFocused) {
+                    scope.launch {
+                        bringIntoViewRequester.bringIntoView()
+                    }
                 }
-            }
-        }
-        ,
+            },
         supportingText = errorText?.let {
             { AllInErrorLine(text = it) }
         },
         visualTransformation = visualTransformation,
         singleLine = !multiLine,
         onValueChange = {
-            if(maxChar==null || it.text.length<=maxChar) {
+            if (maxChar == null || it.text.length <= maxChar) {
                 textFieldValue = it
                 onValueChange(it.text)
             }
@@ -93,16 +92,16 @@ fun AllInTextField(
                 fontSize = placeholderFontSize,
                 style = AllInTheme.typography.r,
                 color = placeholderColor,
-                maxLines = if(multiLine) 3 else 1,
+                maxLines = if (multiLine) 3 else 1,
                 overflow = TextOverflow.Ellipsis
             )
         },
-        trailingIcon = trailingContent ?: trailingIcon?.let{
+        trailingIcon = trailingContent ?: trailingIcon?.let {
             @Composable {
                 Icon(
                     imageVector = it,
                     contentDescription = null,
-                    tint = AllInTheme.colors.allIn_LightGrey300
+                    tint = AllInTheme.colors.allInLightGrey300
                 )
             }
         },
@@ -111,7 +110,7 @@ fun AllInTextField(
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType, imeAction = imeAction),
         keyboardActions = keyboardActions,
         shape = AbsoluteSmoothCornerShape(10.dp, 100),
-        colors =  OutlinedTextFieldDefaults.colors(
+        colors = OutlinedTextFieldDefaults.colors(
             cursorColor = textColor,
             focusedBorderColor = borderColor,
             unfocusedBorderColor = borderColor,
@@ -135,36 +134,36 @@ fun AllInPasswordField(
     keyboardType: KeyboardType = KeyboardType.Password,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     errorText: String? = null,
-    onValueChange: (String)->Unit,
+    onValueChange: (String) -> Unit,
     bringIntoViewRequester: BringIntoViewRequester,
-    isHiddenByDefault: Boolean = true
-){
-    var hidden by remember{
+    isHiddenByDefault: Boolean = true,
+) {
+    var hidden by remember {
         mutableStateOf(isHiddenByDefault)
     }
-        AllInTextField(
-            modifier = modifier,
-            errorText = errorText,
-            placeholder = placeholder,
-            imeAction = imeAction,
-            keyboardActions = keyboardActions,
-            visualTransformation = if (hidden) PasswordVisualTransformation() else VisualTransformation.None,
-            value = value,
-            onValueChange = onValueChange,
-            bringIntoViewRequester = bringIntoViewRequester,
-            trailingContent = {
-                IconButton(
-                    onClick = { hidden = !hidden }
-                ) {
-                    Icon(
-                        imageVector = if (hidden) Icons.Default.VisibilityOff else Icons.Default.Visibility,
-                        contentDescription = null,
-                        tint = AllInTheme.colors.allIn_LightGrey300
-                    )
-                }
-            },
-            keyboardType = keyboardType
-        )
+    AllInTextField(
+        modifier = modifier,
+        errorText = errorText,
+        placeholder = placeholder,
+        imeAction = imeAction,
+        keyboardActions = keyboardActions,
+        visualTransformation = if (hidden) PasswordVisualTransformation() else VisualTransformation.None,
+        value = value,
+        onValueChange = onValueChange,
+        bringIntoViewRequester = bringIntoViewRequester,
+        trailingContent = {
+            IconButton(
+                onClick = { hidden = !hidden }
+            ) {
+                Icon(
+                    imageVector = if (hidden) Icons.Default.VisibilityOff else Icons.Default.Visibility,
+                    contentDescription = null,
+                    tint = AllInTheme.colors.allInLightGrey300
+                )
+            }
+        },
+        keyboardType = keyboardType
+    )
 }
 
 @OptIn(ExperimentalFoundationApi::class)

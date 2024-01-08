@@ -2,7 +2,15 @@ package fr.iut.alldev.allin.ui.login
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.relocation.BringIntoViewRequester
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.ClickableText
@@ -27,24 +35,28 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import fr.iut.alldev.allin.R
-import fr.iut.alldev.allin.ui.core.*
 import fr.iut.alldev.allin.theme.AllInTheme
+import fr.iut.alldev.allin.ui.core.AllInAlertDialog
+import fr.iut.alldev.allin.ui.core.AllInGradientButton
+import fr.iut.alldev.allin.ui.core.AllInLoading
+import fr.iut.alldev.allin.ui.core.AllInPasswordField
+import fr.iut.alldev.allin.ui.core.AllInTextField
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(
-    navigateToDashboard: ()->Unit,
-    navigateToRegister: ()->Unit,
-    loginViewModel: LoginViewModel = hiltViewModel()
+    navigateToDashboard: () -> Unit,
+    navigateToRegister: () -> Unit,
+    loginViewModel: LoginViewModel = hiltViewModel(),
 ) {
     val focusManager = LocalFocusManager.current
 
     val bringIntoViewRequester = BringIntoViewRequester()
-    val loading by remember{ loginViewModel.loading }
-    var hasLoginError by remember{ loginViewModel.hasError }
+    val loading by remember { loginViewModel.loading }
+    var hasLoginError by remember { loginViewModel.hasError }
 
-    val (username, setUsername) = remember{ loginViewModel.username }
-    val (password, setPassword) = remember{ loginViewModel.password }
+    val (username, setUsername) = remember { loginViewModel.username }
+    val (password, setPassword) = remember { loginViewModel.password }
 
     val keyboardActions = remember {
         KeyboardActions(
@@ -61,7 +73,7 @@ fun LoginScreen(
     Box(
         Modifier
             .fillMaxSize()
-            .background(AllInTheme.themeColors.main_surface)
+            .background(AllInTheme.themeColors.mainSurface)
             .padding(horizontal = 44.dp)
             .verticalScroll(rememberScrollState())
     ) {
@@ -71,7 +83,7 @@ fun LoginScreen(
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 text = stringResource(id = R.string.Login_title),
-                color = AllInTheme.themeColors.on_main_surface,
+                color = AllInTheme.themeColors.onMainSurface,
                 style = AllInTheme.typography.h3,
                 textAlign = TextAlign.Center,
                 fontSize = 40.sp
@@ -80,7 +92,7 @@ fun LoginScreen(
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 text = stringResource(id = R.string.Login_subtitle),
-                color = AllInTheme.themeColors.on_main_surface,
+                color = AllInTheme.themeColors.onMainSurface,
                 style = AllInTheme.typography.r,
                 textAlign = TextAlign.Center,
                 fontSize = 23.sp
@@ -111,13 +123,13 @@ fun LoginScreen(
             ClickableText(
                 text = AnnotatedString(stringResource(id = R.string.forgot_password)),
                 style = AllInTheme.typography.m.copy(
-                    color = AllInTheme.themeColors.on_main_surface,
+                    color = AllInTheme.themeColors.onMainSurface,
                     fontSize = 15.sp,
                 ),
                 modifier = Modifier
                     .align(Alignment.End)
                     .padding(top = 15.dp)
-            ){
+            ) {
                 // TODO : Forgot password
             }
             Spacer(modifier = Modifier.height(67.dp))
@@ -142,7 +154,7 @@ fun LoginScreen(
             ) {
                 Text(
                     text = stringResource(id = R.string.no_account),
-                    color = AllInTheme.themeColors.on_main_surface,
+                    color = AllInTheme.themeColors.onMainSurface,
                     fontSize = 15.sp,
                     style = AllInTheme.typography.r,
                     modifier = Modifier.padding(end = 5.dp)
@@ -150,7 +162,7 @@ fun LoginScreen(
                 ClickableText(
                     text = AnnotatedString(stringResource(id = R.string.Register)),
                     style = AllInTheme.typography.r.copy(
-                        color = AllInTheme.colors.allIn_Purple,
+                        color = AllInTheme.colors.allInPurple,
                         fontSize = 15.sp,
                         fontWeight = FontWeight.Bold
                     )

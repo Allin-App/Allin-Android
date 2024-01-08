@@ -15,11 +15,11 @@ import fr.iut.alldev.allin.theme.AllInTheme
 
 @Composable
 fun RainbowButton(
+    modifier: Modifier = Modifier,
     text: String,
-    onClick: ()->Unit,
+    onClick: () -> Unit,
     enabled: Boolean = true,
-    rippleColor: Color = AllInTheme.colors.allIn_Blue,
-    modifier: Modifier = Modifier
+    rippleColor: Color = AllInTheme.colors.allInBlue,
 ) {
     AllInRipple(rippleColor) {
         AllInCard(
@@ -32,11 +32,11 @@ fun RainbowButton(
                 with(AllInTheme.typography.h2) {
                     if (enabled) {
                         copy(
-                            brush = AllInTheme.colors.allIn_TextGradient
+                            brush = AllInTheme.colors.allInTextGradient
                         )
                     } else {
                         copy(
-                            color = AllInTheme.themeColors.disabled_border
+                            color = AllInTheme.themeColors.disabledBorder
                         )
                     }
                 }

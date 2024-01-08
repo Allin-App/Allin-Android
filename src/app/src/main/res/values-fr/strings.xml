@@ -114,4 +114,11 @@
     <string name="bet_status_waiting">En attente…</string>
     <string name="place_your_bets">Faites vos paris</string>
 
+    <!--Bet history-->
+    <string name="bet_history_current_title">En cours</string>
+    <string name="bet_history_title">Historique</string>
+    <string name="bet_history_status_in_progress">%s [icon] pariés</string>
+    <string name="bet_history_status_won">%s [icon] gagnés !</string>
+    <string name="bet_history_status_lost">%s [icon] perdus !</string>
+
 </resources>

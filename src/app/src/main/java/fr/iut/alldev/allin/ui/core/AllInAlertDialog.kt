@@ -17,10 +17,10 @@ fun AllInAlertDialog(
     title: String,
     text: String,
     confirmText: String = stringResource(id = R.string.Ok),
-    onDismiss: ()->Unit,
-    onConfirm: ()->Unit = onDismiss
+    onDismiss: () -> Unit,
+    onConfirm: () -> Unit = onDismiss,
 ) {
-    if(enabled) {
+    if (enabled) {
         AlertDialog(
             title = {
                 Text(
@@ -43,16 +43,16 @@ fun AllInAlertDialog(
                         text = confirmText,
                         fontSize = 15.sp,
                         style = AllInTheme.typography.h1.copy(
-                            brush = AllInTheme.colors.allIn_MainGradient
+                            brush = AllInTheme.colors.allInMainGradient
                         )
                     )
                 }
 
             },
             onDismissRequest = onDismiss,
-            containerColor = AllInTheme.themeColors.main_surface,
-            titleContentColor = AllInTheme.themeColors.on_main_surface,
-            textContentColor = AllInTheme.themeColors.on_background_2,
+            containerColor = AllInTheme.themeColors.mainSurface,
+            titleContentColor = AllInTheme.themeColors.onMainSurface,
+            textContentColor = AllInTheme.themeColors.onBackground2,
         )
     }
 }

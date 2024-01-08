@@ -20,20 +20,20 @@ import racra.compose.smooth_corner_rect_library.AbsoluteSmoothCornerShape
 @Composable
 fun AllInChip(
     text: String,
-    isSelected: Boolean = false,
-    onClick: ()->Unit = {},
     modifier: Modifier = Modifier,
+    isSelected: Boolean = false,
+    onClick: () -> Unit = {},
     radius: Dp = 50.dp,
-    selectedColor: Color = AllInTheme.colors.allIn_Purple,
+    selectedColor: Color = AllInTheme.colors.allInPurple,
     unselectedColor: Color = AllInTheme.themeColors.background,
 ) {
     Card(
         modifier = modifier,
         shape = AbsoluteSmoothCornerShape(radius, 100),
         onClick = onClick,
-        border = if(!isSelected) BorderStroke(1.dp, AllInTheme.themeColors.border) else null,
+        border = if (!isSelected) BorderStroke(1.dp, AllInTheme.themeColors.border) else null,
         colors = CardDefaults.cardColors(
-        containerColor = if(isSelected) selectedColor else unselectedColor
+            containerColor = if (isSelected) selectedColor else unselectedColor
         )
     ) {
         Box {
@@ -45,7 +45,7 @@ fun AllInChip(
                     .alpha(if (isSelected) 0f else 1f),
                 textAlign = TextAlign.Center,
                 style = AllInTheme.typography.r,
-                color = AllInTheme.themeColors.on_background_2
+                color = AllInTheme.themeColors.onBackground2
             )
             if (isSelected) {
                 Text(
@@ -66,7 +66,7 @@ fun AllInChip(
 @Composable
 private fun AllInChipPreviewUnselected() {
     AllInTheme {
-        AllInChip("Public", false)
+        AllInChip("Public", isSelected = false)
     }
 }
 
@@ -74,6 +74,6 @@ private fun AllInChipPreviewUnselected() {
 @Composable
 private fun AllInChipPreviewSelected() {
     AllInTheme {
-        AllInChip("Public", true)
+        AllInChip("Public", isSelected = true)
     }
 }

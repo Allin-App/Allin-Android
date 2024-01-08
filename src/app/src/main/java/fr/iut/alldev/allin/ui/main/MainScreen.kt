@@ -10,8 +10,9 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import fr.iut.alldev.allin.ui.betstatus.BetStatusBottomSheet
-import fr.iut.alldev.allin.ui.betstatus.visitor.BetStatusBottomSheetDisplayBetVisitor
+import fr.iut.alldev.allin.theme.AllInTheme
+import fr.iut.alldev.allin.ui.betStatus.BetStatusBottomSheet
+import fr.iut.alldev.allin.ui.betStatus.visitor.BetStatusBottomSheetDisplayBetVisitor
 import fr.iut.alldev.allin.ui.core.AllInLoading
 import fr.iut.alldev.allin.ui.main.components.AllInScaffold
 import fr.iut.alldev.allin.ui.navigation.AllInDrawerNavHost
@@ -19,7 +20,6 @@ import fr.iut.alldev.allin.ui.navigation.Routes
 import fr.iut.alldev.allin.ui.navigation.TopLevelDestination
 import fr.iut.alldev.allin.ui.navigation.drawer.AllInDrawer
 import fr.iut.alldev.allin.ui.navigation.popUpTo
-import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.vo.bet.factory.toBetVO
 import kotlinx.coroutines.launch
 
@@ -33,7 +33,7 @@ private val topLevelDestinations = listOf(
 
 @Composable
 private fun rememberBetStatusVisibilities()
-: Triple<MutableState<Boolean>, MutableState<Boolean>, (Boolean) -> Unit> {
+        : Triple<MutableState<Boolean>, MutableState<Boolean>, (Boolean) -> Unit> {
     val statusVisibility = remember {
         mutableStateOf(false)
     }
@@ -42,10 +42,9 @@ private fun rememberBetStatusVisibilities()
         mutableStateOf(false)
     }
 
-    val setStatusVisibility = {
-            it: Boolean ->
+    val setStatusVisibility = { it: Boolean ->
         statusVisibility.value = it
-        if(it) sheetBackVisibility.value = true
+        if (it) sheetBackVisibility.value = true
     }
     return Triple(
         statusVisibility,
@@ -60,15 +59,15 @@ fun MainScreen(
     navController: NavHostController = rememberNavController(),
     drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
     startDestination: String = Routes.PUBLIC_BETS,
-    mainViewModel: MainViewModel = hiltViewModel()
+    mainViewModel: MainViewModel = hiltViewModel(),
 ) {
-    val loading by remember{ mainViewModel.loading }
+    val loading by remember { mainViewModel.loading }
 
-    val currentUser = remember{
+    val currentUser = remember {
         mainViewModel.currentUserState
     }
 
-    val (selectedBet, setSelectedBet) = remember{
+    val (selectedBet, setSelectedBet) = remember {
         mainViewModel.selectedBet
     }
 
@@ -84,12 +83,12 @@ fun MainScreen(
     val scope = rememberCoroutineScope()
 
     val (statusVisibility, sheetBackVisibility, setStatusVisibility)
-    = rememberBetStatusVisibilities()
+            = rememberBetStatusVisibilities()
 
     val bottomSheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true,
         confirmValueChange = {
-            if(it == SheetValue.Hidden){
+            if (it == SheetValue.Hidden) {
                 sheetBackVisibility.value = false
             }
             true
@@ -104,23 +103,23 @@ fun MainScreen(
         nbFriends = 5,
         nbBets = 35,
         bestWin = 362,
-        navigateTo = {route ->
+        navigateTo = { route ->
             navController.popUpTo(route, startDestination)
         }
-    ){
+    ) {
         AllInScaffold(
-            onMenuClicked = {  scope.launch { drawerState.open() } },
+            onMenuClicked = { scope.launch { drawerState.open() } },
             coinAmount = currentUser.userCoins.value,
             drawerState = drawerState
         ) {
-            LaunchedEffect(key1 = it){
+            LaunchedEffect(key1 = it) {
                 betStatusDisplayVisitor.paddingValues.value = it
             }
             Column(
                 modifier = Modifier
                     .padding(top = it.calculateTopPadding())
                     .fillMaxSize()
-                    .background(AllInTheme.themeColors.main_surface),
+                    .background(AllInTheme.themeColors.mainSurface),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 AllInDrawerNavHost(

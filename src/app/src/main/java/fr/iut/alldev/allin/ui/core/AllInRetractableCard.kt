@@ -4,7 +4,12 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
@@ -26,16 +31,16 @@ fun AllInRetractableCard(
     text: String,
     boldText: String = "",
     isOpen: Boolean,
-    setIsOpen: (Boolean)->Unit,
+    setIsOpen: (Boolean) -> Unit,
     borderWidth: Dp? = null,
     interactionSource: MutableInteractionSource = MutableInteractionSource(),
-    content: @Composable ()->Unit
+    content: @Composable () -> Unit,
 ) {
     AllInCard(
         modifier = modifier.fillMaxWidth(),
         borderWidth = borderWidth,
-        borderColor = AllInTheme.colors.allIn_Purple.copy(.5f)
-    ){
+        borderColor = AllInTheme.colors.allInPurple.copy(.5f)
+    ) {
         Column(
             Modifier.animateContentSize()
         ) {
@@ -55,25 +60,25 @@ fun AllInRetractableCard(
                     query = boldText,
                     highlightStyle = SpanStyle(
                         fontWeight = FontWeight.Bold,
-                        color = AllInTheme.themeColors.on_main_surface,
+                        color = AllInTheme.themeColors.onMainSurface,
                         fontStyle = AllInTheme.typography.h2.fontStyle
                     ),
-                    color = AllInTheme.themeColors.on_background_2,
+                    color = AllInTheme.themeColors.onBackground2,
                     style = AllInTheme.typography.r,
                     fontSize = 16.sp,
                     modifier = Modifier.weight(1f)
                 )
                 Icon(
-                    imageVector = with(Icons.Default){
-                        if(isOpen) ExpandLess else ExpandMore
+                    imageVector = with(Icons.Default) {
+                        if (isOpen) ExpandLess else ExpandMore
                     },
                     contentDescription = null,
-                    tint = AllInTheme.colors.allIn_Purple,
+                    tint = AllInTheme.colors.allInPurple,
                     modifier = Modifier.size(30.dp)
                 )
             }
-            AnimatedVisibility(isOpen){
-                Column{
+            AnimatedVisibility(isOpen) {
+                Column {
                     HorizontalDivider(color = AllInTheme.themeColors.border)
                     content()
                 }

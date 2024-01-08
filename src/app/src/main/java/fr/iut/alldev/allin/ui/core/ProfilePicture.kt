@@ -25,17 +25,17 @@ import fr.iut.alldev.allin.theme.AllInTheme
 
 @Composable
 fun ProfilePicture(
+    modifier: Modifier = Modifier,
     image: Painter? = null,
     borderWidth: Dp? = null,
     size: Dp = 80.dp,
-    modifier: Modifier = Modifier
 ) {
     val shape = RoundedCornerShape(100)
     Card(
         modifier = modifier.size(size),
         shape = shape,
-        colors = CardDefaults.cardColors(containerColor = AllInTheme.colors.allIn_DarkGrey100),
-        border = borderWidth?.let{BorderStroke(it, AllInTheme.colors.allIn_DarkGrey50)}
+        colors = CardDefaults.cardColors(containerColor = AllInTheme.colors.allInDarkGrey100),
+        border = borderWidth?.let { BorderStroke(it, AllInTheme.colors.allInDarkGrey50) }
     ) {
         Box(Modifier.fillMaxSize()) {
             image?.let {
@@ -47,7 +47,7 @@ fun ProfilePicture(
                         .fillMaxSize()
                         .clip(shape)
                 )
-            } ?: run{
+            } ?: run {
                 Icon(
                     imageVector = Icons.Default.PhotoCamera,
                     tint = AllInTheme.colors.white,
@@ -76,7 +76,7 @@ private fun ProfilePictureDefaultPreview() {
 private fun ProfilePicturePreview() {
     AllInTheme {
         ProfilePicture(
-            painterResource(id = R.drawable.money_with_wings)
+            image = painterResource(id = R.drawable.money_with_wings)
         )
     }
 }

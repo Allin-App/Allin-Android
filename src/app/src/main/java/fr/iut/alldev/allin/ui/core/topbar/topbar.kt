@@ -1,7 +1,11 @@
 package fr.iut.alldev.allin.ui.core.topbar
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
@@ -16,14 +20,14 @@ import fr.iut.alldev.allin.theme.AllInTheme
 
 @Composable
 fun AllInTopBar(
-    onMenuClicked: ()->Unit,
-    coinAmount: Int
+    onMenuClicked: () -> Unit,
+    coinAmount: Int,
 ) {
     Box(
         modifier = Modifier
             .height(86.dp)
             .fillMaxWidth()
-            .background(brush = AllInTheme.colors.allIn_MainGradient)
+            .background(brush = AllInTheme.colors.allInMainGradient)
     ) {
         IconButton(
             onClick = onMenuClicked,
@@ -35,7 +39,8 @@ fun AllInTopBar(
                 painterResource(id = R.drawable.allin_menu),
                 modifier = Modifier.size(30.dp),
                 contentDescription = null,
-                tint = Color.White)
+                tint = Color.White
+            )
         }
         Icon(
             painter = painterResource(R.drawable.allin),
@@ -55,7 +60,7 @@ fun AllInTopBar(
 
 @Preview
 @Composable
-private fun AllInTopBarPreview(){
+private fun AllInTopBarPreview() {
     AllInTheme {
         AllInTopBar(onMenuClicked = { }, coinAmount = 541)
     }

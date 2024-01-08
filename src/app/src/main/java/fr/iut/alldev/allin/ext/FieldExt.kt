@@ -10,33 +10,33 @@ const val ALLOWED_SYMBOLS = "~`!@#\$%^&*()_-+={[}]|\\:;\"'<,>.?/"
 
 sealed class FieldErrorState(
     private val messageId: Int? = null,
-    private val messageArgs:Array<out Any> = emptyArray()
-){
-    object NoError: FieldErrorState()
+    private vararg val messageArgs: Any,
+) {
+    data object NoError : FieldErrorState()
 
-    data class TooShort(val fieldName: String, val minChar: Int)
-        : FieldErrorState(R.string.FieldError_TooShort, arrayOf(fieldName, minChar))
+    data class TooShort(val fieldName: String, val minChar: Int) :
+        FieldErrorState(R.string.FieldError_TooShort, fieldName, minChar)
 
-    data class BadFormat(val fieldName: String, val format: String)
-        : FieldErrorState(R.string.FieldError_BadFormat, arrayOf(fieldName, format))
+    data class BadFormat(val fieldName: String, val format: String) :
+        FieldErrorState(R.string.FieldError_BadFormat, fieldName, format)
 
-    object NotIdentical: FieldErrorState(R.string.FieldError_NotIdentical)
+    data object NotIdentical : FieldErrorState(R.string.FieldError_NotIdentical)
 
     data class NoSpecialCharacter(val fieldName: String, val characters: String = ALLOWED_SYMBOLS) :
-        FieldErrorState(R.string.FieldError_NoSpecialCharacter, arrayOf(fieldName, characters))
+        FieldErrorState(R.string.FieldError_NoSpecialCharacter, fieldName, characters)
 
     data class AlreadyUsed(val value: String) :
-        FieldErrorState(R.string.FieldError_AlreadyUsed, arrayOf(value))
+        FieldErrorState(R.string.FieldError_AlreadyUsed, value)
 
-    data class PastDate(val fieldName: String)
-        : FieldErrorState(R.string.FieldError_PastDate, arrayOf(fieldName))
-    data class DateOrder(val fieldName1: String, val fieldName2: String)
-        : FieldErrorState(R.string.FieldError_DateOrder, arrayOf(fieldName1, fieldName2))
+    data class PastDate(val fieldName: String) :
+        FieldErrorState(R.string.FieldError_PastDate, fieldName)
 
+    data class DateOrder(val fieldName1: String, val fieldName2: String) :
+        FieldErrorState(R.string.FieldError_DateOrder, fieldName1, fieldName2)
 
 
     @Composable
-    fun errorResource() = stringResourceOrNull(id = messageId, messageArgs)
+    fun errorResource() = stringResourceOrNull(id = messageId, *messageArgs)
 }
 
 fun String.isEmail() = Patterns.EMAIL_ADDRESS.matcher(this).matches()
@@ -44,7 +44,7 @@ fun String.isEmail() = Patterns.EMAIL_ADDRESS.matcher(this).matches()
 fun String.containsCharacter(characters: CharSequence): Boolean {
     var contains = false
     characters.forEach {
-        if(this.contains(it)){
+        if (this.contains(it)) {
             contains = true
             return@forEach
         }
@@ -54,7 +54,7 @@ fun String.containsCharacter(characters: CharSequence): Boolean {
 
 
 @Composable
-fun stringResourceOrNull(@StringRes id: Int?, args: Array<out Any>) = id?.let {
+fun stringResourceOrNull(@StringRes id: Int?, vararg args: Any) = id?.let {
     stringResource(id = id, *args)
 }
 

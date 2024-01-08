@@ -20,24 +20,29 @@ import fr.iut.alldev.allin.theme.AllInTheme
 
 @Composable
 fun AllInTopBarCoinCounter(
-    amount:Int,
+    amount: Int,
+    modifier: Modifier = Modifier,
     backgroundColor: Color = AllInTheme.colors.white,
-    textColor: Color = AllInTheme.colors.allIn_Dark,
-    iconColor: Color = AllInTheme.colors.allIn_Blue,
-    modifier: Modifier = Modifier
+    textColor: Color = AllInTheme.colors.allInDark,
+    iconColor: Color = AllInTheme.colors.allInBlue,
 ) {
-    Card(modifier = modifier.wrapContentSize(), shape = RoundedCornerShape(topStartPercent = 50, bottomStartPercent = 50)) {
+    Card(
+        modifier = modifier.wrapContentSize(),
+        shape = RoundedCornerShape(topStartPercent = 50, bottomStartPercent = 50)
+    ) {
         Row(
             modifier = Modifier
-            .background(backgroundColor)
-            .padding(horizontal = 13.dp, vertical = 5.dp),
+                .background(backgroundColor)
+                .padding(horizontal = 13.dp, vertical = 5.dp),
             horizontalArrangement = Arrangement.spacedBy(7.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(text = amount.toString(),
+            Text(
+                text = amount.toString(),
                 color = textColor,
                 style = AllInTheme.typography.h1,
-                fontSize = 20.sp)
+                fontSize = 20.sp
+            )
             Icon(
                 painter = AllInTheme.icons.allCoins(),
                 tint = iconColor,

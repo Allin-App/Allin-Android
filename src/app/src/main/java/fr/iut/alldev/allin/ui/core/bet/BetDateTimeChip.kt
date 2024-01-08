@@ -18,7 +18,7 @@ import fr.iut.alldev.allin.theme.AllInTheme
 @Composable
 fun BetDateTimeChip(
     text: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Card(
         modifier = modifier.wrapContentSize(),
@@ -31,7 +31,7 @@ fun BetDateTimeChip(
             modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
             style = AllInTheme.typography.h3,
             textAlign = TextAlign.Center,
-            color = AllInTheme.colors.allIn_Purple
+            color = AllInTheme.colors.allInPurple
         )
     }
 }

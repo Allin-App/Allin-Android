@@ -29,7 +29,7 @@ import racra.compose.smooth_corner_rect_library.AbsoluteSmoothCornerShape
 @Composable
 fun AllInCard(
     modifier: Modifier = Modifier,
-    onClick: (()->Unit)? = null,
+    onClick: (() -> Unit)? = null,
     radius: Dp = 15.dp,
     enabled: Boolean = true,
     backgroundColor: Color = AllInTheme.themeColors.background,
@@ -37,24 +37,26 @@ fun AllInCard(
     backgroundBrush: Brush? = null,
     borderWidth: Dp? = null,
     borderColor: Color = AllInTheme.themeColors.border,
-    disabledBorderColor: Color = AllInTheme.themeColors.disabled_border,
+    disabledBorderColor: Color = AllInTheme.themeColors.disabledBorder,
     borderBrush: Brush? = null,
-    content: @Composable ()->Unit
+    content: @Composable () -> Unit,
 ) {
 
     val cardShape = AbsoluteSmoothCornerShape(radius, smoothnessAsPercent = 100)
     val cardModifier = modifier
         .run {
-        backgroundBrush?.let{
-            this.clip(cardShape).background(it)
-        } ?: this
-    }
-    val cardBorders = borderWidth?.let{
-            width -> borderBrush?.let{BorderStroke(width, it)}
-        ?: BorderStroke(width, if(enabled) borderColor else disabledBorderColor)
+            backgroundBrush?.let {
+                this
+                    .clip(cardShape)
+                    .background(it)
+            } ?: this
+        }
+    val cardBorders = borderWidth?.let { width ->
+        borderBrush?.let { BorderStroke(width, it) }
+            ?: BorderStroke(width, if (enabled) borderColor else disabledBorderColor)
     }
     val cardColors = CardDefaults.cardColors(
-        containerColor = if(backgroundBrush!=null) Color.Transparent else backgroundColor,
+        containerColor = if (backgroundBrush != null) Color.Transparent else backgroundColor,
         disabledContainerColor = disabledBackgroundColor
     )
     onClick?.let {
@@ -84,7 +86,7 @@ fun AllInCard(
 @Composable
 fun AllInBouncyCard(
     modifier: Modifier = Modifier,
-    onClick: (()->Unit)? = null,
+    onClick: (() -> Unit)? = null,
     radius: Dp = 15.dp,
     enabled: Boolean = true,
     backgroundColor: Color = AllInTheme.themeColors.background,
@@ -92,15 +94,15 @@ fun AllInBouncyCard(
     backgroundBrush: Brush? = null,
     borderWidth: Dp? = null,
     borderColor: Color = AllInTheme.themeColors.border,
-    disabledBorderColor: Color = AllInTheme.themeColors.disabled_border,
+    disabledBorderColor: Color = AllInTheme.themeColors.disabledBorder,
     borderBrush: Brush? = null,
-    content: @Composable ()->Unit
-){
+    content: @Composable () -> Unit,
+) {
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
 
     val scale by animateFloatAsState(
-        targetValue = if(isPressed) .95f else 1f,
+        targetValue = if (isPressed) .95f else 1f,
         animationSpec = spring(
             Spring.DampingRatioHighBouncy,
             Spring.StiffnessMediumLow
@@ -109,10 +111,10 @@ fun AllInBouncyCard(
     AllInCard(
         modifier = modifier
             .combinedClickable(
-            interactionSource = interactionSource,
-            indication = null,
-            onClick = { onClick?.let { it() } }
-        )
+                interactionSource = interactionSource,
+                indication = null,
+                onClick = { onClick?.let { it() } }
+            )
             .scale(scale),
         onClick = null,
         radius = radius,

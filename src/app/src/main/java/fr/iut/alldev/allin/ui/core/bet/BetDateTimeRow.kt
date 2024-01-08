@@ -17,7 +17,7 @@ fun BetDateTimeRow(
     label: String,
     date: String,
     time: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -28,7 +28,7 @@ fun BetDateTimeRow(
             text = label,
             fontSize = 15.sp,
             style = AllInTheme.typography.m,
-            color = AllInTheme.themeColors.on_background_2
+            color = AllInTheme.themeColors.onBackground2
         )
         BetDateTimeChip(date)
         BetDateTimeChip(time)
@@ -39,7 +39,7 @@ fun BetDateTimeRow(
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun BetDateTimeRowPreview() {
-    AllInTheme{
+    AllInTheme {
         BetDateTimeRow(label = "Commence le", date = "11 Sept.", time = "13:00")
     }
 }

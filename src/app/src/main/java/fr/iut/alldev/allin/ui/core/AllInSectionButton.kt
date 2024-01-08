@@ -17,18 +17,18 @@ import fr.iut.alldev.allin.theme.AllInTheme
 fun AllInSectionButton(
     text: String,
     isSelected: Boolean,
-    onClick: (Int)->Unit
+    onClick: (Int) -> Unit,
 ) {
-    val style = if(isSelected){
+    val style = if (isSelected) {
         AllInTheme.typography.h3.copy(
-            color = AllInTheme.themeColors.on_main_surface,
+            color = AllInTheme.themeColors.onMainSurface,
             fontSize = 15.sp,
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.ExtraBold
         )
-    }else{
+    } else {
         AllInTheme.typography.h3.copy(
-            color = AllInTheme.themeColors.on_background_2,
+            color = AllInTheme.themeColors.onBackground2,
             fontSize = 15.sp,
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.SemiBold

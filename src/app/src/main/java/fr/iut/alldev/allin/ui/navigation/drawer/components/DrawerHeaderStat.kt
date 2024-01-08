@@ -10,7 +10,7 @@ import fr.iut.alldev.allin.theme.AllInTheme
 @Composable
 fun DrawerHeaderStat(
     label: String,
-    value: Int
+    value: Int,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
@@ -22,7 +22,7 @@ fun DrawerHeaderStat(
         )
         Text(
             text = label,
-            color = AllInTheme.colors.allIn_LightGrey300,
+            color = AllInTheme.colors.allInLightGrey300,
             style = AllInTheme.typography.r
         )
     }

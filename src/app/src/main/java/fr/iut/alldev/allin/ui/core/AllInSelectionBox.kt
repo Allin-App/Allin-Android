@@ -5,10 +5,19 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.HelpOutline
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.ExpandLess
+import androidx.compose.material.icons.filled.ExpandMore
+import androidx.compose.material.icons.filled.PinEnd
+import androidx.compose.material.icons.filled.SportsFootball
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -27,7 +36,7 @@ import fr.iut.alldev.allin.theme.AllInTheme
 
 class SelectionElement(
     val textId: Int,
-    val imageVector: ImageVector
+    val imageVector: ImageVector,
 )
 
 @Composable
@@ -35,10 +44,10 @@ fun AllInSelectionLine(
     text: String,
     iconVector: ImageVector?,
     modifier: Modifier = Modifier,
-    onClick: ()->Unit,
+    onClick: () -> Unit,
     trailingIcon: ImageVector? = null,
-    interactionSource: MutableInteractionSource
-){
+    interactionSource: MutableInteractionSource,
+) {
     Row(
         modifier = modifier
             .clickable(
@@ -54,13 +63,13 @@ fun AllInSelectionLine(
             Icon(
                 imageVector = it,
                 contentDescription = null,
-                tint = AllInTheme.colors.allIn_Purple,
+                tint = AllInTheme.colors.allInPurple,
                 modifier = Modifier.size(20.dp)
             )
         }
         Text(
             text = text,
-            color = AllInTheme.colors.allIn_Purple,
+            color = AllInTheme.colors.allInPurple,
             style = AllInTheme.typography.h2,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.weight(1f)
@@ -69,7 +78,7 @@ fun AllInSelectionLine(
             Icon(
                 imageVector = trailingIcon,
                 contentDescription = null,
-                tint = AllInTheme.colors.allIn_Purple,
+                tint = AllInTheme.colors.allInPurple,
                 modifier = Modifier
                     .size(30.dp)
             )
@@ -82,30 +91,30 @@ fun AllInSelectionLine(
 fun AllInSelectionBox(
     modifier: Modifier = Modifier,
     isOpen: Boolean,
-    setIsOpen: (Boolean)->Unit,
+    setIsOpen: (Boolean) -> Unit,
     selected: SelectionElement?,
-    setSelected: (SelectionElement)->Unit,
-    elements: List<SelectionElement>
+    setSelected: (SelectionElement) -> Unit,
+    elements: List<SelectionElement>,
 ) {
     val interactionSource = remember { MutableInteractionSource() }
-    AllInCard(modifier.fillMaxWidth()){
+    AllInCard(modifier.fillMaxWidth()) {
         Column(
             Modifier.animateContentSize()
         ) {
             AllInSelectionLine(
-                text = selected?.let{
+                text = selected?.let {
                     stringResource(id = it.textId)
                 } ?: "",
-                iconVector = selected?.let{
+                iconVector = selected?.let {
                     selected.imageVector
                 },
                 onClick = { setIsOpen(!isOpen) },
                 interactionSource = interactionSource,
-                trailingIcon = with(Icons.Default){
-                    if(isOpen) ExpandLess else ExpandMore
+                trailingIcon = with(Icons.Default) {
+                    if (isOpen) ExpandLess else ExpandMore
                 }
             )
-            AnimatedVisibility(isOpen){
+            AnimatedVisibility(isOpen) {
                 Column {
                     HorizontalDivider(color = AllInTheme.themeColors.border)
                     elements.filter { it != selected }.forEach { element ->

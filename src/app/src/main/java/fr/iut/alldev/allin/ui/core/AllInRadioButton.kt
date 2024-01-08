@@ -12,15 +12,15 @@ import fr.iut.alldev.allin.theme.AllInTheme
 fun AllInRadioButton(
     modifier: Modifier = Modifier,
     checked: Boolean,
-    unCheckedColor: Color = Color.Transparent
+    unCheckedColor: Color = Color.Transparent,
 ) {
     AllInCard(
         radius = 100.dp,
-        borderColor = AllInTheme.colors.allIn_Mint,
-        borderWidth = if(!checked) 1.dp else null,
-        backgroundColor = if (checked) AllInTheme.colors.allIn_Purple else unCheckedColor,
+        borderColor = AllInTheme.colors.allInMint,
+        borderWidth = if (!checked) 1.dp else null,
+        backgroundColor = if (checked) AllInTheme.colors.allInPurple else unCheckedColor,
         modifier = modifier.size(12.dp)
-    ){}
+    ) {}
 }
 
 @Preview
@@ -35,7 +35,7 @@ private fun AllInRadioButtonNotCheckedPreview() {
 @Composable
 private fun AllInRadioButtonNotCheckedFilledPreview() {
     AllInTheme {
-        AllInRadioButton(checked = false, unCheckedColor = AllInTheme.colors.allIn_Mint)
+        AllInRadioButton(checked = false, unCheckedColor = AllInTheme.colors.allInMint)
     }
 }
 

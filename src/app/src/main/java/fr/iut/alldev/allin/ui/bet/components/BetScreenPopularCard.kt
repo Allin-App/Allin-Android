@@ -1,7 +1,13 @@
 package fr.iut.alldev.allin.ui.bet.components
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,9 +24,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.ext.shadow
+import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.core.AllInCard
 import fr.iut.alldev.allin.ui.core.HighlightedText
-import fr.iut.alldev.allin.theme.AllInTheme
 import kotlin.math.ceil
 
 @Composable
@@ -29,22 +35,22 @@ fun BetScreenPopularCard(
     points: Float,
     pointUnit: String,
     title: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     AllInCard(
         modifier = modifier
             .let {
-                if(isSystemInDarkTheme()){
+                if (isSystemInDarkTheme()) {
                     it.shadow(
                         colors = listOf(
-                            AllInTheme.colors.allIn_Pink,
-                            AllInTheme.colors.allIn_Blue
+                            AllInTheme.colors.allInPink,
+                            AllInTheme.colors.allInBlue
                         ),
                         blurRadius = 10.dp,
                         alpha = .5f,
                         cornerRadius = 15.dp
                     )
-                }else{
+                } else {
                     it.shadow(
                         color = Color.Black,
                         blurRadius = 10.dp,
@@ -53,11 +59,10 @@ fun BetScreenPopularCard(
                     )
                 }
             }
-            .fillMaxWidth()
-        ,
-        backgroundColor = AllInTheme.colors.allIn_Dark,
+            .fillMaxWidth(),
+        backgroundColor = AllInTheme.colors.allInDark,
         borderWidth = 2.dp,
-        borderBrush = AllInTheme.colors.allIn_MainGradient
+        borderBrush = AllInTheme.colors.allInMainGradient
     ) {
         Column(modifier = Modifier.padding(13.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -65,12 +70,12 @@ fun BetScreenPopularCard(
                     painter = painterResource(id = R.drawable.allin_fire),
                     modifier = Modifier.size(15.dp),
                     contentDescription = null,
-                    tint = AllInTheme.colors.allIn_Pink
+                    tint = AllInTheme.colors.allInPink
                 )
                 Spacer(modifier = Modifier.width(3.dp))
                 Text(
                     text = stringResource(id = R.string.Popular),
-                    color = AllInTheme.colors.allIn_Pink,
+                    color = AllInTheme.colors.allInPink,
                     fontSize = 17.sp,
                     style = AllInTheme.typography.h2
                 )
@@ -92,7 +97,7 @@ fun BetScreenPopularCard(
                     query = nbPlayers.toString(),
                     highlightStyle = SpanStyle(
                         fontWeight = FontWeight.Bold,
-                        color = AllInTheme.colors.allIn_Pink
+                        color = AllInTheme.colors.allInPink
                     ),
                     color = AllInTheme.colors.white,
                     style = AllInTheme.typography.r,
@@ -104,21 +109,21 @@ fun BetScreenPopularCard(
                     style = AllInTheme.typography.r,
                     fontSize = 15.sp
                 )
-                val pointsText = if (points % 1 == 0f){
+                val pointsText = if (points % 1 == 0f) {
                     stringResource(id = R.string.int_and_unit, points.toInt(), pointUnit)
-                }else{
+                } else {
                     stringResource(id = R.string.float_and_unit, points, pointUnit)
                 }
                 HighlightedText(
                     text = pluralStringResource(
                         id = R.plurals.n_points_at_stake,
-                        if(pointUnit.isEmpty()) ceil(points).toInt() else 2,
+                        if (pointUnit.isEmpty()) ceil(points).toInt() else 2,
                         pointsText
                     ),
                     query = pointsText,
                     highlightStyle = SpanStyle(
                         fontWeight = FontWeight.Bold,
-                        color = AllInTheme.colors.allIn_Pink
+                        color = AllInTheme.colors.allInPink
                     ),
                     color = AllInTheme.colors.white,
                     style = AllInTheme.typography.r,

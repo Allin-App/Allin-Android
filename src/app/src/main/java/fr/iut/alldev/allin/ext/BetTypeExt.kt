@@ -1,5 +1,6 @@
 package fr.iut.alldev.allin.ext
 
+import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.HelpOutline
 import androidx.compose.material.icons.filled.Edit
@@ -8,7 +9,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.data.model.bet.BetType
 
-fun BetType.getTitle(): Int {
+@StringRes
+fun BetType.getTitleId(): Int {
     return when (this) {
         BetType.YES_NO ->  R.string.yes_no
         BetType.MATCH -> R.string.sport_match

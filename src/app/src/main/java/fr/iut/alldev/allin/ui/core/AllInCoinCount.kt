@@ -12,7 +12,7 @@ fun AllInCoinCount(
     modifier: Modifier = Modifier,
     amount: Int,
     color: Color,
-    position: IconPosition = IconPosition.TRAILING
+    position: IconPosition = IconPosition.TRAILING,
 ) {
     AllInTextIcon(
         text = amount.toString(),
@@ -28,6 +28,6 @@ fun AllInCoinCount(
 @Composable
 private fun AllInCoinCountPreview() {
     AllInTheme {
-        AllInCoinCount(amount = 542, color = AllInTheme.colors.allIn_Purple)
+        AllInCoinCount(amount = 542, color = AllInTheme.colors.allInPurple)
     }
 }

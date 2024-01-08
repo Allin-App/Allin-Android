@@ -21,11 +21,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import fr.iut.alldev.allin.R
+import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.core.AllInGradientButton
 import fr.iut.alldev.allin.ui.core.AllInLoading
 import fr.iut.alldev.allin.ui.core.AllInPasswordField
 import fr.iut.alldev.allin.ui.core.AllInTextField
-import fr.iut.alldev.allin.theme.AllInTheme
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -37,17 +37,17 @@ fun RegisterScreen(
 
     val focusManager = LocalFocusManager.current
 
-    val loading by remember{ registerViewModel.loading }
+    val loading by remember { registerViewModel.loading }
 
-    val usernameError by remember{ registerViewModel.usernameError }
-    val emailError by remember{ registerViewModel.emailError }
-    val passwordError by remember{ registerViewModel.passwordError }
-    val passwordValidationError by remember{ registerViewModel.passwordValidationError }
+    val usernameError by remember { registerViewModel.usernameError }
+    val emailError by remember { registerViewModel.emailError }
+    val passwordError by remember { registerViewModel.passwordError }
+    val passwordValidationError by remember { registerViewModel.passwordValidationError }
 
-    val (username, setUsername) = remember{ registerViewModel.username }
-    val (email, setEmail) = remember{ registerViewModel.email }
-    val (password, setPassword) = remember{ registerViewModel.password }
-    val (passwordValidation, setPasswordValidation) = remember{ registerViewModel.passwordValidation }
+    val (username, setUsername) = remember { registerViewModel.username }
+    val (email, setEmail) = remember { registerViewModel.email }
+    val (password, setPassword) = remember { registerViewModel.password }
+    val (passwordValidation, setPasswordValidation) = remember { registerViewModel.passwordValidation }
 
     val bringIntoViewRequester = remember { BringIntoViewRequester() }
     val scrollState = rememberScrollState()
@@ -76,7 +76,7 @@ fun RegisterScreen(
     Column(
         Modifier
             .fillMaxSize()
-            .background(AllInTheme.themeColors.main_surface)
+            .background(AllInTheme.themeColors.mainSurface)
             .padding(horizontal = 44.dp)
     ) {
         Column(
@@ -88,7 +88,7 @@ fun RegisterScreen(
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 text = stringResource(id = R.string.Hello_x, username),
-                color = AllInTheme.themeColors.on_main_surface,
+                color = AllInTheme.themeColors.onMainSurface,
                 style = AllInTheme.typography.h3,
                 textAlign = TextAlign.Center,
                 fontSize = 40.sp,
@@ -98,7 +98,7 @@ fun RegisterScreen(
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 text = stringResource(id = R.string.Register_title),
-                color = AllInTheme.themeColors.on_main_surface,
+                color = AllInTheme.themeColors.onMainSurface,
                 style = AllInTheme.typography.h3,
                 textAlign = TextAlign.Center,
                 fontSize = 40.sp
@@ -107,7 +107,7 @@ fun RegisterScreen(
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 text = stringResource(id = R.string.Register_subtitle),
-                color = AllInTheme.themeColors.on_main_surface,
+                color = AllInTheme.themeColors.onMainSurface,
                 style = AllInTheme.typography.r,
                 textAlign = TextAlign.Center,
                 fontSize = 23.sp
@@ -182,7 +182,7 @@ fun RegisterScreen(
             ) {
                 Text(
                     text = stringResource(id = R.string.already_have_account),
-                    color = AllInTheme.themeColors.on_main_surface,
+                    color = AllInTheme.themeColors.onMainSurface,
                     fontSize = 15.sp,
                     style = AllInTheme.typography.r,
                     modifier = Modifier.padding(end = 5.dp)
@@ -190,7 +190,7 @@ fun RegisterScreen(
                 ClickableText(
                     text = AnnotatedString(stringResource(id = R.string.Login)),
                     style = AllInTheme.typography.r.copy(
-                        color = AllInTheme.colors.allIn_Purple,
+                        color = AllInTheme.colors.allInPurple,
                         fontSize = 15.sp,
                         fontWeight = FontWeight.Bold
                     )

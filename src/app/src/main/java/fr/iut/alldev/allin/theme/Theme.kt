@@ -17,62 +17,66 @@ import fr.iut.alldev.allin.R
 
 @Composable
 fun AllInTheme(
-    content: @Composable () -> Unit
-)  {
+    content: @Composable () -> Unit,
+) {
     val customColors = AllInColors(
-        allIn_Dark = Color(0xFF2A2A2A),
-        allIn_DarkGrey300 = Color(0xFF1c1c1c),
-        allIn_DarkGrey200 = Color(0xFF262626),
-        allIn_DarkGrey100 = Color(0xFF393939),
-        allIn_DarkGrey50 = Color(0xFF454545),
-        allIn_Grey = Color(0xFF525252),
-        allIn_LightGrey300 = Color(0XFFAAAAAA),
-        allIn_LightGrey200 = Color(0XFFC5C5C5),
-        allIn_LightGrey100 = Color(0XFFEBEBEB),
-        allIn_LightGrey50 = Color(0XFFF7F7F7),
-        allIn_White = Color(0xFFEBEBF6),
+        allInDark = Color(0xFF2A2A2A),
+        allInDarkGrey300 = Color(0xFF1c1c1c),
+        allInDarkGrey200 = Color(0xFF262626),
+        allInDarkGrey100 = Color(0xFF393939),
+        allInDarkGrey50 = Color(0xFF454545),
+        allInGrey = Color(0xFF525252),
+        allInLightGrey300 = Color(0XFFAAAAAA),
+        allInLightGrey200 = Color(0XFFC5C5C5),
+        allInLightGrey100 = Color(0XFFEBEBEB),
+        allInLightGrey50 = Color(0XFFF7F7F7),
+        allInWhite = Color(0xFFEBEBF6),
         white = Color(0xFFFFFFFF),
         black = Color(0xFF000000),
-        allIn_Pink = Color(0xFFFF2A89),
-        allIn_Purple = Color(0xFF7D79FF),
-        allIn_LoginPurple = Color(0xFF7F7BFB),
-        allIn_BarPurple = Color(0xFF846AC9),
-        allIn_BarPink = Color(0xFFFE2B8A),
-        allIn_Blue = Color(0xFF6a89fa),
-        allIn_Mint = Color(0xFFC4DEE9),
-        allIn_DarkBlue = Color(0xFF323078),
-        allIn_BetFinish = Color(0xFF353535),
-        allIn_BetInProgress = Color(0xFF604BDB),
-        allIn_BetWaiting = Color(0xFFDF3B9A),
-        allIn_BetFinishText = Color(0xFFA7A7A7),
-        allIn_BetInProgressText = Color(0xFF4636A3),
-        allIn_BetWaitingText = Color(0xFF852E6C),
+        allInPink = Color(0xFFFF2A89),
+        allInPurple = Color(0xFF7D79FF),
+        allInLoginPurple = Color(0xFF7F7BFB),
+        allInBarPurple = Color(0xFF846AC9),
+        allInBarPink = Color(0xFFFE2B8A),
+        allInBlue = Color(0xFF6a89fa),
+        allInMint = Color(0xFFC4DEE9),
+        allInDarkBlue = Color(0xFF323078),
+        allInBetFinish = Color(0xFF353535),
+        allInBetInProgress = Color(0xFF604BDB),
+        allInBetWaiting = Color(0xFFDF3B9A),
+        allInBetFinishText = Color(0xFFA7A7A7),
+        allInBetInProgressText = Color(0xFF4636A3),
+        allInBetWaitingText = Color(0xFF852E6C),
 
-        allIn_MainGradient = Brush.linearGradient(
+        allInMainGradient = Brush.linearGradient(
             0.0f to Color(0xFFf951a8),
             0.5f to Color(0xFFaa7ef3),
             1.0f to Color(0xFF199fee),
             start = Offset(0f, Float.POSITIVE_INFINITY),
             end = Offset(Float.POSITIVE_INFINITY, 0f)
         ),
-        allIn_Bar1stGradient = Brush.horizontalGradient(
+        allInBar1stGradient = Brush.horizontalGradient(
             0.0f to Color(0xFF2599F8),
             1.0f to Color(0xFF846AC9)
         ),
-        allIn_Bar2ndGradient = Brush.horizontalGradient(
+        allInBar2ndGradient = Brush.horizontalGradient(
             0.0f to Color(0xFFFE2B8A),
             1.0f to Color(0xFFC249A8)
         ),
-        allIn_TextGradient = Brush.horizontalGradient(
+        allInTextGradient = Brush.horizontalGradient(
             0.0f to Color(0xFFF876C1),
             1.0f to Color(0xFF2399F8)
         ),
-        allIn_LoginGradient = Brush.linearGradient(
+        allInLoginGradient = Brush.linearGradient(
             0.0f to Color(0xFFEC1794),
             0.5f to Color(0xFFaa7ef3),
             1.0f to Color(0xFF00EEEE),
             start = Offset(0f, Float.POSITIVE_INFINITY),
             end = Offset(Float.POSITIVE_INFINITY, 0f)
+        ),
+        allInDarkGradient = Brush.horizontalGradient(
+            0.0f to Color(0xFF595959),
+            1.0f to Color(0xFF000000)
         )
     )
 
@@ -107,31 +111,31 @@ fun AllInTheme(
         )
     )
 
-    val customTheme = if(isSystemInDarkTheme()){
+    val customTheme = if (isSystemInDarkTheme()) {
         AllInThemeColors(
-            main_surface = customColors.allIn_DarkGrey300,
-            on_main_surface = customColors.allIn_White,
-            background = customColors.allIn_DarkGrey200,
-            on_background = customColors.white,
-            tint_1 = customColors.white,
-            background_2 = customColors.allIn_Dark,
-            on_background_2 = customColors.allIn_LightGrey200,
-            border = customColors.allIn_DarkGrey100,
-            disabled = customColors.allIn_DarkGrey200,
-            disabled_border = customColors.allIn_DarkGrey100
+            mainSurface = customColors.allInDarkGrey300,
+            onMainSurface = customColors.allInWhite,
+            background = customColors.allInDarkGrey200,
+            onBackground = customColors.white,
+            tint1 = customColors.white,
+            background2 = customColors.allInDark,
+            onBackground2 = customColors.allInLightGrey200,
+            border = customColors.allInDarkGrey100,
+            disabled = customColors.allInDarkGrey200,
+            disabledBorder = customColors.allInDarkGrey100
         )
-    }else{
+    } else {
         AllInThemeColors(
-            main_surface = customColors.allIn_White,
-            on_main_surface = customColors.allIn_Dark,
+            mainSurface = customColors.allInWhite,
+            onMainSurface = customColors.allInDark,
             background = customColors.white,
-            on_background = customColors.allIn_DarkBlue,
-            tint_1 = customColors.allIn_LoginPurple,
-            background_2 = customColors.allIn_LightGrey50,
-            on_background_2 = customColors.allIn_LightGrey300,
-            border = customColors.allIn_LightGrey100,
-            disabled = customColors.allIn_LightGrey100,
-            disabled_border = customColors.allIn_LightGrey200
+            onBackground = customColors.allInDarkBlue,
+            tint1 = customColors.allInLoginPurple,
+            background2 = customColors.allInLightGrey50,
+            onBackground2 = customColors.allInLightGrey300,
+            border = customColors.allInLightGrey100,
+            disabled = customColors.allInLightGrey100,
+            disabledBorder = customColors.allInLightGrey200
 
         )
     }
@@ -145,7 +149,7 @@ fun AllInTheme(
         LocalIcons provides customIcons,
         LocalTypography provides customTypography,
         LocalThemeColors provides customTheme
-    ){
+    ) {
         content()
     }
 }

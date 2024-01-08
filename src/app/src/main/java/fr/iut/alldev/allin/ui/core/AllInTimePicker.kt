@@ -15,7 +15,7 @@ fun AllInTimePicker(
     hour: Int?,
     minutes: Int?,
     onSelectHour: (Int, Int) -> Unit,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
 ) {
     val calendar = Calendar.getInstance()
     val timePickerState = rememberTimePickerState(
@@ -36,7 +36,7 @@ fun AllInTimePicker(
                 Text(
                     text = stringResource(id = R.string.Validate),
                     style = AllInTheme.typography.h1.copy(
-                        brush = AllInTheme.colors.allIn_MainGradient
+                        brush = AllInTheme.colors.allInMainGradient
                     )
                 )
             }
@@ -45,7 +45,7 @@ fun AllInTimePicker(
             TextButton(onClick = onDismiss) {
                 Text(
                     text = stringResource(id = R.string.Cancel),
-                    color = AllInTheme.themeColors.on_background_2,
+                    color = AllInTheme.themeColors.onBackground2,
                     style = AllInTheme.typography.h3
                 )
             }
@@ -54,16 +54,16 @@ fun AllInTimePicker(
             TimePicker(
                 state = timePickerState,
                 colors = TimePickerDefaults.colors(
-                    selectorColor = AllInTheme.colors.allIn_Purple,
+                    selectorColor = AllInTheme.colors.allInPurple,
                     containerColor = AllInTheme.themeColors.background,
-                    clockDialColor = AllInTheme.themeColors.background_2,
-                    clockDialUnselectedContentColor = AllInTheme.themeColors.on_main_surface,
-                    clockDialSelectedContentColor = AllInTheme.themeColors.background_2,
+                    clockDialColor = AllInTheme.themeColors.background2,
+                    clockDialUnselectedContentColor = AllInTheme.themeColors.onMainSurface,
+                    clockDialSelectedContentColor = AllInTheme.themeColors.background2,
 
-                )
+                    )
             )
         },
-        containerColor = AllInTheme.themeColors.main_surface
+        containerColor = AllInTheme.themeColors.mainSurface
     )
 }
 

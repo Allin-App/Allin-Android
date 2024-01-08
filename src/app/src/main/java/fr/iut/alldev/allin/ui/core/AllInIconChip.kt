@@ -25,22 +25,22 @@ import racra.compose.smooth_corner_rect_library.AbsoluteSmoothCornerShape
 @Composable
 fun AllInIconChip(
     text: String,
-    isSelected: Boolean = false,
-    onClick: ()->Unit = {},
     modifier: Modifier = Modifier,
+    isSelected: Boolean = false,
+    onClick: () -> Unit = {},
     radius: Dp = 15.dp,
-    selectedColor: Color = AllInTheme.colors.allIn_Purple,
+    selectedColor: Color = AllInTheme.colors.allInPurple,
     unselectedColor: Color = AllInTheme.themeColors.background,
-    leadingIcon: ImageVector
+    leadingIcon: ImageVector,
 ) {
-    val contentColor = if(isSelected) AllInTheme.colors.white else selectedColor
+    val contentColor = if (isSelected) AllInTheme.colors.white else selectedColor
     Card(
         modifier = modifier,
         shape = AbsoluteSmoothCornerShape(radius, 100),
         onClick = onClick,
-        border = if(!isSelected) BorderStroke(1.dp, AllInTheme.themeColors.border) else null,
+        border = if (!isSelected) BorderStroke(1.dp, AllInTheme.themeColors.border) else null,
         colors = CardDefaults.cardColors(
-            containerColor = if(isSelected) selectedColor else unselectedColor
+            containerColor = if (isSelected) selectedColor else unselectedColor
         )
     ) {
         Row(

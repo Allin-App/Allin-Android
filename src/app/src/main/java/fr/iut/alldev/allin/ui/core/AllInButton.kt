@@ -18,9 +18,9 @@ fun AllInButton(
     color: Color,
     text: String,
     textColor: Color,
-    radius: Dp = 15.dp,
     modifier: Modifier = Modifier,
-    onClick: ()->Unit
+    radius: Dp = 15.dp,
+    onClick: () -> Unit,
 ) {
     AllInCard(
         onClick = onClick,
@@ -46,7 +46,7 @@ fun AllInButton(
 private fun AllInButtonPreview() {
     AllInTheme {
         AllInButton(
-            color = AllInTheme.colors.allIn_LoginPurple,
+            color = AllInTheme.colors.allInLoginPurple,
             text = "Connexion",
             textColor = Color.White
         ) {

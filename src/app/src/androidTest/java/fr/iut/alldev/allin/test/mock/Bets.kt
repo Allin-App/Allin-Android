@@ -6,7 +6,7 @@ import fr.iut.alldev.allin.data.model.bet.YesNoBet
 import java.time.ZonedDateTime
 
 object Bets {
-    val bets by lazy{
+    val bets by lazy {
         listOf(
             YesNoBet(
                 theme = "Theme",
@@ -14,7 +14,7 @@ object Bets {
                 endRegisterDate = ZonedDateTime.now(),
                 endBetDate = ZonedDateTime.now(),
                 isPublic = true,
-                betStatus = BetStatus.IN_PROGRESS
+                betStatus = BetStatus.InProgress
             ),
             MatchBet(
                 theme = "Theme",
@@ -22,7 +22,7 @@ object Bets {
                 endRegisterDate = ZonedDateTime.now(),
                 endBetDate = ZonedDateTime.now(),
                 isPublic = true,
-                betStatus = BetStatus.IN_PROGRESS,
+                betStatus = BetStatus.InProgress,
                 nameTeam1 = "Team_1",
                 nameTeam2 = "Team_2"
             ),

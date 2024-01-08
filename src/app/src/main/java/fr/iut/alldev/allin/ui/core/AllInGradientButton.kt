@@ -16,15 +16,15 @@ import fr.iut.alldev.allin.theme.AllInTheme
 fun AllInGradientButton(
     text: String,
     modifier: Modifier = Modifier,
-    onClick: ()->Unit
+    onClick: () -> Unit,
 ) {
     AllInCard(
         onClick = onClick,
         modifier = modifier
             .shadow(
                 colors = listOf(
-                    AllInTheme.colors.allIn_Pink,
-                    AllInTheme.colors.allIn_Blue
+                    AllInTheme.colors.allInPink,
+                    AllInTheme.colors.allInBlue
                 ),
                 blurRadius = 20.dp,
                 alpha = .5f,
@@ -32,7 +32,7 @@ fun AllInGradientButton(
             )
             .fillMaxWidth(),
         radius = 10.dp,
-        backgroundBrush = AllInTheme.colors.allIn_MainGradient
+        backgroundBrush = AllInTheme.colors.allInMainGradient
     ) {
         Text(
             text = text,

@@ -2,7 +2,13 @@ package fr.iut.alldev.allin.ui.core
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
@@ -17,14 +23,14 @@ import fr.iut.alldev.allin.theme.AllInTheme
 
 @Composable
 fun StatBar(
-    percentage: Float
+    percentage: Float,
 ) {
-    val radius100percent = if(percentage==1f) 50 else 0
-    val radius0percent = if(percentage==0f) 50 else 0
-    Box{
+    val radius100percent = if (percentage == 1f) 50 else 0
+    val radius0percent = if (percentage == 0f) 50 else 0
+    Box {
         Row(
             Modifier.align(Alignment.Center)
-        ){
+        ) {
             Box(
                 modifier = Modifier
                     .height(20.dp)
@@ -37,10 +43,10 @@ fun StatBar(
                             bottomRightPercent = radius100percent
                         )
                     )
-                    .background(AllInTheme.colors.allIn_Bar1stGradient)
+                    .background(AllInTheme.colors.allInBar1stGradient)
 
             )
-            if(percentage!=0f && percentage!=1f) {
+            if (percentage != 0f && percentage != 1f) {
                 Spacer(modifier = Modifier.width(15.dp))
             }
             Box(
@@ -55,23 +61,25 @@ fun StatBar(
                             bottomRightPercent = 50
                         )
                     )
-                    .background(AllInTheme.colors.allIn_Bar2ndGradient)
+                    .background(AllInTheme.colors.allInBar2ndGradient)
             )
         }
         PercentagePositionnedElement(percentage = percentage) {
-            when(percentage){
+            when (percentage) {
                 0f -> Icon(
                     painter = painterResource(id = R.drawable.fire_solid),
-                    tint = AllInTheme.colors.allIn_BarPink,
-                    contentDescription = null,
-                    modifier = Modifier.size(32.dp)
-                    )
-                1f -> Icon(
-                    painter = painterResource(id = R.drawable.fire_solid),
-                    tint = AllInTheme.colors.allIn_BarPurple,
+                    tint = AllInTheme.colors.allInBarPink,
                     contentDescription = null,
                     modifier = Modifier.size(32.dp)
                 )
+
+                1f -> Icon(
+                    painter = painterResource(id = R.drawable.fire_solid),
+                    tint = AllInTheme.colors.allInBarPurple,
+                    contentDescription = null,
+                    modifier = Modifier.size(32.dp)
+                )
+
                 else -> Image(
                     painter = painterResource(id = R.drawable.bar_flame),
                     contentDescription = null,

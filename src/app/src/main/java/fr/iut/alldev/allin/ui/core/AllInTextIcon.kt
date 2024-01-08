@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.sp
 import fr.iut.alldev.allin.theme.AllInTheme
 
 
-enum class IconPosition{
+enum class IconPosition {
     LEADING,
     TRAILING
 }
@@ -36,10 +36,10 @@ fun AllInTextIcon(
     color: Color,
     position: IconPosition = IconPosition.TRAILING,
     size: Int = 15,
-    iconSize: Int = size
+    iconSize: Int = size,
 ) {
     val direction =
-        if(position==IconPosition.LEADING) LayoutDirection.Rtl
+        if (position == IconPosition.LEADING) LayoutDirection.Rtl
         else LayoutDirection.Ltr
     Box(modifier) {
         CompositionLocalProvider(
@@ -75,10 +75,10 @@ fun AllInTextIcon(
     color: Color,
     position: IconPosition = IconPosition.TRAILING,
     size: Int = 15,
-    iconSize: Int = size
+    iconSize: Int = size,
 ) {
     val direction =
-        if(position==IconPosition.LEADING) LayoutDirection.Rtl
+        if (position == IconPosition.LEADING) LayoutDirection.Rtl
         else LayoutDirection.Ltr
     Box(modifier) {
         CompositionLocalProvider(
@@ -113,7 +113,7 @@ private fun AllInTextIconPreview() {
         AllInTextIcon(
             text = "value",
             icon = Icons.Default.Fireplace,
-            color = AllInTheme.colors.allIn_Blue
+            color = AllInTheme.colors.allInBlue
         )
     }
 }
@@ -125,7 +125,7 @@ private fun AllInTextIconReversePreview() {
         AllInTextIcon(
             text = "value",
             icon = AllInTheme.icons.allCoins(),
-            color = AllInTheme.colors.allIn_Blue,
+            color = AllInTheme.colors.allInBlue,
             position = IconPosition.LEADING
         )
     }

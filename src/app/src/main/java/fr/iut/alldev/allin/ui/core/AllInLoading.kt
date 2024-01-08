@@ -2,7 +2,15 @@ package fr.iut.alldev.allin.ui.core
 
 import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.*
+import androidx.compose.animation.core.CubicBezierEasing
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.VectorConverter
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.animateValue
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.keyframes
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Canvas
@@ -42,7 +50,7 @@ import kotlin.math.max
 fun AllInLoading(
     modifier: Modifier = Modifier,
     visible: Boolean,
-    brush: Brush = AllInTheme.colors.allIn_MainGradient
+    brush: Brush = AllInTheme.colors.allInMainGradient,
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     AnimatedVisibility(
@@ -68,7 +76,7 @@ fun AllInLoading(
                         indication = null,
                         onClick = {}
                     )
-                    .background(AllInTheme.themeColors.main_surface.copy(alpha = .4f))
+                    .background(AllInTheme.themeColors.mainSurface.copy(alpha = .4f))
             ) {
                 AllInCircularProgressIndicator(
                     modifier = Modifier
@@ -85,7 +93,7 @@ fun AllInLoading(
 @Composable
 fun AllInCircularProgressIndicator(
     modifier: Modifier = Modifier,
-    brush: Brush = AllInTheme.colors.allIn_MainGradient,
+    brush: Brush = AllInTheme.colors.allInMainGradient,
     strokeWidth: Dp = ProgressIndicatorDefaults.CircularStrokeWidth,
     strokeCap: StrokeCap = ProgressIndicatorDefaults.CircularIndeterminateStrokeCap,
 ) {
@@ -93,7 +101,7 @@ fun AllInCircularProgressIndicator(
         Stroke(width = strokeWidth.toPx(), cap = strokeCap)
     }
 
-    val transition = rememberInfiniteTransition()
+    val transition = rememberInfiniteTransition(label = "")
     val currentRotation = transition.animateValue(
         0,
         RotationsPerCycle,
@@ -113,7 +121,7 @@ fun AllInCircularProgressIndicator(
                 durationMillis = RotationDuration,
                 easing = LinearEasing
             )
-        )
+        ), label = ""
     )
     val endAngle = transition.animateFloat(
         0f,
@@ -121,10 +129,10 @@ fun AllInCircularProgressIndicator(
         infiniteRepeatable(
             animation = keyframes {
                 durationMillis = HeadAndTailAnimationDuration + HeadAndTailDelayDuration
-                0f at 0 with CircularEasing
+                0f at 0 using CircularEasing
                 JumpRotationAngle at HeadAndTailAnimationDuration
             }
-        )
+        ), label = ""
     )
     val startAngle = transition.animateFloat(
         0f,
@@ -132,10 +140,10 @@ fun AllInCircularProgressIndicator(
         infiniteRepeatable(
             animation = keyframes {
                 durationMillis = HeadAndTailAnimationDuration + HeadAndTailDelayDuration
-                0f at HeadAndTailDelayDuration with CircularEasing
+                0f at HeadAndTailDelayDuration using CircularEasing
                 JumpRotationAngle at durationMillis
             }
-        )
+        ), label = ""
     )
     Canvas(
         modifier
@@ -162,7 +170,7 @@ private fun DrawScope.drawCircularIndicator(
     startAngle: Float,
     sweep: Float,
     color: Color,
-    stroke: Stroke
+    stroke: Stroke,
 ) {
     val diameterOffset = stroke.width / 2
     val arcDimen = size.width - 2 * diameterOffset
@@ -181,7 +189,7 @@ private fun DrawScope.drawCircularIndicator(
     startAngle: Float,
     sweep: Float,
     brush: Brush,
-    stroke: Stroke
+    stroke: Stroke,
 ) {
     val diameterOffset = stroke.width / 2
     val arcDimen = size.width - 2 * diameterOffset
@@ -201,7 +209,7 @@ private fun DrawScope.drawIndeterminateCircularIndicator(
     strokeWidth: Dp,
     sweep: Float,
     brush: Brush,
-    stroke: Stroke
+    stroke: Stroke,
 ) {
     val strokeCapOffset = if (stroke.cap == StrokeCap.Butt) {
         0f

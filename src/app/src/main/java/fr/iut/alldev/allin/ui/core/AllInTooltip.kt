@@ -27,14 +27,14 @@ fun AllInTooltip(
     TooltipBox(
         positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
         tooltip = {
-            AllInPlainTooltip{
+            AllInPlainTooltip {
                 Text(
                     text = text,
-                    color = AllInTheme.colors.allIn_LightGrey200,
+                    color = AllInTheme.colors.allInLightGrey200,
                     style = AllInTheme.typography.r,
-                    fontSize = 10.sp
+                    fontSize = 12.sp
                 )
-          }
+            }
         },
         state = state
     ) {
@@ -60,15 +60,15 @@ private val AllInPlainTooltipContentPadding =
 @Composable
 fun AllInPlainTooltip(
     modifier: Modifier = Modifier,
-    containerColor: Color = AllInTheme.colors.allIn_Dark,
+    containerColor: Color = AllInTheme.colors.allInDark,
     borderWidth: Dp = 1.dp,
-    borderColor: Color = AllInTheme.colors.allIn_DarkGrey100,
+    borderColor: Color = AllInTheme.colors.allInDarkGrey100,
     shape: Shape = AbsoluteSmoothCornerShape(10.dp, 100),
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
-    ){
+    ) {
         Surface(
             shape = shape,
             border = BorderStroke(borderWidth, borderColor),
@@ -107,8 +107,8 @@ class AllInArrowShape : Shape {
     ) =
         Outline.Generic(
             Path().apply {
-                lineTo(size.width /2 , size.height)
-                lineTo(size.width , 0f)
+                lineTo(size.width / 2, size.height)
+                lineTo(size.width, 0f)
             }
         )
 }
@@ -120,7 +120,7 @@ private fun AllInTooltipPreview() {
         AllInPlainTooltip(content = {
             Text(
                 text = "Généralement une question qui sera répondu par les utilisateurs.",
-                color = AllInTheme.colors.allIn_LightGrey200,
+                color = AllInTheme.colors.allInLightGrey200,
                 style = AllInTheme.typography.r,
                 fontSize = 10.sp
             )

@@ -6,7 +6,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.*
+import androidx.compose.material3.DrawerState
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.ModalDrawerSheet
+import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -14,10 +18,10 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.navigation.TopLevelDestination
 import fr.iut.alldev.allin.ui.navigation.drawer.components.DrawerCell
 import fr.iut.alldev.allin.ui.navigation.drawer.components.DrawerHeader
-import fr.iut.alldev.allin.theme.AllInTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -30,15 +34,15 @@ fun AllInDrawer(
     nbBets: Int,
     bestWin: Int,
     nbFriends: Int,
-    navigateTo: (String)->Unit,
-    content: @Composable ()->Unit
+    navigateTo: (String) -> Unit,
+    content: @Composable () -> Unit,
 ) {
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet(
                 drawerShape = RectangleShape,
-                drawerContainerColor = AllInTheme.colors.allIn_Dark
+                drawerContainerColor = AllInTheme.colors.allInDark
             ) {
                 DrawerHeader(
                     nbBets = nbBets,
@@ -71,7 +75,7 @@ fun AllInDrawer(
                         Icon(
                             imageVector = Icons.Filled.Settings,
                             modifier = Modifier.size(40.dp),
-                            tint = AllInTheme.colors.allIn_DarkGrey50,
+                            tint = AllInTheme.colors.allInDarkGrey50,
                             contentDescription = null
                         )
                     }

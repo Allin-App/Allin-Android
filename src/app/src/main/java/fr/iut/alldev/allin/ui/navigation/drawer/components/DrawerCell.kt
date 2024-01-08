@@ -25,14 +25,16 @@ fun DrawerCell(
     title: String,
     subtitle: String,
     emoji: Painter,
-    onClick: ()->Unit,
-    modifier: Modifier = Modifier
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
-    Card(onClick = onClick,
+    Card(
+        onClick = onClick,
         modifier = modifier,
-        border = BorderStroke(width = 1.dp, color = AllInTheme.colors.allIn_DarkGrey50),
+        border = BorderStroke(width = 1.dp, color = AllInTheme.colors.allInDarkGrey50),
         shape = RoundedCornerShape(20),
-        colors = CardDefaults.cardColors(containerColor = AllInTheme.colors.allIn_DarkGrey100)) {
+        colors = CardDefaults.cardColors(containerColor = AllInTheme.colors.allInDarkGrey100)
+    ) {
         Row(
             modifier = Modifier.padding(horizontal = 10.dp, vertical = 17.dp),
             verticalAlignment = Alignment.CenterVertically
@@ -56,12 +58,12 @@ fun DrawerCell(
                     text = subtitle,
                     style = AllInTheme.typography.r,
                     fontSize = 9.sp,
-                    color = AllInTheme.colors.allIn_LightGrey300,
+                    color = AllInTheme.colors.allInLightGrey300,
                 )
             }
             Icon(
                 imageVector = Icons.Default.ChevronRight,
-                tint = AllInTheme.colors.allIn_DarkGrey50,
+                tint = AllInTheme.colors.allInDarkGrey50,
                 contentDescription = null
             )
 

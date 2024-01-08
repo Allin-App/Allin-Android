@@ -1,29 +1,37 @@
 package fr.iut.alldev.allin.ext
 
+import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
 import fr.iut.alldev.allin.R
+import fr.iut.alldev.allin.data.model.bet.BetFinishedStatus.LOST
+import fr.iut.alldev.allin.data.model.bet.BetFinishedStatus.WON
 import fr.iut.alldev.allin.data.model.bet.BetStatus
 import fr.iut.alldev.allin.theme.AllInTheme
 
-fun BetStatus.getTitle(): Int {
+@StringRes
+fun BetStatus.getTitleId(): Int {
     return when (this) {
-        BetStatus.FINISHED -> R.string.bet_status_finished
-        BetStatus.IN_PROGRESS -> R.string.bet_status_in_progress
-        BetStatus.WAITING -> R.string.bet_status_waiting
+        is BetStatus.Finished -> R.string.bet_status_finished
+        BetStatus.InProgress -> R.string.bet_status_in_progress
+        BetStatus.Waiting -> R.string.bet_status_waiting
     }
 }
 
-fun BetStatus.getDateStartLabel(): Int {
+@StringRes
+fun BetStatus.getDateStartLabelId(): Int {
     return when (this) {
-        BetStatus.FINISHED -> R.string.Started
+        is BetStatus.Finished -> R.string.Started
         else -> R.string.Starting
     }
 }
 
-fun BetStatus.getDateEndLabel(): Int {
+@StringRes
+fun BetStatus.getDateEndLabelId(): Int {
     return when (this) {
-        BetStatus.FINISHED -> R.string.Ended
+        is BetStatus.Finished -> R.string.Ended
         else -> R.string.Ends
     }
 }
@@ -31,17 +39,41 @@ fun BetStatus.getDateEndLabel(): Int {
 @Composable
 fun BetStatus.getColor(): Color {
     return when (this) {
-        BetStatus.FINISHED -> AllInTheme.colors.allIn_BetFinish
-        BetStatus.IN_PROGRESS -> AllInTheme.colors.allIn_BetInProgress
-        BetStatus.WAITING -> AllInTheme.colors.allIn_BetWaiting
+        is BetStatus.Finished -> AllInTheme.colors.allInBetFinish
+        BetStatus.InProgress -> AllInTheme.colors.allInBetInProgress
+        BetStatus.Waiting -> AllInTheme.colors.allInBetWaiting
     }
 }
 
 @Composable
 fun BetStatus.getTextColor(): Color {
     return when (this) {
-        BetStatus.FINISHED -> AllInTheme.colors.allIn_BetFinishText
-        BetStatus.IN_PROGRESS -> AllInTheme.colors.allIn_BetInProgressText
-        BetStatus.WAITING -> AllInTheme.colors.allIn_BetWaitingText
+        is BetStatus.Finished -> AllInTheme.colors.allInBetFinishText
+        BetStatus.InProgress -> AllInTheme.colors.allInBetInProgressText
+        BetStatus.Waiting -> AllInTheme.colors.allInBetWaitingText
+    }
+}
+
+@StringRes
+fun BetStatus.getBetHistoryPhrase(): Int {
+    return when (this) {
+        is BetStatus.Finished -> when (this.status) {
+            WON -> R.string.bet_history_status_won
+            LOST -> R.string.bet_history_status_lost
+        }
+
+        else -> R.string.bet_history_status_in_progress
+    }
+}
+
+@Composable
+fun BetStatus.getBetHistoryStatusColor(): Brush {
+    return when (this) {
+        is BetStatus.Finished -> when (this.status) {
+            WON -> AllInTheme.colors.allInMainGradient
+            LOST -> AllInTheme.colors.allInDarkGradient
+        }
+
+        else -> SolidColor(AllInTheme.colors.allInDarkGrey100)
     }
 }
