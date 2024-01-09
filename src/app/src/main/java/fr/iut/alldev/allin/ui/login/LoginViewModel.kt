@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import fr.iut.alldev.allin.data.api.interceptors.AllInAPIException
 import fr.iut.alldev.allin.data.repository.UserRepository
+import fr.iut.alldev.allin.keystore.AllInKeystoreManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -13,7 +14,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val keystoreManager: AllInKeystoreManager
 ) : ViewModel() {
 
     var loading = mutableStateOf(false)
@@ -22,19 +24,21 @@ class LoginViewModel @Inject constructor(
     val username = mutableStateOf("")
     val password = mutableStateOf("")
     fun onLogin(
-        navigateToDashboard: ()->Unit
-    ){
+        navigateToDashboard: () -> Unit
+    ) {
         viewModelScope.launch {
             loading.value = true
 
             withContext(Dispatchers.IO) {
-                try{
-                    userRepository.login(username.value, password.value)
-                } catch (e: AllInAPIException){
+                try {
+                    userRepository
+                        .login(username.value, password.value)
+                        ?.let { token -> keystoreManager.putToken(token) }
+                } catch (e: AllInAPIException) {
                     hasError.value = true
                 }
             }
-            if(!hasError.value){
+            if (!hasError.value) {
                 navigateToDashboard()
             }
             loading.value = false

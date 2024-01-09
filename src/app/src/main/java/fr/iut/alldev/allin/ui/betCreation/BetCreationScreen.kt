@@ -24,6 +24,7 @@ import fr.iut.alldev.allin.ext.getIcon
 import fr.iut.alldev.allin.ext.getTitleId
 import fr.iut.alldev.allin.ui.betCreation.tabs.BetCreationScreenAnswerTab
 import fr.iut.alldev.allin.ui.betCreation.tabs.BetCreationScreenQuestionTab
+import fr.iut.alldev.allin.ui.core.AllInAlertDialog
 import fr.iut.alldev.allin.ui.core.AllInDatePicker
 import fr.iut.alldev.allin.ui.core.AllInSections
 import fr.iut.alldev.allin.ui.core.AllInTimePicker
@@ -42,6 +43,7 @@ fun BetCreationScreen(
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     val betTypes = remember { BetType.values().toList() }
+    var hasError by remember { mutableStateOf(false) }
 
     var theme by remember { viewModel.theme }
     var phrase by remember { viewModel.phrase }
@@ -151,8 +153,10 @@ fun BetCreationScreen(
                     themeFieldName = themeFieldName,
                     phraseFieldName = phraseFieldName,
                     registerDateFieldName = registerDateFieldName,
-                    betDateFieldName = betDateFieldName
-                ) { mainViewModel.loading.value = it }
+                    betDateFieldName = betDateFieldName,
+                    setLoading = { mainViewModel.loading.value = it },
+                    onError = { hasError = true }
+                )
             }
         )
     }
@@ -182,6 +186,14 @@ fun BetCreationScreen(
             }
         )
     }
+
+    AllInAlertDialog(
+        enabled = hasError,
+        title = stringResource(id = R.string.generic_error),
+        text = stringResource(id = R.string.bet_creation_error),
+        onDismiss = { hasError = false }
+    )
+
     if (showRegisterTimePicker || showEndTimePicker) {
         val timeToEdit = if (showRegisterTimePicker) registerDate else betDate
         AllInTimePicker(

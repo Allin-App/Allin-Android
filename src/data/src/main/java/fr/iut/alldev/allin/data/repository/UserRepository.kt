@@ -7,10 +7,13 @@ abstract class UserRepository {
     abstract suspend fun login(
         username: String,
         password: String
-    )
+    ): String?
+
+    abstract suspend fun login(token: String): String?
+
     abstract suspend fun register(
         username: String,
         email: String,
         password: String
-    )
+    ): String?
 }

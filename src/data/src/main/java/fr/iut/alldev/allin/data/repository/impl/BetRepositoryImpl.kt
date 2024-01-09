@@ -8,24 +8,22 @@ import fr.iut.alldev.allin.data.model.bet.YesNoBet
 import fr.iut.alldev.allin.data.repository.BetRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
-import timber.log.Timber
 import java.time.ZonedDateTime
 import javax.inject.Inject
 
 class BetRepositoryImpl @Inject constructor(
-    private val api: AllInApi,
+    private val api: AllInApi
 ) : BetRepository() {
     override suspend fun createBet(bet: Bet) {
-        // TODO
-        Timber.d("$bet")
+        api.createBet(bet.toResponseBet())
     }
 
     override suspend fun getHistory(): Flow<List<Bet>> {
         // TODO
         return flowOf(
             listOf(
-
                 YesNoBet(
+                    creator = "Lucas",
                     theme = "Theme",
                     phrase = "Bet phrase 1",
                     endRegisterDate = ZonedDateTime.now().minusDays(4),
@@ -34,6 +32,7 @@ class BetRepositoryImpl @Inject constructor(
                     betStatus = BetStatus.Finished(BetFinishedStatus.WON)
                 ),
                 YesNoBet(
+                    creator = "Lucas",
                     theme = "Theme",
                     phrase = "Bet phrase 2",
                     endRegisterDate = ZonedDateTime.now().minusDays(3),
@@ -42,6 +41,7 @@ class BetRepositoryImpl @Inject constructor(
                     betStatus = BetStatus.Finished(BetFinishedStatus.LOST)
                 ),
                 YesNoBet(
+                    creator = "Lucas",
                     theme = "Theme",
                     phrase = "Bet phrase 3",
                     endRegisterDate = ZonedDateTime.now().minusDays(15),
@@ -58,6 +58,7 @@ class BetRepositoryImpl @Inject constructor(
         return flowOf(
             listOf(
                 YesNoBet(
+                    creator = "Lucas",
                     theme = "Theme",
                     phrase = "Bet phrase 1",
                     endRegisterDate = ZonedDateTime.now().plusDays(5),
@@ -66,6 +67,7 @@ class BetRepositoryImpl @Inject constructor(
                     betStatus = BetStatus.InProgress
                 ),
                 YesNoBet(
+                    creator = "Lucas",
                     theme = "Theme",
                     phrase = "Bet phrase 2",
                     endRegisterDate = ZonedDateTime.now().plusDays(1),
@@ -74,6 +76,7 @@ class BetRepositoryImpl @Inject constructor(
                     betStatus = BetStatus.InProgress
                 ),
                 YesNoBet(
+                    creator = "Lucas",
                     theme = "Theme",
                     phrase = "Bet phrase 3",
                     endRegisterDate = ZonedDateTime.now().plusDays(3),

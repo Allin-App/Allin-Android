@@ -4,11 +4,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import fr.iut.alldev.allin.data.api.interceptors.AllInAPIException
+import fr.iut.alldev.allin.data.model.User
 import fr.iut.alldev.allin.data.model.bet.BetFactory
 import fr.iut.alldev.allin.data.model.bet.BetType
 import fr.iut.alldev.allin.data.repository.BetRepository
+import fr.iut.alldev.allin.di.AllInCurrentUser
 import fr.iut.alldev.allin.ext.FieldErrorState
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.time.ZonedDateTime
 import javax.inject.Inject
 
@@ -17,6 +21,7 @@ const val PHRASE_MIN_SIZE = 5
 
 @HiltViewModel
 class BetCreationViewModel @Inject constructor(
+    @AllInCurrentUser val currentUser: User,
     private val betRepository: BetRepository,
 ) : ViewModel() {
 
@@ -33,7 +38,7 @@ class BetCreationViewModel @Inject constructor(
     val registerDateError = mutableStateOf<FieldErrorState>(FieldErrorState.NoError)
     val betDateError = mutableStateOf<FieldErrorState>(FieldErrorState.NoError)
 
-    private fun initErrorField(){
+    private fun initErrorField() {
         themeError.value = FieldErrorState.NoError
         phraseError.value = FieldErrorState.NoError
         registerDateError.value = FieldErrorState.NoError
@@ -46,30 +51,30 @@ class BetCreationViewModel @Inject constructor(
         phraseFieldName: String,
         registerDateFieldName: String,
         betDateFieldName: String,
-    ){
-        if(theme.value.length < THEME_MIN_SIZE){
+    ) {
+        if (theme.value.length < THEME_MIN_SIZE) {
             themeError.value =
                 FieldErrorState.TooShort(themeFieldName.lowercase(), THEME_MIN_SIZE)
             hasError.value = true
         }
 
-        if(phrase.value.length < PHRASE_MIN_SIZE){
+        if (phrase.value.length < PHRASE_MIN_SIZE) {
             phraseError.value =
                 FieldErrorState.TooShort(phraseFieldName.lowercase(), PHRASE_MIN_SIZE)
             hasError.value = true
         }
 
-        if(registerDate.value <= ZonedDateTime.now()){
+        if (registerDate.value <= ZonedDateTime.now()) {
             registerDateError.value =
                 FieldErrorState.PastDate(registerDateFieldName.lowercase())
             hasError.value = true
         }
 
-        if(betDate.value <= ZonedDateTime.now()){
+        if (betDate.value <= ZonedDateTime.now()) {
             betDateError.value =
                 FieldErrorState.PastDate(betDateFieldName.lowercase())
             hasError.value = true
-        }else if(betDate.value < registerDate.value){
+        } else if (betDate.value < registerDate.value) {
             betDateError.value =
                 FieldErrorState.DateOrder(
                     registerDateFieldName.lowercase(),
@@ -85,7 +90,8 @@ class BetCreationViewModel @Inject constructor(
         phraseFieldName: String,
         registerDateFieldName: String,
         betDateFieldName: String,
-        setLoading: (Boolean)->Unit
+        onError: () -> Unit,
+        setLoading: (Boolean) -> Unit,
     ) {
         viewModelScope.launch {
             setLoading(true)
@@ -98,19 +104,25 @@ class BetCreationViewModel @Inject constructor(
                 betDateFieldName,
             )
 
-            if(!hasError.value){
-                val bet = BetFactory.createBet(
-                    betType = selectedBetType.value,
-                    theme = theme.value,
-                    phrase = phrase.value,
-                    endRegisterDate = registerDate.value,
-                    endBetDate = betDate.value,
-                    isPublic = isPublic.value,
-                    nameTeam1 = "",
-                    nameTeam2 = "",
-                    possibleAnswers = setOf()
-                )
-                betRepository.createBet(bet)
+            if (!hasError.value) {
+                try {
+                    val bet = BetFactory.createBet(
+                        betType = selectedBetType.value,
+                        theme = theme.value,
+                        phrase = phrase.value,
+                        endRegisterDate = registerDate.value,
+                        endBetDate = betDate.value,
+                        isPublic = isPublic.value,
+                        nameTeam1 = "",
+                        nameTeam2 = "",
+                        possibleAnswers = setOf(),
+                        creator = currentUser.username
+                    )
+                    betRepository.createBet(bet)
+                } catch (e: AllInAPIException) {
+                    Timber.e(e)
+                    onError()
+                }
             }
             setLoading(false)
         }

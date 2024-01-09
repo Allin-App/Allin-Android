@@ -176,7 +176,8 @@ private fun YesNoBetPreview() {
             endRegisterDate = ZonedDateTime.now(),
             endBetDate = ZonedDateTime.now(),
             isPublic = true,
-            betStatus = BetStatus.InProgress
+            betStatus = BetStatus.InProgress,
+            creator = "creator"
         ).toBetVO()?.Accept(
             BetStatusBottomSheetDisplayBetVisitor(
                 userCoinAmount = coins,
@@ -198,7 +199,8 @@ private fun YesNoBetFinishedPreview() {
             endRegisterDate = ZonedDateTime.now(),
             endBetDate = ZonedDateTime.now(),
             isPublic = true,
-            betStatus = BetStatus.Finished(BetFinishedStatus.WON)
+            betStatus = BetStatus.Finished(BetFinishedStatus.WON),
+            creator = "creator"
         ).toBetVO()?.Accept(
             BetStatusBottomSheetDisplayBetVisitor(
                 userCoinAmount = coins,
@@ -222,7 +224,8 @@ private fun MatchBetPreview() {
             isPublic = true,
             betStatus = BetStatus.InProgress,
             nameTeam1 = "Team 1",
-            nameTeam2 = "Team 2"
+            nameTeam2 = "Team 2",
+            creator = "creator"
         ).toBetVO()?.Accept(
             BetStatusBottomSheetDisplayBetVisitor(
                 userCoinAmount = coins,

@@ -60,6 +60,7 @@ fun MainScreen(
     drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
     startDestination: String = Routes.PUBLIC_BETS,
     mainViewModel: MainViewModel = hiltViewModel(),
+    navigateToWelcomeScreen: () -> Unit
 ) {
     val loading by remember { mainViewModel.loading }
 
@@ -105,6 +106,10 @@ fun MainScreen(
         bestWin = 362,
         navigateTo = { route ->
             navController.popUpTo(route, startDestination)
+        },
+        logout = {
+            mainViewModel.deleteToken()
+            navigateToWelcomeScreen()
         }
     ) {
         AllInScaffold(

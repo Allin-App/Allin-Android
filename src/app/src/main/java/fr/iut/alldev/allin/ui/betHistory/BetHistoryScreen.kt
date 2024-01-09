@@ -52,7 +52,7 @@ fun BetHistoryScreen(
             items(bets) {
                 BetHistoryScreenCard(
                     title = it.phrase,
-                    creator = "creator",
+                    creator = it.creator,
                     category = it.theme,
                     date = it.endBetDate.formatToMediumDateNoYear(),
                     time = it.endBetDate.formatToTime(),

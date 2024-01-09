@@ -8,6 +8,7 @@
     <string name="password">Password</string>
     <string name="confirm_password">Confirm password</string>
     <string name="Login">Login</string>
+    <string name="Logout">Logout</string>
     <string name="already_have_account">Already have an account ?</string>
     <string name="forgot_password">Forgot password ?</string>
     <string name="no_account">Don\'t have an account ?</string>
@@ -27,6 +28,7 @@
     <string name="Details">Details</string>
     <string name="Stake">Stake</string>
     <string name="Possible_winnings">Possible winnings</string>
+    <string name="generic_error">Error</string>
 
     <!--Drawer-->
     <string name="bets">Bets</string>
@@ -82,6 +84,8 @@
     <string name="yes_no_bottom_text_2">No other answer will be accepted.</string>
     <string name="sport_match">Sport match</string>
     <string name="custom_answers">Custom answers</string>
+    <string name="bet_creation_error">Error while creating the bet. Please try again.</string>
+
     <!--Bet Page-->
     <string name="Popular">Popular</string>
     <string name="Public">Public</string>
@@ -107,6 +111,7 @@
         <item quantity="one">%s point at stake</item>
         <item quantity="other">%s points at stake</item>
     </plurals>
+
     <!--Bet status-->
     <string name="bet_status_finished">Finished !</string>
     <string name="bet_status_in_progress">In progress…</string>

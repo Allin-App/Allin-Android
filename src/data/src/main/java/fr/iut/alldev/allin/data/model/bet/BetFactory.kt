@@ -6,6 +6,7 @@ class BetFactory {
     companion object {
         fun createBet(
             betType: BetType,
+            creator: String,
             theme: String,
             phrase: String,
             endRegisterDate: ZonedDateTime,
@@ -20,6 +21,7 @@ class BetFactory {
                 BetType.YES_NO -> {
                     YesNoBet(
                         theme = theme,
+                        creator = creator,
                         phrase = phrase,
                         endRegisterDate = endRegisterDate,
                         endBetDate = endBetDate,
@@ -31,6 +33,7 @@ class BetFactory {
                 BetType.MATCH -> {
                     MatchBet(
                         theme = theme,
+                        creator = creator,
                         phrase = phrase,
                         endRegisterDate = endRegisterDate,
                         endBetDate = endBetDate,
@@ -45,6 +48,7 @@ class BetFactory {
                 BetType.CUSTOM -> {
                     CustomBet(
                         theme = theme,
+                        creator = creator,
                         phrase = phrase,
                         endRegisterDate = endRegisterDate,
                         endBetDate = endBetDate,

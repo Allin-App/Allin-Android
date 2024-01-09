@@ -46,15 +46,12 @@ object NavArguments {
     const val ARG_BET_HISTORY_IS_CURRENT = "ARG_BET_HISTORY_IS_CURRENT"
 }
 
-
 internal fun NavHostController.popUpTo(route: String, baseRoute: String) {
     this.navigate(route) {
         launchSingleTop = true
         popUpTo(baseRoute) {
-            saveState = true
             inclusive = true
         }
-        restoreState = true
     }
 }
 
@@ -67,21 +64,19 @@ fun AllInNavHost(
     NavHost(
         navController = navController,
         startDestination = startDestination,
-        enterTransition =
-        {
-            if (navController.currentDestination?.route != Routes.DASHBOARD)
+        enterTransition = {
+            if (navController.currentDestination?.route != Routes.DASHBOARD &&
+                navController.currentDestination?.route != Routes.WELCOME
+            ) {
                 slideInHorizontally(initialOffsetX = { it })
-            else
-                fadeIn(animationSpec = tween(1500))
+            } else fadeIn(animationSpec = tween(1500))
         },
-        exitTransition =
-        {
-            if (navController.currentDestination?.route != Routes.DASHBOARD)
+        exitTransition = {
+            if (navController.currentDestination?.route != Routes.DASHBOARD &&
+                navController.currentDestination?.route != Routes.WELCOME
+            ) {
                 slideOutHorizontally(targetOffsetX = { -it / 2 })
-            else
-                fadeOut(
-                    animationSpec = tween(1500)
-                )
+            } else fadeOut(animationSpec = tween(1500))
         },
         modifier = modifier
             .fillMaxSize()
@@ -90,7 +85,7 @@ fun AllInNavHost(
         allInWelcomeScreen(navController)
         allInRegisterScreen(navController)
         allInLoginScreen(navController)
-        allInDashboard()
+        allInDashboard(navController)
     }
 }
 
@@ -149,14 +144,15 @@ private fun NavGraphBuilder.allInWelcomeScreen(
             },
             navigateToLogin = {
                 navController.popUpTo(Routes.LOGIN, Routes.WELCOME)
+            },
+            navigateToDashboard = {
+                navController.popUpTo(Routes.DASHBOARD, Routes.WELCOME)
             }
         )
     }
 }
 
-private fun NavGraphBuilder.allInRegisterScreen(
-    navController: NavHostController,
-) {
+private fun NavGraphBuilder.allInRegisterScreen(navController: NavHostController) {
     composable(route = Routes.REGISTER) {
         RegisterScreen(
             navigateToDashboard = {
@@ -169,9 +165,7 @@ private fun NavGraphBuilder.allInRegisterScreen(
     }
 }
 
-private fun NavGraphBuilder.allInLoginScreen(
-    navController: NavHostController,
-) {
+private fun NavGraphBuilder.allInLoginScreen(navController: NavHostController) {
     composable(route = Routes.LOGIN) {
         LoginScreen(
             navigateToRegister = {
@@ -184,10 +178,14 @@ private fun NavGraphBuilder.allInLoginScreen(
     }
 }
 
-private fun NavGraphBuilder.allInDashboard() {
+private fun NavGraphBuilder.allInDashboard(navController: NavHostController) {
     composable(
         route = Routes.DASHBOARD,
     ) {
-        MainScreen()
+        MainScreen(
+            navigateToWelcomeScreen = {
+                navController.popUpTo(Routes.WELCOME, Routes.DASHBOARD)
+            }
+        )
     }
 }

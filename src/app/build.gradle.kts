@@ -100,4 +100,7 @@ dependencies {
     androidTestImplementation(libs.test.junit)
     androidTestImplementation(libs.test.espresso)
     androidTestImplementation(libs.test.androidx.junit)
+    androidTestImplementation(libs.hilt.androidTesting)
+    kaptAndroidTest(libs.hilt.androidCompiler)
+
 }

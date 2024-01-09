@@ -32,6 +32,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import fr.iut.alldev.allin.R
+import fr.iut.alldev.allin.data.ext.formatToMediumDateNoYear
+import fr.iut.alldev.allin.data.ext.formatToTime
 import fr.iut.alldev.allin.data.model.bet.Bet
 import fr.iut.alldev.allin.data.model.bet.BetFinishedStatus
 import fr.iut.alldev.allin.data.model.bet.BetStatus
@@ -50,7 +52,8 @@ private val bets = listOf(
         endRegisterDate = ZonedDateTime.now(),
         endBetDate = ZonedDateTime.now(),
         isPublic = true,
-        betStatus = BetStatus.Waiting
+        betStatus = BetStatus.Waiting,
+        creator = "Lucas"
     ),
     YesNoBet(
         theme = "Études",
@@ -58,7 +61,8 @@ private val bets = listOf(
         endRegisterDate = ZonedDateTime.now(),
         endBetDate = ZonedDateTime.now(),
         isPublic = true,
-        betStatus = BetStatus.InProgress
+        betStatus = BetStatus.InProgress,
+        creator = "Lucas"
     ),
     YesNoBet(
         theme = "Études",
@@ -66,7 +70,8 @@ private val bets = listOf(
         endRegisterDate = ZonedDateTime.now(),
         endBetDate = ZonedDateTime.now(),
         isPublic = true,
-        betStatus = BetStatus.Finished(BetFinishedStatus.WON)
+        betStatus = BetStatus.Finished(BetFinishedStatus.WON),
+        creator = "Lucas"
     ),
     MatchBet(
         theme = "Études",
@@ -76,7 +81,8 @@ private val bets = listOf(
         isPublic = true,
         betStatus = BetStatus.Waiting,
         nameTeam1 = "Team 1",
-        nameTeam2 = "Team 2"
+        nameTeam2 = "Team 2",
+        creator = "Lucas"
     ),
 )
 
@@ -153,11 +159,11 @@ fun BetScreen(
         }
         items(bets) {
             BetScreenCard(
-                creator = "Lucas",
-                category = "Études",
-                title = "Emre va réussir son TP de CI/CD mercredi?",
-                date = "11 Sept.",
-                time = "13:00",
+                creator = it.creator,
+                category = it.theme,
+                title = it.phrase,
+                date = it.endBetDate.formatToMediumDateNoYear(),
+                time = it.endBetDate.formatToTime(),
                 players = List(3) { null },
                 onClickParticipate = { selectBet(it, true) },
                 onClickCard = { selectBet(it, false) },

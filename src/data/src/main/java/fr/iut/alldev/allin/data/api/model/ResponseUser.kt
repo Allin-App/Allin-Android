@@ -19,7 +19,8 @@ data class ResponseUser(
     val username: String,
     val email: String,
     var nbCoins: Int,
-){
+    var token: String? = null,
+) {
     fun toUser() = User(
         username = username,
         email = email,

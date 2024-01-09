@@ -10,6 +10,7 @@ kotlin = "1.9.20"
 
 androidxCore = "1.12.0"
 androidxActivity = "1.8.2"
+androidxSecurity = "1.0.0"
 
 composeBom = "2023.10.01"
 composePreview = "1.6.0-beta03"
@@ -39,6 +40,7 @@ resgenPlugin = "2.5"
 # Android
 androidx-core = { module = "androidx.core:core-ktx", version.ref = "androidxCore" }
 androidx-activity = { module = "androidx.activity:activity-compose", version.ref = "androidxActivity" }
+androidx-security = { module = "androidx.security:security-crypto", version.ref = "androidxSecurity" }
 
 # Lifecycle
 androidx-lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle" }
@@ -50,7 +52,8 @@ androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-ru
 test-junit = { group = "junit", name = "junit", version.ref = "junit" }
 test-androidx-junit = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "androidxTestExtJunit" }
 test-espresso = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
-
+hilt-androidTesting = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hilt" }
+hilt-androidCompiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
 
 # Compose
 compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
@@ -95,6 +98,6 @@ plugin-hilt = { module = "com.google.dagger:hilt-android-gradle-plugin", version
 
 [bundles]
 
-android = ["androidx-core", "androidx-activity"]
+android = ["androidx-core", "androidx-activity", "androidx-security"]
 androidx-lifecycle = ["androidx-lifecycle-runtime", "androidx-lifecycle-viewmodel", "androidx-lifecycle-process", "androidx-lifecycle-runtime-compose"]
 compose = ["compose-ui", "compose-ui-graphics", "compose-tooling-preview", "compose-ui-tooling", "compose-foundation", "compose-material", "compose-material3", "compose-material-icons", "compose-material-icons-extended", "compose-navigation", "compose-ui-googlefonts"]

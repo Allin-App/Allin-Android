@@ -6,6 +6,7 @@
     <string name="password">Mot de passe</string>
     <string name="confirm_password">Confirmation du mot de passe</string>
     <string name="Login">Se connecter</string>
+    <string name="Logout">Déconnexion</string>
     <string name="already_have_account">Tu as déjà un compte ?</string>
     <string name="forgot_password">Mot de passe oublié ?</string>
     <string name="no_account">Pas encore inscrit ?</string>
@@ -25,6 +26,7 @@
     <string name="Details">Détails</string>
     <string name="Stake">Mise</string>
     <string name="Possible_winnings">Gains possibles</string>
+    <string name="generic_error">Erreur</string>
 
     <!--Drawer-->
     <string name="bets">Bets</string>
@@ -79,6 +81,8 @@
     <string name="yes_no_bottom_text_1">Les utilisateurs devront répondre au pari avec OUI ou NON.</string>
     <string name="yes_no_bottom_text_2">Aucune autre réponse ne sera acceptée.</string>
     <string name="custom_answers">Réponses personnalisées</string>
+    <string name="bet_creation_error">Erreur lors de la création du bet, veuillez rééssayer.</string>
+
     <!--Bet Page-->
     <string name="Popular">Populaire</string>
     <string name="Public">Public</string>

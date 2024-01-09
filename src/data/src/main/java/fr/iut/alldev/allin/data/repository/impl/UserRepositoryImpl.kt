@@ -10,25 +10,34 @@ class UserRepositoryImpl @Inject constructor(
     private val api: AllInApi,
 ) : UserRepository() {
 
-    override suspend fun login(username: String, password: String) {
-        currentUser = api.login(
+    override suspend fun login(username: String, password: String): String? {
+        val response = api.login(
             CheckUser(
                 login = username,
                 password = password
             )
-        ).toUser()
+        )
+        currentUser = response.toUser()
+        return response.token
+    }
+
+    override suspend fun login(token: String): String? {
+        val response = api.login(token = "Bearer $token")
+        currentUser = response.toUser()
+        return response.token
     }
 
 
-    override suspend fun register(username: String, email: String, password: String) {
-        currentUser = api.register(
+    override suspend fun register(username: String, email: String, password: String): String? {
+        val response = api.register(
             RequestUser(
                 username = username,
                 email = email,
                 password = password,
                 nbCoins = 0
             )
-        ).toUser()
-
+        )
+        currentUser = response.toUser()
+        return response.token
     }
 }
