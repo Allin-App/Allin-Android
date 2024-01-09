@@ -82,6 +82,7 @@
     <string name="yes_no_bottom_text_2">Aucune autre réponse ne sera acceptée.</string>
     <string name="custom_answers">Réponses personnalisées</string>
     <string name="bet_creation_error">Erreur lors de la création du bet, veuillez rééssayer.</string>
+    <string name="bet_creation_success_message">Bet créé !</string>
 
     <!--Bet Page-->
     <string name="Popular">Populaire</string>

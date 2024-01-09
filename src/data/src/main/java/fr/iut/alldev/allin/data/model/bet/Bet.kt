@@ -1,6 +1,6 @@
 package fr.iut.alldev.allin.data.model.bet
 
-import fr.iut.alldev.allin.data.api.model.ResponseBet
+import fr.iut.alldev.allin.data.api.model.RequestBet
 import java.time.ZonedDateTime
 
 abstract class Bet(
@@ -14,9 +14,8 @@ abstract class Bet(
     open val betStatus: BetStatus,
 ) {
     abstract fun getResponses(): List<String>
-    fun toResponseBet(): ResponseBet {
-        return ResponseBet(
-            id = id,
+    fun toRequestBet(): RequestBet {
+        return RequestBet(
             theme = theme,
             sentenceBet = phrase,
             endRegistration = endRegisterDate,

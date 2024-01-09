@@ -1,8 +1,8 @@
 package fr.iut.alldev.allin.data.api
 
 import fr.iut.alldev.allin.data.api.model.CheckUser
+import fr.iut.alldev.allin.data.api.model.RequestBet
 import fr.iut.alldev.allin.data.api.model.RequestUser
-import fr.iut.alldev.allin.data.api.model.ResponseBet
 import fr.iut.alldev.allin.data.api.model.ResponseUser
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -20,5 +20,5 @@ interface AllInApi {
     suspend fun login(@Header("Authorization") token: String): ResponseUser
 
     @POST("bets/add")
-    suspend fun createBet(@Body body: ResponseBet)
+    suspend fun createBet(@Body body: RequestBet)
 }

@@ -14,6 +14,7 @@ import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.betStatus.BetStatusBottomSheet
 import fr.iut.alldev.allin.ui.betStatus.visitor.BetStatusBottomSheetDisplayBetVisitor
 import fr.iut.alldev.allin.ui.core.AllInLoading
+import fr.iut.alldev.allin.ui.core.snackbar.AllInSnackbarVisualsImpl
 import fr.iut.alldev.allin.ui.main.components.AllInScaffold
 import fr.iut.alldev.allin.ui.navigation.AllInDrawerNavHost
 import fr.iut.alldev.allin.ui.navigation.Routes
@@ -62,15 +63,12 @@ fun MainScreen(
     mainViewModel: MainViewModel = hiltViewModel(),
     navigateToWelcomeScreen: () -> Unit
 ) {
-    val loading by remember { mainViewModel.loading }
+    val scope = rememberCoroutineScope()
 
-    val currentUser = remember {
-        mainViewModel.currentUserState
-    }
-
-    val (selectedBet, setSelectedBet) = remember {
-        mainViewModel.selectedBet
-    }
+    var loading by remember { mainViewModel.loading }
+    val currentUser = remember { mainViewModel.currentUserState }
+    val (selectedBet, setSelectedBet) = remember { mainViewModel.selectedBet }
+    val (statusVisibility, sheetBackVisibility, setStatusVisibility) = rememberBetStatusVisibilities()
 
     val betStatusDisplayVisitor = remember {
         BetStatusBottomSheetDisplayBetVisitor(
@@ -81,10 +79,26 @@ fun MainScreen(
         )
     }
 
-    val scope = rememberCoroutineScope()
+    val snackbarHostState = remember { SnackbarHostState() }
+    var snackbarContent by remember { mainViewModel.snackbarContent }
 
-    val (statusVisibility, sheetBackVisibility, setStatusVisibility)
-            = rememberBetStatusVisibilities()
+    LaunchedEffect(snackbarContent) {
+        snackbarContent?.let {
+            scope.launch {
+                snackbarHostState.currentSnackbarData?.dismiss()
+                snackbarHostState.showSnackbar(
+                    AllInSnackbarVisualsImpl(
+                        message = it.text,
+                        withDismissAction = false,
+                        duration = SnackbarDuration.Short,
+                        type = it.type
+                    )
+                )
+                snackbarHostState.currentSnackbarData
+                snackbarContent = null
+            }
+        }
+    }
 
     val bottomSheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true,
@@ -115,7 +129,8 @@ fun MainScreen(
         AllInScaffold(
             onMenuClicked = { scope.launch { drawerState.open() } },
             coinAmount = currentUser.userCoins.value,
-            drawerState = drawerState
+            drawerState = drawerState,
+            snackbarHostState = snackbarHostState
         ) {
             LaunchedEffect(key1 = it) {
                 betStatusDisplayVisitor.paddingValues.value = it
@@ -129,12 +144,13 @@ fun MainScreen(
             ) {
                 AllInDrawerNavHost(
                     navController = navController,
-                    mainViewModel = mainViewModel,
                     selectBet = { bet, participate ->
                         setSelectedBet(bet)
                         betStatusDisplayVisitor.participateBottomSheetVisibility.value = participate
                         setStatusVisibility(true)
-                    }
+                    },
+                    setLoading = { loading = it },
+                    putSnackbarContent = { mainViewModel.putSnackbarContent(it) }
                 )
             }
         }

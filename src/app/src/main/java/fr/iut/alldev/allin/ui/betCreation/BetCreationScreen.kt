@@ -31,7 +31,6 @@ import fr.iut.alldev.allin.ui.core.AllInTimePicker
 import fr.iut.alldev.allin.ui.core.RainbowButton
 import fr.iut.alldev.allin.ui.core.SectionElement
 import fr.iut.alldev.allin.ui.core.SelectionElement
-import fr.iut.alldev.allin.ui.main.MainViewModel
 import java.time.Instant
 import java.time.ZoneId
 import java.time.ZonedDateTime
@@ -39,7 +38,8 @@ import java.time.ZonedDateTime
 @Composable
 fun BetCreationScreen(
     viewModel: BetCreationViewModel = hiltViewModel(),
-    mainViewModel: MainViewModel,
+    setLoading: (Boolean) -> Unit,
+    onCreation: () -> Unit
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     val betTypes = remember { BetType.values().toList() }
@@ -154,8 +154,11 @@ fun BetCreationScreen(
                     phraseFieldName = phraseFieldName,
                     registerDateFieldName = registerDateFieldName,
                     betDateFieldName = betDateFieldName,
-                    setLoading = { mainViewModel.loading.value = it },
-                    onError = { hasError = true }
+                    setLoading = setLoading,
+                    onError = { hasError = true },
+                    onSuccess = {
+                        onCreation()
+                    }
                 )
             }
         )

@@ -1,5 +1,6 @@
 package fr.iut.alldev.allin.ui.main
 
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -9,6 +10,7 @@ import fr.iut.alldev.allin.data.model.User
 import fr.iut.alldev.allin.data.model.bet.Bet
 import fr.iut.alldev.allin.di.AllInCurrentUser
 import fr.iut.alldev.allin.keystore.AllInKeystoreManager
+import fr.iut.alldev.allin.ui.core.snackbar.SnackbarType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -29,6 +31,12 @@ class MainViewModel @Inject constructor(
     val currentUserState = UserState(currentUser)
     val selectedBet = mutableStateOf<Bet?>(null)
 
+    val snackbarContent: MutableState<SnackbarContent?> by lazy { mutableStateOf(null) }
+    fun putSnackbarContent(content: SnackbarContent) {
+        snackbarContent.value = content
+    }
+
+
     fun deleteToken() {
         viewModelScope.launch {
             keystoreManager.deleteToken()
@@ -46,4 +54,8 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    class SnackbarContent(
+        val text: String,
+        val type: SnackbarType = SnackbarType.STANDARD
+    )
 }

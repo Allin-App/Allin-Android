@@ -14,8 +14,10 @@ import javax.inject.Inject
 class BetRepositoryImpl @Inject constructor(
     private val api: AllInApi
 ) : BetRepository() {
-    override suspend fun createBet(bet: Bet) {
-        api.createBet(bet.toResponseBet())
+    override suspend fun createBet(bet: Bet, token: String) {
+        api.createBet(
+            bet.toRequestBet().copy(createdBy = token)
+        )
     }
 
     override suspend fun getHistory(): Flow<List<Bet>> {

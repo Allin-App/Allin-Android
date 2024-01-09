@@ -11,6 +11,7 @@ import fr.iut.alldev.allin.data.model.bet.BetType
 import fr.iut.alldev.allin.data.repository.BetRepository
 import fr.iut.alldev.allin.di.AllInCurrentUser
 import fr.iut.alldev.allin.ext.FieldErrorState
+import fr.iut.alldev.allin.keystore.AllInKeystoreManager
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.time.ZonedDateTime
@@ -23,6 +24,7 @@ const val PHRASE_MIN_SIZE = 5
 class BetCreationViewModel @Inject constructor(
     @AllInCurrentUser val currentUser: User,
     private val betRepository: BetRepository,
+    private val keystoreManager: AllInKeystoreManager
 ) : ViewModel() {
 
     var hasError = mutableStateOf(false)
@@ -92,6 +94,7 @@ class BetCreationViewModel @Inject constructor(
         betDateFieldName: String,
         onError: () -> Unit,
         setLoading: (Boolean) -> Unit,
+        onSuccess: () -> Unit
     ) {
         viewModelScope.launch {
             setLoading(true)
@@ -118,7 +121,8 @@ class BetCreationViewModel @Inject constructor(
                         possibleAnswers = setOf(),
                         creator = currentUser.username
                     )
-                    betRepository.createBet(bet)
+                    betRepository.createBet(bet, keystoreManager.getToken() ?: "")
+                    onSuccess()
                 } catch (e: AllInAPIException) {
                     Timber.e(e)
                     onError()

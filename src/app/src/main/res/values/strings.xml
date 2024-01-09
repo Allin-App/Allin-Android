@@ -85,6 +85,7 @@
     <string name="sport_match">Sport match</string>
     <string name="custom_answers">Custom answers</string>
     <string name="bet_creation_error">Error while creating the bet. Please try again.</string>
+    <string name="bet_creation_success_message">Bet created !</string>
 
     <!--Bet Page-->
     <string name="Popular">Popular</string>

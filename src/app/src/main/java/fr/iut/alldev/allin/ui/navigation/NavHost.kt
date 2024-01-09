@@ -11,6 +11,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -19,11 +20,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.data.model.bet.Bet
 import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.bet.BetScreen
 import fr.iut.alldev.allin.ui.betCreation.BetCreationScreen
 import fr.iut.alldev.allin.ui.betHistory.BetHistoryScreen
+import fr.iut.alldev.allin.ui.core.snackbar.SnackbarType
 import fr.iut.alldev.allin.ui.login.LoginScreen
 import fr.iut.alldev.allin.ui.main.MainScreen
 import fr.iut.alldev.allin.ui.main.MainViewModel
@@ -93,9 +96,10 @@ fun AllInNavHost(
 internal fun AllInDrawerNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController,
-    mainViewModel: MainViewModel,
     selectBet: (Bet, Boolean) -> Unit,
     startDestination: String = Routes.PUBLIC_BETS,
+    setLoading: (Boolean) -> Unit,
+    putSnackbarContent: (MainViewModel.SnackbarContent) -> Unit
 ) {
     NavHost(
         navController = navController,
@@ -110,8 +114,18 @@ internal fun AllInDrawerNavHost(
             )
         }
         composable(route = Routes.BET_CREATION) {
+            val creationSuccessMessage = stringResource(id = R.string.bet_creation_success_message)
             BetCreationScreen(
-                mainViewModel = mainViewModel
+                setLoading = setLoading,
+                onCreation = {
+                    putSnackbarContent(
+                        MainViewModel.SnackbarContent(
+                            text = creationSuccessMessage,
+                            type = SnackbarType.SUCCESS
+                        )
+                    )
+                    navController.popUpTo(Routes.PUBLIC_BETS, Routes.BET_CREATION)
+                }
             )
         }
 
