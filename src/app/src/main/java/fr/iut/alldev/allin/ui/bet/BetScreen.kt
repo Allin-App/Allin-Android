@@ -35,56 +35,10 @@ import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.data.ext.formatToMediumDateNoYear
 import fr.iut.alldev.allin.data.ext.formatToTime
 import fr.iut.alldev.allin.data.model.bet.Bet
-import fr.iut.alldev.allin.data.model.bet.BetFinishedStatus
-import fr.iut.alldev.allin.data.model.bet.BetStatus
-import fr.iut.alldev.allin.data.model.bet.MatchBet
-import fr.iut.alldev.allin.data.model.bet.YesNoBet
 import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.bet.components.BetScreenCard
 import fr.iut.alldev.allin.ui.bet.components.BetScreenPopularCard
 import fr.iut.alldev.allin.ui.core.AllInChip
-import java.time.ZonedDateTime
-
-private val bets = listOf(
-    YesNoBet(
-        theme = "Études",
-        phrase = "Emre va t'il finir son TP de MAUI?",
-        endRegisterDate = ZonedDateTime.now(),
-        endBetDate = ZonedDateTime.now(),
-        isPublic = true,
-        betStatus = BetStatus.Waiting,
-        creator = "Lucas"
-    ),
-    YesNoBet(
-        theme = "Études",
-        phrase = "Emre va t'il finir son TP de MAUI?",
-        endRegisterDate = ZonedDateTime.now(),
-        endBetDate = ZonedDateTime.now(),
-        isPublic = true,
-        betStatus = BetStatus.InProgress,
-        creator = "Lucas"
-    ),
-    YesNoBet(
-        theme = "Études",
-        phrase = "Emre va t'il finir son TP de MAUI?",
-        endRegisterDate = ZonedDateTime.now(),
-        endBetDate = ZonedDateTime.now(),
-        isPublic = true,
-        betStatus = BetStatus.Finished(BetFinishedStatus.WON),
-        creator = "Lucas"
-    ),
-    MatchBet(
-        theme = "Études",
-        phrase = "Emre va t'il finir son TP de MAUI?",
-        endRegisterDate = ZonedDateTime.now(),
-        endBetDate = ZonedDateTime.now(),
-        isPublic = true,
-        betStatus = BetStatus.Waiting,
-        nameTeam1 = "Team 1",
-        nameTeam2 = "Team 2",
-        creator = "Lucas"
-    ),
-)
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterialApi::class)
 @Composable
@@ -92,6 +46,8 @@ fun BetScreen(
     viewModel: BetViewModel = hiltViewModel(),
     selectBet: (Bet, Boolean) -> Unit,
 ) {
+
+    val bets by viewModel.bets.collectAsState()
 
     val horizontalPadding = 23.dp
 

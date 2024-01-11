@@ -21,7 +21,6 @@ class BetRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getHistory(): Flow<List<Bet>> {
-        // TODO
         return flowOf(
             listOf(
                 YesNoBet(
@@ -87,6 +86,12 @@ class BetRepositoryImpl @Inject constructor(
                     betStatus = BetStatus.InProgress
                 )
             )
+        )
+    }
+
+    override suspend fun getAllBets(): Flow<List<Bet>> {
+        return flowOf(
+            api.getAllBets().map { it.toBet() }
         )
     }
 
