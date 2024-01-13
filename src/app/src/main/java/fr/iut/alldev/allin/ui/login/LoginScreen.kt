@@ -84,7 +84,7 @@ fun LoginScreen(
                 modifier = Modifier.fillMaxWidth(),
                 text = stringResource(id = R.string.Login_title),
                 color = AllInTheme.themeColors.onMainSurface,
-                style = AllInTheme.typography.h3,
+                style = AllInTheme.typography.sm1,
                 textAlign = TextAlign.Center,
                 fontSize = 40.sp
             )
@@ -93,7 +93,7 @@ fun LoginScreen(
                 modifier = Modifier.fillMaxWidth(),
                 text = stringResource(id = R.string.Login_subtitle),
                 color = AllInTheme.themeColors.onMainSurface,
-                style = AllInTheme.typography.r,
+                style = AllInTheme.typography.p1,
                 textAlign = TextAlign.Center,
                 fontSize = 23.sp
             )
@@ -122,7 +122,7 @@ fun LoginScreen(
             }
             ClickableText(
                 text = AnnotatedString(stringResource(id = R.string.forgot_password)),
-                style = AllInTheme.typography.m.copy(
+                style = AllInTheme.typography.sm2.copy(
                     color = AllInTheme.themeColors.onMainSurface,
                     fontSize = 15.sp,
                 ),
@@ -156,12 +156,12 @@ fun LoginScreen(
                     text = stringResource(id = R.string.no_account),
                     color = AllInTheme.themeColors.onMainSurface,
                     fontSize = 15.sp,
-                    style = AllInTheme.typography.r,
+                    style = AllInTheme.typography.p1,
                     modifier = Modifier.padding(end = 5.dp)
                 )
                 ClickableText(
                     text = AnnotatedString(stringResource(id = R.string.Register)),
-                    style = AllInTheme.typography.r.copy(
+                    style = AllInTheme.typography.p1.copy(
                         color = AllInTheme.colors.allInPurple,
                         fontSize = 15.sp,
                         fontWeight = FontWeight.Bold

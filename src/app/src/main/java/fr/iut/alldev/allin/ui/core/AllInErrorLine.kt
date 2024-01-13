@@ -12,7 +12,7 @@ import fr.iut.alldev.allin.theme.AllInTheme
 fun AllInErrorLine(text: String) {
     Text(
         text = text,
-        style = AllInTheme.typography.r,
+        style = AllInTheme.typography.p1,
         color = Color.Red,
         fontSize = 10.sp,
         overflow = TextOverflow.Ellipsis

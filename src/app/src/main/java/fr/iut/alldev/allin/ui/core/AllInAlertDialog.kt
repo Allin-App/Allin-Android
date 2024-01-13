@@ -32,7 +32,7 @@ fun AllInAlertDialog(
             text = {
                 Text(
                     text = text,
-                    style = AllInTheme.typography.r
+                    style = AllInTheme.typography.p1
                 )
             },
             confirmButton = {

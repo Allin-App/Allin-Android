@@ -21,7 +21,7 @@ interface AllInApi {
     suspend fun login(@Header("Authorization") token: String): ResponseUser
 
     @POST("bets/add")
-    suspend fun createBet(@Body body: RequestBet)
+    suspend fun createBet(@Header("Authorization") token: String, @Body body: RequestBet)
 
     @GET("bets/gets")
     suspend fun getAllBets(): List<ResponseBet>

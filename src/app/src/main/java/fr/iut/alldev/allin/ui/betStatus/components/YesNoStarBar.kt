@@ -45,7 +45,7 @@ fun YesNoStatBar(
         ) {
             Text(
                 text = yesPercentage.toPercentageString(),
-                style = AllInTheme.typography.h3,
+                style = AllInTheme.typography.sm1,
                 color = AllInTheme.colors.allInBarPurple
             )
         }

@@ -89,7 +89,7 @@ fun RegisterScreen(
                 modifier = Modifier.fillMaxWidth(),
                 text = stringResource(id = R.string.Hello_x, username),
                 color = AllInTheme.themeColors.onMainSurface,
-                style = AllInTheme.typography.h3,
+                style = AllInTheme.typography.sm1,
                 textAlign = TextAlign.Center,
                 fontSize = 40.sp,
                 overflow = TextOverflow.Ellipsis,
@@ -99,7 +99,7 @@ fun RegisterScreen(
                 modifier = Modifier.fillMaxWidth(),
                 text = stringResource(id = R.string.Register_title),
                 color = AllInTheme.themeColors.onMainSurface,
-                style = AllInTheme.typography.h3,
+                style = AllInTheme.typography.sm1,
                 textAlign = TextAlign.Center,
                 fontSize = 40.sp
             )
@@ -108,7 +108,7 @@ fun RegisterScreen(
                 modifier = Modifier.fillMaxWidth(),
                 text = stringResource(id = R.string.Register_subtitle),
                 color = AllInTheme.themeColors.onMainSurface,
-                style = AllInTheme.typography.r,
+                style = AllInTheme.typography.p1,
                 textAlign = TextAlign.Center,
                 fontSize = 23.sp
             )
@@ -184,12 +184,12 @@ fun RegisterScreen(
                     text = stringResource(id = R.string.already_have_account),
                     color = AllInTheme.themeColors.onMainSurface,
                     fontSize = 15.sp,
-                    style = AllInTheme.typography.r,
+                    style = AllInTheme.typography.p1,
                     modifier = Modifier.padding(end = 5.dp)
                 )
                 ClickableText(
                     text = AnnotatedString(stringResource(id = R.string.Login)),
-                    style = AllInTheme.typography.r.copy(
+                    style = AllInTheme.typography.p1.copy(
                         color = AllInTheme.colors.allInPurple,
                         fontSize = 15.sp,
                         fontWeight = FontWeight.Bold

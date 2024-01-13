@@ -105,7 +105,7 @@ fun AllInSnackbarContent(
             Text(
                 text = text,
                 color = contentColor,
-                style = AllInTheme.typography.r,
+                style = AllInTheme.typography.p1,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 5,
                 modifier = Modifier.weight(1f)

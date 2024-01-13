@@ -55,6 +55,5 @@ data class RequestBet(
     @Serializable(SimpleDateSerializer::class) val endRegistration: ZonedDateTime,
     @Serializable(SimpleDateSerializer::class) var endBet: ZonedDateTime,
     var isPrivate: Boolean,
-    var response: List<String>,
-    val createdBy: String
+    var response: List<String>
 )

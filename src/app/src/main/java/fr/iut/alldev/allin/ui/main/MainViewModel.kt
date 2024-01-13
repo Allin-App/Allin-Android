@@ -8,12 +8,16 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import fr.iut.alldev.allin.data.model.User
 import fr.iut.alldev.allin.data.model.bet.Bet
+import fr.iut.alldev.allin.data.model.bet.BetFinishedStatus
+import fr.iut.alldev.allin.data.model.bet.BetStatus
+import fr.iut.alldev.allin.data.model.bet.YesNoBet
 import fr.iut.alldev.allin.di.AllInCurrentUser
 import fr.iut.alldev.allin.keystore.AllInKeystoreManager
 import fr.iut.alldev.allin.ui.core.snackbar.SnackbarType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.time.ZonedDateTime
 import javax.inject.Inject
 
 class UserState(val user: User) {
@@ -30,6 +34,17 @@ class MainViewModel @Inject constructor(
 
     val currentUserState = UserState(currentUser)
     val selectedBet = mutableStateOf<Bet?>(null)
+    val wonBet = mutableStateOf<Bet?>(
+        YesNoBet(
+            theme = "Theme",
+            phrase = "Phrase",
+            endRegisterDate = ZonedDateTime.now(),
+            endBetDate = ZonedDateTime.now(),
+            isPublic = true,
+            betStatus = BetStatus.Finished(BetFinishedStatus.WON),
+            creator = "creator"
+        )
+    )
 
     val snackbarContent: MutableState<SnackbarContent?> by lazy { mutableStateOf(null) }
     fun putSnackbarContent(content: SnackbarContent) {

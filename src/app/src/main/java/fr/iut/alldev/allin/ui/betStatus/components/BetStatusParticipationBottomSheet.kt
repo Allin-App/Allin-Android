@@ -1,6 +1,5 @@
 package fr.iut.alldev.allin.ui.betStatus.components
 
-import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -9,7 +8,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -31,6 +29,7 @@ fun BetStatusParticipationBottomSheet(
     onDismiss: () -> Unit,
     state: SheetState,
     onParticipate: () -> Unit,
+    content: @Composable () -> Unit
 ) {
     val scope = rememberCoroutineScope()
     AllInBottomSheet(
@@ -61,7 +60,7 @@ fun BetStatusParticipationBottomSheet(
         Spacer(modifier = Modifier.height(30.dp))
         Text(
             text = betPhrase,
-            style = AllInTheme.typography.s,
+            style = AllInTheme.typography.p2,
             color = AllInTheme.themeColors.onMainSurface,
             modifier = Modifier.padding(horizontal = 18.dp)
         )
@@ -81,13 +80,16 @@ fun BetStatusParticipationBottomSheet(
             ) {
                 Text(
                     text = stringResource(id = R.string.Possible_winnings),
-                    style = AllInTheme.typography.r,
+                    style = AllInTheme.typography.p1,
                     color = AllInTheme.themeColors.onBackground
                 )
                 AllInCoinCount(
                     amount = 121,
                     color = AllInTheme.themeColors.onBackground
                 )
+            }
+            Box(modifier = Modifier.fillMaxSize()) {
+                content()
             }
             AllInButton(
                 color = AllInTheme.colors.allInPurple,
@@ -102,24 +104,5 @@ fun BetStatusParticipationBottomSheet(
                 }
             }
         }
-    }
-}
-
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Preview
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-private fun BetStatusParticipationBottomSheetPreview() {
-    AllInTheme {
-        BetStatusParticipationBottomSheet(
-            sheetVisibility = true,
-            safeBottomPadding = 5.dp,
-            betPhrase = "Lorem Ipsum",
-            coinAmount = 125,
-            onDismiss = {},
-            state = rememberModalBottomSheetState(),
-            onParticipate = {}
-        )
     }
 }

@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.tooling.preview.Preview
 import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.core.AllInTextIcon
@@ -26,7 +27,7 @@ fun YesNoDetailsLine(
         AllInTextIcon(
             text = yesText,
             color = AllInTheme.colors.allInBlue,
-            icon = icon,
+            icon = rememberVectorPainter(image = icon),
             position = IconPosition.LEADING,
             size = 10,
             iconSize = 15
@@ -34,7 +35,7 @@ fun YesNoDetailsLine(
         AllInTextIcon(
             text = noText,
             color = AllInTheme.colors.allInBarPink,
-            icon = icon,
+            icon = rememberVectorPainter(image = icon),
             position = IconPosition.TRAILING,
             size = 10,
             iconSize = 15

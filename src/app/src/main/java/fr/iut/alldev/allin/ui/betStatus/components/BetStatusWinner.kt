@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import fr.iut.alldev.allin.theme.AllInTheme
@@ -41,7 +42,7 @@ fun BetStatusWinner(
         ) {
             AllInTextIcon(
                 text = answer,
-                icon = Icons.Filled.EmojiEvents,
+                icon = rememberVectorPainter(image = Icons.Filled.EmojiEvents),
                 color = color,
                 size = 50,
                 iconSize = 60,
@@ -57,13 +58,13 @@ fun BetStatusWinner(
                 )
                 AllInTextIcon(
                     text = username,
-                    icon = Icons.Filled.People,
+                    icon = rememberVectorPainter(image = Icons.Filled.People),
                     color = color,
                     position = IconPosition.LEADING
                 )
                 AllInTextIcon(
                     text = "x" + String.format("%.1f", multiplier),
-                    icon = Icons.Filled.EmojiEvents,
+                    icon = rememberVectorPainter(image = Icons.Filled.EmojiEvents),
                     color = color,
                     position = IconPosition.LEADING
                 )

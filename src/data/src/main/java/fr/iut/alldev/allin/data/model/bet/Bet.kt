@@ -3,7 +3,7 @@ package fr.iut.alldev.allin.data.model.bet
 import fr.iut.alldev.allin.data.api.model.RequestBet
 import java.time.ZonedDateTime
 
-abstract class Bet(
+sealed class Bet(
     open val id: Int? = null,
     open val creator: String,
     open val theme: String,
@@ -21,8 +21,7 @@ abstract class Bet(
             endRegistration = endRegisterDate,
             endBet = endBetDate,
             isPrivate = !isPublic,
-            response = getResponses(),
-            createdBy = creator
+            response = getResponses()
         )
     }
 }

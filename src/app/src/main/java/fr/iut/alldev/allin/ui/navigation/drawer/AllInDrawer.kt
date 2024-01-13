@@ -74,7 +74,7 @@ fun AllInDrawer(
                 ) {
                     Text(
                         text = stringResource(id = R.string.Logout),
-                        style = AllInTheme.typography.h3,
+                        style = AllInTheme.typography.sm1,
                         color = AllInTheme.colors.allInDarkGrey50,
                         fontSize = 16.sp
                     )

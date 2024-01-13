@@ -18,6 +18,7 @@ fun AllInBottomSheet(
     state: SheetState,
     scrimColor: Color = BottomSheetDefaults.ScrimColor,
     containerColor: Color = AllInTheme.themeColors.background,
+    dragHandle: (@Composable ()->Unit)? = { BottomSheetDefaults.DragHandle() },
     content: @Composable ColumnScope.()->Unit
 ) {
     val localDensity = LocalDensity.current
@@ -38,6 +39,7 @@ fun AllInBottomSheet(
                     bottom = 0,
                 )
             },
+            dragHandle = dragHandle,
             content = content
         )
     }

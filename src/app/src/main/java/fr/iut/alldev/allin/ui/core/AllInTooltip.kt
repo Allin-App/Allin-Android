@@ -31,7 +31,7 @@ fun AllInTooltip(
                 Text(
                     text = text,
                     color = AllInTheme.colors.allInLightGrey200,
-                    style = AllInTheme.typography.r,
+                    style = AllInTheme.typography.p1,
                     fontSize = 12.sp
                 )
             }
@@ -121,7 +121,7 @@ private fun AllInTooltipPreview() {
             Text(
                 text = "Généralement une question qui sera répondu par les utilisateurs.",
                 color = AllInTheme.colors.allInLightGrey200,
-                style = AllInTheme.typography.r,
+                style = AllInTheme.typography.p1,
                 fontSize = 10.sp
             )
         })

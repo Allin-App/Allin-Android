@@ -8,9 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import fr.iut.alldev.allin.data.model.bet.Bet
 import fr.iut.alldev.allin.ui.betStatus.components.BetStatusBottomSheetBack
-import fr.iut.alldev.allin.ui.betStatus.visitor.BetStatusBottomSheetDisplayBetVisitor
 import fr.iut.alldev.allin.ui.core.AllInBottomSheet
-import fr.iut.alldev.allin.vo.bet.BetVO
 
 
 internal const val SHEET_HEIGHT = .85f
@@ -22,9 +20,9 @@ fun BetStatusBottomSheet(
     state: SheetState,
     sheetVisibility: Boolean,
     sheetBackVisibility: Boolean,
-    bet: BetVO<Bet>?,
+    bet: Bet?,
     onDismiss: ()->Unit,
-    visitor: BetStatusBottomSheetDisplayBetVisitor
+    displayBet: @Composable (Bet) -> Unit
 ) {
     AnimatedVisibility(
         visible = sheetBackVisibility,
@@ -37,7 +35,7 @@ fun BetStatusBottomSheet(
     ) {
         bet?.let {
             BetStatusBottomSheetBack(
-                status = it.bet.betStatus
+                status = it.betStatus
             )
         }
     }
@@ -51,7 +49,9 @@ fun BetStatusBottomSheet(
         Column(
             Modifier.fillMaxHeight(SHEET_HEIGHT)
         ) {
-            bet?.Accept(visitor)
+            bet?.let {
+                displayBet(it)
+            }
         }
     }
 }

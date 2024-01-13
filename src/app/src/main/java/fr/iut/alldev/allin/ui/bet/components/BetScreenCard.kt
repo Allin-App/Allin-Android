@@ -79,7 +79,7 @@ fun BetScreenCard(
                         players.size,
                         players.size
                     ),
-                    style = AllInTheme.typography.m,
+                    style = AllInTheme.typography.sm2,
                     color = AllInTheme.themeColors.onBackground2
                 )
             }

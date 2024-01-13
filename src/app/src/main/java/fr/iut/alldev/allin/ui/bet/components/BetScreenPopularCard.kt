@@ -100,13 +100,13 @@ fun BetScreenPopularCard(
                         color = AllInTheme.colors.allInPink
                     ),
                     color = AllInTheme.colors.white,
-                    style = AllInTheme.typography.r,
+                    style = AllInTheme.typography.p1,
                     fontSize = 15.sp
                 )
                 Text(
                     text = " - ",
                     color = AllInTheme.colors.white,
-                    style = AllInTheme.typography.r,
+                    style = AllInTheme.typography.p1,
                     fontSize = 15.sp
                 )
                 val pointsText = if (points % 1 == 0f) {
@@ -126,7 +126,7 @@ fun BetScreenPopularCard(
                         color = AllInTheme.colors.allInPink
                     ),
                     color = AllInTheme.colors.white,
-                    style = AllInTheme.typography.r,
+                    style = AllInTheme.typography.p1,
                     fontSize = 15.sp
                 )
             }

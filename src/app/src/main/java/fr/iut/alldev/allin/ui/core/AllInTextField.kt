@@ -90,7 +90,7 @@ fun AllInTextField(
             Text(
                 text = placeholder,
                 fontSize = placeholderFontSize,
-                style = AllInTheme.typography.r,
+                style = AllInTheme.typography.p1,
                 color = placeholderColor,
                 maxLines = if (multiLine) 3 else 1,
                 overflow = TextOverflow.Ellipsis
@@ -105,7 +105,7 @@ fun AllInTextField(
                 )
             }
         },
-        textStyle = AllInTheme.typography.r,
+        textStyle = AllInTheme.typography.p1,
         enabled = enabled,
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType, imeAction = imeAction),
         keyboardActions = keyboardActions,

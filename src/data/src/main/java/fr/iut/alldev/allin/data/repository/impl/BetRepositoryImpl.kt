@@ -16,7 +16,8 @@ class BetRepositoryImpl @Inject constructor(
 ) : BetRepository() {
     override suspend fun createBet(bet: Bet, token: String) {
         api.createBet(
-            bet.toRequestBet().copy(createdBy = token)
+            token = token,
+            body = bet.toRequestBet()
         )
     }
 

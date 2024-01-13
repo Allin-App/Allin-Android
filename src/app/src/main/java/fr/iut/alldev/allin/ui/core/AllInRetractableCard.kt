@@ -64,7 +64,7 @@ fun AllInRetractableCard(
                         fontStyle = AllInTheme.typography.h2.fontStyle
                     ),
                     color = AllInTheme.themeColors.onBackground2,
-                    style = AllInTheme.typography.r,
+                    style = AllInTheme.typography.p1,
                     fontSize = 16.sp,
                     modifier = Modifier.weight(1f)
                 )

@@ -51,7 +51,7 @@ fun AllInDatePicker(
                 Text(
                     text = stringResource(id = R.string.Cancel),
                     color = AllInTheme.themeColors.onBackground2,
-                    style = AllInTheme.typography.h3
+                    style = AllInTheme.typography.sm1
                 )
             }
         },
