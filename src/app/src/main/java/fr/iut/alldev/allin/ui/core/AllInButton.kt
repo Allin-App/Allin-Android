@@ -15,10 +15,11 @@ import fr.iut.alldev.allin.theme.AllInTheme
 
 @Composable
 fun AllInButton(
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
     color: Color,
     text: String,
     textColor: Color,
-    modifier: Modifier = Modifier,
     radius: Dp = 15.dp,
     onClick: () -> Unit,
 ) {
@@ -26,13 +27,14 @@ fun AllInButton(
         onClick = onClick,
         modifier = modifier,
         radius = radius,
-        backgroundColor = color
+        backgroundColor = color,
+        enabled = enabled
     ) {
         Text(
             text = text,
             textAlign = TextAlign.Center,
             style = AllInTheme.typography.h2,
-            color = textColor,
+            color = if(enabled) textColor else AllInTheme.themeColors.disabledBorder,
             fontSize = 20.sp,
             modifier = Modifier
                 .padding(vertical = 15.dp)
@@ -49,6 +51,21 @@ private fun AllInButtonPreview() {
             color = AllInTheme.colors.allInLoginPurple,
             text = "Connexion",
             textColor = Color.White
+        ) {
+
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun AllInButtonDisabledPreview() {
+    AllInTheme {
+        AllInButton(
+            color = AllInTheme.colors.allInLoginPurple,
+            text = "Connexion",
+            textColor = Color.White,
+            enabled = false
         ) {
 
         }

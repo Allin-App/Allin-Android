@@ -62,7 +62,7 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 loading.value = true
-                currentUserState.userCoins.intValue += 50
+                currentUserState.userCoins.intValue -= stake
                 Thread.sleep(1000)
                 loading.value = false
             }

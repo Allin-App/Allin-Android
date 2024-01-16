@@ -2,15 +2,18 @@ package fr.iut.alldev.allin.data.model.bet
 
 import java.time.ZonedDateTime
 
+const val YES_VALUE = "Yes"
+const val NO_VALUE = "No"
+
 data class YesNoBet(
-    override val id: Int? = null,
+    override val id: String? = null,
     override val creator: String,
     override val theme: String,
     override val phrase: String,
     override val endRegisterDate: ZonedDateTime,
     override val endBetDate: ZonedDateTime,
     override val isPublic: Boolean,
-    override val betStatus: BetStatus,
+    override val betStatus: BetStatus
 ) : Bet(
     id,
     creator,
@@ -21,5 +24,5 @@ data class YesNoBet(
     isPublic,
     betStatus
 ) {
-    override fun getResponses(): List<String> = listOf("Yes", "No")
+    override fun getResponses(): List<String> = listOf(YES_VALUE, NO_VALUE)
 }

@@ -40,7 +40,7 @@ class BetWithStatusPreviewProvider : PreviewParameterProvider<Bet> {
                 isPublic = true,
                 betStatus = status,
                 creator = "creator",
-                possibleAnswers = setOf(
+                possibleAnswers = listOf(
                     "Answer 1",
                     "Answer 2",
                     "Answer 3",

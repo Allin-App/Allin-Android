@@ -70,14 +70,15 @@ fun MainScreen(
     val (selectedBet, setSelectedBet) = remember { mainViewModel.selectedBet }
     val (wonBet, setWonBet) = remember { mainViewModel.wonBet }
     val (statusVisibility, sheetBackVisibility, setStatusVisibility) = rememberBetStatusVisibilities()
-    val (displayResult, setDisplayResult ) = remember{ mutableStateOf(true) }
+    val (participateSheetVisibility, setParticipateSheetVisibility) = remember {
+        mutableStateOf(false)
+    }
+
+    val (displayResult, setDisplayResult) = remember { mutableStateOf(true) }
 
     val betStatusDisplayer = remember {
         BetStatusBottomSheetBetDisplayer(
-            userCoinAmount = currentUser.userCoins,
-            onParticipate = {
-                mainViewModel.participateToBet(it)
-            }
+            openParticipateSheet = { setParticipateSheetVisibility(true) }
         )
     }
 
@@ -152,7 +153,7 @@ fun MainScreen(
                     navController = navController,
                     selectBet = { bet, participate ->
                         setSelectedBet(bet)
-                        betStatusDisplayer.participateBottomSheetVisibility.value = participate
+                        setParticipateSheetVisibility(participate)
                         setStatusVisibility(true)
                     },
                     setLoading = { loading = it },
@@ -180,11 +181,14 @@ fun MainScreen(
         state = statusBottomSheetState,
         sheetVisibility = statusVisibility.value,
         sheetBackVisibility = sheetBackVisibility.value,
-        onDismiss = {
-            setStatusVisibility(false)
-        },
+        onDismiss = { setStatusVisibility(false) },
         bet = selectedBet,
-        displayBet = { betStatusDisplayer.DisplayBet(it) }
+        paddingValues = betStatusDisplayer.paddingValues.value,
+        displayBet = { betStatusDisplayer.DisplayBet(it) },
+        userCoinAmount = mainViewModel.currentUserState.userCoins,
+        onParticipate = { mainViewModel.participateToBet(it) },
+        participateSheetVisibility = participateSheetVisibility,
+        setParticipateSheetVisibility = setParticipateSheetVisibility
     )
     AllInLoading(visible = loading)
     BackHandler(

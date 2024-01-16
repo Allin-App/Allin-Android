@@ -14,7 +14,7 @@ class BetFactory {
             isPublic: Boolean,
             nameTeam1: String = "",
             nameTeam2: String = "",
-            possibleAnswers: Set<String> = emptySet(),
+            possibleAnswers: List<String> = emptyList(),
 
             ): Bet =
             when (betType) {

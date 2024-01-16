@@ -12,17 +12,17 @@ import fr.iut.alldev.allin.vo.bet.BetDisplayer
 
 class BetTestDisplayer : BetDisplayer {
     @Composable
-    override fun DisplayYesNoBet(b: YesNoBet) {
+    override fun DisplayYesNoBet(bet: YesNoBet) {
         Text("This is a YesNo Bet", Modifier.testTag(TestTags.YES_NO_BET.tag))
     }
 
     @Composable
-    override fun DisplayMatchBet(b: MatchBet) {
+    override fun DisplayMatchBet(bet: MatchBet) {
         Text("This is a Match Bet", Modifier.testTag(TestTags.MATCH_BET.tag))
     }
 
     @Composable
-    override fun DisplayCustomBet(b: CustomBet) {
+    override fun DisplayCustomBet(bet: CustomBet) {
         Text("This is a Custom Bet", Modifier.testTag(TestTags.CUSTOM_BET.tag))
     }
 }

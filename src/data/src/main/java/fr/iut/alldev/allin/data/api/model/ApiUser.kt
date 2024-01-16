@@ -16,15 +16,16 @@ data class RequestUser(
 @Keep
 @Serializable
 data class ResponseUser(
+    val id: String,
     val username: String,
     val email: String,
     var nbCoins: Int,
     var token: String? = null,
 ) {
     fun toUser() = User(
+        id = id,
         username = username,
         email = email,
-        id = "",
         coins = nbCoins
     )
 }

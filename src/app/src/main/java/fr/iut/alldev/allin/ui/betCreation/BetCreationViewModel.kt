@@ -118,7 +118,7 @@ class BetCreationViewModel @Inject constructor(
                         isPublic = isPublic.value,
                         nameTeam1 = "",
                         nameTeam2 = "",
-                        possibleAnswers = setOf(),
+                        possibleAnswers = listOf(),
                         creator = currentUser.username
                     )
                     betRepository.createBet(bet, keystoreManager.getToken() ?: "")

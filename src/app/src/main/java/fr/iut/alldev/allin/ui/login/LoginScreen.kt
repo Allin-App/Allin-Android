@@ -1,6 +1,5 @@
 package fr.iut.alldev.allin.ui.login
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -11,12 +10,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.relocation.BringIntoViewRequester
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -42,7 +39,6 @@ import fr.iut.alldev.allin.ui.core.AllInLoading
 import fr.iut.alldev.allin.ui.core.AllInPasswordField
 import fr.iut.alldev.allin.ui.core.AllInTextField
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(
     navigateToDashboard: () -> Unit,
@@ -51,7 +47,6 @@ fun LoginScreen(
 ) {
     val focusManager = LocalFocusManager.current
 
-    val bringIntoViewRequester = BringIntoViewRequester()
     val loading by remember { loginViewModel.loading }
     var hasLoginError by remember { loginViewModel.hasError }
 
@@ -102,22 +97,20 @@ fun LoginScreen(
                 verticalArrangement = Arrangement.spacedBy(20.dp)
             ) {
                 AllInTextField(
-                    modifier = Modifier.fillMaxWidth(),
                     placeholder = stringResource(id = R.string.username),
                     value = username,
+                    modifier = Modifier.fillMaxWidth(),
                     onValueChange = setUsername,
-                    bringIntoViewRequester = bringIntoViewRequester,
                     imeAction = ImeAction.Next,
                     keyboardActions = keyboardActions
                 )
                 AllInPasswordField(
-                    modifier = Modifier.fillMaxWidth(),
                     placeholder = stringResource(id = R.string.password),
                     value = password,
-                    onValueChange = setPassword,
-                    bringIntoViewRequester = bringIntoViewRequester,
+                    modifier = Modifier.fillMaxWidth(),
                     imeAction = ImeAction.Done,
-                    keyboardActions = keyboardActions
+                    keyboardActions = keyboardActions,
+                    onValueChange = setPassword
                 )
             }
             ClickableText(

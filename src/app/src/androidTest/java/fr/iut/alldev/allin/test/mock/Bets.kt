@@ -37,7 +37,7 @@ object Bets {
                 isPublic = true,
                 betStatus = BetStatus.InProgress,
                 creator = "creator",
-                possibleAnswers = setOf(
+                possibleAnswers = listOf(
                     "Answer 1",
                     "Answer 2",
                     "Answer 3",

@@ -2,7 +2,6 @@ package fr.iut.alldev.allin.ui.core
 
 import android.content.res.Configuration
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.relocation.BringIntoViewRequester
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -11,35 +10,37 @@ import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.input.*
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.os.ConfigurationCompat
+import androidx.core.text.isDigitsOnly
+import fr.iut.alldev.allin.ext.formatToSimple
+import fr.iut.alldev.allin.ext.toFloatOrNull
+import fr.iut.alldev.allin.ext.verifyIsFloat
 import fr.iut.alldev.allin.theme.AllInTheme
-import kotlinx.coroutines.launch
 import racra.compose.smooth_corner_rect_library.AbsoluteSmoothCornerShape
+import java.util.Locale
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun AllInTextField(
-    placeholder: String,
-    value: String,
     modifier: Modifier = Modifier,
+    placeholder: String? = null,
+    value: String,
     maxChar: Int? = null,
     enabled: Boolean = true,
-    trailingIcon: ImageVector? = null,
-    trailingContent: @Composable (() -> Unit)? = null,
+    trailingIcon: Painter? = null,
+    trailingContent: @Composable() (() -> Unit)? = null,
     placeholderFontSize: TextUnit = 18.sp,
     multiLine: Boolean = false,
-    onValueChange: (String) -> Unit,
     errorText: String? = null,
-    bringIntoViewRequester: BringIntoViewRequester,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardType: KeyboardType = KeyboardType.Text,
     imeAction: ImeAction = ImeAction.Default,
@@ -48,58 +49,38 @@ fun AllInTextField(
     containerColor: Color = AllInTheme.themeColors.background,
     textColor: Color = AllInTheme.themeColors.onMainSurface,
     placeholderColor: Color = AllInTheme.themeColors.onBackground2,
+    onValueChange: (String) -> Unit,
 ) {
-    val scope = rememberCoroutineScope()
-    var hasFocus by remember { mutableStateOf(false) }
-
-    var textFieldValue by remember {
-        mutableStateOf(TextFieldValue(text = value, selection = TextRange(value.length)))
-    }
-
-    LaunchedEffect(key1 = value, block = {
-        textFieldValue = TextFieldValue(
-            text = value,
-            selection = textFieldValue.selection
-        )
-    })
-
     OutlinedTextField(
-        value = textFieldValue,
+        value = value,
         isError = errorText != null,
-        modifier = modifier
-            .onFocusChanged {
-                hasFocus = it.hasFocus
-                if (it.isFocused) {
-                    scope.launch {
-                        bringIntoViewRequester.bringIntoView()
-                    }
-                }
-            },
+        modifier = modifier,
         supportingText = errorText?.let {
             { AllInErrorLine(text = it) }
         },
         visualTransformation = visualTransformation,
         singleLine = !multiLine,
         onValueChange = {
-            if (maxChar == null || it.text.length <= maxChar) {
-                textFieldValue = it
-                onValueChange(it.text)
+            if (maxChar == null || it.length <= maxChar) {
+                onValueChange(it)
             }
         },
-        placeholder = {
-            Text(
-                text = placeholder,
-                fontSize = placeholderFontSize,
-                style = AllInTheme.typography.p1,
-                color = placeholderColor,
-                maxLines = if (multiLine) 3 else 1,
-                overflow = TextOverflow.Ellipsis
-            )
+        placeholder = placeholder?.let {
+            {
+                Text(
+                    text = placeholder,
+                    fontSize = placeholderFontSize,
+                    style = AllInTheme.typography.p1,
+                    color = placeholderColor,
+                    maxLines = if (multiLine) 3 else 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
         },
         trailingIcon = trailingContent ?: trailingIcon?.let {
             @Composable {
                 Icon(
-                    imageVector = it,
+                    painter = it,
                     contentDescription = null,
                     tint = AllInTheme.colors.allInLightGrey300
                 )
@@ -135,22 +116,13 @@ fun AllInPasswordField(
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     errorText: String? = null,
     onValueChange: (String) -> Unit,
-    bringIntoViewRequester: BringIntoViewRequester,
     isHiddenByDefault: Boolean = true,
 ) {
-    var hidden by remember {
-        mutableStateOf(isHiddenByDefault)
-    }
+    var hidden by remember { mutableStateOf(isHiddenByDefault) }
     AllInTextField(
-        modifier = modifier,
-        errorText = errorText,
         placeholder = placeholder,
-        imeAction = imeAction,
-        keyboardActions = keyboardActions,
-        visualTransformation = if (hidden) PasswordVisualTransformation() else VisualTransformation.None,
         value = value,
-        onValueChange = onValueChange,
-        bringIntoViewRequester = bringIntoViewRequester,
+        modifier = modifier,
         trailingContent = {
             IconButton(
                 onClick = { hidden = !hidden }
@@ -162,9 +134,72 @@ fun AllInPasswordField(
                 )
             }
         },
-        keyboardType = keyboardType
+        onValueChange = onValueChange,
+        errorText = errorText,
+        visualTransformation = if (hidden) PasswordVisualTransformation() else VisualTransformation.None,
+        keyboardType = keyboardType,
+        imeAction = imeAction,
+        keyboardActions = keyboardActions
     )
 }
+
+@Composable
+fun AllInFloatTextfield(
+    modifier: Modifier = Modifier,
+    value: Float?,
+    setValue: (Float?) -> Unit
+) {
+    val configuration = LocalConfiguration.current
+    val locale = remember {
+        ConfigurationCompat.getLocales(configuration).get(0) ?: Locale.getDefault()
+    }
+    var stringValue by remember(value) { mutableStateOf(value?.formatToSimple(locale) ?: "") }
+
+    AllInTextField(
+        value = stringValue,
+        modifier = modifier,
+        maxChar = 5,
+        keyboardType = KeyboardType.Number
+    ) {
+        it.verifyIsFloat(locale)?.let {
+            stringValue = it
+            if (it.isNotEmpty()) {
+                if (it.lastOrNull() !in setOf(',', '.')) {
+                    it.toFloatOrNull(locale)?.let {
+                        setValue(it)
+                    }
+                }
+            } else setValue(null)
+        }
+    }
+}
+
+@Composable
+fun AllInIntTextField(
+    modifier: Modifier = Modifier,
+    placeholder: String? = null,
+    maxChar: Int? = 3,
+    value: Int?,
+    trailingIcon: Painter? = null,
+    setValue: (Int?) -> Unit
+) {
+    AllInTextField(
+        value = value?.toString() ?: "",
+        placeholder = placeholder,
+        modifier = modifier,
+        maxChar = maxChar,
+        trailingIcon = trailingIcon,
+        keyboardType = KeyboardType.NumberPassword
+    ) {
+        if (it.isEmpty()) setValue(null)
+        else if (it.isDigitsOnly()) {
+            it.toIntOrNull()?.let {
+                setValue(it)
+            }
+        }
+    }
+}
+
 
 @OptIn(ExperimentalFoundationApi::class)
 @Preview
@@ -174,8 +209,7 @@ private fun AllInTextFieldPlaceholderPreview() {
         AllInTextField(
             placeholder = "Email",
             value = "",
-            onValueChange = { },
-            bringIntoViewRequester = BringIntoViewRequester()
+            onValueChange = { }
         )
     }
 }
@@ -190,8 +224,7 @@ private fun AllInTextFieldValuePreview() {
         AllInTextField(
             placeholder = "Email",
             value = "JohnDoe@mail.com",
-            onValueChange = { },
-            bringIntoViewRequester = BringIntoViewRequester()
+            onValueChange = { }
         )
     }
 }
@@ -204,9 +237,8 @@ private fun AllInTextFieldErrorPreview() {
         AllInTextField(
             placeholder = "Email",
             value = "JohnDoe@mail.com",
-            errorText = "This is an error.",
             onValueChange = { },
-            bringIntoViewRequester = BringIntoViewRequester()
+            errorText = "This is an error."
         )
     }
 }
@@ -220,13 +252,11 @@ private fun AllInTextFieldPasswordPreview() {
         AllInPasswordField(
             placeholder = "Password",
             value = value,
-            onValueChange = setValue,
-            bringIntoViewRequester = BringIntoViewRequester()
+            onValueChange = setValue
         )
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Preview
 @Composable
 private fun AllInTextFieldMultilinePreview() {
@@ -234,9 +264,8 @@ private fun AllInTextFieldMultilinePreview() {
         AllInTextField(
             placeholder = "David sera il absent le Lundi matin en cours ?",
             value = "",
-            onValueChange = { },
             multiLine = true,
-            bringIntoViewRequester = BringIntoViewRequester()
+            onValueChange = { }
         )
     }
 }

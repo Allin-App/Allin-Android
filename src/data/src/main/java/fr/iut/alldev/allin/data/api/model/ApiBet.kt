@@ -4,6 +4,8 @@ import androidx.annotation.Keep
 import fr.iut.alldev.allin.data.model.bet.Bet
 import fr.iut.alldev.allin.data.model.bet.BetStatus
 import fr.iut.alldev.allin.data.model.bet.CustomBet
+import fr.iut.alldev.allin.data.model.bet.NO_VALUE
+import fr.iut.alldev.allin.data.model.bet.YES_VALUE
 import fr.iut.alldev.allin.data.model.bet.YesNoBet
 import fr.iut.alldev.allin.data.serialization.SimpleDateSerializer
 import kotlinx.serialization.Serializable
@@ -12,7 +14,7 @@ import java.time.ZonedDateTime
 @Keep
 @Serializable
 data class ResponseBet(
-    val id: Int?,
+    val id: String?,
     val theme: String,
     val sentenceBet: String,
     @Serializable(SimpleDateSerializer::class) val endRegistration: ZonedDateTime,
@@ -22,7 +24,7 @@ data class ResponseBet(
     val createdBy: String
 ) {
     fun toBet(): Bet {
-        if (response.toSet() == setOf("Yes", "No")) {
+        if (response.toSet() == setOf(YES_VALUE, NO_VALUE)) {
             return YesNoBet(
                 theme = theme,
                 phrase = sentenceBet,
@@ -41,7 +43,7 @@ data class ResponseBet(
                 isPublic = !isPrivate,
                 betStatus = BetStatus.Waiting,
                 creator = createdBy,
-                possibleAnswers = response.toSet()
+                possibleAnswers = response
             )
         }
     }

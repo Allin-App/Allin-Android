@@ -17,11 +17,11 @@ interface BetDisplayer {
     }
 
     @Composable
-    fun DisplayYesNoBet(b: YesNoBet)
+    fun DisplayYesNoBet(bet: YesNoBet)
 
     @Composable
-    fun DisplayMatchBet(b: MatchBet)
+    fun DisplayMatchBet(bet: MatchBet)
 
     @Composable
-    fun DisplayCustomBet(b: CustomBet)
+    fun DisplayCustomBet(bet: CustomBet)
 }

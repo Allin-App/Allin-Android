@@ -21,25 +21,25 @@ fun BetCreationScreenQuestionTab(
     nbFriends: Int,
     betTheme: String,
     betThemeError: String?,
-    setBetTheme: (String)->Unit,
+    setBetTheme: (String) -> Unit,
     betPhrase: String,
     betPhraseError: String?,
-    setBetPhrase: (String)->Unit,
+    setBetPhrase: (String) -> Unit,
     isPublic: Boolean,
-    setIsPublic: (Boolean)->Unit,
+    setIsPublic: (Boolean) -> Unit,
     registerDate: ZonedDateTime,
     registerDateError: String?,
     betDate: ZonedDateTime,
     betDateError: String?,
     selectedFriends: MutableList<Int>,
-    setRegisterDateDialog: (Boolean)->Unit,
-    setEndDateDialog: (Boolean)->Unit,
-    setRegisterTimeDialog: (Boolean)->Unit,
-    setEndTimeDialog: (Boolean)->Unit,
+    setRegisterDateDialog: (Boolean) -> Unit,
+    setEndDateDialog: (Boolean) -> Unit,
+    setRegisterTimeDialog: (Boolean) -> Unit,
+    setEndTimeDialog: (Boolean) -> Unit,
     interactionSource: MutableInteractionSource
 ) {
     val bringIntoViewRequester = remember { BringIntoViewRequester() }
-    Column(modifier){
+    Column(modifier) {
         QuestionTabThemePhraseSection(
             betTheme = betTheme,
             betThemeError = betThemeError,
@@ -47,7 +47,6 @@ fun BetCreationScreenQuestionTab(
             betPhrase = betPhrase,
             betPhraseError = betPhraseError,
             setBetPhrase = setBetPhrase,
-            bringIntoViewRequester = bringIntoViewRequester,
             interactionSource = interactionSource
         )
         Spacer(modifier = Modifier.height(35.dp))

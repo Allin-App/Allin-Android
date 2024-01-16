@@ -9,7 +9,7 @@ import fr.iut.alldev.allin.data.model.bet.MatchBet
 import fr.iut.alldev.allin.data.model.bet.YesNoBet
 import java.time.ZonedDateTime
 
-class BetPreviewProvider: PreviewParameterProvider<Bet> {
+class BetPreviewProvider : PreviewParameterProvider<Bet> {
     override val values = sequenceOf(
         YesNoBet(
             theme = "Theme",
@@ -39,7 +39,7 @@ class BetPreviewProvider: PreviewParameterProvider<Bet> {
             isPublic = true,
             betStatus = BetStatus.Finished(BetFinishedStatus.WON),
             creator = "creator",
-            possibleAnswers = setOf(
+            possibleAnswers = listOf(
                 "Answer 1",
                 "Answer 2",
                 "Answer 3",

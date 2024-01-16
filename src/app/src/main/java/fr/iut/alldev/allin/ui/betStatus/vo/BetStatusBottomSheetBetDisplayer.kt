@@ -10,7 +10,6 @@ import androidx.compose.material.icons.filled.WorkspacePremium
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,7 +28,6 @@ import fr.iut.alldev.allin.data.model.bet.YesNoBet
 import fr.iut.alldev.allin.ext.getDateEndLabelId
 import fr.iut.alldev.allin.ext.getDateStartLabelId
 import fr.iut.alldev.allin.theme.AllInTheme
-import fr.iut.alldev.allin.ui.betStatus.components.BetStatusParticipationBottomSheet
 import fr.iut.alldev.allin.ui.betStatus.components.BetStatusWinner
 import fr.iut.alldev.allin.ui.betStatus.components.YesNoDetailsLine
 import fr.iut.alldev.allin.ui.betStatus.components.YesNoStatBar
@@ -41,28 +39,22 @@ import fr.iut.alldev.allin.ui.preview.BetWithStatusPreviewProvider
 import fr.iut.alldev.allin.vo.bet.BetDisplayer
 
 class BetStatusBottomSheetBetDisplayer(
-    val userCoinAmount: MutableIntState,
-    val onParticipate: (Int) -> Unit,
+    val openParticipateSheet: () -> Unit
 ) : BetDisplayer {
-    val participateBottomSheetVisibility = mutableStateOf(false)
     val paddingValues = mutableStateOf(PaddingValues())
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    override fun DisplayYesNoBet(b: YesNoBet) {
-
-        val (participateSheetVisibility, setParticipateSheetVisibility) = remember {
-            this.participateBottomSheetVisibility
-        }
+    override fun DisplayYesNoBet(bet: YesNoBet) {
         val safeBottomPadding = paddingValues.value.calculateBottomPadding()
 
         Box(Modifier.padding(bottom = safeBottomPadding)) {
             Column {
                 Column(Modifier.padding(horizontal = 20.dp)) {
                     BetTitleHeader(
-                        title = b.phrase,
-                        category = b.theme,
-                        creator = b.creator,
+                        title = bet.phrase,
+                        category = bet.theme,
+                        creator = bet.creator,
                         modifier = Modifier.fillMaxWidth()
                     )
                     Spacer(modifier = Modifier.height(20.dp))
@@ -70,22 +62,22 @@ class BetStatusBottomSheetBetDisplayer(
                         horizontalAlignment = Alignment.End
                     ) {
                         BetDateTimeRow(
-                            label = stringResource(id = b.betStatus.getDateStartLabelId()),
-                            date = b.endRegisterDate.formatToMediumDateNoYear(),
-                            time = b.endRegisterDate.formatToTime(),
+                            label = stringResource(id = bet.betStatus.getDateStartLabelId()),
+                            date = bet.endRegisterDate.formatToMediumDateNoYear(),
+                            time = bet.endRegisterDate.formatToTime(),
                             modifier = Modifier.width(IntrinsicSize.Max)
                         )
                         Spacer(modifier = Modifier.height(15.dp))
                         BetDateTimeRow(
-                            label = stringResource(id = b.betStatus.getDateEndLabelId()),
-                            date = b.endBetDate.formatToMediumDateNoYear(),
-                            time = b.endBetDate.formatToTime(),
+                            label = stringResource(id = bet.betStatus.getDateEndLabelId()),
+                            date = bet.endBetDate.formatToMediumDateNoYear(),
+                            time = bet.endBetDate.formatToTime(),
                             modifier = Modifier.width(IntrinsicSize.Max)
                         )
                     }
                     Spacer(modifier = Modifier.height(20.dp))
                 }
-                if (b.betStatus is BetStatus.Finished) {
+                if (bet.betStatus is BetStatus.Finished) {
                     BetStatusWinner(
                         answer = stringResource(id = R.string.Yes),
                         color = AllInTheme.colors.allInBlue,
@@ -128,42 +120,26 @@ class BetStatusBottomSheetBetDisplayer(
                     }
                 }
             }
-            if (b.betStatus !is BetStatus.Finished) {
+            if (bet.betStatus !is BetStatus.Finished) {
                 RainbowButton(
                     modifier = Modifier
                         .align(Alignment.BottomCenter)
                         .padding(horizontal = 7.dp),
                     text = stringResource(id = R.string.Participate),
-                    enabled = b.betStatus == BetStatus.Waiting,
-                    onClick = {
-                        setParticipateSheetVisibility(true)
-                    }
+                    enabled = bet.betStatus == BetStatus.Waiting,
+                    onClick = openParticipateSheet
                 )
             }
-        }
-
-        BetStatusParticipationBottomSheet(
-            sheetVisibility = participateSheetVisibility && b.betStatus == BetStatus.Waiting,
-            safeBottomPadding = safeBottomPadding,
-            betPhrase = b.phrase,
-            coinAmount = userCoinAmount.intValue,
-            onDismiss = { setParticipateSheetVisibility(false) },
-            state = rememberModalBottomSheetState(),
-            onParticipate = {
-                onParticipate(100)
-            }
-        ) {
-
         }
     }
 
     @Composable
-    override fun DisplayMatchBet(b: MatchBet) {
+    override fun DisplayMatchBet(bet: MatchBet) {
         Text("This is a MATCH BET")
     }
 
     @Composable
-    override fun DisplayCustomBet(b: CustomBet) {
+    override fun DisplayCustomBet(bet: CustomBet) {
         Text("This is a CUSTOM BET")
     }
 }
@@ -176,9 +152,6 @@ private fun BetStatusBottomSheetPreview(
 ) {
     AllInTheme {
         val coins = remember { mutableIntStateOf(100) }
-        BetStatusBottomSheetBetDisplayer(
-            userCoinAmount = coins,
-            onParticipate = {}
-        ).DisplayBet(bet)
+        BetStatusBottomSheetBetDisplayer {}.DisplayBet(bet)
     }
 }

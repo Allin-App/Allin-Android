@@ -4,7 +4,7 @@ import fr.iut.alldev.allin.data.api.model.RequestBet
 import java.time.ZonedDateTime
 
 sealed class Bet(
-    open val id: Int? = null,
+    open val id: String? = null,
     open val creator: String,
     open val theme: String,
     open val phrase: String,
