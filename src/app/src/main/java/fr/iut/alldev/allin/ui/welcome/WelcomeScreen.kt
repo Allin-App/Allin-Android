@@ -88,7 +88,7 @@ fun WelcomeScreen(
                 text = stringResource(id = R.string.welcome_subtitle),
                 color = AllInTheme.themeColors.onBackground,
                 fontSize = 15.sp,
-                style = AllInTheme.typography.r
+                style = AllInTheme.typography.p1
             )
             Spacer(modifier = Modifier.height(78.dp))
             AllInButton(
@@ -106,12 +106,12 @@ fun WelcomeScreen(
                     text = stringResource(id = R.string.already_have_account),
                     color = AllInTheme.themeColors.tint1,
                     fontSize = 15.sp,
-                    style = AllInTheme.typography.r,
+                    style = AllInTheme.typography.p1,
                     modifier = Modifier.padding(end = 5.dp)
                 )
                 ClickableText(
                     text = AnnotatedString(stringResource(id = R.string.Login)),
-                    style = AllInTheme.typography.r.copy(
+                    style = AllInTheme.typography.p1.copy(
                         color = AllInTheme.themeColors.tint1,
                         fontSize = 15.sp,
                         fontWeight = FontWeight.Bold

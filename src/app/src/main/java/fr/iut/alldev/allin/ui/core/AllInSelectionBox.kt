@@ -6,8 +6,10 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -29,6 +31,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.theme.AllInTheme
@@ -36,11 +39,11 @@ import fr.iut.alldev.allin.theme.AllInTheme
 
 class SelectionElement(
     val textId: Int,
-    val imageVector: ImageVector,
+    val imageVector: ImageVector
 )
 
 @Composable
-fun AllInSelectionLine(
+private fun AllInSelectionLine(
     text: String,
     iconVector: ImageVector?,
     modifier: Modifier = Modifier,
@@ -91,13 +94,19 @@ fun AllInSelectionLine(
 fun AllInSelectionBox(
     modifier: Modifier = Modifier,
     isOpen: Boolean,
+    borderWidth: Dp? = null,
     setIsOpen: (Boolean) -> Unit,
     selected: SelectionElement?,
     setSelected: (SelectionElement) -> Unit,
     elements: List<SelectionElement>,
 ) {
     val interactionSource = remember { MutableInteractionSource() }
-    AllInCard(modifier.fillMaxWidth()) {
+    AllInCard(
+        modifier = modifier.fillMaxWidth(),
+        radius = 10.dp,
+        borderWidth = borderWidth,
+        borderColor = AllInTheme.colors.allInPurple.copy(alpha = .42f)
+    ) {
         Column(
             Modifier.animateContentSize()
         ) {
@@ -151,6 +160,84 @@ private fun AllInSelectionBoxClosedPreview() {
             setSelected = {},
             setIsOpen = {},
         )
+    }
+}
+
+@Composable
+private fun AllInSelectionLine(
+    element: @Composable RowScope.() -> Unit,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+    trailingIcon: ImageVector? = null,
+    interactionSource: MutableInteractionSource
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .clickable(
+                interactionSource = interactionSource,
+                indication = null,
+                onClick = onClick
+            )
+            .padding(horizontal = 12.dp, vertical = 10.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        element()
+        trailingIcon?.let {
+            Icon(
+                imageVector = trailingIcon,
+                contentDescription = null,
+                tint = AllInTheme.colors.allInPurple,
+                modifier = Modifier
+                    .size(30.dp)
+            )
+        }
+    }
+}
+
+@Composable
+fun AllInSelectionBox(
+    modifier: Modifier = Modifier,
+    isOpen: Boolean,
+    setIsOpen: (Boolean) -> Unit,
+    borderWidth: Dp? = null,
+    selected: (@Composable RowScope.() -> Unit)?,
+    setSelected: (@Composable RowScope.() -> Unit) -> Unit,
+    elements: List<@Composable RowScope.() -> Unit>,
+) {
+    val interactionSource = remember { MutableInteractionSource() }
+    AllInCard(
+        modifier = modifier.fillMaxWidth(),
+        radius = 10.dp,
+        borderWidth = borderWidth,
+        borderColor = AllInTheme.colors.allInPurple.copy(alpha = .42f)
+    ) {
+        Column(Modifier.animateContentSize()) {
+            AllInSelectionLine(
+                element = selected ?: { Box { } },
+                onClick = { setIsOpen(!isOpen) },
+                interactionSource = interactionSource,
+                trailingIcon = with(Icons.Default) {
+                    if (isOpen) ExpandLess else ExpandMore
+                }
+            )
+            AnimatedVisibility(isOpen) {
+                Column {
+                    HorizontalDivider(color = AllInTheme.themeColors.border)
+                    elements.filter { it != selected }.forEach { element ->
+                        AllInSelectionLine(
+                            element = element,
+                            interactionSource = interactionSource,
+                            onClick = {
+                                setSelected(element)
+                                setIsOpen(false)
+                            }
+                        )
+                    }
+                }
+            }
+        }
     }
 }
 

@@ -23,7 +23,7 @@ fun DrawerHeaderStat(
         Text(
             text = label,
             color = AllInTheme.colors.allInLightGrey300,
-            style = AllInTheme.typography.r
+            style = AllInTheme.typography.p1
         )
     }
 }

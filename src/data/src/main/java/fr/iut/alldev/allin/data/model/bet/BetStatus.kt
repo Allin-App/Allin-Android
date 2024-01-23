@@ -6,4 +6,14 @@ sealed class BetStatus {
     data object InProgress : BetStatus()
 
     data object Waiting : BetStatus()
+
+    companion object {
+        val entries = sequenceOf(
+            InProgress,
+            Waiting,
+            Finished(BetFinishedStatus.WON),
+            Finished(BetFinishedStatus.LOST)
+        )
+    }
+
 }

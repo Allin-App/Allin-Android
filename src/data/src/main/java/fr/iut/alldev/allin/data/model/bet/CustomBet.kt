@@ -3,7 +3,7 @@ package fr.iut.alldev.allin.data.model.bet
 import java.time.ZonedDateTime
 
 data class CustomBet(
-    override val id: Int? = null,
+    override val id: String,
     override val creator: String,
     override val theme: String,
     override val phrase: String,
@@ -11,7 +11,7 @@ data class CustomBet(
     override val endBetDate: ZonedDateTime,
     override val isPublic: Boolean,
     override val betStatus: BetStatus,
-    val possibleAnswers: Set<String>,
+    val possibleAnswers: List<String>
 ) : Bet(
     id,
     creator,
@@ -22,5 +22,5 @@ data class CustomBet(
     isPublic,
     betStatus
 ) {
-    override fun getResponses(): List<String> = possibleAnswers.toList()
+    override fun getResponses(): List<String> = possibleAnswers
 }

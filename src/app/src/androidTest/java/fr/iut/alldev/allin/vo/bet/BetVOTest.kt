@@ -9,8 +9,7 @@ import fr.iut.alldev.allin.test.TestTags
 import fr.iut.alldev.allin.test.mock.Bets
 import fr.iut.alldev.allin.ui.MainActivity
 import fr.iut.alldev.allin.theme.AllInTheme
-import fr.iut.alldev.allin.vo.bet.factory.toBetVO
-import fr.iut.alldev.allin.vo.bet.visitor.BetTestVisitor
+import fr.iut.alldev.allin.vo.bet.displayer.BetTestDisplayer
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -30,37 +29,55 @@ class BetVOTest {
     }
 
     companion object {
-        val visitor = BetTestVisitor()
+        val displayer = BetTestDisplayer()
     }
 
     @Test
-    fun testVisitor_shouldDisplayYesNoBetUI(){
+    fun testDisplayer_shouldDisplayYesNoBetUI(){
         //Given
 
         //When
         composeTestRule.activity.setContent {
              AllInTheme{
-                 Bets.bets[0].toBetVO()?.Accept(v = visitor)
+                 displayer.DisplayBet(Bets.bets[0])
             }
         }
         //Expect
         composeTestRule.onNodeWithTag(TestTags.YES_NO_BET.tag).assertExists()
         composeTestRule.onNodeWithTag(TestTags.MATCH_BET.tag).assertDoesNotExist()
+        composeTestRule.onNodeWithTag(TestTags.CUSTOM_BET.tag).assertDoesNotExist()
     }
 
     @Test
-    fun testVisitor_shouldDisplayMatchUI(){
+    fun testDisplayer_shouldDisplayMatchUI(){
         //Given
 
         //When
         composeTestRule.activity.setContent {
             AllInTheme{
-                Bets.bets[1].toBetVO()?.Accept(v = visitor)
+                displayer.DisplayBet(Bets.bets[1])
             }
         }
         //Expect
         composeTestRule.onNodeWithTag(TestTags.MATCH_BET.tag).assertExists()
         composeTestRule.onNodeWithTag(TestTags.YES_NO_BET.tag).assertDoesNotExist()
+        composeTestRule.onNodeWithTag(TestTags.CUSTOM_BET.tag).assertDoesNotExist()
+    }
+
+    @Test
+    fun testDisplayer_shouldDisplayCustomBetUI(){
+        //Given
+
+        //When
+        composeTestRule.activity.setContent {
+            AllInTheme{
+                displayer.DisplayBet(Bets.bets[2])
+            }
+        }
+        //Expect
+        composeTestRule.onNodeWithTag(TestTags.MATCH_BET.tag).assertDoesNotExist()
+        composeTestRule.onNodeWithTag(TestTags.YES_NO_BET.tag).assertDoesNotExist()
+        composeTestRule.onNodeWithTag(TestTags.CUSTOM_BET.tag).assertExists()
     }
 
 }

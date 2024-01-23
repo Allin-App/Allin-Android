@@ -14,14 +14,15 @@ class ErrorInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
         val response = chain.proceed(request)
-        if(!response.isSuccessful){
+        if (!response.isSuccessful) {
             when (response.code) {
                 404 -> throw AllInNotFoundException(response.message)
                 401 -> throw AllInUnauthorizedException(response.message)
                 else -> throw AllInUnsuccessfulException(response.message)
             }
         }
-        if (response.body?.contentType()?.subtype != "json") {
+        
+        response.body?.contentType()?.subtype?.takeIf { it != "json" }?.let {
             throw AllInAPIException(response.message)
         }
 

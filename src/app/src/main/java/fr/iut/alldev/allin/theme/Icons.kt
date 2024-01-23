@@ -9,7 +9,7 @@ import androidx.compose.ui.graphics.painter.Painter
 
 @Immutable
 data class AllInIcons(
-    val allCoins: @Composable ()->Painter,
+    val allCoins: @Composable () -> Painter,
 )
 
 internal val LocalIcons = staticCompositionLocalOf {

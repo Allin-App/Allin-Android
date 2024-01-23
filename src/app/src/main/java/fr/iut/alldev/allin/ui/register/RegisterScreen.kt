@@ -2,7 +2,6 @@ package fr.iut.alldev.allin.ui.register
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.relocation.BringIntoViewRequester
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material3.Text
@@ -49,7 +48,6 @@ fun RegisterScreen(
     val (password, setPassword) = remember { registerViewModel.password }
     val (passwordValidation, setPasswordValidation) = remember { registerViewModel.passwordValidation }
 
-    val bringIntoViewRequester = remember { BringIntoViewRequester() }
     val scrollState = rememberScrollState()
 
     val usernameFieldName = stringResource(id = R.string.username)
@@ -89,7 +87,7 @@ fun RegisterScreen(
                 modifier = Modifier.fillMaxWidth(),
                 text = stringResource(id = R.string.Hello_x, username),
                 color = AllInTheme.themeColors.onMainSurface,
-                style = AllInTheme.typography.h3,
+                style = AllInTheme.typography.sm1,
                 textAlign = TextAlign.Center,
                 fontSize = 40.sp,
                 overflow = TextOverflow.Ellipsis,
@@ -99,7 +97,7 @@ fun RegisterScreen(
                 modifier = Modifier.fillMaxWidth(),
                 text = stringResource(id = R.string.Register_title),
                 color = AllInTheme.themeColors.onMainSurface,
-                style = AllInTheme.typography.h3,
+                style = AllInTheme.typography.sm1,
                 textAlign = TextAlign.Center,
                 fontSize = 40.sp
             )
@@ -108,7 +106,7 @@ fun RegisterScreen(
                 modifier = Modifier.fillMaxWidth(),
                 text = stringResource(id = R.string.Register_subtitle),
                 color = AllInTheme.themeColors.onMainSurface,
-                style = AllInTheme.typography.r,
+                style = AllInTheme.typography.p1,
                 textAlign = TextAlign.Center,
                 fontSize = 23.sp
             )
@@ -117,46 +115,42 @@ fun RegisterScreen(
                 verticalArrangement = Arrangement.spacedBy(20.dp)
             ) {
                 AllInTextField(
-                    modifier = Modifier.fillMaxWidth(),
                     placeholder = usernameFieldName,
                     value = username,
-                    onValueChange = setUsername,
+                    modifier = Modifier.fillMaxWidth(),
                     maxChar = 20,
+                    onValueChange = setUsername,
                     errorText = usernameError.errorResource(),
-                    bringIntoViewRequester = bringIntoViewRequester,
                     imeAction = ImeAction.Next,
                     keyboardActions = keyboardActions
                 )
                 AllInTextField(
-                    modifier = Modifier.fillMaxWidth(),
                     placeholder = emailFieldName,
                     value = email,
+                    modifier = Modifier.fillMaxWidth(),
                     onValueChange = setEmail,
                     errorText = emailError.errorResource(),
                     keyboardType = KeyboardType.Email,
-                    bringIntoViewRequester = bringIntoViewRequester,
                     imeAction = ImeAction.Next,
                     keyboardActions = keyboardActions
                 )
                 AllInPasswordField(
-                    modifier = Modifier.fillMaxWidth(),
                     placeholder = passwordFieldName,
                     value = password,
-                    errorText = passwordError.errorResource(),
-                    onValueChange = setPassword,
-                    bringIntoViewRequester = bringIntoViewRequester,
+                    modifier = Modifier.fillMaxWidth(),
                     imeAction = ImeAction.Next,
-                    keyboardActions = keyboardActions
+                    keyboardActions = keyboardActions,
+                    errorText = passwordError.errorResource(),
+                    onValueChange = setPassword
                 )
                 AllInPasswordField(
-                    modifier = Modifier.fillMaxWidth(),
                     placeholder = stringResource(id = R.string.confirm_password),
                     value = passwordValidation,
-                    errorText = passwordValidationError.errorResource(),
-                    onValueChange = setPasswordValidation,
-                    bringIntoViewRequester = bringIntoViewRequester,
+                    modifier = Modifier.fillMaxWidth(),
                     imeAction = ImeAction.Done,
-                    keyboardActions = keyboardActions
+                    keyboardActions = keyboardActions,
+                    errorText = passwordValidationError.errorResource(),
+                    onValueChange = setPasswordValidation
                 )
             }
         }
@@ -184,12 +178,12 @@ fun RegisterScreen(
                     text = stringResource(id = R.string.already_have_account),
                     color = AllInTheme.themeColors.onMainSurface,
                     fontSize = 15.sp,
-                    style = AllInTheme.typography.r,
+                    style = AllInTheme.typography.p1,
                     modifier = Modifier.padding(end = 5.dp)
                 )
                 ClickableText(
                     text = AnnotatedString(stringResource(id = R.string.Login)),
-                    style = AllInTheme.typography.r.copy(
+                    style = AllInTheme.typography.p1.copy(
                         color = AllInTheme.colors.allInPurple,
                         fontSize = 15.sp,
                         fontWeight = FontWeight.Bold

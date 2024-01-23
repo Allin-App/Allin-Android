@@ -118,6 +118,7 @@
     <string name="bet_status_in_progress">En cours…</string>
     <string name="bet_status_waiting">En attente…</string>
     <string name="place_your_bets">Faites vos paris</string>
+    <string name="bet_status_participants_list">Liste des participants</string>
 
     <!--Bet history-->
     <string name="bet_history_current_title">En cours</string>
@@ -126,4 +127,10 @@
     <string name="bet_history_status_won">%s [icon] gagnés !</string>
     <string name="bet_history_status_lost">%s [icon] perdus !</string>
 
+    <!--Bet result-->
+    <string name="bet_result_congratulations">FÉLICITATIONS</string>
+    <string name="bet_result_you_win">Vous remportez</string>
+    <string name="bet_result_odds">Cote totale</string>
+    <string name="bet_result_stake">Mise</string>
+    <string name="bet_result_winnings">Gains</string>
 </resources>

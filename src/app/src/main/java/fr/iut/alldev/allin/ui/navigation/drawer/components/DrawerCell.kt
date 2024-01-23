@@ -56,7 +56,7 @@ fun DrawerCell(
                 )
                 Text(
                     text = subtitle,
-                    style = AllInTheme.typography.r,
+                    style = AllInTheme.typography.p1,
                     fontSize = 9.sp,
                     color = AllInTheme.colors.allInLightGrey300,
                 )

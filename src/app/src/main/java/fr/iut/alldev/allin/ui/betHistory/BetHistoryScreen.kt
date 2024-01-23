@@ -54,8 +54,8 @@ fun BetHistoryScreen(
                     title = it.phrase,
                     creator = it.creator,
                     category = it.theme,
-                    date = it.endBetDate.formatToMediumDateNoYear(),
-                    time = it.endBetDate.formatToTime(),
+                    date = it.endRegisterDate.formatToMediumDateNoYear(),
+                    time = it.endRegisterDate.formatToTime(),
                     status = it.betStatus,
                     nbCoins = 230
                 )

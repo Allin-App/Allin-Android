@@ -19,3 +19,18 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+
+# Android.Security.Crypto
+-dontwarn com.google.api.client.http.**
+-dontwarn com.google.errorprone.**
+-dontwarn org.joda.time.**
+
+-keep,allowoptimization class com.google.crypto.tink.** { *; }
+-keep,allowoptimization class com.google.errorprone.** { *; }
+-keep,allowoptimization class com.google.api.client.http.** { *; }
+
+-keep,allowobfuscation,allowshrinking interface retrofit2.Call
+-keep,allowobfuscation,allowshrinking class retrofit2.Response
+
+-keep,allowobfuscation,allowshrinking class kotlin.coroutines.Continuation

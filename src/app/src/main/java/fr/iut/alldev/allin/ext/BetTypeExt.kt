@@ -12,7 +12,7 @@ import fr.iut.alldev.allin.data.model.bet.BetType
 @StringRes
 fun BetType.getTitleId(): Int {
     return when (this) {
-        BetType.YES_NO ->  R.string.yes_no
+        BetType.YES_NO -> R.string.yes_no
         BetType.MATCH -> R.string.sport_match
         BetType.CUSTOM -> R.string.custom_answers
     }

@@ -11,8 +11,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import fr.iut.alldev.allin.theme.AllInTheme
+import fr.iut.alldev.allin.ui.betResult.BetResultBottomSheet
 import fr.iut.alldev.allin.ui.betStatus.BetStatusBottomSheet
-import fr.iut.alldev.allin.ui.betStatus.visitor.BetStatusBottomSheetDisplayBetVisitor
+import fr.iut.alldev.allin.ui.betStatus.vo.BetStatusBottomSheetBetDisplayer
 import fr.iut.alldev.allin.ui.core.AllInLoading
 import fr.iut.alldev.allin.ui.core.snackbar.AllInSnackbarVisualsImpl
 import fr.iut.alldev.allin.ui.main.components.AllInScaffold
@@ -21,7 +22,6 @@ import fr.iut.alldev.allin.ui.navigation.Routes
 import fr.iut.alldev.allin.ui.navigation.TopLevelDestination
 import fr.iut.alldev.allin.ui.navigation.drawer.AllInDrawer
 import fr.iut.alldev.allin.ui.navigation.popUpTo
-import fr.iut.alldev.allin.vo.bet.factory.toBetVO
 import kotlinx.coroutines.launch
 
 private val topLevelDestinations = listOf(
@@ -67,15 +67,18 @@ fun MainScreen(
 
     var loading by remember { mainViewModel.loading }
     val currentUser = remember { mainViewModel.currentUserState }
-    val (selectedBet, setSelectedBet) = remember { mainViewModel.selectedBet }
+    val selectedBet by remember { mainViewModel.selectedBet }
+    val (wonBet, setWonBet) = remember { mainViewModel.wonBet }
     val (statusVisibility, sheetBackVisibility, setStatusVisibility) = rememberBetStatusVisibilities()
+    val (participateSheetVisibility, setParticipateSheetVisibility) = remember {
+        mutableStateOf(false)
+    }
 
-    val betStatusDisplayVisitor = remember {
-        BetStatusBottomSheetDisplayBetVisitor(
-            userCoinAmount = currentUser.userCoins,
-            onParticipate = {
-                mainViewModel.participateToBet(it)
-            }
+    val (displayResult, setDisplayResult) = remember { mutableStateOf(true) }
+
+    val betStatusDisplayer = remember {
+        BetStatusBottomSheetBetDisplayer(
+            openParticipateSheet = { setParticipateSheetVisibility(true) }
         )
     }
 
@@ -100,7 +103,7 @@ fun MainScreen(
         }
     }
 
-    val bottomSheetState = rememberModalBottomSheetState(
+    val statusBottomSheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true,
         confirmValueChange = {
             if (it == SheetValue.Hidden) {
@@ -108,6 +111,10 @@ fun MainScreen(
             }
             true
         }
+    )
+
+    val resultBottomSheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = true
     )
 
     AllInDrawer(
@@ -133,7 +140,7 @@ fun MainScreen(
             snackbarHostState = snackbarHostState
         ) {
             LaunchedEffect(key1 = it) {
-                betStatusDisplayVisitor.paddingValues.value = it
+                betStatusDisplayer.paddingValues.value = it
             }
             Column(
                 modifier = Modifier
@@ -145,8 +152,8 @@ fun MainScreen(
                 AllInDrawerNavHost(
                     navController = navController,
                     selectBet = { bet, participate ->
-                        setSelectedBet(bet)
-                        betStatusDisplayVisitor.participateBottomSheetVisibility.value = participate
+                        mainViewModel.openBetDetail(bet)
+                        setParticipateSheetVisibility(participate)
                         setStatusVisibility(true)
                     },
                     setLoading = { loading = it },
@@ -156,15 +163,32 @@ fun MainScreen(
         }
     }
 
+    wonBet?.let {
+        BetResultBottomSheet(
+            state = resultBottomSheetState,
+            sheetVisibility = displayResult,
+            onDismiss = { setDisplayResult(false) },
+            bet = wonBet,
+            username = currentUser.user.username,
+            coinAmount = 1630,
+            stake = 1630,
+            winnings = 1630,
+            odds = 3.62f
+        )
+    }
+
     BetStatusBottomSheet(
-        state = bottomSheetState,
+        state = statusBottomSheetState,
         sheetVisibility = statusVisibility.value,
         sheetBackVisibility = sheetBackVisibility.value,
-        onDismiss = {
-            setStatusVisibility(false)
-        },
-        bet = selectedBet?.toBetVO(),
-        visitor = betStatusDisplayVisitor
+        onDismiss = { setStatusVisibility(false) },
+        betDetail = selectedBet,
+        paddingValues = betStatusDisplayer.paddingValues.value,
+        displayBet = { betStatusDisplayer.DisplayBet(it) },
+        userCoinAmount = mainViewModel.currentUserState.userCoins,
+        onParticipate = { stake, response -> mainViewModel.participateToBet(stake, response) },
+        participateSheetVisibility = participateSheetVisibility,
+        setParticipateSheetVisibility = setParticipateSheetVisibility
     )
     AllInLoading(visible = loading)
     BackHandler(

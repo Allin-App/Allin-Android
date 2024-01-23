@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.relocation.BringIntoViewRequester
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.HelpOutline
 import androidx.compose.runtime.Composable
@@ -24,11 +23,10 @@ import fr.iut.alldev.allin.ui.core.AllInTitleInfo
 internal fun QuestionTabThemePhraseSection(
     betTheme: String,
     betThemeError: String?,
-    setBetTheme: (String)->Unit,
+    setBetTheme: (String) -> Unit,
     betPhrase: String,
     betPhraseError: String?,
-    setBetPhrase: (String)->Unit,
-    bringIntoViewRequester: BringIntoViewRequester,
+    setBetPhrase: (String) -> Unit,
     interactionSource: MutableInteractionSource
 ) {
     AllInTitleInfo(
@@ -41,13 +39,12 @@ internal fun QuestionTabThemePhraseSection(
     AllInTextField(
         placeholder = stringResource(id = R.string.Theme_placeholder),
         value = betTheme,
-        onValueChange = setBetTheme,
-        bringIntoViewRequester = bringIntoViewRequester,
-        borderColor = AllInTheme.colors.white,
+        modifier = Modifier.fillMaxWidth(),
         maxChar = 20,
         placeholderFontSize = 13.sp,
+        onValueChange = setBetTheme,
         errorText = betThemeError,
-        modifier = Modifier.fillMaxWidth()
+        borderColor = AllInTheme.colors.white
     )
     Spacer(modifier = Modifier.height(10.dp))
     AllInTitleInfo(
@@ -60,15 +57,14 @@ internal fun QuestionTabThemePhraseSection(
     AllInTextField(
         placeholder = stringResource(id = R.string.Bet_Phrase_placeholder),
         value = betPhrase,
-        borderColor = AllInTheme.colors.white,
-        onValueChange = setBetPhrase,
-        bringIntoViewRequester = bringIntoViewRequester,
-        multiLine = true,
-        maxChar = 100,
-        placeholderFontSize = 13.sp,
-        errorText = betPhraseError,
         modifier = Modifier
             .fillMaxWidth()
-            .height(100.dp)
+            .height(100.dp),
+        maxChar = 100,
+        placeholderFontSize = 13.sp,
+        multiLine = true,
+        onValueChange = setBetPhrase,
+        errorText = betPhraseError,
+        borderColor = AllInTheme.colors.white
     )
 }

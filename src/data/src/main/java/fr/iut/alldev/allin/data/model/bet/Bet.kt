@@ -3,8 +3,8 @@ package fr.iut.alldev.allin.data.model.bet
 import fr.iut.alldev.allin.data.api.model.RequestBet
 import java.time.ZonedDateTime
 
-abstract class Bet(
-    open val id: Int? = null,
+sealed class Bet(
+    open val id: String,
     open val creator: String,
     open val theme: String,
     open val phrase: String,
@@ -16,13 +16,13 @@ abstract class Bet(
     abstract fun getResponses(): List<String>
     fun toRequestBet(): RequestBet {
         return RequestBet(
+            id = "",
             theme = theme,
             sentenceBet = phrase,
             endRegistration = endRegisterDate,
             endBet = endBetDate,
             isPrivate = !isPublic,
-            response = getResponses(),
-            createdBy = creator
+            response = getResponses()
         )
     }
 }

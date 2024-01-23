@@ -44,7 +44,7 @@ fun AllInChip(
                     .padding(vertical = 8.dp, horizontal = 22.dp)
                     .alpha(if (isSelected) 0f else 1f),
                 textAlign = TextAlign.Center,
-                style = AllInTheme.typography.r,
+                style = AllInTheme.typography.p1,
                 color = AllInTheme.themeColors.onBackground2
             )
             if (isSelected) {

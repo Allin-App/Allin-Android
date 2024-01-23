@@ -10,7 +10,7 @@ plugins {
 }
 
 // Keystore
-val keystorePropertiesFile = rootProject.file("app/keys/keystore.properties")
+val keystorePropertiesFile = rootProject.file("keys/keystore.properties")
 val keystoreProperties = Properties()
 keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 
@@ -33,11 +33,16 @@ android {
         }
     }
 
+
     signingConfigs {
+        named(BuildType.DEBUG.name) {
+            storeFile = file(keystoreProperties["debugStoreFile"].toString())
+        }
         register(BuildType.RELEASE.name) {
-            storeFile = file(keystoreProperties["store"].toString())
-            storePassword = keystoreProperties["password"].toString()
-            keyPassword = keystoreProperties["password"].toString()
+            storeFile = file(keystoreProperties["releaseStoreFile"].toString())
+            storePassword = keystoreProperties["passwordRelease"].toString()
+            keyAlias = keystoreProperties["aliasRelease"].toString()
+            keyPassword = keystoreProperties["passwordRelease"].toString()
         }
     }
 
@@ -102,5 +107,6 @@ dependencies {
     androidTestImplementation(libs.test.androidx.junit)
     androidTestImplementation(libs.hilt.androidTesting)
     kaptAndroidTest(libs.hilt.androidCompiler)
-
+    androidTestImplementation(libs.ui.test.junit)
+    debugImplementation(libs.ui.test.manifest)
 }

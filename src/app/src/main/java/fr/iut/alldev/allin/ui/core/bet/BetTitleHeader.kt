@@ -38,7 +38,7 @@ fun BetTitleHeader(
                     color = AllInTheme.themeColors.onMainSurface
                 ),
                 fontSize = 12.sp,
-                style = AllInTheme.typography.s,
+                style = AllInTheme.typography.p2,
                 color = AllInTheme.themeColors.onBackground2
             )
         }
@@ -47,7 +47,7 @@ fun BetTitleHeader(
             text = category,
             fontSize = 15.sp,
             color = AllInTheme.themeColors.onBackground2,
-            style = AllInTheme.typography.m
+            style = AllInTheme.typography.sm2
         )
         Text(
             text = title,

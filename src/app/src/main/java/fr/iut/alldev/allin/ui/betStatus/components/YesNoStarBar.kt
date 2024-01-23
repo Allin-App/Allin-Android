@@ -4,27 +4,27 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.sp
-import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.data.ext.toPercentageString
 import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.core.PercentagePositionnedElement
 import fr.iut.alldev.allin.ui.core.StatBar
 
 @Composable
-fun YesNoStatBar(
-    yesPercentage: Float,
+fun BinaryStatBar(
+    response1Percentage: Float,
+    response1: String,
+    response2: String,
     modifier: Modifier = Modifier,
 ) {
     Column(modifier) {
         Row {
             Text(
-                text = stringResource(id = R.string.Yes).uppercase(),
+                text = response1,
                 color = AllInTheme.colors.allInBlue,
                 style = AllInTheme.typography.h1,
                 fontStyle = FontStyle.Italic,
@@ -32,20 +32,20 @@ fun YesNoStatBar(
                 modifier = Modifier.weight(1f)
             )
             Text(
-                text = stringResource(id = R.string.No).uppercase(),
+                text = response2,
                 style = AllInTheme.typography.h1,
                 fontStyle = FontStyle.Italic,
                 fontSize = 30.sp,
                 color = AllInTheme.colors.allInBarPink
             )
         }
-        StatBar(percentage = yesPercentage)
+        StatBar(percentage = response1Percentage)
         PercentagePositionnedElement(
-            percentage = yesPercentage
+            percentage = response1Percentage
         ) {
             Text(
-                text = yesPercentage.toPercentageString(),
-                style = AllInTheme.typography.h3,
+                text = response1Percentage.toPercentageString(),
+                style = AllInTheme.typography.sm1,
                 color = AllInTheme.colors.allInBarPurple
             )
         }
@@ -64,6 +64,10 @@ private fun YesNoStatBarPreview(
     @PreviewParameter(YesNoStatBarPreviewProvider::class) percentage: Float,
 ) {
     AllInTheme {
-        YesNoStatBar(percentage)
+        BinaryStatBar(
+            percentage,
+            "Answer 1",
+            "Answer 2"
+        )
     }
 }

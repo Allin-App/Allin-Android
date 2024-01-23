@@ -9,23 +9,23 @@ import kotlinx.serialization.Serializable
 data class RequestUser(
     val username: String,
     val email: String,
-    val password: String,
-    var nbCoins: Int,
+    val password: String
 )
 
 @Keep
 @Serializable
 data class ResponseUser(
+    val id: String = "",
     val username: String,
     val email: String,
     var nbCoins: Int,
-    var token: String? = null,
+    var token: String? = null
 ) {
     fun toUser() = User(
+        id = id,
         username = username,
         email = email,
-        id = "",
-        coins = nbCoins
+        coins = nbCoins.toInt()
     )
 }
 

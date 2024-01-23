@@ -110,6 +110,7 @@ class BetCreationViewModel @Inject constructor(
             if (!hasError.value) {
                 try {
                     val bet = BetFactory.createBet(
+                        id = "",
                         betType = selectedBetType.value,
                         theme = theme.value,
                         phrase = phrase.value,
@@ -118,7 +119,7 @@ class BetCreationViewModel @Inject constructor(
                         isPublic = isPublic.value,
                         nameTeam1 = "",
                         nameTeam2 = "",
-                        possibleAnswers = setOf(),
+                        possibleAnswers = listOf(),
                         creator = currentUser.username
                     )
                     betRepository.createBet(bet, keystoreManager.getToken() ?: "")

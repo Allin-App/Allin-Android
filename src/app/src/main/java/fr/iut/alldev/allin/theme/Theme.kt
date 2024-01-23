@@ -55,6 +55,13 @@ fun AllInTheme(
             start = Offset(0f, Float.POSITIVE_INFINITY),
             end = Offset(Float.POSITIVE_INFINITY, 0f)
         ),
+        allInMainGradientReverse = Brush.linearGradient(
+            0.0f to Color(0xFF199fee),
+            0.5f to Color(0xFFaa7ef3),
+            1.0f to Color(0xFFf951a8),
+            start = Offset(0f, Float.POSITIVE_INFINITY),
+            end = Offset(Float.POSITIVE_INFINITY, 0f)
+        ),
         allInBar1stGradient = Brush.horizontalGradient(
             0.0f to Color(0xFF2599F8),
             1.0f to Color(0xFF846AC9)
@@ -82,32 +89,32 @@ fun AllInTheme(
 
     val customTypography = AllInTypography(
         h1 = TextStyle(
-            fontFamily = PlusJakartaSans,
-            fontWeight = FontWeight.ExtraBold,
+            fontFamily = fontFamilyPlusJakartaSans,
+            fontWeight = FontWeight.ExtraBold
         ),
         h2 = TextStyle(
-            fontFamily = PlusJakartaSans,
-            fontWeight = FontWeight.Bold,
+            fontFamily = fontFamilyPlusJakartaSans,
+            fontWeight = FontWeight.Bold
         ),
-        h3 = TextStyle(
-            fontFamily = PlusJakartaSans,
-            fontWeight = FontWeight.SemiBold,
+        sm1 = TextStyle(
+            fontFamily = fontFamilyPlusJakartaSans,
+            fontWeight = FontWeight.SemiBold
         ),
-        m = TextStyle(
-            fontFamily = PlusJakartaSans,
-            fontWeight = FontWeight.Medium,
+        sm2 = TextStyle(
+            fontFamily = fontFamilyPlusJakartaSans,
+            fontWeight = FontWeight.Medium
         ),
-        r = TextStyle(
-            fontFamily = PlusJakartaSans,
-            fontWeight = FontWeight.Normal,
+        p1 = TextStyle(
+            fontFamily = fontFamilyPlusJakartaSans,
+            fontWeight = FontWeight.Normal
         ),
-        s = TextStyle(
-            fontFamily = PlusJakartaSans,
-            fontWeight = FontWeight.Light,
+        p2 = TextStyle(
+            fontFamily = fontFamilyPlusJakartaSans,
+            fontWeight = FontWeight.Light
         ),
-        xs = TextStyle(
-            fontFamily = PlusJakartaSans,
-            fontWeight = FontWeight.ExtraLight,
+        l1 = TextStyle(
+            fontFamily = fontFamilyPlusJakartaSans,
+            fontWeight = FontWeight.ExtraLight
         )
     )
 

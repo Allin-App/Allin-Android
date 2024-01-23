@@ -1,10 +1,13 @@
 package fr.iut.alldev.allin.data.repository.impl
 
 import fr.iut.alldev.allin.data.api.AllInApi
+import fr.iut.alldev.allin.data.api.AllInApi.Companion.formatBearerToken
 import fr.iut.alldev.allin.data.model.bet.Bet
 import fr.iut.alldev.allin.data.model.bet.BetFinishedStatus
 import fr.iut.alldev.allin.data.model.bet.BetStatus
+import fr.iut.alldev.allin.data.model.bet.Participation
 import fr.iut.alldev.allin.data.model.bet.YesNoBet
+import fr.iut.alldev.allin.data.model.bet.vo.BetDetail
 import fr.iut.alldev.allin.data.repository.BetRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
@@ -16,7 +19,8 @@ class BetRepositoryImpl @Inject constructor(
 ) : BetRepository() {
     override suspend fun createBet(bet: Bet, token: String) {
         api.createBet(
-            bet.toRequestBet().copy(createdBy = token)
+            token = token.formatBearerToken(),
+            body = bet.toRequestBet()
         )
     }
 
@@ -24,6 +28,7 @@ class BetRepositoryImpl @Inject constructor(
         return flowOf(
             listOf(
                 YesNoBet(
+                    id = "1",
                     creator = "Lucas",
                     theme = "Theme",
                     phrase = "Bet phrase 1",
@@ -33,6 +38,7 @@ class BetRepositoryImpl @Inject constructor(
                     betStatus = BetStatus.Finished(BetFinishedStatus.WON)
                 ),
                 YesNoBet(
+                    id = "2",
                     creator = "Lucas",
                     theme = "Theme",
                     phrase = "Bet phrase 2",
@@ -42,6 +48,7 @@ class BetRepositoryImpl @Inject constructor(
                     betStatus = BetStatus.Finished(BetFinishedStatus.LOST)
                 ),
                 YesNoBet(
+                    id = "3",
                     creator = "Lucas",
                     theme = "Theme",
                     phrase = "Bet phrase 3",
@@ -59,6 +66,7 @@ class BetRepositoryImpl @Inject constructor(
         return flowOf(
             listOf(
                 YesNoBet(
+                    id = "1",
                     creator = "Lucas",
                     theme = "Theme",
                     phrase = "Bet phrase 1",
@@ -68,6 +76,7 @@ class BetRepositoryImpl @Inject constructor(
                     betStatus = BetStatus.InProgress
                 ),
                 YesNoBet(
+                    id = "2",
                     creator = "Lucas",
                     theme = "Theme",
                     phrase = "Bet phrase 2",
@@ -77,6 +86,7 @@ class BetRepositoryImpl @Inject constructor(
                     betStatus = BetStatus.InProgress
                 ),
                 YesNoBet(
+                    id = "3",
                     creator = "Lucas",
                     theme = "Theme",
                     phrase = "Bet phrase 3",
@@ -87,6 +97,17 @@ class BetRepositoryImpl @Inject constructor(
                 )
             )
         )
+    }
+
+    override suspend fun getBet(id: String, token: String): BetDetail {
+        return api.getBet(
+            token = token.formatBearerToken(),
+            id = id
+        ).toBetDetail()
+    }
+
+    override suspend fun participateToBet(participation: Participation, token: String) {
+        api.participateToBet(token = token.formatBearerToken(), body = participation.toRequestParticipation())
     }
 
     override suspend fun getAllBets(): Flow<List<Bet>> {

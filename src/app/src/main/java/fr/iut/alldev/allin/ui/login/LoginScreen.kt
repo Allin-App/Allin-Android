@@ -1,6 +1,5 @@
 package fr.iut.alldev.allin.ui.login
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -11,12 +10,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.relocation.BringIntoViewRequester
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -42,7 +39,6 @@ import fr.iut.alldev.allin.ui.core.AllInLoading
 import fr.iut.alldev.allin.ui.core.AllInPasswordField
 import fr.iut.alldev.allin.ui.core.AllInTextField
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(
     navigateToDashboard: () -> Unit,
@@ -51,7 +47,6 @@ fun LoginScreen(
 ) {
     val focusManager = LocalFocusManager.current
 
-    val bringIntoViewRequester = BringIntoViewRequester()
     val loading by remember { loginViewModel.loading }
     var hasLoginError by remember { loginViewModel.hasError }
 
@@ -84,7 +79,7 @@ fun LoginScreen(
                 modifier = Modifier.fillMaxWidth(),
                 text = stringResource(id = R.string.Login_title),
                 color = AllInTheme.themeColors.onMainSurface,
-                style = AllInTheme.typography.h3,
+                style = AllInTheme.typography.sm1,
                 textAlign = TextAlign.Center,
                 fontSize = 40.sp
             )
@@ -93,7 +88,7 @@ fun LoginScreen(
                 modifier = Modifier.fillMaxWidth(),
                 text = stringResource(id = R.string.Login_subtitle),
                 color = AllInTheme.themeColors.onMainSurface,
-                style = AllInTheme.typography.r,
+                style = AllInTheme.typography.p1,
                 textAlign = TextAlign.Center,
                 fontSize = 23.sp
             )
@@ -102,27 +97,25 @@ fun LoginScreen(
                 verticalArrangement = Arrangement.spacedBy(20.dp)
             ) {
                 AllInTextField(
-                    modifier = Modifier.fillMaxWidth(),
                     placeholder = stringResource(id = R.string.username),
                     value = username,
+                    modifier = Modifier.fillMaxWidth(),
                     onValueChange = setUsername,
-                    bringIntoViewRequester = bringIntoViewRequester,
                     imeAction = ImeAction.Next,
                     keyboardActions = keyboardActions
                 )
                 AllInPasswordField(
-                    modifier = Modifier.fillMaxWidth(),
                     placeholder = stringResource(id = R.string.password),
                     value = password,
-                    onValueChange = setPassword,
-                    bringIntoViewRequester = bringIntoViewRequester,
+                    modifier = Modifier.fillMaxWidth(),
                     imeAction = ImeAction.Done,
-                    keyboardActions = keyboardActions
+                    keyboardActions = keyboardActions,
+                    onValueChange = setPassword
                 )
             }
             ClickableText(
                 text = AnnotatedString(stringResource(id = R.string.forgot_password)),
-                style = AllInTheme.typography.m.copy(
+                style = AllInTheme.typography.sm2.copy(
                     color = AllInTheme.themeColors.onMainSurface,
                     fontSize = 15.sp,
                 ),
@@ -156,12 +149,12 @@ fun LoginScreen(
                     text = stringResource(id = R.string.no_account),
                     color = AllInTheme.themeColors.onMainSurface,
                     fontSize = 15.sp,
-                    style = AllInTheme.typography.r,
+                    style = AllInTheme.typography.p1,
                     modifier = Modifier.padding(end = 5.dp)
                 )
                 ClickableText(
                     text = AnnotatedString(stringResource(id = R.string.Register)),
-                    style = AllInTheme.typography.r.copy(
+                    style = AllInTheme.typography.p1.copy(
                         color = AllInTheme.colors.allInPurple,
                         fontSize = 15.sp,
                         fontWeight = FontWeight.Bold

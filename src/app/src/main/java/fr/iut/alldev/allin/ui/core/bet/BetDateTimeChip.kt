@@ -29,7 +29,7 @@ fun BetDateTimeChip(
         Text(
             text = text,
             modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
-            style = AllInTheme.typography.h3,
+            style = AllInTheme.typography.sm1,
             textAlign = TextAlign.Center,
             color = AllInTheme.colors.allInPurple
         )

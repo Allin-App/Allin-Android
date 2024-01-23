@@ -58,7 +58,7 @@ fun AllInDetailsDrawer(
         ) {
             Text(
                 text = text,
-                style = AllInTheme.typography.s,
+                style = AllInTheme.typography.p2,
                 color = textColor,
                 fontSize = 15.sp
             )

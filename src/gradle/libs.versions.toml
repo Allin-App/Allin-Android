@@ -10,9 +10,10 @@ kotlin = "1.9.20"
 
 androidxCore = "1.12.0"
 androidxActivity = "1.8.2"
-androidxSecurity = "1.0.0"
+androidxSecurity = "1.1.0-alpha06"
 
 composeBom = "2023.10.01"
+compose = "1.5.4"
 composePreview = "1.6.0-beta03"
 composeCompiler = "1.5.5"
 composeNavigation = "2.7.6"
@@ -31,7 +32,7 @@ room = "2.6.1"
 okHttp = "4.11.0"
 
 # Plugins
-gradlePlugin = "8.1.2"
+gradlePlugin = "8.1.4"
 publishPlugin = "1.1"
 resgenPlugin = "2.5"
 
@@ -54,6 +55,9 @@ test-androidx-junit = { group = "androidx.test.ext", name = "junit-ktx", version
 test-espresso = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 hilt-androidTesting = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hilt" }
 hilt-androidCompiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
+ui-test-junit = { group = "androidx.compose.ui", name = "ui-test-junit4", version.ref = "compose" }
+ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest", version.ref = "compose" }
+
 
 # Compose
 compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
@@ -94,7 +98,6 @@ plugin-gradle = { module = "com.android.tools.build:gradle", version.ref = "grad
 plugin-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 plugin-kotlinSerialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
 plugin-hilt = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt" }
-
 
 [bundles]
 
