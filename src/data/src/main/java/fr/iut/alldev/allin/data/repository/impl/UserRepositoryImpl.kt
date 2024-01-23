@@ -1,6 +1,7 @@
 package fr.iut.alldev.allin.data.repository.impl
 
 import fr.iut.alldev.allin.data.api.AllInApi
+import fr.iut.alldev.allin.data.api.AllInApi.Companion.formatBearerToken
 import fr.iut.alldev.allin.data.api.model.CheckUser
 import fr.iut.alldev.allin.data.api.model.RequestUser
 import fr.iut.alldev.allin.data.repository.UserRepository
@@ -22,7 +23,7 @@ class UserRepositoryImpl @Inject constructor(
     }
 
     override suspend fun login(token: String): String? {
-        val response = api.login(token = "Bearer $token")
+        val response = api.login(token = token.formatBearerToken())
         currentUser = response.toUser()
         return response.token
     }
@@ -33,8 +34,7 @@ class UserRepositoryImpl @Inject constructor(
             RequestUser(
                 username = username,
                 email = email,
-                password = password,
-                nbCoins = 0
+                password = password
             )
         )
         currentUser = response.toUser()

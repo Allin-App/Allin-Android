@@ -5,6 +5,7 @@ import java.time.ZonedDateTime
 class BetFactory {
     companion object {
         fun createBet(
+            id: String,
             betType: BetType,
             creator: String,
             theme: String,
@@ -20,6 +21,7 @@ class BetFactory {
             when (betType) {
                 BetType.YES_NO -> {
                     YesNoBet(
+                        id = id,
                         theme = theme,
                         creator = creator,
                         phrase = phrase,
@@ -32,6 +34,7 @@ class BetFactory {
 
                 BetType.MATCH -> {
                     MatchBet(
+                        id = id,
                         theme = theme,
                         creator = creator,
                         phrase = phrase,
@@ -47,6 +50,7 @@ class BetFactory {
 
                 BetType.CUSTOM -> {
                     CustomBet(
+                        id = id,
                         theme = theme,
                         creator = creator,
                         phrase = phrase,

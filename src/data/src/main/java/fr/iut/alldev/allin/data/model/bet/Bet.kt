@@ -4,7 +4,7 @@ import fr.iut.alldev.allin.data.api.model.RequestBet
 import java.time.ZonedDateTime
 
 sealed class Bet(
-    open val id: String? = null,
+    open val id: String,
     open val creator: String,
     open val theme: String,
     open val phrase: String,
@@ -16,6 +16,7 @@ sealed class Bet(
     abstract fun getResponses(): List<String>
     fun toRequestBet(): RequestBet {
         return RequestBet(
+            id = "",
             theme = theme,
             sentenceBet = phrase,
             endRegistration = endRegisterDate,

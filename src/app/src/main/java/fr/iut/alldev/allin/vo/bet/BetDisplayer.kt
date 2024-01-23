@@ -1,27 +1,27 @@
 package fr.iut.alldev.allin.vo.bet
 
 import androidx.compose.runtime.Composable
-import fr.iut.alldev.allin.data.model.bet.Bet
 import fr.iut.alldev.allin.data.model.bet.CustomBet
 import fr.iut.alldev.allin.data.model.bet.MatchBet
 import fr.iut.alldev.allin.data.model.bet.YesNoBet
+import fr.iut.alldev.allin.data.model.bet.vo.BetDetail
 
 interface BetDisplayer {
     @Composable
-    fun DisplayBet(bet: Bet){
-        when(bet){
-            is CustomBet -> DisplayCustomBet(bet)
-            is MatchBet -> DisplayMatchBet(bet)
-            is YesNoBet -> DisplayYesNoBet(bet)
+    fun DisplayBet(betDetail: BetDetail) {
+        when (betDetail.bet) {
+            is CustomBet -> DisplayCustomBet(betDetail)
+            is MatchBet -> DisplayMatchBet(betDetail)
+            is YesNoBet -> DisplayYesNoBet(betDetail)
         }
     }
 
     @Composable
-    fun DisplayYesNoBet(bet: YesNoBet)
+    fun DisplayYesNoBet(betDetail: BetDetail)
 
     @Composable
-    fun DisplayMatchBet(bet: MatchBet)
+    fun DisplayMatchBet(betDetail: BetDetail)
 
     @Composable
-    fun DisplayCustomBet(bet: CustomBet)
+    fun DisplayCustomBet(betDetail: BetDetail)
 }

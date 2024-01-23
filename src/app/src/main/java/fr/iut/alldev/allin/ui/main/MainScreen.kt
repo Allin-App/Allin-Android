@@ -67,7 +67,7 @@ fun MainScreen(
 
     var loading by remember { mainViewModel.loading }
     val currentUser = remember { mainViewModel.currentUserState }
-    val (selectedBet, setSelectedBet) = remember { mainViewModel.selectedBet }
+    val selectedBet by remember { mainViewModel.selectedBet }
     val (wonBet, setWonBet) = remember { mainViewModel.wonBet }
     val (statusVisibility, sheetBackVisibility, setStatusVisibility) = rememberBetStatusVisibilities()
     val (participateSheetVisibility, setParticipateSheetVisibility) = remember {
@@ -152,7 +152,7 @@ fun MainScreen(
                 AllInDrawerNavHost(
                     navController = navController,
                     selectBet = { bet, participate ->
-                        setSelectedBet(bet)
+                        mainViewModel.openBetDetail(bet)
                         setParticipateSheetVisibility(participate)
                         setStatusVisibility(true)
                     },
@@ -182,11 +182,11 @@ fun MainScreen(
         sheetVisibility = statusVisibility.value,
         sheetBackVisibility = sheetBackVisibility.value,
         onDismiss = { setStatusVisibility(false) },
-        bet = selectedBet,
+        betDetail = selectedBet,
         paddingValues = betStatusDisplayer.paddingValues.value,
         displayBet = { betStatusDisplayer.DisplayBet(it) },
         userCoinAmount = mainViewModel.currentUserState.userCoins,
-        onParticipate = { mainViewModel.participateToBet(it) },
+        onParticipate = { stake, response -> mainViewModel.participateToBet(stake, response) },
         participateSheetVisibility = participateSheetVisibility,
         setParticipateSheetVisibility = setParticipateSheetVisibility
     )

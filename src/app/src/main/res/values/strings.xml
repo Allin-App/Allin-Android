@@ -118,6 +118,7 @@
     <string name="bet_status_in_progress">In progress…</string>
     <string name="bet_status_waiting">Waiting…</string>
     <string name="place_your_bets">Place your bets</string>
+    <string name="bet_status_participants_list">Participants</string>
 
     <!--Bet history-->
     <string name="bet_history_current_title">Current</string>

@@ -3,7 +3,7 @@ package fr.iut.alldev.allin.data.model.bet
 import java.time.ZonedDateTime
 
 data class CustomBet(
-    override val id: String? = null,
+    override val id: String,
     override val creator: String,
     override val theme: String,
     override val phrase: String,

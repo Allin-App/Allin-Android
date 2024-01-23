@@ -154,6 +154,7 @@ private fun BetResultBottomSheetContentPreview() {
             username = "Pseudo",
             coinAmount = 3976,
             bet = YesNoBet(
+                id = "1",
                 theme = "Theme",
                 phrase = "Phrase",
                 endRegisterDate = ZonedDateTime.now(),

@@ -1,82 +1,138 @@
 package fr.iut.alldev.allin.ui.betStatus.components
 
 import android.content.res.Configuration
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
-
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import fr.iut.alldev.allin.R
+import androidx.core.os.ConfigurationCompat
 import fr.iut.alldev.allin.data.model.bet.Bet
 import fr.iut.alldev.allin.data.model.bet.CustomBet
 import fr.iut.alldev.allin.data.model.bet.MatchBet
 import fr.iut.alldev.allin.data.model.bet.NO_VALUE
 import fr.iut.alldev.allin.data.model.bet.YES_VALUE
 import fr.iut.alldev.allin.data.model.bet.YesNoBet
+import fr.iut.alldev.allin.data.model.bet.vo.BetDetail
+import fr.iut.alldev.allin.ext.formatToSimple
 import fr.iut.alldev.allin.theme.AllInTheme
-import fr.iut.alldev.allin.ui.preview.BetPreviewProvider
+import fr.iut.alldev.allin.ui.core.AllInCard
+import fr.iut.alldev.allin.ui.preview.BetDetailPreviewProvider
+import java.util.Locale
 
 private val participationAnswerFontSize = 25.sp
 
 @Composable
-fun Bet.getParticipationAnswers(): List<@Composable RowScope.() -> Unit> =
-    when (this) {
-        is CustomBet -> this.possibleAnswers.map {
+fun BetDetail.getParticipationAnswers(): List<@Composable RowScope.() -> Unit> {
+    val configuration = LocalConfiguration.current
+    val locale = remember { ConfigurationCompat.getLocales(configuration).get(0) ?: Locale.getDefault() }
+
+    return when (this.bet) {
+        is CustomBet -> (this.bet as CustomBet).possibleAnswers.map {
             {
-                Text(
-                    text = it,
-                    color = AllInTheme.colors.allInBlue,
-                    style = AllInTheme.typography.h1,
-                    fontSize = participationAnswerFontSize
-                )
+                this@getParticipationAnswers.getAnswerOfResponse(it)?.let {
+                    ParticipationAnswerLine(
+                        text = it.response,
+                        odds = it.odds,
+                        locale = locale
+                    )
+                }
             }
         }
 
-        is MatchBet -> listOf(
-            {
-                Text(
-                    text = this@getParticipationAnswers.nameTeam1,
-                    color = AllInTheme.colors.allInBlue,
-                    style = AllInTheme.typography.h1,
-                    fontSize = participationAnswerFontSize
-                )
-            },
-            {
-                Text(
-                    text = this@getParticipationAnswers.nameTeam2,
-                    color = AllInTheme.colors.allInBarPink,
-                    style = AllInTheme.typography.h1,
-                    fontSize = participationAnswerFontSize
-                )
+        is MatchBet -> buildList {
+            val bet = (this@getParticipationAnswers.bet as MatchBet)
+            add {
+                this@getParticipationAnswers.getAnswerOfResponse(bet.nameTeam1)?.let {
+                    ParticipationAnswerLine(
+                        text = it.response,
+                        odds = it.odds,
+                        locale = locale
+                    )
+                }
             }
+            add {
+                this@getParticipationAnswers.getAnswerOfResponse(bet.nameTeam2)?.let {
+                    ParticipationAnswerLine(
+                        text = it.response,
+                        color = AllInTheme.colors.allInBarPink,
+                        odds = it.odds,
+                        locale = locale
+                    )
+                }
+            }
+        }
+
+        is YesNoBet -> buildList {
+            add {
+                this@getParticipationAnswers.getAnswerOfResponse(YES_VALUE)?.let {
+                    ParticipationAnswerLine(
+                        text = it.response,
+                        odds = it.odds,
+                        locale = locale
+                    )
+                }
+            }
+            add {
+                this@getParticipationAnswers.getAnswerOfResponse(NO_VALUE)?.let {
+                    ParticipationAnswerLine(
+                        text = it.response,
+                        color = AllInTheme.colors.allInBarPink,
+                        odds = it.odds,
+                        locale = locale
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun ParticipationAnswerLine(
+    text: String,
+    color: Color = AllInTheme.colors.allInBlue,
+    locale: Locale,
+    odds: Float
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        Text(
+            text = text.uppercase(),
+            color = color,
+            style = AllInTheme.typography.h1,
+            fontSize = participationAnswerFontSize
         )
 
-        is YesNoBet -> listOf(
-            {
+        AllInCard(
+            radius = 50.dp,
+            backgroundColor = AllInTheme.colors.allInPurple
+        ) {
+            Box(Modifier.padding(vertical = 4.dp, horizontal = 8.dp)) {
                 Text(
-                    text = stringResource(id = R.string.Yes).uppercase(),
-                    color = AllInTheme.colors.allInBlue,
-                    style = AllInTheme.typography.h1,
-                    fontSize = participationAnswerFontSize
-                )
-            },
-            {
-                Text(
-                    text = stringResource(id = R.string.No).uppercase(),
-                    color = AllInTheme.colors.allInBarPink,
-                    style = AllInTheme.typography.h1,
-                    fontSize = participationAnswerFontSize
+                    text = "x${odds.formatToSimple(locale)}",
+                    color = AllInTheme.colors.white,
+                    style = AllInTheme.typography.h2
                 )
             }
-        )
+        }
     }
+}
 
 fun Bet.getAnswerFromParticipationIdx(idx: Int) =
     when (this) {
@@ -98,7 +154,7 @@ fun Bet.getAnswerFromParticipationIdx(idx: Int) =
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun ParticipationAnswersPreview(
-    @PreviewParameter(BetPreviewProvider::class) bet: Bet,
+    @PreviewParameter(BetDetailPreviewProvider::class) bet: BetDetail,
 ) {
     AllInTheme {
         Column {

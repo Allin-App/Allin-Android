@@ -12,6 +12,7 @@ import java.time.ZonedDateTime
 class BetPreviewProvider : PreviewParameterProvider<Bet> {
     override val values = sequenceOf(
         YesNoBet(
+            id = "1",
             theme = "Theme",
             phrase = "Phrase",
             endRegisterDate = ZonedDateTime.now(),
@@ -21,6 +22,7 @@ class BetPreviewProvider : PreviewParameterProvider<Bet> {
             creator = "creator"
         ),
         MatchBet(
+            id = "2",
             theme = "Theme",
             phrase = "Phrase",
             endRegisterDate = ZonedDateTime.now(),
@@ -32,6 +34,7 @@ class BetPreviewProvider : PreviewParameterProvider<Bet> {
             nameTeam2 = "Climate Change"
         ),
         CustomBet(
+            id = "3",
             theme = "Theme",
             phrase = "Phrase",
             endRegisterDate = ZonedDateTime.now(),

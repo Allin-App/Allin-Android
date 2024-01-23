@@ -118,6 +118,7 @@
     <string name="bet_status_in_progress">En cours…</string>
     <string name="bet_status_waiting">En attente…</string>
     <string name="place_your_bets">Faites vos paris</string>
+    <string name="bet_status_participants_list">Liste des participants</string>
 
     <!--Bet history-->
     <string name="bet_history_current_title">En cours</string>

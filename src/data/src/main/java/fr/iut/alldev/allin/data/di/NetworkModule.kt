@@ -17,7 +17,7 @@ import javax.inject.Qualifier
 internal val json by lazy {
     Json {
         ignoreUnknownKeys = true
-        encodeDefaults = false
+        encodeDefaults = true
     }
 }
 

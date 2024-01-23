@@ -24,6 +24,7 @@ import fr.iut.alldev.allin.ui.core.AllInIntTextField
 import fr.iut.alldev.allin.ui.core.AllInSelectionBox
 import fr.iut.alldev.allin.ui.core.topbar.AllInTopBarCoinCounter
 import kotlinx.coroutines.launch
+import kotlin.math.roundToInt
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -35,6 +36,7 @@ fun BetStatusParticipationBottomSheet(
     onDismiss: () -> Unit,
     state: SheetState,
     enabled: Boolean,
+    odds: Float,
     stake: Int?,
     setStake: (Int?) -> Unit,
     elements: List<@Composable RowScope.() -> Unit>,
@@ -58,6 +60,7 @@ fun BetStatusParticipationBottomSheet(
             setElement = setElement,
             enabled = enabled,
             stake = stake,
+            odds = odds,
             setStake = setStake
         ) {
             scope.launch {
@@ -76,6 +79,7 @@ private fun ColumnScope.BetStatusParticipationBottomSheetContent(
     coinAmount: Int,
     enabled: Boolean,
     stake: Int?,
+    odds: Float,
     setStake: (Int?) -> Unit,
     selectedElement: (@Composable RowScope.() -> Unit)?,
     elements: List<@Composable RowScope.() -> Unit>,
@@ -150,7 +154,7 @@ private fun ColumnScope.BetStatusParticipationBottomSheetContent(
                 color = AllInTheme.themeColors.onBackground
             )
             AllInCoinCount(
-                amount = 121,
+                amount = stake?.let { (it + (it * odds)).roundToInt() } ?: 0,
                 color = AllInTheme.themeColors.onBackground
             )
         }
@@ -181,6 +185,7 @@ private fun BetStatusParticipationBottomSheetContentPreview() {
                 selectedElement = null,
                 enabled = true,
                 stake = 123,
+                odds = 0.42f,
                 setStake = {}
             )
         }

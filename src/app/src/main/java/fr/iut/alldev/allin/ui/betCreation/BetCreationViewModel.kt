@@ -110,6 +110,7 @@ class BetCreationViewModel @Inject constructor(
             if (!hasError.value) {
                 try {
                     val bet = BetFactory.createBet(
+                        id = "",
                         betType = selectedBetType.value,
                         theme = theme.value,
                         phrase = phrase.value,

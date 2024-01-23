@@ -16,7 +16,5 @@ annotation class AllInCurrentUser
 internal object CurrentUserModule {
     @AllInCurrentUser
     @Provides
-    fun provideUser(
-        userRepository: UserRepository
-    ) = userRepository.currentUser
+    fun provideUser(userRepository: UserRepository) = userRepository.currentUser
 }

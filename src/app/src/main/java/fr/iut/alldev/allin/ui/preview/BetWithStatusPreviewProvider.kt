@@ -13,6 +13,7 @@ class BetWithStatusPreviewProvider : PreviewParameterProvider<Bet> {
     override val values = BetStatus.entries.flatMap { status ->
         sequenceOf(
             YesNoBet(
+                id = "1",
                 theme = "Theme",
                 phrase = "Phrase",
                 endRegisterDate = ZonedDateTime.now(),
@@ -22,6 +23,7 @@ class BetWithStatusPreviewProvider : PreviewParameterProvider<Bet> {
                 creator = "creator"
             ),
             MatchBet(
+                id = "2",
                 theme = "Theme",
                 phrase = "Phrase",
                 endRegisterDate = ZonedDateTime.now(),
@@ -33,6 +35,7 @@ class BetWithStatusPreviewProvider : PreviewParameterProvider<Bet> {
                 nameTeam2 = "Climate Change"
             ),
             CustomBet(
+                id = "3",
                 theme = "Theme",
                 phrase = "Phrase",
                 endRegisterDate = ZonedDateTime.now(),

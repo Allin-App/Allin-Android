@@ -7,7 +7,9 @@ import fr.iut.alldev.allin.data.model.bet.CustomBet
 import fr.iut.alldev.allin.data.model.bet.NO_VALUE
 import fr.iut.alldev.allin.data.model.bet.YES_VALUE
 import fr.iut.alldev.allin.data.model.bet.YesNoBet
-import fr.iut.alldev.allin.data.serialization.SimpleDateSerializer
+import fr.iut.alldev.allin.data.model.bet.vo.BetAnswerDetail
+import fr.iut.alldev.allin.data.model.bet.vo.BetDetail
+import fr.iut.alldev.allin.data.serialization.ZonedDateTimeSerializer
 import kotlinx.serialization.Serializable
 import java.time.ZonedDateTime
 
@@ -17,8 +19,8 @@ data class ResponseBet(
     val id: String?,
     val theme: String,
     val sentenceBet: String,
-    @Serializable(SimpleDateSerializer::class) val endRegistration: ZonedDateTime,
-    @Serializable(SimpleDateSerializer::class) var endBet: ZonedDateTime,
+    @Serializable(ZonedDateTimeSerializer::class) val endRegistration: ZonedDateTime,
+    @Serializable(ZonedDateTimeSerializer::class) var endBet: ZonedDateTime,
     var isPrivate: Boolean,
     var response: List<String>,
     val createdBy: String
@@ -26,6 +28,7 @@ data class ResponseBet(
     fun toBet(): Bet {
         if (response.toSet() == setOf(YES_VALUE, NO_VALUE)) {
             return YesNoBet(
+                id = id ?: "",
                 theme = theme,
                 phrase = sentenceBet,
                 endRegisterDate = endRegistration,
@@ -36,6 +39,7 @@ data class ResponseBet(
             )
         } else {
             return CustomBet(
+                id = id ?: "",
                 theme = theme,
                 phrase = sentenceBet,
                 endRegisterDate = endRegistration,
@@ -52,10 +56,48 @@ data class ResponseBet(
 @Keep
 @Serializable
 data class RequestBet(
+    val id: String = "",
     val theme: String,
     val sentenceBet: String,
-    @Serializable(SimpleDateSerializer::class) val endRegistration: ZonedDateTime,
-    @Serializable(SimpleDateSerializer::class) var endBet: ZonedDateTime,
+    @Serializable(ZonedDateTimeSerializer::class) val endRegistration: ZonedDateTime,
+    @Serializable(ZonedDateTimeSerializer::class) var endBet: ZonedDateTime,
     var isPrivate: Boolean,
     var response: List<String>
 )
+
+@Keep
+@Serializable
+data class ResponseBetAnswerDetail(
+    val response: String,
+    val totalStakes: Int,
+    val totalParticipants: Int,
+    val highestStake: Int,
+    val odds: Float
+) {
+    fun toAnswerDetail() =
+        BetAnswerDetail(
+            response = response,
+            totalStakes = totalStakes,
+            totalParticipants = totalParticipants,
+            highestStake = highestStake,
+            odds = odds
+        )
+}
+
+@Keep
+@Serializable
+data class ResponseBetDetail(
+    val bet: ResponseBet,
+    val answers: List<ResponseBetAnswerDetail>,
+    val participations: List<ResponseParticipation>,
+    val userParticipation: ResponseParticipation? = null
+) {
+    fun toBetDetail() =
+        BetDetail(
+            bet = bet.toBet(),
+            answers = answers.map { it.toAnswerDetail() },
+            participations = participations.map { it.toParticipation() },
+            userParticipation = userParticipation?.toParticipation()
+
+        )
+}

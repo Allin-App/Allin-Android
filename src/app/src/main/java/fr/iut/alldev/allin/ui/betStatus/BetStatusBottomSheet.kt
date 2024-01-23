@@ -6,10 +6,11 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import fr.iut.alldev.allin.data.model.bet.Bet
 import fr.iut.alldev.allin.data.model.bet.BetStatus
+import fr.iut.alldev.allin.data.model.bet.vo.BetDetail
 import fr.iut.alldev.allin.ui.betStatus.components.BetStatusBottomSheetBack
 import fr.iut.alldev.allin.ui.betStatus.components.BetStatusParticipationBottomSheet
+import fr.iut.alldev.allin.ui.betStatus.components.getAnswerFromParticipationIdx
 import fr.iut.alldev.allin.ui.betStatus.components.getParticipationAnswers
 import fr.iut.alldev.allin.ui.core.AllInBottomSheet
 
@@ -23,14 +24,14 @@ fun BetStatusBottomSheet(
     state: SheetState,
     sheetVisibility: Boolean,
     sheetBackVisibility: Boolean,
-    bet: Bet?,
+    betDetail: BetDetail?,
     paddingValues: PaddingValues,
     userCoinAmount: MutableIntState,
-    onParticipate: (Int) -> Unit,
+    onParticipate: (stake: Int, response: String) -> Unit,
     onDismiss: () -> Unit,
     participateSheetVisibility: Boolean,
     setParticipateSheetVisibility: (Boolean) -> Unit,
-    displayBet: @Composable (Bet) -> Unit
+    displayBet: @Composable (BetDetail) -> Unit
 ) {
     AnimatedVisibility(
         visible = sheetBackVisibility,
@@ -41,9 +42,9 @@ fun BetStatusBottomSheet(
             targetOffsetY = { it }
         )
     ) {
-        bet?.let {
+        betDetail?.let {
             BetStatusBottomSheetBack(
-                status = it.betStatus
+                status = it.bet.betStatus
             )
         }
     }
@@ -61,14 +62,15 @@ fun BetStatusBottomSheet(
         Column(
             Modifier.fillMaxHeight(SHEET_HEIGHT)
         ) {
-            bet?.let {
-                val elements = bet.getParticipationAnswers()
+            betDetail?.let {
+                val elements = betDetail.getParticipationAnswers()
 
                 displayBet(it)
                 BetStatusParticipationBottomSheet(
-                    sheetVisibility = participateSheetVisibility && bet.betStatus == BetStatus.Waiting && state.hasExpandedState,
+                    sheetVisibility = participateSheetVisibility && betDetail.bet.betStatus == BetStatus.Waiting && state.hasExpandedState,
                     safeBottomPadding = paddingValues.calculateBottomPadding(),
-                    betPhrase = bet.phrase,
+                    odds = betDetail.answers.getOrNull(selectedAnswer)?.odds ?: 1f,
+                    betPhrase = betDetail.bet.phrase,
                     coinAmount = userCoinAmount.intValue,
                     onDismiss = { setParticipateSheetVisibility(false) },
                     state = rememberModalBottomSheetState(skipPartiallyExpanded = true),
@@ -80,8 +82,11 @@ fun BetStatusBottomSheet(
                     enabled = stake != null &&
                             (stake ?: 0) <= userCoinAmount.intValue
                 ) {
-                    stake?.let {
-                        onParticipate(it)
+                    stake?.let { stake ->
+                        onParticipate(
+                            stake,
+                            betDetail.bet.getAnswerFromParticipationIdx(selectedAnswer)
+                        )
                     }
                 }
 

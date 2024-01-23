@@ -6,7 +6,7 @@ const val YES_VALUE = "Yes"
 const val NO_VALUE = "No"
 
 data class YesNoBet(
-    override val id: String? = null,
+    override val id: String,
     override val creator: String,
     override val theme: String,
     override val phrase: String,
