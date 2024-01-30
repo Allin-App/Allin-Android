@@ -15,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -131,17 +132,17 @@ class BetStatusBottomSheetBetDisplayer(
                             noText = response2Answer?.totalStakes?.toString() ?: "0"
                         )
                         YesNoDetailsLine(
-                            icon = Icons.Filled.People,
+                            icon = rememberVectorPainter(image = Icons.Filled.People),
                             yesText = response1Answer?.totalParticipants?.toString() ?: "0",
                             noText = response2Answer?.totalParticipants?.toString() ?: "0"
                         )
                         YesNoDetailsLine(
-                            icon = Icons.Filled.WorkspacePremium,
+                            icon = rememberVectorPainter(image = Icons.Filled.WorkspacePremium),
                             yesText = response1Answer?.highestStake?.toString() ?: "0",
                             noText = response2Answer?.highestStake?.toString() ?: "0"
                         )
                         YesNoDetailsLine(
-                            icon = Icons.Filled.EmojiEvents,
+                            icon = rememberVectorPainter(image = Icons.Filled.EmojiEvents),
                             yesText = "x${response1Answer?.odds?.formatToSimple(locale) ?: "1.00"}",
                             noText = "x${response2Answer?.odds?.formatToSimple(locale) ?: "1.00"}"
                         )

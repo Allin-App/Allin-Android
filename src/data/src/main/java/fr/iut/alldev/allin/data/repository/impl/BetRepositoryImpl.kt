@@ -110,10 +110,8 @@ class BetRepositoryImpl @Inject constructor(
         api.participateToBet(token = token.formatBearerToken(), body = participation.toRequestParticipation())
     }
 
-    override suspend fun getAllBets(): Flow<List<Bet>> {
-        return flowOf(
-            api.getAllBets().map { it.toBet() }
-        )
+    override suspend fun getAllBets(): List<Bet> {
+        return api.getAllBets().map { it.toBet() }
     }
 
 }

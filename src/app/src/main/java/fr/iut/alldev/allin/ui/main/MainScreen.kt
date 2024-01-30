@@ -11,6 +11,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import fr.iut.alldev.allin.theme.AllInTheme
+import fr.iut.alldev.allin.ui.betConfirmation.BetConfirmationBottomSheet
 import fr.iut.alldev.allin.ui.betResult.BetResultBottomSheet
 import fr.iut.alldev.allin.ui.betStatus.BetStatusBottomSheet
 import fr.iut.alldev.allin.ui.betStatus.vo.BetStatusBottomSheetBetDisplayer
@@ -68,11 +69,10 @@ fun MainScreen(
     var loading by remember { mainViewModel.loading }
     val currentUser = remember { mainViewModel.currentUserState }
     val selectedBet by remember { mainViewModel.selectedBet }
-    val (wonBet, setWonBet) = remember { mainViewModel.wonBet }
+    val wonBet by remember { mainViewModel.wonBet }
+    val toConfirm by remember { mainViewModel.toConfirmBet }
     val (statusVisibility, sheetBackVisibility, setStatusVisibility) = rememberBetStatusVisibilities()
-    val (participateSheetVisibility, setParticipateSheetVisibility) = remember {
-        mutableStateOf(false)
-    }
+    val (participateSheetVisibility, setParticipateSheetVisibility) = remember { mutableStateOf(false) }
 
     val (displayResult, setDisplayResult) = remember { mutableStateOf(true) }
 
@@ -168,13 +168,22 @@ fun MainScreen(
             state = resultBottomSheetState,
             sheetVisibility = displayResult,
             onDismiss = { setDisplayResult(false) },
-            bet = wonBet,
+            bet = it,
             username = currentUser.user.username,
             coinAmount = 1630,
             stake = 1630,
             winnings = 1630,
             odds = 3.62f
         )
+    }
+
+    toConfirm?.let {
+        BetConfirmationBottomSheet(
+            state = resultBottomSheetState,
+            sheetVisibility = displayResult,
+            betDetail = it,
+            onDismiss = { setDisplayResult(false) }
+        ) { /*TODO*/ }
     }
 
     BetStatusBottomSheet(

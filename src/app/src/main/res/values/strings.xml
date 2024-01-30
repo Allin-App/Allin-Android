@@ -16,6 +16,7 @@
     <string name="Validate">Validate</string>
     <string name="Cancel">Cancel</string>
     <string name="Ok">OK</string>
+    <string name="FieldError_Mandatory">This field is mandatory.</string>
     <string name="FieldError_TooShort">The %s must contain at least %d characters.</string>
     <string name="FieldError_BadFormat">The %s has bad format : %s.</string>
     <string name="FieldError_NotIdentical">The fields are not identical.</string>

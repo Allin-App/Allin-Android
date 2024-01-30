@@ -5,17 +5,13 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import fr.iut.alldev.allin.data.model.bet.Bet
 import fr.iut.alldev.allin.data.repository.BetRepository
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,14 +19,16 @@ class BetViewModel @Inject constructor(
     private val betRepository: BetRepository
 ) : ViewModel() {
 
-    private val _isRefreshing = MutableStateFlow(false)
+    private val _isRefreshing by lazy { MutableStateFlow(false) }
     val isRefreshing: StateFlow<Boolean>
         get() = _isRefreshing.asStateFlow()
 
+    private val _bets: MutableStateFlow<List<Bet>> by lazy {
+        MutableStateFlow(emptyList())
+    }
+
     val bets: StateFlow<List<Bet>> by lazy {
-        flow {
-            kotlin.runCatching { emitAll(betRepository.getAllBets()) }
-        }
+        _bets.asStateFlow()
             .filterNotNull()
             .stateIn(
                 viewModelScope,
@@ -39,16 +37,22 @@ class BetViewModel @Inject constructor(
             )
     }
 
-    private fun refreshData() {
-        Thread.sleep(1000)
+    init {
+        viewModelScope.launch {
+            refreshData()
+        }
+    }
+
+    private suspend fun refreshData() {
+        runCatching {
+            _bets.emit(betRepository.getAllBets())
+        }
     }
 
     fun refresh() {
         viewModelScope.launch {
             _isRefreshing.emit(true)
-            withContext(Dispatchers.IO) {
-                refreshData()
-            }
+            refreshData()
             _isRefreshing.emit(false)
         }
     }

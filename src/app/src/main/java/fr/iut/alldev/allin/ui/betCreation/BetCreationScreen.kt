@@ -64,8 +64,6 @@ fun BetCreationScreen(
 
     val themeFieldName = stringResource(id = R.string.Theme)
     val phraseFieldName = stringResource(id = R.string.Bet_Phrase)
-    val registerDateFieldName = stringResource(id = R.string.End_registration_date)
-    val betDateFieldName = stringResource(id = R.string.End_bet_date)
 
     LaunchedEffect(key1 = betTypes) {
         selectionElements = betTypes.map {
@@ -152,8 +150,6 @@ fun BetCreationScreen(
                 viewModel.createBet(
                     themeFieldName = themeFieldName,
                     phraseFieldName = phraseFieldName,
-                    registerDateFieldName = registerDateFieldName,
-                    betDateFieldName = betDateFieldName,
                     setLoading = setLoading,
                     onError = { hasError = true },
                     onSuccess = {

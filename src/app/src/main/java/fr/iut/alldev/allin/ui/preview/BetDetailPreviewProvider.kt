@@ -25,7 +25,7 @@ class BetDetailPreviewProvider : PreviewParameterProvider<BetDetail> {
                     totalParticipants = 1,
                     highestStake = 150,
                     odds = 2.0f
-                ),
+                )
             ),
             participations = listOf(
                 Participation(
