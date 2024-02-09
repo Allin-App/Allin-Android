@@ -10,7 +10,7 @@ import java.time.ZonedDateTime
 
 
 class BetWithStatusPreviewProvider : PreviewParameterProvider<Bet> {
-    override val values = BetStatus.entries.flatMap { status ->
+    override val values = BetStatus.entries.asSequence().flatMap { status ->
         sequenceOf(
             YesNoBet(
                 id = "1",

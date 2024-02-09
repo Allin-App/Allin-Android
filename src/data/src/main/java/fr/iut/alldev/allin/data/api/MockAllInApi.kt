@@ -8,19 +8,26 @@ import fr.iut.alldev.allin.data.api.model.RequestUser
 import fr.iut.alldev.allin.data.api.model.ResponseBet
 import fr.iut.alldev.allin.data.api.model.ResponseBetAnswerDetail
 import fr.iut.alldev.allin.data.api.model.ResponseBetDetail
+import fr.iut.alldev.allin.data.api.model.ResponseBetResultDetail
 import fr.iut.alldev.allin.data.api.model.ResponseParticipation
 import fr.iut.alldev.allin.data.api.model.ResponseUser
+import fr.iut.alldev.allin.data.model.bet.BetStatus
+import fr.iut.alldev.allin.data.model.bet.BetType
 import fr.iut.alldev.allin.data.model.bet.NO_VALUE
 import fr.iut.alldev.allin.data.model.bet.YES_VALUE
+import fr.iut.alldev.allin.data.model.bet.vo.BetResult
 import java.time.ZonedDateTime
 import java.util.UUID
 
 class MockAllInApi : AllInApi {
 
     private fun getUserFromToken(token: String) =
-        mockUsers.find { it.first.token == token }
+        mockUsers.find { it.first.token == token.removePrefix("Bearer ") }
 
-    private fun getAnswerDetails(bet: ResponseBet, participations: List<ResponseParticipation>): List<ResponseBetAnswerDetail> {
+    private fun getAnswerDetails(
+        bet: ResponseBet,
+        participations: List<ResponseParticipation>
+    ): List<ResponseBetAnswerDetail> {
         return bet.response.map { response ->
             val responseParticipations = participations.filter { it.answer == response }
             ResponseBetAnswerDetail(
@@ -65,12 +72,47 @@ class MockAllInApi : AllInApi {
                 endBet = body.endBet,
                 isPrivate = body.isPrivate,
                 response = body.response,
+                type = BetType.BINARY,
+                status = BetStatus.WAITING,
                 createdBy = ""
             )
         )
     }
 
-    override suspend fun getAllBets(): List<ResponseBet> = mockBets.toList()
+    override suspend fun getAllBets(token: String): List<ResponseBet> {
+        getUserFromToken(token) ?: throw AllInAPIException("Invalid login/password.")
+        return mockBets
+    }
+
+    override suspend fun getToConfirm(token: String): List<ResponseBetDetail> {
+        val user = getUserFromToken(token) ?: throw AllInAPIException("Invalid login/password.")
+        return mockBets.filter {
+            it.createdBy == user.first.username && it.status == BetStatus.CLOSING
+        }.map { bet ->
+            val betParticipations = mockParticipations.filter { it.betId == bet.id }
+            val userParticipation = betParticipations.find { it.username == user.first.username }
+
+            ResponseBetDetail(
+                bet = bet,
+                answers = getAnswerDetails(bet, betParticipations),
+                participations = betParticipations,
+                userParticipation = userParticipation
+            )
+        }
+    }
+
+    override suspend fun confirmBet(token: String, id: String, value: String) {
+        getUserFromToken(token) ?: throw AllInAPIException("Invalid login/password.")
+        val bet = mockBets.find { it.id == id } ?: throw AllInAPIException("Unauthorized")
+        mockResults.add(
+            BetResult(
+                betId = id,
+                result = value
+            )
+        )
+        mockBets[mockBets.indexOf(bet)] = bet.copy(status = BetStatus.FINISHED)
+    }
+
     override suspend fun getBet(token: String, id: String): ResponseBetDetail {
         val bet = mockBets.find { it.id == id } ?: throw AllInAPIException("Bet not found")
         val user = getUserFromToken(token) ?: throw AllInAPIException("Invalid login/password.")
@@ -83,6 +125,18 @@ class MockAllInApi : AllInApi {
             participations = betParticipations,
             userParticipation = userParticipation
         )
+    }
+
+    override suspend fun getBetCurrent(token: String): List<ResponseBetDetail> {
+        return emptyList()
+    }
+
+    override suspend fun getBetHistory(token: String): List<ResponseBetResultDetail> {
+        return emptyList()
+    }
+
+    override suspend fun getWon(token: String): List<ResponseBetResultDetail> {
+        return emptyList()
     }
 
     override suspend fun participateToBet(token: String, body: RequestParticipation) {
@@ -214,7 +268,9 @@ private val mockBets = mutableListOf(
         endBet = ZonedDateTime.now().plusDays(4),
         isPrivate = false,
         response = listOf(YES_VALUE, NO_VALUE),
-        createdBy = "Armure"
+        createdBy = "Armure",
+        type = BetType.BINARY,
+        status = BetStatus.WAITING,
     ),
     ResponseBet(
         id = "UUID2",
@@ -224,16 +280,22 @@ private val mockBets = mutableListOf(
         endBet = ZonedDateTime.now().plusDays(4),
         isPrivate = false,
         response = listOf("Answer 1", "Answer 2", "Answer 3", "Answer 4"),
-        createdBy = "User 2"
+        createdBy = "User 2",
+        type = BetType.BINARY,
+        status = BetStatus.WAITING,
     ),
     ResponseBet(
         id = "UUID3",
         theme = "Sport",
         sentenceBet = "Nouveau record du monde ?",
-        endRegistration = ZonedDateTime.now().plusDays(3),
-        endBet = ZonedDateTime.now().plusDays(4),
+        endRegistration = ZonedDateTime.now().minusDays(3),
+        endBet = ZonedDateTime.now().minusDays(2),
         isPrivate = false,
         response = listOf(YES_VALUE, NO_VALUE),
-        createdBy = "Armure"
+        createdBy = "User 1",
+        type = BetType.BINARY,
+        status = BetStatus.CLOSING,
     )
 )
+
+private val mockResults by lazy { mutableListOf<BetResult>() }

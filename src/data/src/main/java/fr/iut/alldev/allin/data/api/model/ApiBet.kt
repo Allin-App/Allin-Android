@@ -2,7 +2,10 @@ package fr.iut.alldev.allin.data.api.model
 
 import androidx.annotation.Keep
 import fr.iut.alldev.allin.data.model.bet.Bet
+import fr.iut.alldev.allin.data.model.bet.BetResult
+import fr.iut.alldev.allin.data.model.bet.BetResultDetail
 import fr.iut.alldev.allin.data.model.bet.BetStatus
+import fr.iut.alldev.allin.data.model.bet.BetType
 import fr.iut.alldev.allin.data.model.bet.CustomBet
 import fr.iut.alldev.allin.data.model.bet.NO_VALUE
 import fr.iut.alldev.allin.data.model.bet.YES_VALUE
@@ -18,6 +21,8 @@ import java.time.ZonedDateTime
 data class ResponseBet(
     val id: String?,
     val theme: String,
+    val type: BetType,
+    val status: BetStatus,
     val sentenceBet: String,
     @Serializable(ZonedDateTimeSerializer::class) val endRegistration: ZonedDateTime,
     @Serializable(ZonedDateTimeSerializer::class) var endBet: ZonedDateTime,
@@ -34,7 +39,7 @@ data class ResponseBet(
                 endRegisterDate = endRegistration,
                 endBetDate = endBet,
                 isPublic = !isPrivate,
-                betStatus = BetStatus.Waiting,
+                betStatus = status,
                 creator = createdBy
             )
         } else {
@@ -45,7 +50,7 @@ data class ResponseBet(
                 endRegisterDate = endRegistration,
                 endBetDate = endBet,
                 isPublic = !isPrivate,
-                betStatus = BetStatus.Waiting,
+                betStatus = status,
                 creator = createdBy,
                 possibleAnswers = response
             )
@@ -58,6 +63,7 @@ data class ResponseBet(
 data class RequestBet(
     val id: String = "",
     val theme: String,
+    val type: BetType,
     val sentenceBet: String,
     @Serializable(ZonedDateTimeSerializer::class) val endRegistration: ZonedDateTime,
     @Serializable(ZonedDateTimeSerializer::class) var endBet: ZonedDateTime,
@@ -99,5 +105,35 @@ data class ResponseBetDetail(
             participations = participations.map { it.toParticipation() },
             userParticipation = userParticipation?.toParticipation()
 
+        )
+}
+
+@Serializable
+data class ResponseBetResult(
+    val betId: String,
+    val result: String
+) {
+    fun toBetResult() =
+        BetResult(
+            betId = betId,
+            result = result
+        )
+}
+
+@Serializable
+data class ResponseBetResultDetail(
+    val betResult: ResponseBetResult,
+    val bet: ResponseBet,
+    val participation: ResponseParticipation,
+    val amount: Int,
+    val won: Boolean
+) {
+    fun toBetResultDetail() =
+        BetResultDetail(
+            betResult = betResult.toBetResult(),
+            bet = bet.toBet(),
+            participation = participation.toParticipation(),
+            amount = amount,
+            won = won
         )
 }

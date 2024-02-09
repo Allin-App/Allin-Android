@@ -30,7 +30,7 @@ class BetCreationViewModel @Inject constructor(
     val registerDate = mutableStateOf(ZonedDateTime.now())
     val betDate = mutableStateOf(ZonedDateTime.now())
     var isPublic = mutableStateOf(true)
-    var selectedBetType = mutableStateOf(BetType.YES_NO)
+    var selectedBetType = mutableStateOf(BetType.BINARY)
 
     val themeError = mutableStateOf<FieldErrorState>(FieldErrorState.NoError)
     val phraseError = mutableStateOf<FieldErrorState>(FieldErrorState.NoError)
@@ -111,7 +111,7 @@ class BetCreationViewModel @Inject constructor(
                         possibleAnswers = listOf(),
                         creator = currentUser.username
                     )
-                    betRepository.createBet(bet, keystoreManager.getToken() ?: "")
+                    betRepository.createBet(bet, keystoreManager.getTokenOrEmpty())
                     onSuccess()
                 } catch (e: AllInAPIException) {
                     Timber.e(e)

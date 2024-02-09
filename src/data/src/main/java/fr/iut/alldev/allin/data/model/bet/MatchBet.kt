@@ -23,6 +23,7 @@ data class MatchBet(
     isPublic,
     betStatus
 ) {
+    override fun getBetType() = BetType.MATCH
     override fun getResponses(): List<String> = listOf(nameTeam1, nameTeam2)
 
 }

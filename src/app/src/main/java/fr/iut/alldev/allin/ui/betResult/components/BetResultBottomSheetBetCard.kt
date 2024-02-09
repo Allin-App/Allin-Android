@@ -4,7 +4,6 @@ import android.content.res.Configuration
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import fr.iut.alldev.allin.data.model.bet.BetFinishedStatus
 import fr.iut.alldev.allin.data.model.bet.BetStatus
 import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.core.bet.BetCard
@@ -51,7 +50,7 @@ private fun BetResultBottomSheetBetCardPreview() {
             title = "Title",
             date = "Date",
             time = "Time",
-            status = BetStatus.Finished(BetFinishedStatus.WON),
+            status = BetStatus.FINISHED,
             stake = 2446,
             winnings = 6930,
             odds = 2.3f

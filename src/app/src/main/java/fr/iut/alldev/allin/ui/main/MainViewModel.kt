@@ -2,28 +2,25 @@ package fr.iut.alldev.allin.ui.main
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import fr.iut.alldev.allin.data.model.User
 import fr.iut.alldev.allin.data.model.bet.Bet
-import fr.iut.alldev.allin.data.model.bet.BetFinishedStatus
-import fr.iut.alldev.allin.data.model.bet.BetStatus
-import fr.iut.alldev.allin.data.model.bet.NO_VALUE
 import fr.iut.alldev.allin.data.model.bet.Participation
-import fr.iut.alldev.allin.data.model.bet.YES_VALUE
-import fr.iut.alldev.allin.data.model.bet.YesNoBet
-import fr.iut.alldev.allin.data.model.bet.vo.BetAnswerDetail
 import fr.iut.alldev.allin.data.model.bet.vo.BetDetail
 import fr.iut.alldev.allin.data.repository.BetRepository
 import fr.iut.alldev.allin.di.AllInCurrentUser
 import fr.iut.alldev.allin.keystore.AllInKeystoreManager
 import fr.iut.alldev.allin.ui.core.snackbar.SnackbarType
+import fr.iut.alldev.allin.ui.main.event.AllInEvent
+import fr.iut.alldev.allin.ui.main.event.ToConfirmBet
+import fr.iut.alldev.allin.ui.main.event.WonBet
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.time.ZonedDateTime
 import javax.inject.Inject
 
 class UserState(val user: User) {
@@ -41,61 +38,49 @@ class MainViewModel @Inject constructor(
 
     val currentUserState = UserState(currentUser)
     val selectedBet = mutableStateOf<BetDetail?>(null)
-    val wonBet = mutableStateOf<Bet?>(
-        null
-        /*        YesNoBet(
-                    id = "1",
-                    theme = "Theme",
-                    phrase = "Phrase",
-                    endRegisterDate = ZonedDateTime.now(),
-                    endBetDate = ZonedDateTime.now(),
-                    isPublic = true,
-                    betStatus = BetStatus.Finished(BetFinishedStatus.WON),
-                    creator = "creator"
-                )*/
-    )
-
-    val toConfirmBet = mutableStateOf<BetDetail?>(
-        BetDetail(
-            bet = YesNoBet(
-                id = "1",
-                theme = "Theme",
-                phrase = "Phrase",
-                endRegisterDate = ZonedDateTime.now(),
-                endBetDate = ZonedDateTime.now(),
-                isPublic = true,
-                betStatus = BetStatus.Finished(BetFinishedStatus.WON),
-                creator = "creator",
-            ),
-            answers = listOf(
-                BetAnswerDetail(
-                    response = YES_VALUE,
-                    totalStakes = 300,
-                    totalParticipants = 2,
-                    highestStake = 200,
-                    odds = 1.0f
-                ),
-                BetAnswerDetail(
-                    response = NO_VALUE,
-                    totalStakes = 150,
-                    totalParticipants = 1,
-                    highestStake = 150,
-                    odds = 2.0f
-                )
-            ),
-            participations = emptyList(),
-            userParticipation = null
-        )
-    )
+    val dismissedEvents = mutableStateListOf<AllInEvent>()
+    val events = mutableStateListOf<AllInEvent>()
 
     val snackbarContent: MutableState<SnackbarContent?> by lazy { mutableStateOf(null) }
+
     fun putSnackbarContent(content: SnackbarContent) {
         snackbarContent.value = content
     }
 
+    init {
+        fetchEvents()
+    }
+
+    fun fetchEvents() {
+        viewModelScope.launch {
+            val token = keystoreManager.getTokenOrEmpty()
+            events.addAll(
+                buildList {
+                    addAll(betRepository.getToConfirm(token).map { bet ->
+                        ToConfirmBet(
+                            betDetail = bet,
+                            onConfirm = {
+                                confirmBet(
+                                    response = it,
+                                    betId = bet.bet.id
+                                )
+                            }
+                        )
+                    })
+                    addAll(betRepository.getWon(token).map { result ->
+                        WonBet(
+                            user = currentUser,
+                            betResult = result
+                        )
+                    })
+                }.filter { it !in dismissedEvents }
+            )
+        }
+    }
+
     fun openBetDetail(bet: Bet) {
         viewModelScope.launch {
-            selectedBet.value = betRepository.getBet(bet.id, keystoreManager.getToken() ?: "")
+            selectedBet.value = betRepository.getBet(bet.id, keystoreManager.getTokenOrEmpty())
         }
     }
 
@@ -117,10 +102,20 @@ class MainViewModel @Inject constructor(
                         response = response,
                         stake = stake
                     )
-                    betRepository.participateToBet(participation, keystoreManager.getToken() ?: "")
+                    betRepository.participateToBet(participation, keystoreManager.getTokenOrEmpty())
                 }
                 loading.value = false
             }
+        }
+    }
+
+    private fun confirmBet(response: String, betId: String) {
+        viewModelScope.launch {
+            betRepository.confirmBet(
+                token = keystoreManager.getTokenOrEmpty(),
+                id = betId,
+                response = response
+            )
         }
     }
 

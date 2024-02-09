@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import fr.iut.alldev.allin.data.model.bet.Bet
 import fr.iut.alldev.allin.data.repository.BetRepository
+import fr.iut.alldev.allin.keystore.AllInKeystoreManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -16,6 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class BetViewModel @Inject constructor(
+    private val keystoreManager: AllInKeystoreManager,
     private val betRepository: BetRepository
 ) : ViewModel() {
 
@@ -45,7 +47,7 @@ class BetViewModel @Inject constructor(
 
     private suspend fun refreshData() {
         runCatching {
-            _bets.emit(betRepository.getAllBets())
+            _bets.emit(betRepository.getAllBets(keystoreManager.getTokenOrEmpty()))
         }
     }
 

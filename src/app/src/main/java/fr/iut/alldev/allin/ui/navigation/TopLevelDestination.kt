@@ -23,7 +23,7 @@ sealed class TopLevelDestination(
     )
 
     data object BetHistory : TopLevelDestination(
-        route = "${Routes.BET_HISTORY}/false",
+        route = Routes.BET_HISTORY,
         title = R.string.bet_history,
         subtitle = R.string.bet_history_subtitle,
         emoji = R.drawable.eyes
@@ -37,7 +37,7 @@ sealed class TopLevelDestination(
     )
 
     data object CurrentBets : TopLevelDestination(
-        route = "${Routes.BET_HISTORY}/true",
+        route = Routes.BET_CURRENT,
         title = R.string.current_bets,
         subtitle = R.string.current_bets_subtitle,
         emoji = R.drawable.money_with_wings

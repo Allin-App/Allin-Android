@@ -13,16 +13,18 @@ sealed class Bet(
     open val isPublic: Boolean,
     open val betStatus: BetStatus,
 ) {
+    abstract fun getBetType(): BetType
     abstract fun getResponses(): List<String>
     fun toRequestBet(): RequestBet {
         return RequestBet(
-            id = "",
+            id = id,
             theme = theme,
             sentenceBet = phrase,
             endRegistration = endRegisterDate,
             endBet = endBetDate,
             isPrivate = !isPublic,
-            response = getResponses()
+            response = getResponses(),
+            type = getBetType()
         )
     }
 }

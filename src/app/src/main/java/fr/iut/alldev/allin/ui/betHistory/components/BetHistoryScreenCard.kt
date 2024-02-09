@@ -20,6 +20,7 @@ fun BetHistoryScreenCard(
     time: String,
     status: BetStatus,
     nbCoins: Int,
+    won: Boolean
 ) {
     BetCard(
         title = title,
@@ -32,7 +33,8 @@ fun BetHistoryScreenCard(
     ) {
         BetHistoryBetStatus(
             status = status,
-            nbCoins = nbCoins
+            nbCoins = nbCoins,
+            won = won
         )
     }
 }
@@ -51,7 +53,8 @@ private fun BetHistoryScreenCardPreview(
             date = "Date",
             time = "Time",
             status = betStatus,
-            nbCoins = 123
+            nbCoins = 123,
+            won = true
         )
     }
 }

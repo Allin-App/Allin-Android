@@ -8,4 +8,5 @@ abstract class AllInKeystoreManager {
     abstract fun putToken(token: String)
     abstract fun getToken(): String?
     abstract fun deleteToken()
+    fun getTokenOrEmpty() = getToken() ?: ""
 }

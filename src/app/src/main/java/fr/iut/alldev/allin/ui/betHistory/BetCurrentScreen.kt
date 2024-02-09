@@ -11,12 +11,12 @@ import fr.iut.alldev.allin.data.ext.formatToTime
 import fr.iut.alldev.allin.ui.betHistory.components.GenericHistory
 
 @Composable
-fun BetHistoryScreen(
-    viewModel: BetHistoryViewModel = hiltViewModel()
+fun BetCurrentScreen(
+    viewModel: BetCurrentViewModel = hiltViewModel()
 ) {
     val bets by viewModel.bets.collectAsState()
     GenericHistory(
-        title = stringResource(id = R.string.bet_history_title),
+        title = stringResource(id = R.string.bet_history_current_title),
         bets = bets,
         getTitle = { it.bet.phrase },
         getCreator = { it.bet.creator },
@@ -24,7 +24,7 @@ fun BetHistoryScreen(
         getEndRegisterDate = { it.bet.endRegisterDate.formatToMediumDateNoYear() },
         getEndBetTime = { it.bet.endBetDate.formatToTime() },
         getStatus = { it.bet.betStatus },
-        getNbCoins = { it.amount },
-        getWon = { it.won }
+        getNbCoins = { it.userParticipation?.stake ?: 0 },
+        getWon = { true }
     )
 }

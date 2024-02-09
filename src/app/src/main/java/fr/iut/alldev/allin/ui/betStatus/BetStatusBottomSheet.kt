@@ -1,9 +1,21 @@
 package fr.iut.alldev.allin.ui.betStatus
 
-import androidx.compose.animation.*
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.SheetState
+import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableIntState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import fr.iut.alldev.allin.data.model.bet.BetStatus
@@ -56,7 +68,7 @@ fun BetStatusBottomSheet(
         scrimColor = Color.Transparent
     ) {
 
-        var selectedAnswer by remember { mutableStateOf(0) }
+        var selectedAnswer by remember { mutableIntStateOf(0) }
         var stake by remember { mutableStateOf<Int?>(null) }
 
         Column(
@@ -67,7 +79,9 @@ fun BetStatusBottomSheet(
 
                 displayBet(it)
                 BetStatusParticipationBottomSheet(
-                    sheetVisibility = participateSheetVisibility && betDetail.bet.betStatus == BetStatus.Waiting && state.hasExpandedState,
+                    sheetVisibility = participateSheetVisibility &&
+                            betDetail.bet.betStatus == BetStatus.IN_PROGRESS &&
+                            state.hasExpandedState,
                     safeBottomPadding = paddingValues.calculateBottomPadding(),
                     odds = betDetail.answers.getOrNull(selectedAnswer)?.odds ?: 1f,
                     betPhrase = betDetail.bet.phrase,

@@ -139,7 +139,7 @@ private fun BetResultBottomSheetContentPreview() {
                 endRegisterDate = ZonedDateTime.now(),
                 endBetDate = ZonedDateTime.now(),
                 isPublic = true,
-                betStatus = BetStatus.InProgress,
+                betStatus = BetStatus.IN_PROGRESS,
                 creator = "creator",
             ),
             stake = 4175,

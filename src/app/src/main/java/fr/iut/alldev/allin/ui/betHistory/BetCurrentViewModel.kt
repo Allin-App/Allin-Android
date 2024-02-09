@@ -3,7 +3,7 @@ package fr.iut.alldev.allin.ui.betHistory
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import fr.iut.alldev.allin.data.model.bet.BetResultDetail
+import fr.iut.alldev.allin.data.model.bet.vo.BetDetail
 import fr.iut.alldev.allin.data.repository.BetRepository
 import fr.iut.alldev.allin.keystore.AllInKeystoreManager
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,15 +16,15 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class BetHistoryViewModel @Inject constructor(
+class BetCurrentViewModel @Inject constructor(
     private val betRepository: BetRepository,
     private val keystoreManager: AllInKeystoreManager
 ) : ViewModel() {
-    private val _bets: MutableStateFlow<List<BetResultDetail>> by lazy {
+    private val _bets: MutableStateFlow<List<BetDetail>> by lazy {
         MutableStateFlow(emptyList())
     }
 
-    val bets: StateFlow<List<BetResultDetail>> by lazy {
+    val bets: StateFlow<List<BetDetail>> by lazy {
         _bets.asStateFlow()
             .filterNotNull()
             .stateIn(
@@ -37,7 +37,7 @@ class BetHistoryViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             _bets.emit(
-                betRepository.getHistory(keystoreManager.getTokenOrEmpty())
+                betRepository.getToConfirm(keystoreManager.getTokenOrEmpty())
             )
         }
     }

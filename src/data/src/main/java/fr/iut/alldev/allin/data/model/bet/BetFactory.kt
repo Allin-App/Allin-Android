@@ -19,7 +19,7 @@ class BetFactory {
 
             ): Bet =
             when (betType) {
-                BetType.YES_NO -> {
+                BetType.BINARY -> {
                     YesNoBet(
                         id = id,
                         theme = theme,
@@ -28,7 +28,7 @@ class BetFactory {
                         endRegisterDate = endRegisterDate,
                         endBetDate = endBetDate,
                         isPublic = isPublic,
-                        betStatus = BetStatus.Waiting
+                        betStatus = BetStatus.WAITING
                     )
                 }
 
@@ -41,7 +41,7 @@ class BetFactory {
                         endRegisterDate = endRegisterDate,
                         endBetDate = endBetDate,
                         isPublic = isPublic,
-                        betStatus = BetStatus.Waiting,
+                        betStatus = BetStatus.WAITING,
                         nameTeam1 = nameTeam1,
                         nameTeam2 = nameTeam2
                     )
@@ -57,7 +57,7 @@ class BetFactory {
                         endRegisterDate = endRegisterDate,
                         endBetDate = endBetDate,
                         isPublic = isPublic,
-                        betStatus = BetStatus.Waiting,
+                        betStatus = BetStatus.WAITING,
                         possibleAnswers = possibleAnswers
                     )
                 }

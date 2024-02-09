@@ -41,7 +41,6 @@ import androidx.core.os.ConfigurationCompat
 import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.data.ext.formatToMediumDateNoYear
 import fr.iut.alldev.allin.data.ext.formatToTime
-import fr.iut.alldev.allin.data.model.bet.BetFinishedStatus
 import fr.iut.alldev.allin.data.model.bet.BetStatus
 import fr.iut.alldev.allin.data.model.bet.CustomBet
 import fr.iut.alldev.allin.data.model.bet.MatchBet
@@ -140,7 +139,8 @@ fun ConfirmationAnswers(
     onClick: (String) -> Unit
 ) {
     val configuration = LocalConfiguration.current
-    val locale = remember { ConfigurationCompat.getLocales(configuration).get(0) ?: Locale.getDefault() }
+    val locale =
+        remember { ConfigurationCompat.getLocales(configuration).get(0) ?: Locale.getDefault() }
 
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -148,7 +148,10 @@ fun ConfirmationAnswers(
         when (betDetail.bet) {
             is CustomBet -> items((betDetail.bet as CustomBet).possibleAnswers) {
                 betDetail.getAnswerOfResponse(it)?.let {
-                    val opacity by animateFloatAsState(targetValue = if (selectedAnswer != null && selectedAnswer != it.response) .5f else 1f, label = "")
+                    val opacity by animateFloatAsState(
+                        targetValue = if (selectedAnswer != null && selectedAnswer != it.response) .5f else 1f,
+                        label = ""
+                    )
 
 
                     BetConfirmationBottomSheetAnswer(
@@ -166,7 +169,10 @@ fun ConfirmationAnswers(
                 val bet = (betDetail.bet as MatchBet)
                 item {
                     betDetail.getAnswerOfResponse(bet.nameTeam1)?.let {
-                        val opacity by animateFloatAsState(targetValue = if (selectedAnswer != null && selectedAnswer != it.response) .5f else 1f, label = "")
+                        val opacity by animateFloatAsState(
+                            targetValue = if (selectedAnswer != null && selectedAnswer != it.response) .5f else 1f,
+                            label = ""
+                        )
                         BetConfirmationBottomSheetAnswer(
                             text = it.response,
                             odds = it.odds,
@@ -179,7 +185,10 @@ fun ConfirmationAnswers(
                 }
                 item {
                     betDetail.getAnswerOfResponse(bet.nameTeam2)?.let {
-                        val opacity by animateFloatAsState(targetValue = if (selectedAnswer != null && selectedAnswer != it.response) .5f else 1f, label = "")
+                        val opacity by animateFloatAsState(
+                            targetValue = if (selectedAnswer != null && selectedAnswer != it.response) .5f else 1f,
+                            label = ""
+                        )
 
                         BetConfirmationBottomSheetAnswer(
                             text = it.response,
@@ -198,7 +207,10 @@ fun ConfirmationAnswers(
             is YesNoBet -> {
                 item {
                     betDetail.getAnswerOfResponse(YES_VALUE)?.let {
-                        val opacity by animateFloatAsState(targetValue = if (selectedAnswer != null && selectedAnswer != it.response) .5f else 1f, label = "")
+                        val opacity by animateFloatAsState(
+                            targetValue = if (selectedAnswer != null && selectedAnswer != it.response) .5f else 1f,
+                            label = ""
+                        )
                         val scale by animateFloatAsState(
                             targetValue = if (selectedAnswer == null) 1f
                             else if (selectedAnswer != it.response) .95f else 1.05f,
@@ -219,10 +231,13 @@ fun ConfirmationAnswers(
                 }
                 item {
                     betDetail.getAnswerOfResponse(NO_VALUE)?.let {
-                        val opacity by animateFloatAsState(targetValue = if (selectedAnswer != null && selectedAnswer != it.response) .5f else 1f, label = "")
+                        val opacity by animateFloatAsState(
+                            targetValue = if (selectedAnswer != null && selectedAnswer != it.response) .5f else 1f,
+                            label = ""
+                        )
                         val scale by animateFloatAsState(
                             targetValue = if (selectedAnswer == null) 1f
-                            else if (selectedAnswer != it.response) .95f else 1.05f,
+                            else if (selectedAnswer != it.response) .95f else 1f,
                             label = ""
                         )
 
@@ -358,7 +373,7 @@ private fun BetConfirmationBottomSheetContentPreview() {
                     endRegisterDate = ZonedDateTime.now(),
                     endBetDate = ZonedDateTime.now(),
                     isPublic = true,
-                    betStatus = BetStatus.Finished(BetFinishedStatus.WON),
+                    betStatus = BetStatus.FINISHED,
                     creator = "creator",
                 ),
                 answers = listOf(

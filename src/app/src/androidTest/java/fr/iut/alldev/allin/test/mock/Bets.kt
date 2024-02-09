@@ -11,7 +11,7 @@ object Bets {
                             endRegisterDate = ZonedDateTime.now(),
                             endBetDate = ZonedDateTime.now(),
                             isPublic = true,
-                            betStatus = BetStatus.InProgress,
+                            betStatus = BetStatus.IN_PROGRESS,
                             creator = "creator",
                             id = ""
                         ),
@@ -21,7 +21,7 @@ object Bets {
                             endRegisterDate = ZonedDateTime.now(),
                             endBetDate = ZonedDateTime.now(),
                             isPublic = true,
-                            betStatus = BetStatus.InProgress,
+                            betStatus = BetStatus.IN_PROGRESS,
                             nameTeam1 = "Team_1",
                             nameTeam2 = "Team_2",
                             creator = "creator",
@@ -33,7 +33,7 @@ object Bets {
                             endRegisterDate = ZonedDateTime.now(),
                             endBetDate = ZonedDateTime.now(),
                             isPublic = true,
-                            betStatus = BetStatus.InProgress,
+                            betStatus = BetStatus.IN_PROGRESS,
                             creator = "creator",
                             possibleAnswers = listOf(
                                 "Answer 1",

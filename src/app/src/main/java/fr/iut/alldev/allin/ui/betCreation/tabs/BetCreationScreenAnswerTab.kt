@@ -43,7 +43,7 @@ fun BetCreationScreenAnswerTab(
         )
         Spacer(modifier = Modifier.height(26.dp))
         when (selectedBetType) {
-            BetType.YES_NO -> {
+            BetType.BINARY -> {
                 Column(
                     modifier = Modifier.padding(vertical = 20.dp),
                     verticalArrangement = Arrangement.spacedBy(17.dp)
