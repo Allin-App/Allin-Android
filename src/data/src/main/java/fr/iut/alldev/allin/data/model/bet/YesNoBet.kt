@@ -24,5 +24,6 @@ data class YesNoBet(
     isPublic,
     betStatus
 ) {
+    override fun getBetType() = BetType.BINARY
     override fun getResponses(): List<String> = listOf(YES_VALUE, NO_VALUE)
 }

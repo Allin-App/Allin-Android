@@ -17,9 +17,6 @@ import timber.log.Timber
 import java.time.ZonedDateTime
 import javax.inject.Inject
 
-const val THEME_MIN_SIZE = 3
-const val PHRASE_MIN_SIZE = 5
-
 @HiltViewModel
 class BetCreationViewModel @Inject constructor(
     @AllInCurrentUser val currentUser: User,
@@ -27,13 +24,13 @@ class BetCreationViewModel @Inject constructor(
     private val keystoreManager: AllInKeystoreManager
 ) : ViewModel() {
 
-    var hasError = mutableStateOf(false)
+    private var hasError = mutableStateOf(false)
     var theme = mutableStateOf("")
     var phrase = mutableStateOf("")
     val registerDate = mutableStateOf(ZonedDateTime.now())
     val betDate = mutableStateOf(ZonedDateTime.now())
     var isPublic = mutableStateOf(true)
-    var selectedBetType = mutableStateOf(BetType.YES_NO)
+    var selectedBetType = mutableStateOf(BetType.BINARY)
 
     val themeError = mutableStateOf<FieldErrorState>(FieldErrorState.NoError)
     val phraseError = mutableStateOf<FieldErrorState>(FieldErrorState.NoError)
@@ -49,20 +46,16 @@ class BetCreationViewModel @Inject constructor(
     }
 
     private fun verifyField(
-        themeFieldName: String,
-        phraseFieldName: String,
         registerDateFieldName: String,
         betDateFieldName: String,
     ) {
-        if (theme.value.length < THEME_MIN_SIZE) {
-            themeError.value =
-                FieldErrorState.TooShort(themeFieldName.lowercase(), THEME_MIN_SIZE)
+        if (theme.value.isBlank()) {
+            themeError.value = FieldErrorState.Mandatory
             hasError.value = true
         }
 
-        if (phrase.value.length < PHRASE_MIN_SIZE) {
-            phraseError.value =
-                FieldErrorState.TooShort(phraseFieldName.lowercase(), PHRASE_MIN_SIZE)
+        if (phrase.value.isBlank()) {
+            phraseError.value = FieldErrorState.Mandatory
             hasError.value = true
         }
 
@@ -90,8 +83,6 @@ class BetCreationViewModel @Inject constructor(
     fun createBet(
         themeFieldName: String,
         phraseFieldName: String,
-        registerDateFieldName: String,
-        betDateFieldName: String,
         onError: () -> Unit,
         setLoading: (Boolean) -> Unit,
         onSuccess: () -> Unit
@@ -103,8 +94,6 @@ class BetCreationViewModel @Inject constructor(
             verifyField(
                 themeFieldName,
                 phraseFieldName,
-                registerDateFieldName,
-                betDateFieldName,
             )
 
             if (!hasError.value) {
@@ -122,7 +111,7 @@ class BetCreationViewModel @Inject constructor(
                         possibleAnswers = listOf(),
                         creator = currentUser.username
                     )
-                    betRepository.createBet(bet, keystoreManager.getToken() ?: "")
+                    betRepository.createBet(bet, keystoreManager.getTokenOrEmpty())
                     onSuccess()
                 } catch (e: AllInAPIException) {
                     Timber.e(e)

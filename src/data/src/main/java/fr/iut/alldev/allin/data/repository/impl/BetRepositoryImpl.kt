@@ -3,15 +3,10 @@ package fr.iut.alldev.allin.data.repository.impl
 import fr.iut.alldev.allin.data.api.AllInApi
 import fr.iut.alldev.allin.data.api.AllInApi.Companion.formatBearerToken
 import fr.iut.alldev.allin.data.model.bet.Bet
-import fr.iut.alldev.allin.data.model.bet.BetFinishedStatus
-import fr.iut.alldev.allin.data.model.bet.BetStatus
+import fr.iut.alldev.allin.data.model.bet.BetResultDetail
 import fr.iut.alldev.allin.data.model.bet.Participation
-import fr.iut.alldev.allin.data.model.bet.YesNoBet
 import fr.iut.alldev.allin.data.model.bet.vo.BetDetail
 import fr.iut.alldev.allin.data.repository.BetRepository
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
-import java.time.ZonedDateTime
 import javax.inject.Inject
 
 class BetRepositoryImpl @Inject constructor(
@@ -24,79 +19,16 @@ class BetRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun getHistory(): Flow<List<Bet>> {
-        return flowOf(
-            listOf(
-                YesNoBet(
-                    id = "1",
-                    creator = "Lucas",
-                    theme = "Theme",
-                    phrase = "Bet phrase 1",
-                    endRegisterDate = ZonedDateTime.now().minusDays(4),
-                    endBetDate = ZonedDateTime.now().minusDays(2),
-                    isPublic = false,
-                    betStatus = BetStatus.Finished(BetFinishedStatus.WON)
-                ),
-                YesNoBet(
-                    id = "2",
-                    creator = "Lucas",
-                    theme = "Theme",
-                    phrase = "Bet phrase 2",
-                    endRegisterDate = ZonedDateTime.now().minusDays(3),
-                    endBetDate = ZonedDateTime.now().minusDays(1),
-                    isPublic = true,
-                    betStatus = BetStatus.Finished(BetFinishedStatus.LOST)
-                ),
-                YesNoBet(
-                    id = "3",
-                    creator = "Lucas",
-                    theme = "Theme",
-                    phrase = "Bet phrase 3",
-                    endRegisterDate = ZonedDateTime.now().minusDays(15),
-                    endBetDate = ZonedDateTime.now().minusDays(7),
-                    isPublic = false,
-                    betStatus = BetStatus.Finished(BetFinishedStatus.LOST)
-                )
-            )
-        )
+    override suspend fun getHistory(token: String): List<BetResultDetail> {
+        return api.getBetHistory(token.formatBearerToken()).map {
+            it.toBetResultDetail()
+        }
     }
 
-    override suspend fun getCurrentBets(): Flow<List<Bet>> {
-        // TODO
-        return flowOf(
-            listOf(
-                YesNoBet(
-                    id = "1",
-                    creator = "Lucas",
-                    theme = "Theme",
-                    phrase = "Bet phrase 1",
-                    endRegisterDate = ZonedDateTime.now().plusDays(5),
-                    endBetDate = ZonedDateTime.now().plusDays(7),
-                    isPublic = false,
-                    betStatus = BetStatus.InProgress
-                ),
-                YesNoBet(
-                    id = "2",
-                    creator = "Lucas",
-                    theme = "Theme",
-                    phrase = "Bet phrase 2",
-                    endRegisterDate = ZonedDateTime.now().plusDays(1),
-                    endBetDate = ZonedDateTime.now().plusDays(2),
-                    isPublic = true,
-                    betStatus = BetStatus.InProgress
-                ),
-                YesNoBet(
-                    id = "3",
-                    creator = "Lucas",
-                    theme = "Theme",
-                    phrase = "Bet phrase 3",
-                    endRegisterDate = ZonedDateTime.now().plusDays(3),
-                    endBetDate = ZonedDateTime.now().plusDays(4),
-                    isPublic = false,
-                    betStatus = BetStatus.InProgress
-                )
-            )
-        )
+    override suspend fun getCurrentBets(token: String): List<BetDetail> {
+        return api.getToConfirm(token.formatBearerToken()).map {
+            it.toBetDetail()
+        }
     }
 
     override suspend fun getBet(id: String, token: String): BetDetail {
@@ -107,13 +39,24 @@ class BetRepositoryImpl @Inject constructor(
     }
 
     override suspend fun participateToBet(participation: Participation, token: String) {
-        api.participateToBet(token = token.formatBearerToken(), body = participation.toRequestParticipation())
+        api.participateToBet(
+            token = token.formatBearerToken(),
+            body = participation.toRequestParticipation()
+        )
     }
 
-    override suspend fun getAllBets(): Flow<List<Bet>> {
-        return flowOf(
-            api.getAllBets().map { it.toBet() }
-        )
+    override suspend fun getAllBets(token: String): List<Bet> =
+        api.getAllBets(token.formatBearerToken()).map { it.toBet() }
+
+    override suspend fun getToConfirm(token: String): List<BetDetail> =
+        api.getToConfirm(token.formatBearerToken()).map { it.toBetDetail() }
+
+    override suspend fun getWon(token: String): List<BetResultDetail> =
+        api.getWon(token.formatBearerToken()).map { it.toBetResultDetail() }
+
+
+    override suspend fun confirmBet(token: String, id: String, response: String) {
+        api.confirmBet(token.formatBearerToken(), id, response)
     }
 
 }

@@ -2,6 +2,7 @@ package fr.iut.alldev.allin.ui.main
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,6 +15,9 @@ import fr.iut.alldev.allin.data.repository.BetRepository
 import fr.iut.alldev.allin.di.AllInCurrentUser
 import fr.iut.alldev.allin.keystore.AllInKeystoreManager
 import fr.iut.alldev.allin.ui.core.snackbar.SnackbarType
+import fr.iut.alldev.allin.ui.main.event.AllInEvent
+import fr.iut.alldev.allin.ui.main.event.ToConfirmBet
+import fr.iut.alldev.allin.ui.main.event.WonBet
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -34,28 +38,49 @@ class MainViewModel @Inject constructor(
 
     val currentUserState = UserState(currentUser)
     val selectedBet = mutableStateOf<BetDetail?>(null)
-    val wonBet = mutableStateOf<Bet?>(
-        null
-        /*        YesNoBet(
-                    id = "1",
-                    theme = "Theme",
-                    phrase = "Phrase",
-                    endRegisterDate = ZonedDateTime.now(),
-                    endBetDate = ZonedDateTime.now(),
-                    isPublic = true,
-                    betStatus = BetStatus.Finished(BetFinishedStatus.WON),
-                    creator = "creator"
-                )*/
-    )
+    val dismissedEvents = mutableStateListOf<AllInEvent>()
+    val events = mutableStateListOf<AllInEvent>()
 
     val snackbarContent: MutableState<SnackbarContent?> by lazy { mutableStateOf(null) }
+
     fun putSnackbarContent(content: SnackbarContent) {
         snackbarContent.value = content
     }
 
+    init {
+        fetchEvents()
+    }
+
+    fun fetchEvents() {
+        viewModelScope.launch {
+            val token = keystoreManager.getTokenOrEmpty()
+            events.addAll(
+                buildList {
+                    addAll(betRepository.getToConfirm(token).map { bet ->
+                        ToConfirmBet(
+                            betDetail = bet,
+                            onConfirm = {
+                                confirmBet(
+                                    response = it,
+                                    betId = bet.bet.id
+                                )
+                            }
+                        )
+                    })
+                    addAll(betRepository.getWon(token).map { result ->
+                        WonBet(
+                            user = currentUser,
+                            betResult = result
+                        )
+                    })
+                }.filter { it !in dismissedEvents }
+            )
+        }
+    }
+
     fun openBetDetail(bet: Bet) {
         viewModelScope.launch {
-            selectedBet.value = betRepository.getBet(bet.id, keystoreManager.getToken() ?: "")
+            selectedBet.value = betRepository.getBet(bet.id, keystoreManager.getTokenOrEmpty())
         }
     }
 
@@ -77,10 +102,20 @@ class MainViewModel @Inject constructor(
                         response = response,
                         stake = stake
                     )
-                    betRepository.participateToBet(participation, keystoreManager.getToken() ?: "")
+                    betRepository.participateToBet(participation, keystoreManager.getTokenOrEmpty())
                 }
                 loading.value = false
             }
+        }
+    }
+
+    private fun confirmBet(response: String, betId: String) {
+        viewModelScope.launch {
+            betRepository.confirmBet(
+                token = keystoreManager.getTokenOrEmpty(),
+                id = betId,
+                response = response
+            )
         }
     }
 

@@ -1,13 +1,9 @@
 package fr.iut.alldev.allin.ui.betResult
 
-import androidx.compose.foundation.MarqueeSpacing
-import androidx.compose.foundation.background
-import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -18,8 +14,6 @@ import androidx.compose.material3.SheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -34,6 +28,7 @@ import fr.iut.alldev.allin.ui.betResult.components.BetResultBottomSheetBetCard
 import fr.iut.alldev.allin.ui.betResult.components.BetResultBottomSheetContentCoinAmount
 import fr.iut.alldev.allin.ui.betResult.components.BetResultBottomSheetContentCongratulations
 import fr.iut.alldev.allin.ui.core.AllInBottomSheet
+import fr.iut.alldev.allin.ui.core.AllInMarqueeBox
 import java.time.ZonedDateTime
 
 @Composable
@@ -76,22 +71,7 @@ fun BetResultBottomSheetContent(
     odds: Float,
     onClose: () -> Unit
 ) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(AllInTheme.colors.allInMainGradientReverse),
-    ) {
-        Icon(
-            painter = painterResource(id = R.drawable.allin_marquee),
-            contentDescription = null,
-            modifier = Modifier
-                .fillMaxSize()
-                .rotate(11f)
-                .scale(1.2f)
-                .offset(x = (-24).dp)
-                .basicMarquee(spacing = MarqueeSpacing(0.dp)),
-            tint = AllInTheme.colors.white.copy(alpha = .05f)
-        )
+    AllInMarqueeBox(backgroundBrush = AllInTheme.colors.allInMainGradientReverse) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -146,7 +126,6 @@ fun BetResultBottomSheetContent(
 }
 
 @Preview
-@Preview(widthDp = 800, heightDp = 1280)
 @Composable
 private fun BetResultBottomSheetContentPreview() {
     AllInTheme {
@@ -160,7 +139,7 @@ private fun BetResultBottomSheetContentPreview() {
                 endRegisterDate = ZonedDateTime.now(),
                 endBetDate = ZonedDateTime.now(),
                 isPublic = true,
-                betStatus = BetStatus.InProgress,
+                betStatus = BetStatus.IN_PROGRESS,
                 creator = "creator",
             ),
             stake = 4175,

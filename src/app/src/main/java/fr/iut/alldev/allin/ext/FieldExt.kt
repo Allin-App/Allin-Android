@@ -14,6 +14,9 @@ sealed class FieldErrorState(
 ) {
     data object NoError : FieldErrorState()
 
+    data object Mandatory : FieldErrorState(R.string.FieldError_Mandatory)
+
+
     data class TooShort(val fieldName: String, val minChar: Int) :
         FieldErrorState(R.string.FieldError_TooShort, fieldName, minChar)
 

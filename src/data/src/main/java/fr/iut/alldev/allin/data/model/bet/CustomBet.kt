@@ -22,5 +22,7 @@ data class CustomBet(
     isPublic,
     betStatus
 ) {
+    override fun getBetType() = BetType.CUSTOM
+
     override fun getResponses(): List<String> = possibleAnswers
 }

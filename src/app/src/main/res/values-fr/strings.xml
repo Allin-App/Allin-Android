@@ -14,6 +14,7 @@
     <string name="Validate">Valider</string>
     <string name="Cancel">Annuler</string>
     <string name="Ok">OK</string>
+    <string name="FieldError_Mandatory">Ce champ est obligatoire.</string>
     <string name="FieldError_TooShort">Le %s doit contenir au moins %d caractères.</string>
     <string name="FieldError_BadFormat">Le %s a un mauvais format : %s.</string>
     <string name="FieldError_NotIdentical">Les champs ne sont pas identiques.</string>
@@ -117,6 +118,8 @@
     <string name="bet_status_finished">Terminé !</string>
     <string name="bet_status_in_progress">En cours…</string>
     <string name="bet_status_waiting">En attente…</string>
+    <string name="bet_status_closing">Fermeture…</string>
+    <string name="bet_status_cancelled">Annulé</string>
     <string name="place_your_bets">Faites vos paris</string>
     <string name="bet_status_participants_list">Liste des participants</string>
 

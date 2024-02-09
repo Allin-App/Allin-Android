@@ -68,8 +68,8 @@ private fun BetCardPreview() {
             title = "Title",
             date = "Date",
             time = "Time",
-            status = BetStatus.Waiting
-        ){
+            status = BetStatus.WAITING
+        ) {
             Text("Content")
         }
     }

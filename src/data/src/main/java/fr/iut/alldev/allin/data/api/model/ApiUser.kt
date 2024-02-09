@@ -25,7 +25,7 @@ data class ResponseUser(
         id = id,
         username = username,
         email = email,
-        coins = nbCoins.toInt()
+        coins = nbCoins
     )
 }
 

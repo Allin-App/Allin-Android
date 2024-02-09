@@ -12,19 +12,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.data.model.bet.Bet
 import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.bet.BetScreen
 import fr.iut.alldev.allin.ui.betCreation.BetCreationScreen
+import fr.iut.alldev.allin.ui.betHistory.BetCurrentScreen
 import fr.iut.alldev.allin.ui.betHistory.BetHistoryScreen
 import fr.iut.alldev.allin.ui.core.snackbar.SnackbarType
 import fr.iut.alldev.allin.ui.login.LoginScreen
@@ -41,12 +39,9 @@ object Routes {
     const val PUBLIC_BETS = "PUBLIC_BETS"
     const val BET_CREATION = "BET_CREATION"
     const val BET_HISTORY = "BET_HISTORY"
+    const val BET_CURRENT = "BET_CURRENT"
     const val FRIENDS = "FRIENDS"
 
-}
-
-object NavArguments {
-    const val ARG_BET_HISTORY_IS_CURRENT = "ARG_BET_HISTORY_IS_CURRENT"
 }
 
 internal fun NavHostController.popUpTo(route: String, baseRoute: String) {
@@ -99,7 +94,8 @@ internal fun AllInDrawerNavHost(
     selectBet: (Bet, Boolean) -> Unit,
     startDestination: String = Routes.PUBLIC_BETS,
     setLoading: (Boolean) -> Unit,
-    putSnackbarContent: (MainViewModel.SnackbarContent) -> Unit
+    putSnackbarContent: (MainViewModel.SnackbarContent) -> Unit,
+    backHandlers: @Composable () -> Unit
 ) {
     NavHost(
         navController = navController,
@@ -108,12 +104,15 @@ internal fun AllInDrawerNavHost(
         enterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None }
     ) {
+
         composable(route = Routes.PUBLIC_BETS) {
+            backHandlers()
             BetScreen(
                 selectBet = selectBet
             )
         }
         composable(route = Routes.BET_CREATION) {
+            backHandlers()
             val creationSuccessMessage = stringResource(id = R.string.bet_creation_success_message)
             BetCreationScreen(
                 setLoading = setLoading,
@@ -130,20 +129,17 @@ internal fun AllInDrawerNavHost(
         }
 
         composable(
-            route = "${Routes.BET_HISTORY}/{${NavArguments.ARG_BET_HISTORY_IS_CURRENT}}",
-            arguments = listOf(
-                navArgument(NavArguments.ARG_BET_HISTORY_IS_CURRENT) {
-                    type = NavType.BoolType
-                }
-            )
-
+            route = Routes.BET_HISTORY
         ) {
-            val isCurrent =
-                it.arguments?.getBoolean(NavArguments.ARG_BET_HISTORY_IS_CURRENT) ?: false
-            BetHistoryScreen(
-                isCurrent = isCurrent,
-                viewModel = hiltViewModel(it, isCurrent.toString())
-            )
+            backHandlers()
+            BetHistoryScreen()
+        }
+
+        composable(
+            route = Routes.BET_CURRENT
+        ) {
+            backHandlers()
+            BetCurrentScreen()
         }
     }
 }

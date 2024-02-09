@@ -2,7 +2,19 @@ package fr.iut.alldev.allin.ui.betStatus.vo
 
 import android.content.res.Configuration
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -12,9 +24,12 @@ import androidx.compose.material.icons.filled.WorkspacePremium
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -64,7 +79,8 @@ class BetStatusBottomSheetBetDisplayer(
     ) {
         val safeBottomPadding = paddingValues.value.calculateBottomPadding()
         val configuration = LocalConfiguration.current
-        val locale = remember { ConfigurationCompat.getLocales(configuration).get(0) ?: Locale.getDefault() }
+        val locale =
+            remember { ConfigurationCompat.getLocales(configuration).get(0) ?: Locale.getDefault() }
 
         val response1Answer = remember { betDetail.getAnswerOfResponse(response1) }
         val response2Answer = remember { betDetail.getAnswerOfResponse(response2) }
@@ -98,7 +114,7 @@ class BetStatusBottomSheetBetDisplayer(
                     }
                     Spacer(modifier = Modifier.height(20.dp))
                 }
-                if (betDetail.bet.betStatus is BetStatus.Finished) {
+                if (betDetail.bet.betStatus == BetStatus.FINISHED) {
                     BetStatusWinner(
                         answer = response1Display,
                         color = AllInTheme.colors.allInBlue,
@@ -118,8 +134,10 @@ class BetStatusBottomSheetBetDisplayer(
                     Spacer(modifier = Modifier.height(20.dp))
                     BinaryStatBar(
                         response1Percentage = remember {
-                            val total = (response1Answer?.totalParticipants ?: 0) + (response2Answer?.totalParticipants ?: 0)
-                            if (total == 0) .5f else (response1Answer?.totalParticipants ?: 0) / total.toFloat()
+                            val total = (response1Answer?.totalParticipants
+                                ?: 0) + (response2Answer?.totalParticipants ?: 0)
+                            if (total == 0) .5f else (response1Answer?.totalParticipants
+                                ?: 0) / total.toFloat()
                         },
                         response1 = response1Display,
                         response2 = response2Display
@@ -131,17 +149,17 @@ class BetStatusBottomSheetBetDisplayer(
                             noText = response2Answer?.totalStakes?.toString() ?: "0"
                         )
                         YesNoDetailsLine(
-                            icon = Icons.Filled.People,
+                            icon = rememberVectorPainter(image = Icons.Filled.People),
                             yesText = response1Answer?.totalParticipants?.toString() ?: "0",
                             noText = response2Answer?.totalParticipants?.toString() ?: "0"
                         )
                         YesNoDetailsLine(
-                            icon = Icons.Filled.WorkspacePremium,
+                            icon = rememberVectorPainter(image = Icons.Filled.WorkspacePremium),
                             yesText = response1Answer?.highestStake?.toString() ?: "0",
                             noText = response2Answer?.highestStake?.toString() ?: "0"
                         )
                         YesNoDetailsLine(
-                            icon = Icons.Filled.EmojiEvents,
+                            icon = rememberVectorPainter(image = Icons.Filled.EmojiEvents),
                             yesText = "x${response1Answer?.odds?.formatToSimple(locale) ?: "1.00"}",
                             noText = "x${response2Answer?.odds?.formatToSimple(locale) ?: "1.00"}"
                         )
@@ -183,13 +201,13 @@ class BetStatusBottomSheetBetDisplayer(
                     }
                 }
             }
-            if (betDetail.bet.betStatus !is BetStatus.Finished && betDetail.userParticipation == null) {
+            if (betDetail.bet.betStatus != BetStatus.FINISHED && betDetail.userParticipation == null) {
                 RainbowButton(
                     modifier = Modifier
                         .align(Alignment.BottomCenter)
                         .padding(horizontal = 7.dp),
                     text = stringResource(id = R.string.Participate),
-                    enabled = betDetail.bet.betStatus == BetStatus.Waiting,
+                    enabled = betDetail.bet.betStatus == BetStatus.IN_PROGRESS,
                     onClick = openParticipateSheet
                 )
             }

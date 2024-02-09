@@ -51,14 +51,15 @@ val betHistoryStatusInlineContent = mapOf(
 @Composable
 fun BetHistoryBetStatus(
     status: BetStatus,
+    won: Boolean,
     nbCoins: Int,
 ) {
-    val betHistoryPhrase = stringResource(id = status.getBetHistoryPhrase(), nbCoins)
+    val betHistoryPhrase = stringResource(id = status.getBetHistoryPhrase(won), nbCoins)
 
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(status.getBetHistoryStatusColor())
+            .background(status.getBetHistoryStatusColor(won))
             .padding(16.dp),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
@@ -85,7 +86,8 @@ private fun BetHistoryBetStatusPreview(
     AllInTheme {
         BetHistoryBetStatus(
             status = betStatus,
-            nbCoins = 230
+            nbCoins = 230,
+            won = true
         )
     }
 }

@@ -2,16 +2,30 @@ package fr.iut.alldev.allin.ui.main
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.DrawerState
+import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.SheetValue
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.rememberDrawerState
+import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import fr.iut.alldev.allin.theme.AllInTheme
-import fr.iut.alldev.allin.ui.betResult.BetResultBottomSheet
 import fr.iut.alldev.allin.ui.betStatus.BetStatusBottomSheet
 import fr.iut.alldev.allin.ui.betStatus.vo.BetStatusBottomSheetBetDisplayer
 import fr.iut.alldev.allin.ui.core.AllInLoading
@@ -32,28 +46,6 @@ private val topLevelDestinations = listOf(
     TopLevelDestination.CurrentBets
 )
 
-@Composable
-private fun rememberBetStatusVisibilities()
-        : Triple<MutableState<Boolean>, MutableState<Boolean>, (Boolean) -> Unit> {
-    val statusVisibility = remember {
-        mutableStateOf(false)
-    }
-
-    val sheetBackVisibility = remember {
-        mutableStateOf(false)
-    }
-
-    val setStatusVisibility = { it: Boolean ->
-        statusVisibility.value = it
-        if (it) sheetBackVisibility.value = true
-    }
-    return Triple(
-        statusVisibility,
-        sheetBackVisibility,
-        setStatusVisibility,
-    )
-}
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
@@ -65,16 +57,19 @@ fun MainScreen(
 ) {
     val scope = rememberCoroutineScope()
 
-    var loading by remember { mainViewModel.loading }
+    val (loading, setLoading) = remember { mainViewModel.loading }
     val currentUser = remember { mainViewModel.currentUserState }
     val selectedBet by remember { mainViewModel.selectedBet }
-    val (wonBet, setWonBet) = remember { mainViewModel.wonBet }
-    val (statusVisibility, sheetBackVisibility, setStatusVisibility) = rememberBetStatusVisibilities()
-    val (participateSheetVisibility, setParticipateSheetVisibility) = remember {
-        mutableStateOf(false)
+    val statusVisibility = remember { mutableStateOf(false) }
+    val sheetBackVisibility = remember { mutableStateOf(false) }
+    val setStatusVisibility = { it: Boolean ->
+        statusVisibility.value = it
+        if (it) sheetBackVisibility.value = true
     }
+    val (participateSheetVisibility, setParticipateSheetVisibility) = remember { mutableStateOf(false) }
 
-    val (displayResult, setDisplayResult) = remember { mutableStateOf(true) }
+    val events = remember { mainViewModel.events }
+    val eventBottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 
     val betStatusDisplayer = remember {
         BetStatusBottomSheetBetDisplayer(
@@ -113,10 +108,6 @@ fun MainScreen(
         }
     )
 
-    val resultBottomSheetState = rememberModalBottomSheetState(
-        skipPartiallyExpanded = true
-    )
-
     AllInDrawer(
         drawerState = drawerState,
         destinations = topLevelDestinations,
@@ -126,6 +117,7 @@ fun MainScreen(
         nbBets = 35,
         bestWin = 362,
         navigateTo = { route ->
+            mainViewModel.fetchEvents()
             navController.popUpTo(route, startDestination)
         },
         logout = {
@@ -135,7 +127,7 @@ fun MainScreen(
     ) {
         AllInScaffold(
             onMenuClicked = { scope.launch { drawerState.open() } },
-            coinAmount = currentUser.userCoins.value,
+            coinAmount = currentUser.userCoins.intValue,
             drawerState = drawerState,
             snackbarHostState = snackbarHostState
         ) {
@@ -156,25 +148,26 @@ fun MainScreen(
                         setParticipateSheetVisibility(participate)
                         setStatusVisibility(true)
                     },
-                    setLoading = { loading = it },
-                    putSnackbarContent = { mainViewModel.putSnackbarContent(it) }
+                    setLoading = setLoading,
+                    putSnackbarContent = { mainViewModel.putSnackbarContent(it) },
+                    backHandlers = {
+                        BackHandler(enabled = drawerState.isOpen) {
+                            scope.launch {
+                                drawerState.close()
+                            }
+                        }
+                    }
                 )
             }
         }
     }
 
-    wonBet?.let {
-        BetResultBottomSheet(
-            state = resultBottomSheetState,
-            sheetVisibility = displayResult,
-            onDismiss = { setDisplayResult(false) },
-            bet = wonBet,
-            username = currentUser.user.username,
-            coinAmount = 1630,
-            stake = 1630,
-            winnings = 1630,
-            odds = 3.62f
-        )
+
+    events.firstOrNull()?.let {
+        it.Display(sheetState = eventBottomSheetState) {
+            mainViewModel.dismissedEvents += it
+            events.removeFirstOrNull()
+        }
     }
 
     BetStatusBottomSheet(
@@ -191,14 +184,6 @@ fun MainScreen(
         setParticipateSheetVisibility = setParticipateSheetVisibility
     )
     AllInLoading(visible = loading)
-    BackHandler(
-        enabled = drawerState.isOpen
-    ) {
-        scope.launch {
-            drawerState.close()
-        }
-    }
-
 }
 
 

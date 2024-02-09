@@ -12,7 +12,7 @@ import fr.iut.alldev.allin.data.model.bet.BetType
 @StringRes
 fun BetType.getTitleId(): Int {
     return when (this) {
-        BetType.YES_NO -> R.string.yes_no
+        BetType.BINARY -> R.string.yes_no
         BetType.MATCH -> R.string.sport_match
         BetType.CUSTOM -> R.string.custom_answers
     }
@@ -20,7 +20,7 @@ fun BetType.getTitleId(): Int {
 
 fun BetType.getIcon(): ImageVector {
     return when (this) {
-        BetType.YES_NO -> Icons.AutoMirrored.Default.HelpOutline
+        BetType.BINARY -> Icons.AutoMirrored.Default.HelpOutline
         BetType.MATCH -> Icons.Default.SportsSoccer
         BetType.CUSTOM -> Icons.Default.Edit
     }
