@@ -20,6 +20,9 @@ buildscript {
 
         // Hilt
         classpath(libs.plugin.hilt)
+
+        // Easy Launcher
+        classpath(libs.plugin.easylauncher)
     }
 }
 

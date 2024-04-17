@@ -7,6 +7,7 @@ plugins {
     id("kotlin-android")
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
+    id("com.starter.easylauncher")
 }
 
 // Keystore
@@ -72,6 +73,14 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
+}
+
+easylauncher {
+    buildTypes {
+        register(BuildType.DEBUG.name).configure {
+            filters(chromeLike())
         }
     }
 }

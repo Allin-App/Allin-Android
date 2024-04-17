@@ -34,6 +34,7 @@ okHttp = "4.11.0"
 gradlePlugin = "8.1.4"
 publishPlugin = "1.1"
 resgenPlugin = "2.5"
+easylauncherPlugin = "6.1.0"
 
 [libraries]
 
@@ -97,6 +98,7 @@ plugin-gradle = { module = "com.android.tools.build:gradle", version.ref = "grad
 plugin-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 plugin-kotlinSerialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
 plugin-hilt = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt" }
+plugin-easylauncher = { module = "com.project.starter:easylauncher", version.ref = "easylauncherPlugin" }
 
 [bundles]
 
