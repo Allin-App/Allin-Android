@@ -2,6 +2,7 @@ package fr.iut.alldev.allin
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
+import racra.compose.smooth_corner_rect_library.BuildConfig
 import timber.log.Timber
 
 @HiltAndroidApp

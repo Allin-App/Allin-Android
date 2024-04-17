@@ -37,7 +37,6 @@ fun BetStatusBottomSheet(
     sheetVisibility: Boolean,
     sheetBackVisibility: Boolean,
     betDetail: BetDetail?,
-    paddingValues: PaddingValues,
     userCoinAmount: MutableIntState,
     onParticipate: (stake: Int, response: String) -> Unit,
     onDismiss: () -> Unit,
@@ -82,7 +81,6 @@ fun BetStatusBottomSheet(
                     sheetVisibility = participateSheetVisibility &&
                             betDetail.bet.betStatus == BetStatus.IN_PROGRESS &&
                             state.hasExpandedState,
-                    safeBottomPadding = paddingValues.calculateBottomPadding(),
                     odds = betDetail.answers.getOrNull(selectedAnswer)?.odds ?: 1f,
                     betPhrase = betDetail.bet.phrase,
                     coinAmount = userCoinAmount.intValue,

@@ -35,7 +35,7 @@ fun AllInBottomSheet(
                 WindowInsets(
                     left = it.getLeft(localDensity, localLayoutDirection),
                     right = it.getRight(localDensity, localLayoutDirection),
-                    top = it.getTop(localDensity),
+                    top = 0,
                     bottom = 0,
                 )
             },

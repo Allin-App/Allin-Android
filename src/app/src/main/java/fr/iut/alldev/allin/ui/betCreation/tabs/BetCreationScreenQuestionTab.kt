@@ -1,14 +1,19 @@
 package fr.iut.alldev.allin.ui.betCreation.tabs
 
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import fr.iut.alldev.allin.data.ext.formatToMediumDate
 import fr.iut.alldev.allin.data.ext.formatToTime
+import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.betCreation.tabs.sections.QuestionTabDateTimeSection
 import fr.iut.alldev.allin.ui.betCreation.tabs.sections.QuestionTabPrivacySection
 import fr.iut.alldev.allin.ui.betCreation.tabs.sections.QuestionTabThemePhraseSection
@@ -37,7 +42,7 @@ fun BetCreationScreenQuestionTab(
     setEndTimeDialog: (Boolean) -> Unit,
     interactionSource: MutableInteractionSource
 ) {
-    Column(modifier) {
+    Column(modifier = modifier) {
         QuestionTabThemePhraseSection(
             betTheme = betTheme,
             betThemeError = betThemeError,
@@ -68,6 +73,35 @@ fun BetCreationScreenQuestionTab(
             nbFriends = nbFriends,
             selectedFriends = selectedFriends,
             interactionSource = interactionSource
+        )
+        Spacer(modifier = Modifier.height(120.dp))
+    }
+}
+
+@Preview
+@Composable
+private fun BetCreationScreenQuestionTabPreview() {
+    AllInTheme {
+        BetCreationScreenQuestionTab(
+            nbFriends = 4651,
+            betTheme = "Elly",
+            betThemeError = null,
+            setBetTheme = { },
+            betPhrase = "Trinh",
+            betPhraseError = null,
+            setBetPhrase = { },
+            isPublic = true,
+            setIsPublic = {  },
+            registerDate = ZonedDateTime.now(),
+            registerDateError = null,
+            betDate = ZonedDateTime.now(),
+            betDateError = null,
+            selectedFriends = mutableListOf(),
+            setRegisterDateDialog = {  },
+            setEndDateDialog = {  },
+            setRegisterTimeDialog = {  },
+            setEndTimeDialog = {  },
+            interactionSource = remember { MutableInteractionSource() }
         )
     }
 }

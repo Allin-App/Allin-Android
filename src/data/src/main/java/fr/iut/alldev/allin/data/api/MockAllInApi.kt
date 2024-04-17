@@ -211,13 +211,6 @@ private val mockParticipations = mutableListOf(
     ResponseParticipation(
         id = "",
         betId = "UUID1",
-        username = mockUsers[0].first.username,
-        answer = YES_VALUE,
-        stake = 200
-    ),
-    ResponseParticipation(
-        id = "",
-        betId = "UUID1",
         username = mockUsers[1].first.username,
         answer = NO_VALUE,
         stake = 1500
@@ -270,7 +263,7 @@ private val mockBets = mutableListOf(
         response = listOf(YES_VALUE, NO_VALUE),
         createdBy = "Armure",
         type = BetType.BINARY,
-        status = BetStatus.WAITING,
+        status = BetStatus.IN_PROGRESS,
     ),
     ResponseBet(
         id = "UUID2",
@@ -282,7 +275,7 @@ private val mockBets = mutableListOf(
         response = listOf("Answer 1", "Answer 2", "Answer 3", "Answer 4"),
         createdBy = "User 2",
         type = BetType.BINARY,
-        status = BetStatus.WAITING,
+        status = BetStatus.IN_PROGRESS,
     ),
     ResponseBet(
         id = "UUID3",

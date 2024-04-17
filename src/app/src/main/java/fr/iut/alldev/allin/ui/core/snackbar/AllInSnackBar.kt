@@ -16,9 +16,9 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.SwipeToDismissBox
-import androidx.compose.material3.SwipeToDismissValue
+import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberSwipeToDismissState
+import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -40,9 +40,9 @@ fun AllInSnackbar(
     SnackbarHost(
         hostState = snackbarState
     ) { snackbarData ->
-        val dismissState = rememberSwipeToDismissState(
+        val dismissState = rememberSwipeToDismissBoxState(
             confirmValueChange = { value ->
-                if (value != SwipeToDismissValue.Settled) {
+                if (value != SwipeToDismissBoxValue.Settled) {
                     snackbarState.currentSnackbarData?.dismiss()
                     true
                 } else {

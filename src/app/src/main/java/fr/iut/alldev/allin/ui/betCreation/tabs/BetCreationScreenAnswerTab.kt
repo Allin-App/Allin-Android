@@ -12,10 +12,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.data.model.bet.BetType
 import fr.iut.alldev.allin.ext.getTitleId
+import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.betCreation.components.BetCreationScreenBottomText
 import fr.iut.alldev.allin.ui.core.AllInSelectionBox
 import fr.iut.alldev.allin.ui.core.SelectionElement
@@ -26,7 +28,7 @@ fun BetCreationScreenAnswerTab(
     selected: SelectionElement?,
     selectedBetType: BetType,
     setSelected: (SelectionElement) -> Unit,
-    elements: List<SelectionElement>,
+    elements: List<SelectionElement>
 ) {
     var isOpen by remember {
         mutableStateOf(false)
@@ -65,5 +67,18 @@ fun BetCreationScreenAnswerTab(
                 )
             }
         }
+    }
+}
+
+@Preview
+@Composable
+private fun BetCreationScreenAnswerTabPreview() {
+    AllInTheme {
+        BetCreationScreenAnswerTab(
+            selected = null,
+            selectedBetType = BetType.BINARY,
+            setSelected = { },
+            elements = listOf()
+        )
     }
 }

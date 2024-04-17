@@ -2,12 +2,18 @@ package fr.iut.alldev.allin.ui.core.topbar
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,45 +29,52 @@ fun AllInTopBar(
     onMenuClicked: () -> Unit,
     coinAmount: Int,
 ) {
-    Box(
-        modifier = Modifier
-            .height(86.dp)
-            .fillMaxWidth()
-            .background(brush = AllInTheme.colors.allInMainGradient)
-    ) {
-        IconButton(
-            onClick = onMenuClicked,
-            modifier = Modifier
-                .padding(start = 19.dp)
-                .align(Alignment.CenterStart)
-        ) {
-            Icon(
-                painterResource(id = R.drawable.allin_menu),
-                modifier = Modifier.size(30.dp),
-                contentDescription = null,
-                tint = Color.White
-            )
+    TopAppBar(
+        modifier = Modifier.background(AllInTheme.colors.allInMainGradient),
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = Color.Transparent
+        ),
+        title = { },
+        navigationIcon = {
+            IconButton(
+                onClick = onMenuClicked,
+                modifier = Modifier
+            ) {
+                Icon(
+                    painterResource(id = R.drawable.allin_menu),
+                    modifier = Modifier.size(30.dp),
+                    contentDescription = null,
+                    tint = Color.White
+                )
+            }
+        },
+        actions = {
+            Box(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.allin),
+                    contentDescription = null,
+                    tint = AllInTheme.colors.white,
+                    modifier = Modifier
+                        .size(40.dp)
+                        .align(Alignment.Center)
+                )
+                AllInTopBarCoinCounter(
+                    amount = coinAmount,
+                    modifier = Modifier
+                        .align(Alignment.CenterEnd)
+                        .offset(x = 4.dp)
+                )
+            }
         }
-        Icon(
-            painter = painterResource(R.drawable.allin),
-            contentDescription = null,
-            tint = AllInTheme.colors.white,
-            modifier = Modifier
-                .size(40.dp)
-                .align(Alignment.Center)
-        )
-        AllInTopBarCoinCounter(
-            amount = coinAmount,
-            modifier = Modifier
-                .align(Alignment.CenterEnd)
-        )
-    }
+    )
 }
 
 @Preview
 @Composable
 private fun AllInTopBarPreview() {
     AllInTheme {
-        AllInTopBar(onMenuClicked = { }, coinAmount = 541)
+         AllInTopBar(onMenuClicked = { }, coinAmount = 541)
     }
 }

@@ -131,9 +131,6 @@ fun MainScreen(
             drawerState = drawerState,
             snackbarHostState = snackbarHostState
         ) {
-            LaunchedEffect(key1 = it) {
-                betStatusDisplayer.paddingValues.value = it
-            }
             Column(
                 modifier = Modifier
                     .padding(top = it.calculateTopPadding())
@@ -176,7 +173,6 @@ fun MainScreen(
         sheetBackVisibility = sheetBackVisibility.value,
         onDismiss = { setStatusVisibility(false) },
         betDetail = selectedBet,
-        paddingValues = betStatusDisplayer.paddingValues.value,
         displayBet = { betStatusDisplayer.DisplayBet(it) },
         userCoinAmount = mainViewModel.currentUserState.userCoins,
         onParticipate = { stake, response -> mainViewModel.participateToBet(stake, response) },

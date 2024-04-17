@@ -30,7 +30,6 @@ import kotlin.math.roundToInt
 @Composable
 fun BetStatusParticipationBottomSheet(
     sheetVisibility: Boolean,
-    safeBottomPadding: Dp,
     betPhrase: String,
     coinAmount: Int,
     onDismiss: () -> Unit,
@@ -52,7 +51,6 @@ fun BetStatusParticipationBottomSheet(
         containerColor = AllInTheme.themeColors.background2
     ) {
         BetStatusParticipationBottomSheetContent(
-            safeBottomPadding = safeBottomPadding,
             betPhrase = betPhrase,
             coinAmount = coinAmount,
             elements = elements,
@@ -73,8 +71,7 @@ fun BetStatusParticipationBottomSheet(
 }
 
 @Composable
-private fun ColumnScope.BetStatusParticipationBottomSheetContent(
-    safeBottomPadding: Dp,
+private fun BetStatusParticipationBottomSheetContent(
     betPhrase: String,
     coinAmount: Int,
     enabled: Boolean,
@@ -139,8 +136,7 @@ private fun ColumnScope.BetStatusParticipationBottomSheetContent(
     Column(
         modifier = Modifier
             .background(AllInTheme.themeColors.background)
-            .padding(horizontal = 7.dp)
-            .padding(bottom = safeBottomPadding, top = 7.dp),
+            .padding(7.dp),
         verticalArrangement = Arrangement.spacedBy(7.dp)
     ) {
         Row(
@@ -164,7 +160,8 @@ private fun ColumnScope.BetStatusParticipationBottomSheetContent(
             text = stringResource(id = R.string.Participate),
             textColor = AllInTheme.colors.white,
             radius = 5.dp,
-            onClick = onButtonClick
+            onClick = onButtonClick,
+            modifier = Modifier.navigationBarsPadding()
         )
     }
 }
@@ -176,7 +173,6 @@ private fun BetStatusParticipationBottomSheetContentPreview() {
     AllInTheme {
         Column {
             BetStatusParticipationBottomSheetContent(
-                safeBottomPadding = 0.dp,
                 betPhrase = "Bet phrase",
                 coinAmount = 3620,
                 onButtonClick = {},

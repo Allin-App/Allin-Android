@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardActions
@@ -27,6 +28,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -70,6 +72,7 @@ fun LoginScreen(
             .fillMaxSize()
             .background(AllInTheme.themeColors.mainSurface)
             .padding(horizontal = 44.dp)
+            .safeContentPadding()
             .verticalScroll(rememberScrollState())
     ) {
         Column(
@@ -108,6 +111,7 @@ fun LoginScreen(
                     placeholder = stringResource(id = R.string.password),
                     value = password,
                     modifier = Modifier.fillMaxWidth(),
+                    keyboardType = KeyboardType.Password,
                     imeAction = ImeAction.Done,
                     keyboardActions = keyboardActions,
                     onValueChange = setPassword

@@ -1,35 +1,22 @@
 package fr.iut.alldev.allin.ui.betCreation
 
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.data.model.bet.BetType
 import fr.iut.alldev.allin.ext.getIcon
 import fr.iut.alldev.allin.ext.getTitleId
-import fr.iut.alldev.allin.ui.betCreation.tabs.BetCreationScreenAnswerTab
-import fr.iut.alldev.allin.ui.betCreation.tabs.BetCreationScreenQuestionTab
+import fr.iut.alldev.allin.ui.betCreation.components.BetCreationScreenContent
 import fr.iut.alldev.allin.ui.core.AllInAlertDialog
 import fr.iut.alldev.allin.ui.core.AllInDatePicker
-import fr.iut.alldev.allin.ui.core.AllInSections
 import fr.iut.alldev.allin.ui.core.AllInTimePicker
-import fr.iut.alldev.allin.ui.core.RainbowButton
-import fr.iut.alldev.allin.ui.core.SectionElement
 import fr.iut.alldev.allin.ui.core.SelectionElement
 import java.time.Instant
 import java.time.ZoneId
@@ -41,8 +28,7 @@ fun BetCreationScreen(
     setLoading: (Boolean) -> Unit,
     onCreation: () -> Unit
 ) {
-    val interactionSource = remember { MutableInteractionSource() }
-    val betTypes = remember { BetType.values().toList() }
+    val betTypes = remember { BetType.entries }
     var hasError by remember { mutableStateOf(false) }
 
     var theme by remember { viewModel.theme }
@@ -60,7 +46,6 @@ fun BetCreationScreen(
     val selectedFriends = remember { mutableListOf<Int>() }
     var selectionElements by remember { mutableStateOf(listOf<SelectionElement>()) }
     var selectedBetTypeElement by remember { mutableStateOf<SelectionElement?>(null) }
-    val focus = LocalFocusManager.current
 
     val themeFieldName = stringResource(id = R.string.Theme)
     val phraseFieldName = stringResource(id = R.string.Bet_Phrase)
@@ -85,80 +70,42 @@ fun BetCreationScreen(
     val (showRegisterTimePicker, setRegisterTimePicker) = remember { mutableStateOf(false) }
     val (showEndTimePicker, setEndTimePicker) = remember { mutableStateOf(false) }
 
-    Box(
-        Modifier
-            .fillMaxSize()
-            .padding(top = 20.dp)
-    ) {
-        AllInSections(
-            onLoadSection = {
-                focus.clearFocus()
-            },
-            modifier = Modifier
-                .align(Alignment.TopCenter)
-                .fillMaxSize()
-                .padding(bottom = 90.dp),
-            sections = listOf(
-                SectionElement(stringResource(id = R.string.Question)) {
-                    BetCreationScreenQuestionTab(
-                        isPublic = isPublic,
-                        setIsPublic = { isPublic = it },
-                        betPhrase = phrase,
-                        setBetPhrase = { phrase = it },
-                        betTheme = theme,
-                        setBetTheme = { theme = it },
-                        nbFriends = 42,
-                        selectedFriends = selectedFriends,
-                        registerDate = registerDate,
-                        betDate = betDate,
-                        setRegisterDateDialog = { setRegisterDatePicker(it) },
-                        setEndDateDialog = { setEndDatePicker(it) },
-                        setRegisterTimeDialog = { setRegisterTimePicker(it) },
-                        setEndTimeDialog = { setEndTimePicker(it) },
-                        interactionSource = interactionSource,
-                        betThemeError = themeError.errorResource(),
-                        betPhraseError = phraseError.errorResource(),
-                        registerDateError = registerDateError.errorResource(),
-                        betDateError = betDateError.errorResource(),
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .verticalScroll(rememberScrollState())
-                            .padding(vertical = 12.dp, horizontal = 20.dp)
-                    )
-                },
-                SectionElement(stringResource(id = R.string.Answer)) {
-                    BetCreationScreenAnswerTab(
-                        selectedBetType = selectedBetType,
-                        selected = selectedBetTypeElement,
-                        setSelected = { selectedBetTypeElement = it },
-                        elements = selectionElements,
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(vertical = 12.dp, horizontal = 20.dp)
-                    )
+    BetCreationScreenContent(
+        nbFriends = 42,
+        betTheme = theme,
+        betThemeError = themeError.errorResource(),
+        setBetTheme = { theme = it },
+        betPhrase = phrase,
+        betPhraseError = phraseError.errorResource(),
+        setBetPhrase = { phrase = it },
+        isPublic = isPublic,
+        setIsPublic = { isPublic = it },
+        registerDate = registerDate,
+        registerDateError = registerDateError.errorResource(),
+        betDate = betDate,
+        betDateError = betDateError.errorResource(),
+        selectedFriends = selectedFriends,
+        setRegisterDateDialog = setRegisterDatePicker,
+        setEndDateDialog = setEndDatePicker,
+        setRegisterTimeDialog = setRegisterTimePicker,
+        setEndTimeDialog = setEndTimePicker,
+        selectedBetTypeElement = selectedBetTypeElement,
+        selectedBetType = selectedBetType,
+        setSelectedBetTypeElement = { selectedBetTypeElement = it },
+        selectionBetType = selectionElements,
+        onCreateBet = {
+            viewModel.createBet(
+                themeFieldName = themeFieldName,
+                phraseFieldName = phraseFieldName,
+                setLoading = setLoading,
+                onError = { hasError = true },
+                onSuccess = {
+                    onCreation()
                 }
             )
-        )
+        }
+    )
 
-        RainbowButton(
-            text = stringResource(id = R.string.Publish),
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(bottom = 14.dp)
-                .padding(horizontal = 20.dp),
-            onClick = {
-                viewModel.createBet(
-                    themeFieldName = themeFieldName,
-                    phraseFieldName = phraseFieldName,
-                    setLoading = setLoading,
-                    onError = { hasError = true },
-                    onSuccess = {
-                        onCreation()
-                    }
-                )
-            }
-        )
-    }
     if (showRegisterDatePicker || showEndDatePicker) {
         val dateToEdit = if (showRegisterDatePicker) registerDate else betDate
         AllInDatePicker(

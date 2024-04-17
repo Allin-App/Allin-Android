@@ -11,19 +11,21 @@ import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
 import javax.inject.Singleton
 
-const val mock = false
-
 @Module
 @InstallIn(SingletonComponent::class)
 class ApiModule {
     @Provides
     @Singleton
     fun provideAllInApi(@AllInUrl url: HttpUrl, okHttpClient: OkHttpClient): AllInApi {
-        return if (mock) {
+        return if (MOCK) {
             MockAllInApi()
         } else {
             val retrofit = createRetrofit(url = url, okHttpClient = okHttpClient)
             retrofit.create(AllInApi::class.java)
         }
+    }
+
+    companion object {
+        const val MOCK = true
     }
 }

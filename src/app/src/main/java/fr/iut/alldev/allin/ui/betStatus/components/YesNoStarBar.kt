@@ -5,6 +5,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
@@ -36,7 +37,9 @@ fun BinaryStatBar(
                 style = AllInTheme.typography.h1,
                 fontStyle = FontStyle.Italic,
                 fontSize = 30.sp,
-                color = AllInTheme.colors.allInBarPink
+                color = AllInTheme.colors.allInBarPink,
+                textAlign = TextAlign.End,
+                modifier = Modifier.weight(1f)
             )
         }
         StatBar(percentage = response1Percentage)

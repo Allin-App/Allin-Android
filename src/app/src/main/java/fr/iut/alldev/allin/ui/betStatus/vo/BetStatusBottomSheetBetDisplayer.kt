@@ -12,7 +12,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -21,14 +23,14 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.EmojiEvents
 import androidx.compose.material.icons.filled.People
 import androidx.compose.material.icons.filled.WorkspacePremium
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
@@ -67,8 +69,6 @@ import java.util.Locale
 class BetStatusBottomSheetBetDisplayer(
     val openParticipateSheet: () -> Unit
 ) : BetDisplayer {
-    val paddingValues = mutableStateOf(PaddingValues())
-
     @Composable
     private fun DisplayBinaryBet(
         betDetail: BetDetail,
@@ -77,15 +77,13 @@ class BetStatusBottomSheetBetDisplayer(
         response1Display: String = response1,
         response2Display: String = response2
     ) {
-        val safeBottomPadding = paddingValues.value.calculateBottomPadding()
         val configuration = LocalConfiguration.current
-        val locale =
-            remember { ConfigurationCompat.getLocales(configuration).get(0) ?: Locale.getDefault() }
+        val locale = remember { ConfigurationCompat.getLocales(configuration).get(0) ?: Locale.getDefault() }
 
         val response1Answer = remember { betDetail.getAnswerOfResponse(response1) }
         val response2Answer = remember { betDetail.getAnswerOfResponse(response2) }
 
-        Box(Modifier.padding(bottom = safeBottomPadding)) {
+        Box(Modifier.navigationBarsPadding()) {
             Column {
                 Column(Modifier.padding(horizontal = 20.dp)) {
                     BetTitleHeader(
@@ -125,79 +123,82 @@ class BetStatusBottomSheetBetDisplayer(
                 } else {
                     HorizontalDivider(color = AllInTheme.themeColors.border)
                 }
-                Column(
-                    Modifier
+                LazyColumn(
+                    modifier = Modifier
                         .fillMaxHeight()
-                        .background(AllInTheme.themeColors.background2)
-                        .padding(horizontal = 20.dp)
+                        .background(AllInTheme.themeColors.background2),
+                    contentPadding = PaddingValues(horizontal = 20.dp)
                 ) {
-                    Spacer(modifier = Modifier.height(20.dp))
-                    BinaryStatBar(
-                        response1Percentage = remember {
-                            val total = (response1Answer?.totalParticipants
-                                ?: 0) + (response2Answer?.totalParticipants ?: 0)
-                            if (total == 0) .5f else (response1Answer?.totalParticipants
-                                ?: 0) / total.toFloat()
-                        },
-                        response1 = response1Display,
-                        response2 = response2Display
-                    )
-                    AllInDetailsDrawer {
-                        YesNoDetailsLine(
-                            icon = AllInTheme.icons.allCoins(),
-                            yesText = response1Answer?.totalStakes?.toString() ?: "0",
-                            noText = response2Answer?.totalStakes?.toString() ?: "0"
+                    item {
+                        Spacer(modifier = Modifier.height(20.dp))
+                        BinaryStatBar(
+                            response1Percentage = remember {
+                                val total = (response1Answer?.totalParticipants
+                                    ?: 0) + (response2Answer?.totalParticipants ?: 0)
+                                if (total == 0) .5f else (response1Answer?.totalParticipants
+                                    ?: 0) / total.toFloat()
+                            },
+                            response1 = response1Display,
+                            response2 = response2Display
                         )
-                        YesNoDetailsLine(
-                            icon = rememberVectorPainter(image = Icons.Filled.People),
-                            yesText = response1Answer?.totalParticipants?.toString() ?: "0",
-                            noText = response2Answer?.totalParticipants?.toString() ?: "0"
-                        )
-                        YesNoDetailsLine(
-                            icon = rememberVectorPainter(image = Icons.Filled.WorkspacePremium),
-                            yesText = response1Answer?.highestStake?.toString() ?: "0",
-                            noText = response2Answer?.highestStake?.toString() ?: "0"
-                        )
-                        YesNoDetailsLine(
-                            icon = rememberVectorPainter(image = Icons.Filled.EmojiEvents),
-                            yesText = "x${response1Answer?.odds?.formatToSimple(locale) ?: "1.00"}",
-                            noText = "x${response2Answer?.odds?.formatToSimple(locale) ?: "1.00"}"
+                        AllInDetailsDrawer {
+                            YesNoDetailsLine(
+                                icon = AllInTheme.icons.allCoins(),
+                                yesText = response1Answer?.totalStakes?.toString() ?: "0",
+                                noText = response2Answer?.totalStakes?.toString() ?: "0"
+                            )
+                            YesNoDetailsLine(
+                                icon = rememberVectorPainter(image = Icons.Filled.People),
+                                yesText = response1Answer?.totalParticipants?.toString() ?: "0",
+                                noText = response2Answer?.totalParticipants?.toString() ?: "0"
+                            )
+                            YesNoDetailsLine(
+                                icon = rememberVectorPainter(image = Icons.Filled.WorkspacePremium),
+                                yesText = response1Answer?.highestStake?.toString() ?: "0",
+                                noText = response2Answer?.highestStake?.toString() ?: "0"
+                            )
+                            YesNoDetailsLine(
+                                icon = rememberVectorPainter(image = Icons.Filled.EmojiEvents),
+                                yesText = "x${response1Answer?.odds?.formatToSimple(locale) ?: "1.00"}",
+                                noText = "x${response2Answer?.odds?.formatToSimple(locale) ?: "1.00"}"
+                            )
+                        }
+
+                        Text(
+                            text = stringResource(id = R.string.bet_status_participants_list),
+                            fontSize = 20.sp,
+                            color = AllInTheme.themeColors.onMainSurface,
+                            style = AllInTheme.typography.h1,
+                            modifier = Modifier.padding(vertical = 36.dp)
                         )
                     }
+                    betDetail.userParticipation?.let {
+                        item {
+                            BetStatusParticipant(
+                                username = it.username,
+                                allCoinsAmount = it.stake
+                            )
+                            HorizontalDivider(
+                                color = AllInTheme.themeColors.border,
+                                modifier = Modifier.padding(vertical = 8.dp, horizontal = 25.dp)
+                            )
+                        }
+                    }
+                    items(betDetail.participations) {
+                        if (it.username != betDetail.userParticipation?.username) {
+                            BetStatusParticipant(
+                                username = it.username,
+                                allCoinsAmount = it.stake
+                            )
+                            Spacer(modifier = Modifier.height(8.dp))
+                        }
+                    }
 
-                    Text(
-                        text = stringResource(id = R.string.bet_status_participants_list),
-                        fontSize = 20.sp,
-                        color = AllInTheme.themeColors.onMainSurface,
-                        style = AllInTheme.typography.h1,
-                        modifier = Modifier.padding(vertical = 36.dp)
-                    )
-                    LazyColumn(
-                        verticalArrangement = Arrangement.spacedBy(8.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        contentPadding = PaddingValues(horizontal = 13.dp, vertical = 8.dp),
-                        modifier = Modifier.fillMaxHeight()
-                    ) {
-                        betDetail.userParticipation?.let {
-                            item {
-                                BetStatusParticipant(
-                                    username = it.username,
-                                    allCoinsAmount = it.stake
-                                )
-                                HorizontalDivider(
-                                    color = AllInTheme.themeColors.border,
-                                    modifier = Modifier.padding(vertical = 8.dp, horizontal = 25.dp)
-                                )
-                            }
+                    item {
+                        if (betDetail.bet.betStatus != BetStatus.FINISHED && betDetail.userParticipation == null) {
+                            Spacer(modifier = Modifier.height(48.dp))
                         }
-                        items(betDetail.participations) {
-                            if (it.username != betDetail.userParticipation?.username) {
-                                BetStatusParticipant(
-                                    username = it.username,
-                                    allCoinsAmount = it.stake
-                                )
-                            }
-                        }
+                        Spacer(modifier = Modifier.navigationBarsPadding())
                     }
                 }
             }
@@ -205,7 +206,14 @@ class BetStatusBottomSheetBetDisplayer(
                 RainbowButton(
                     modifier = Modifier
                         .align(Alignment.BottomCenter)
-                        .padding(horizontal = 7.dp),
+                        .background(
+                            Brush.verticalGradient(
+                                .2f to Color.Transparent,
+                                .5f to AllInTheme.themeColors.background2
+                            )
+                        )
+                        .padding(7.dp)
+                        .navigationBarsPadding(),
                     text = stringResource(id = R.string.Participate),
                     enabled = betDetail.bet.betStatus == BetStatus.IN_PROGRESS,
                     onClick = openParticipateSheet
@@ -214,7 +222,6 @@ class BetStatusBottomSheetBetDisplayer(
         }
     }
 
-    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun DisplayYesNoBet(betDetail: BetDetail) {
         DisplayBinaryBet(

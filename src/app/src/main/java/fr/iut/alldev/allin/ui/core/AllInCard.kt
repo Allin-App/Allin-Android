@@ -20,6 +20,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import fr.iut.alldev.allin.theme.AllInTheme
@@ -98,6 +100,7 @@ fun AllInBouncyCard(
     borderBrush: Brush? = null,
     content: @Composable () -> Unit,
 ) {
+    val haptic = LocalHapticFeedback.current
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
 
@@ -106,14 +109,17 @@ fun AllInBouncyCard(
         animationSpec = spring(
             Spring.DampingRatioHighBouncy,
             Spring.StiffnessMediumLow
-        )
+        ), label = ""
     )
     AllInCard(
         modifier = modifier
             .combinedClickable(
                 interactionSource = interactionSource,
                 indication = null,
-                onClick = { onClick?.let { it() } }
+                onClick = { onClick?.let { it() } },
+                onLongClick = {
+                    haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                }
             )
             .scale(scale),
         onClick = null,

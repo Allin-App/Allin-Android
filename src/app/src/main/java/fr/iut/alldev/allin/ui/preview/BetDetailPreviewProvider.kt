@@ -47,12 +47,12 @@ class BetDetailPreviewProvider : PreviewParameterProvider<BetDetail> {
                     stake = 150
                 )
             ),
-            userParticipation = Participation(
+            userParticipation = null /*Participation(
                 betId = it.id,
                 username = "MyUser",
                 response = NO_VALUE,
                 stake = 150
-            )
+            )*/
         )
     }
 }
