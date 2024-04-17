@@ -108,6 +108,7 @@ fun MainScreen(
         }
     )
 
+
     AllInDrawer(
         drawerState = drawerState,
         destinations = topLevelDestinations,
@@ -153,11 +154,17 @@ fun MainScreen(
                                 drawerState.close()
                             }
                         }
+                    },
+                    openDrawer = {
+                        scope.launch {
+                            drawerState.open()
+                        }
                     }
                 )
             }
         }
     }
+
 
 
     events.firstOrNull()?.let {

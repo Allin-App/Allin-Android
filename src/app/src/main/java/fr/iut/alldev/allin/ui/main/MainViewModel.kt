@@ -43,12 +43,12 @@ class MainViewModel @Inject constructor(
 
     val snackbarContent: MutableState<SnackbarContent?> by lazy { mutableStateOf(null) }
 
-    fun putSnackbarContent(content: SnackbarContent) {
-        snackbarContent.value = content
-    }
-
     init {
         fetchEvents()
+    }
+
+    fun putSnackbarContent(content: SnackbarContent) {
+        snackbarContent.value = content
     }
 
     fun fetchEvents() {

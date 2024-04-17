@@ -5,13 +5,12 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeContentPadding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -31,7 +30,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -50,8 +48,6 @@ fun BetScreen(
     viewModel: BetViewModel = hiltViewModel(),
     selectBet: (Bet, Boolean) -> Unit,
 ) {
-    val haptic = LocalHapticFeedback.current
-
     val bets by viewModel.bets.collectAsState()
 
     val refreshing by viewModel.isRefreshing.collectAsState()
@@ -96,11 +92,9 @@ fun BetScreen(
                         )
                     )
                     .padding(top = 5.dp, bottom = 19.dp),
-                horizontalArrangement = Arrangement.spacedBy(9.dp)
+                horizontalArrangement = Arrangement.spacedBy(9.dp),
+                contentPadding = PaddingValues(horizontal = 23.dp)
             ) {
-                item {
-                    Spacer(modifier = Modifier.width(23.dp))
-                }
                 items(items) {
                     var isSelected by remember { mutableStateOf(false) }
                     AllInChip(
@@ -109,9 +103,6 @@ fun BetScreen(
                         onClick = {
                             isSelected = !isSelected
                         })
-                }
-                item {
-                    Spacer(modifier = Modifier.width(23.dp))
                 }
             }
         }

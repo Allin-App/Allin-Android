@@ -5,20 +5,11 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeContentPadding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyItemScope
-import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.pager.HorizontalPager
@@ -48,54 +39,61 @@ fun AllInSections(
     sections: List<SectionElement>,
     modifier: Modifier = Modifier,
     interSectionsPadding: Dp = 56.dp,
-    onLoadSection: ()->Unit = { }
+    openDrawer: () -> Unit,
+    onLoadSection: () -> Unit = { }
 ) {
     val pagerState = rememberPagerState(pageCount = { sections.size })
     val scope = rememberCoroutineScope()
-    LazyColumn(
-        modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ){
-        stickyHeader {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(
-                        Brush.verticalGradient(
-                            0.75f to AllInTheme.themeColors.mainSurface,
-                            1f to Color.Transparent
-                        )
-                    ),
-                contentAlignment = Alignment.Center
+
+    LaunchedEffect(key1 = pagerState.isScrollInProgress) {
+        if (
+            pagerState.isScrollInProgress &&
+            !pagerState.canScrollBackward &&
+            pagerState.currentPage == pagerState.targetPage
+        ) {
+            openDrawer()
+        }
+    }
+
+    Box(modifier = modifier) {
+        HorizontalPager(state = pagerState) { page ->
+            LaunchedEffect(key1 = page) { onLoadSection() }
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                contentPadding = PaddingValues(top = 40.dp, start = 20.dp, end = 20.dp)
             ) {
-                LazyRow(
-                    horizontalArrangement = Arrangement.spacedBy(interSectionsPadding),
-                    modifier = Modifier.padding(vertical = 12.dp)
-                ) {
-                    itemsIndexed(sections) { index, section ->
-                        AllInSectionButton(
-                            text = section.text,
-                            isSelected = index == pagerState.currentPage,
-                            onClick = {
-                                scope.launch {
-                                    pagerState.animateScrollToPage(index)
-                                }
-                            }
-                        )
-                    }
+                item {
+                    sections[page].content()
                 }
             }
         }
 
-        item {
-            HorizontalPager(
-                state = pagerState
-            ) { page ->
-                LaunchedEffect(key1 = page) { onLoadSection() }
-                Column(
-                    modifier = Modifier.padding(horizontal = 20.dp)
-                ) {
-                    sections[page].content()
+        Box(
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .fillMaxWidth()
+                .background(
+                    Brush.verticalGradient(
+                        0.75f to AllInTheme.themeColors.mainSurface,
+                        1f to Color.Transparent
+                    )
+                ),
+            contentAlignment = Alignment.Center
+        ) {
+            LazyRow(
+                horizontalArrangement = Arrangement.spacedBy(interSectionsPadding),
+                modifier = Modifier.padding(vertical = 12.dp)
+            ) {
+                itemsIndexed(sections) { index, section ->
+                    AllInSectionButton(
+                        text = section.text,
+                        isSelected = index == pagerState.currentPage,
+                        onClick = {
+                            scope.launch {
+                                pagerState.animateScrollToPage(index)
+                            }
+                        }
+                    )
                 }
             }
         }
@@ -108,6 +106,7 @@ fun AllInSections(
 private fun AllInSectionsPreview() {
     AllInTheme {
         AllInSections(
+            openDrawer = { },
             sections = listOf(
                 SectionElement("Page 1") {
                     Text("This is page 1")

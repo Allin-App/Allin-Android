@@ -51,6 +51,7 @@ fun BetCreationScreenContent(
     selectedBetType: BetType,
     setSelectedBetTypeElement: (SelectionElement) -> Unit,
     selectionBetType: List<SelectionElement>,
+    openDrawer: () -> Unit,
     onCreateBet: () -> Unit
 ) {
     val interactionSource = remember { MutableInteractionSource() }
@@ -58,6 +59,7 @@ fun BetCreationScreenContent(
 
     Box(Modifier.fillMaxSize()) {
         AllInSections(
+            openDrawer = openDrawer,
             onLoadSection = { focus.clearFocus() },
             modifier = Modifier.align(Alignment.TopCenter),
             sections = listOf(
@@ -144,7 +146,8 @@ private fun BetCreationScreenContentPreview() {
             selectedBetType = BetType.BINARY,
             setSelectedBetTypeElement = { },
             selectionBetType = listOf(),
-            onCreateBet = { }
+            onCreateBet = { },
+            openDrawer = { }
         )
     }
 }

@@ -90,6 +90,7 @@ fun AllInNavHost(
 @Composable
 internal fun AllInDrawerNavHost(
     modifier: Modifier = Modifier,
+    openDrawer: () -> Unit,
     navController: NavHostController,
     selectBet: (Bet, Boolean) -> Unit,
     startDestination: String = Routes.PUBLIC_BETS,
@@ -116,6 +117,7 @@ internal fun AllInDrawerNavHost(
             val creationSuccessMessage = stringResource(id = R.string.bet_creation_success_message)
             BetCreationScreen(
                 setLoading = setLoading,
+                openDrawer = openDrawer,
                 onCreation = {
                     putSnackbarContent(
                         MainViewModel.SnackbarContent(

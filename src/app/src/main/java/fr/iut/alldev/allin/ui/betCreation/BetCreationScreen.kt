@@ -1,6 +1,5 @@
 package fr.iut.alldev.allin.ui.betCreation
 
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -26,6 +25,7 @@ import java.time.ZonedDateTime
 fun BetCreationScreen(
     viewModel: BetCreationViewModel = hiltViewModel(),
     setLoading: (Boolean) -> Unit,
+    openDrawer: () -> Unit,
     onCreation: () -> Unit
 ) {
     val betTypes = remember { BetType.entries }
@@ -93,6 +93,7 @@ fun BetCreationScreen(
         selectedBetType = selectedBetType,
         setSelectedBetTypeElement = { selectedBetTypeElement = it },
         selectionBetType = selectionElements,
+        openDrawer = openDrawer,
         onCreateBet = {
             viewModel.createBet(
                 themeFieldName = themeFieldName,
