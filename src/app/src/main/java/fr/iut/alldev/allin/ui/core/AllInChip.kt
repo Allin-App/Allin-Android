@@ -54,7 +54,6 @@ fun AllInChip(
                     textAlign = TextAlign.Center,
                     style = AllInTheme.typography.h1,
                     color = AllInTheme.colors.white
-
                 )
             }
         }

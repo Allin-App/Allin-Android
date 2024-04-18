@@ -10,10 +10,12 @@ import androidx.compose.ui.graphics.painter.Painter
 @Immutable
 data class AllInIcons(
     val allCoins: @Composable () -> Painter,
+    val logo: @Composable () -> Painter
 )
 
 internal val LocalIcons = staticCompositionLocalOf {
     AllInIcons(
-        allCoins = { ColorPainter(Color.Unspecified) }
+        allCoins = { ColorPainter(Color.Unspecified) },
+        logo = { ColorPainter(Color.Unspecified) }
     )
 }

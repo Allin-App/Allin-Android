@@ -19,6 +19,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -96,7 +100,15 @@ fun QuestionTabPrivacySection(
                 setIsOpen = { isOpen = it }
             ) {
                 LazyColumn(
-                    modifier = Modifier.height(440.dp)
+                    modifier = Modifier
+                        .height(440.dp)
+                        .nestedScroll(object : NestedScrollConnection {
+                            override fun onPostScroll(
+                                consumed: Offset,
+                                available: Offset,
+                                source: NestedScrollSource
+                            ) = available.copy(x = 0f)
+                        })
                 ) {
                     itemsIndexed(friends, key = { _, it -> it.id }) { idx, it ->
                         var isSelected by remember {

@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.*
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -28,12 +29,12 @@ import fr.iut.alldev.allin.theme.AllInTheme
 import racra.compose.smooth_corner_rect_library.AbsoluteSmoothCornerShape
 import java.util.Locale
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun AllInTextField(
-    modifier: Modifier = Modifier,
-    placeholder: String? = null,
     value: String,
+    modifier: Modifier = Modifier,
+    textStyle: TextStyle = AllInTheme.typography.p1,
+    placeholder: String? = null,
     maxChar: Int? = null,
     enabled: Boolean = true,
     trailingIcon: Painter? = null,
@@ -86,7 +87,7 @@ fun AllInTextField(
                 )
             }
         },
-        textStyle = AllInTheme.typography.p1,
+        textStyle = textStyle,
         enabled = enabled,
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType, imeAction = imeAction),
         keyboardActions = keyboardActions,
@@ -145,8 +146,12 @@ fun AllInPasswordField(
 
 @Composable
 fun AllInFloatTextfield(
-    modifier: Modifier = Modifier,
     value: Float?,
+    modifier: Modifier = Modifier,
+    textStyle: TextStyle = AllInTheme.typography.p1,
+    placeholder: String? = null,
+    trailingIcon: Painter? = null,
+    maxChar: Int? = 5,
     setValue: (Float?) -> Unit
 ) {
     val configuration = LocalConfiguration.current
@@ -158,7 +163,10 @@ fun AllInFloatTextfield(
     AllInTextField(
         value = stringValue,
         modifier = modifier,
-        maxChar = 5,
+        placeholder = placeholder,
+        maxChar = maxChar,
+        textStyle = textStyle,
+        trailingIcon = trailingIcon,
         keyboardType = KeyboardType.Number
     ) {
         it.verifyIsFloat(locale)?.let {
@@ -176,11 +184,12 @@ fun AllInFloatTextfield(
 
 @Composable
 fun AllInIntTextField(
-    modifier: Modifier = Modifier,
-    placeholder: String? = null,
-    maxChar: Int? = 3,
     value: Int?,
+    modifier: Modifier = Modifier,
+    textStyle: TextStyle = AllInTheme.typography.p1,
+    placeholder: String? = null,
     trailingIcon: Painter? = null,
+    maxChar: Int? = 3,
     setValue: (Int?) -> Unit
 ) {
     AllInTextField(
@@ -189,6 +198,7 @@ fun AllInIntTextField(
         modifier = modifier,
         maxChar = maxChar,
         trailingIcon = trailingIcon,
+        textStyle = textStyle,
         keyboardType = KeyboardType.NumberPassword
     ) {
         if (it.isEmpty()) setValue(null)

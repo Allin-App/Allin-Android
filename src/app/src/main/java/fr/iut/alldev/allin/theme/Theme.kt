@@ -148,7 +148,8 @@ fun AllInTheme(
     }
 
     val customIcons = AllInIcons(
-        allCoins = { painterResource(id = R.drawable.allcoin) }
+        allCoins = { painterResource(id = R.drawable.allcoin) },
+        logo = { painterResource(id = R.drawable.allin) }
     )
 
     CompositionLocalProvider(

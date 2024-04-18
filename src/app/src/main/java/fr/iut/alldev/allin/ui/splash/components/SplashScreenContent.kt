@@ -6,9 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.core.Icon
 
@@ -21,7 +19,7 @@ fun SplashScreenContent() {
         contentAlignment = Alignment.Center
     ) {
         Icon(
-            painter = painterResource(R.drawable.allin),
+            painter = AllInTheme.icons.logo(),
             contentDescription = null,
             tint = AllInTheme.colors.white,
             modifier = Modifier.fillMaxSize(.25f)

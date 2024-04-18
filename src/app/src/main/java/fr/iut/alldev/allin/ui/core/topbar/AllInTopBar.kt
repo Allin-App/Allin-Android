@@ -48,7 +48,7 @@ fun AllInTopBar(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Icon(
-                    painter = painterResource(R.drawable.allin),
+                    painter = AllInTheme.icons.logo(),
                     contentDescription = null,
                     tint = AllInTheme.colors.white,
                     modifier = Modifier

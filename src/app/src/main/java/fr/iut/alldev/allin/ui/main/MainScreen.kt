@@ -160,7 +160,6 @@ fun MainScreen(
     }
 
 
-
     events.firstOrNull()?.let {
         it.Display(sheetState = eventBottomSheetState) {
             mainViewModel.dismissedEvents += it

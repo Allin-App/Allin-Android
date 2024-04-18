@@ -15,10 +15,8 @@ import androidx.compose.material3.SheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.data.ext.formatToMediumDateNoYear
 import fr.iut.alldev.allin.data.ext.formatToTime
 import fr.iut.alldev.allin.data.model.bet.Bet
@@ -94,7 +92,7 @@ fun BetResultBottomSheetContent(
             }
 
             Icon(
-                painter = painterResource(R.drawable.allin),
+                painter = AllInTheme.icons.logo(),
                 contentDescription = null,
                 tint = AllInTheme.colors.white,
                 modifier = Modifier

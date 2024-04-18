@@ -32,7 +32,6 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -154,7 +153,6 @@ fun ConfirmationAnswers(
                         label = ""
                     )
 
-
                     BetConfirmationBottomSheetAnswer(
                         text = it.response,
                         odds = it.odds,
@@ -213,8 +211,7 @@ fun ConfirmationAnswers(
                             label = ""
                         )
                         val scale by animateFloatAsState(
-                            targetValue = if (selectedAnswer == null) 1f
-                            else if (selectedAnswer != it.response) .95f else 1.05f,
+                            targetValue = if (selectedAnswer != null && selectedAnswer != it.response) .95f else 1f,
                             label = ""
                         )
 
@@ -237,8 +234,7 @@ fun ConfirmationAnswers(
                             label = ""
                         )
                         val scale by animateFloatAsState(
-                            targetValue = if (selectedAnswer == null) 1f
-                            else if (selectedAnswer != it.response) .95f else 1f,
+                            targetValue = if (selectedAnswer != null && selectedAnswer != it.response) .95f else 1f,
                             label = ""
                         )
 
@@ -290,7 +286,7 @@ fun BetConfirmationBottomSheetContent(
             }
 
             Icon(
-                painter = painterResource(R.drawable.allin),
+                painter = AllInTheme.icons.logo(),
                 contentDescription = null,
                 tint = AllInTheme.colors.white,
                 modifier = Modifier

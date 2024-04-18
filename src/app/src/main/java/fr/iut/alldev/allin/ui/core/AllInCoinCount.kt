@@ -14,7 +14,7 @@ fun AllInCoinCount(
     modifier: Modifier = Modifier,
     amount: Int,
     color: Color? = null,
-    brush: Brush?= null,
+    brush: Brush? = null,
     size: Int = 15,
     textStyle: TextStyle = AllInTheme.typography.h1,
     position: IconPosition = IconPosition.TRAILING
