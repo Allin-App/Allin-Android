@@ -2,16 +2,11 @@ package fr.iut.alldev.allin.ui.core.topbar
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -75,6 +70,6 @@ fun AllInTopBar(
 @Composable
 private fun AllInTopBarPreview() {
     AllInTheme {
-         AllInTopBar(onMenuClicked = { }, coinAmount = 541)
+        AllInTopBar(onMenuClicked = { }, coinAmount = 541)
     }
 }

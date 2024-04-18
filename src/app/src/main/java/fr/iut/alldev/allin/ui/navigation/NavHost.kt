@@ -28,10 +28,13 @@ import fr.iut.alldev.allin.ui.core.snackbar.SnackbarType
 import fr.iut.alldev.allin.ui.login.LoginScreen
 import fr.iut.alldev.allin.ui.main.MainScreen
 import fr.iut.alldev.allin.ui.main.MainViewModel
+import fr.iut.alldev.allin.ui.ranking.RankingScreen
 import fr.iut.alldev.allin.ui.register.RegisterScreen
+import fr.iut.alldev.allin.ui.splash.SplashScreen
 import fr.iut.alldev.allin.ui.welcome.WelcomeScreen
 
 object Routes {
+    const val SPLASH = "SPLASH"
     const val WELCOME = "WELCOME"
     const val REGISTER = "REGISTER"
     const val LOGIN = "LOGIN"
@@ -41,8 +44,14 @@ object Routes {
     const val BET_HISTORY = "BET_HISTORY"
     const val BET_CURRENT = "BET_CURRENT"
     const val FRIENDS = "FRIENDS"
-
 }
+
+private val fadingRoutes
+    get() = listOf(
+        Routes.WELCOME,
+        Routes.DASHBOARD,
+        Routes.SPLASH
+    )
 
 internal fun NavHostController.popUpTo(route: String, baseRoute: String) {
     this.navigate(route) {
@@ -57,22 +66,18 @@ internal fun NavHostController.popUpTo(route: String, baseRoute: String) {
 fun AllInNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    startDestination: String = Routes.WELCOME,
+    startDestination: String = Routes.SPLASH,
 ) {
     NavHost(
         navController = navController,
         startDestination = startDestination,
         enterTransition = {
-            if (navController.currentDestination?.route != Routes.DASHBOARD &&
-                navController.currentDestination?.route != Routes.WELCOME
-            ) {
+            if (navController.currentDestination?.route !in fadingRoutes) {
                 slideInHorizontally(initialOffsetX = { it })
             } else fadeIn(animationSpec = tween(1500))
         },
         exitTransition = {
-            if (navController.currentDestination?.route != Routes.DASHBOARD &&
-                navController.currentDestination?.route != Routes.WELCOME
-            ) {
+            if (navController.currentDestination?.route !in fadingRoutes) {
                 slideOutHorizontally(targetOffsetX = { -it / 2 })
             } else fadeOut(animationSpec = tween(1500))
         },
@@ -80,6 +85,7 @@ fun AllInNavHost(
             .fillMaxSize()
             .background(AllInTheme.themeColors.mainSurface),
     ) {
+        allInSplashScreen(navController)
         allInWelcomeScreen(navController)
         allInRegisterScreen(navController)
         allInLoginScreen(navController)
@@ -90,7 +96,6 @@ fun AllInNavHost(
 @Composable
 internal fun AllInDrawerNavHost(
     modifier: Modifier = Modifier,
-    openDrawer: () -> Unit,
     navController: NavHostController,
     selectBet: (Bet, Boolean) -> Unit,
     startDestination: String = Routes.PUBLIC_BETS,
@@ -116,18 +121,16 @@ internal fun AllInDrawerNavHost(
             backHandlers()
             val creationSuccessMessage = stringResource(id = R.string.bet_creation_success_message)
             BetCreationScreen(
-                setLoading = setLoading,
-                openDrawer = openDrawer,
-                onCreation = {
-                    putSnackbarContent(
-                        MainViewModel.SnackbarContent(
-                            text = creationSuccessMessage,
-                            type = SnackbarType.SUCCESS
-                        )
+                setLoading = setLoading
+            ) {
+                putSnackbarContent(
+                    MainViewModel.SnackbarContent(
+                        text = creationSuccessMessage,
+                        type = SnackbarType.SUCCESS
                     )
-                    navController.popUpTo(Routes.PUBLIC_BETS, Routes.BET_CREATION)
-                }
-            )
+                )
+                navController.popUpTo(Routes.PUBLIC_BETS, Routes.BET_CREATION)
+            }
         }
 
         composable(
@@ -138,11 +141,33 @@ internal fun AllInDrawerNavHost(
         }
 
         composable(
+            route = Routes.FRIENDS
+        ) {
+            backHandlers()
+            RankingScreen()
+        }
+
+        composable(
             route = Routes.BET_CURRENT
         ) {
             backHandlers()
             BetCurrentScreen()
         }
+    }
+}
+
+private fun NavGraphBuilder.allInSplashScreen(
+    navController: NavHostController,
+) {
+    composable(route = Routes.SPLASH) {
+        SplashScreen(
+            navigateToWelcomeScreen = {
+                navController.popUpTo(Routes.WELCOME, Routes.SPLASH)
+            },
+            navigateToDashboard = {
+                navController.popUpTo(Routes.DASHBOARD, Routes.SPLASH)
+            }
+        )
     }
 }
 
@@ -156,9 +181,6 @@ private fun NavGraphBuilder.allInWelcomeScreen(
             },
             navigateToLogin = {
                 navController.popUpTo(Routes.LOGIN, Routes.WELCOME)
-            },
-            navigateToDashboard = {
-                navController.popUpTo(Routes.DASHBOARD, Routes.WELCOME)
             }
         )
     }

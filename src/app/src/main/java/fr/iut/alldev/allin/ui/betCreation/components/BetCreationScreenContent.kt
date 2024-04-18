@@ -17,6 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import fr.iut.alldev.allin.R
+import fr.iut.alldev.allin.data.model.User
 import fr.iut.alldev.allin.data.model.bet.BetType
 import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.betCreation.tabs.BetCreationScreenAnswerTab
@@ -29,7 +30,6 @@ import java.time.ZonedDateTime
 
 @Composable
 fun BetCreationScreenContent(
-    nbFriends: Int,
     betTheme: String,
     betThemeError: String?,
     setBetTheme: (String) -> Unit,
@@ -42,7 +42,8 @@ fun BetCreationScreenContent(
     registerDateError: String?,
     betDate: ZonedDateTime,
     betDateError: String?,
-    selectedFriends: MutableList<Int>,
+    friends: List<User>,
+    selectedFriends: MutableList<String>,
     setRegisterDateDialog: (Boolean) -> Unit,
     setEndDateDialog: (Boolean) -> Unit,
     setRegisterTimeDialog: (Boolean) -> Unit,
@@ -51,7 +52,6 @@ fun BetCreationScreenContent(
     selectedBetType: BetType,
     setSelectedBetTypeElement: (SelectionElement) -> Unit,
     selectionBetType: List<SelectionElement>,
-    openDrawer: () -> Unit,
     onCreateBet: () -> Unit
 ) {
     val interactionSource = remember { MutableInteractionSource() }
@@ -59,7 +59,6 @@ fun BetCreationScreenContent(
 
     Box(Modifier.fillMaxSize()) {
         AllInSections(
-            openDrawer = openDrawer,
             onLoadSection = { focus.clearFocus() },
             modifier = Modifier.align(Alignment.TopCenter),
             sections = listOf(
@@ -71,7 +70,7 @@ fun BetCreationScreenContent(
                         setBetPhrase = setBetPhrase,
                         betTheme = betTheme,
                         setBetTheme = setBetTheme,
-                        nbFriends = nbFriends,
+                        friends = friends,
                         selectedFriends = selectedFriends,
                         registerDate = registerDate,
                         betDate = betDate,
@@ -124,7 +123,7 @@ fun BetCreationScreenContent(
 private fun BetCreationScreenContentPreview() {
     AllInTheme {
         BetCreationScreenContent(
-            nbFriends = 8900,
+            friends = emptyList(),
             betTheme = "Ina",
             betThemeError = null,
             setBetTheme = { },
@@ -146,8 +145,7 @@ private fun BetCreationScreenContentPreview() {
             selectedBetType = BetType.BINARY,
             setSelectedBetTypeElement = { },
             selectionBetType = listOf(),
-            onCreateBet = { },
-            openDrawer = { }
+            onCreateBet = { }
         )
     }
 }

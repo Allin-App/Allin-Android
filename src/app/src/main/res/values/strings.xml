@@ -74,7 +74,10 @@
     <string name="End_registration_date">Registration end date</string>
     <string name="End_bet_date">Bet end date</string>
     <string name="Bet_privacy">Bet privacy</string>
-    <string name="n_friends_available">%d friends available</string>
+    <plurals name="n_friends_available">
+        <item quantity="one">%d friend available</item>
+        <item quantity="other">%d friends available</item>
+    </plurals>
     <string name="public_bottom_text_1">Your bet will be visible by all the users.</string>
     <string name="public_bottom_text_2">Everyone will be able to join the bet.</string>
     <string name="private_bottom_text_1">Your bet will only be visible by your friends.</string>
@@ -137,5 +140,7 @@
     <string name="bet_result_stake">Stake</string>
     <string name="bet_result_winnings">Winnings</string>
 
+    <!--Ranking-->
+    <string name="ranking_title">Ranking</string>
 
 </resources>

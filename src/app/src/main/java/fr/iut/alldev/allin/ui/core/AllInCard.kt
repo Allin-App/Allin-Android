@@ -11,8 +11,8 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -20,6 +20,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.Dp
@@ -27,12 +28,12 @@ import androidx.compose.ui.unit.dp
 import fr.iut.alldev.allin.theme.AllInTheme
 import racra.compose.smooth_corner_rect_library.AbsoluteSmoothCornerShape
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AllInCard(
     modifier: Modifier = Modifier,
     onClick: (() -> Unit)? = null,
     radius: Dp = 15.dp,
+    shape: Shape? = null,
     enabled: Boolean = true,
     backgroundColor: Color = AllInTheme.themeColors.background,
     disabledBackgroundColor: Color = AllInTheme.themeColors.disabled,
@@ -44,7 +45,7 @@ fun AllInCard(
     content: @Composable () -> Unit,
 ) {
 
-    val cardShape = AbsoluteSmoothCornerShape(radius, smoothnessAsPercent = 100)
+    val cardShape = shape ?: AbsoluteSmoothCornerShape(radius, smoothnessAsPercent = 100)
     val cardModifier = modifier
         .run {
             backgroundBrush?.let {
@@ -111,15 +112,19 @@ fun AllInBouncyCard(
             Spring.StiffnessMediumLow
         ), label = ""
     )
+
+    LaunchedEffect(key1 = scale < .97f) {
+        if (scale < .97f) {
+            haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+        }
+    }
+
     AllInCard(
         modifier = modifier
             .combinedClickable(
                 interactionSource = interactionSource,
                 indication = null,
-                onClick = { onClick?.let { it() } },
-                onLongClick = {
-                    haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                }
+                onClick = { onClick?.let { it() } }
             )
             .scale(scale),
         onClick = null,

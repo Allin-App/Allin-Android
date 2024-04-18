@@ -39,21 +39,10 @@ fun AllInSections(
     sections: List<SectionElement>,
     modifier: Modifier = Modifier,
     interSectionsPadding: Dp = 56.dp,
-    openDrawer: () -> Unit,
     onLoadSection: () -> Unit = { }
 ) {
     val pagerState = rememberPagerState(pageCount = { sections.size })
     val scope = rememberCoroutineScope()
-
-    LaunchedEffect(key1 = pagerState.isScrollInProgress) {
-        if (
-            pagerState.isScrollInProgress &&
-            !pagerState.canScrollBackward &&
-            pagerState.currentPage == pagerState.targetPage
-        ) {
-            openDrawer()
-        }
-    }
 
     Box(modifier = modifier) {
         HorizontalPager(state = pagerState) { page ->
@@ -106,7 +95,6 @@ fun AllInSections(
 private fun AllInSectionsPreview() {
     AllInTheme {
         AllInSections(
-            openDrawer = { },
             sections = listOf(
                 SectionElement("Page 1") {
                     Text("This is page 1")

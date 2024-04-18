@@ -147,20 +147,14 @@ fun MainScreen(
                         setStatusVisibility(true)
                     },
                     setLoading = setLoading,
-                    putSnackbarContent = { mainViewModel.putSnackbarContent(it) },
-                    backHandlers = {
-                        BackHandler(enabled = drawerState.isOpen) {
-                            scope.launch {
-                                drawerState.close()
-                            }
-                        }
-                    },
-                    openDrawer = {
+                    putSnackbarContent = { mainViewModel.putSnackbarContent(it) }
+                ) {
+                    BackHandler(enabled = drawerState.isOpen) {
                         scope.launch {
-                            drawerState.open()
+                            drawerState.close()
                         }
                     }
-                )
+                }
             }
         }
     }

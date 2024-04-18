@@ -9,6 +9,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import fr.iut.alldev.allin.R
+import fr.iut.alldev.allin.data.model.User
 import fr.iut.alldev.allin.data.model.bet.BetType
 import fr.iut.alldev.allin.ext.getIcon
 import fr.iut.alldev.allin.ext.getTitleId
@@ -25,7 +26,6 @@ import java.time.ZonedDateTime
 fun BetCreationScreen(
     viewModel: BetCreationViewModel = hiltViewModel(),
     setLoading: (Boolean) -> Unit,
-    openDrawer: () -> Unit,
     onCreation: () -> Unit
 ) {
     val betTypes = remember { BetType.entries }
@@ -43,7 +43,21 @@ fun BetCreationScreen(
     val registerDateError by remember { viewModel.registerDateError }
     val betDateError by remember { viewModel.betDateError }
 
-    val selectedFriends = remember { mutableListOf<Int>() }
+    val friends = remember {
+        buildList {
+            repeat(10) {
+                add(
+                    User(
+                        id = "$it",
+                        username = "Dave",
+                        email = "",
+                        coins = 420
+                    )
+                )
+            }
+        }
+    }
+    val selectedFriends = remember { mutableListOf<String>() }
     var selectionElements by remember { mutableStateOf(listOf<SelectionElement>()) }
     var selectedBetTypeElement by remember { mutableStateOf<SelectionElement?>(null) }
 
@@ -71,7 +85,6 @@ fun BetCreationScreen(
     val (showEndTimePicker, setEndTimePicker) = remember { mutableStateOf(false) }
 
     BetCreationScreenContent(
-        nbFriends = 42,
         betTheme = theme,
         betThemeError = themeError.errorResource(),
         setBetTheme = { theme = it },
@@ -84,6 +97,7 @@ fun BetCreationScreen(
         registerDateError = registerDateError.errorResource(),
         betDate = betDate,
         betDateError = betDateError.errorResource(),
+        friends = friends,
         selectedFriends = selectedFriends,
         setRegisterDateDialog = setRegisterDatePicker,
         setEndDateDialog = setEndDatePicker,
@@ -93,7 +107,6 @@ fun BetCreationScreen(
         selectedBetType = selectedBetType,
         setSelectedBetTypeElement = { selectedBetTypeElement = it },
         selectionBetType = selectionElements,
-        openDrawer = openDrawer,
         onCreateBet = {
             viewModel.createBet(
                 themeFieldName = themeFieldName,

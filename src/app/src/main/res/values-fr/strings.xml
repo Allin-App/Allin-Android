@@ -71,7 +71,11 @@
     <string name="End_registration_date">Date de fin des inscriptions</string>
     <string name="End_bet_date">Date de fin du BET</string>
     <string name="Bet_privacy">Confidentialité du bet</string>
-    <string name="n_friends_available">%d amis disponibles</string>
+    <plurals name="n_friends_available">
+        <item quantity="one">%d ami disponibles</item>
+        <item quantity="other">%d amis disponibles</item>
+        <item quantity="many">%d amis disponibles</item>
+    </plurals>
     <string name="public_bottom_text_1">Votre bet sera visible par tous les utilisateurs.</string>
     <string name="public_bottom_text_2">Tout le monde pourra rejoindre le BET.</string>
     <string name="private_bottom_text_1">Votre bet sera visible uniquement par vos amis.</string>
@@ -136,4 +140,7 @@
     <string name="bet_result_odds">Cote totale</string>
     <string name="bet_result_stake">Mise</string>
     <string name="bet_result_winnings">Gains</string>
+
+    <!--Ranking-->
+    <string name="ranking_title">Classement</string>
 </resources>

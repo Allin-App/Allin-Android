@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.HelpOutline
 import androidx.compose.material.icons.filled.Lock
@@ -18,9 +19,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import fr.iut.alldev.allin.R
+import fr.iut.alldev.allin.data.model.User
 import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.betCreation.components.BetCreationScreenBottomText
 import fr.iut.alldev.allin.ui.betCreation.components.BetCreationScreenFriendLine
@@ -32,8 +35,8 @@ import fr.iut.alldev.allin.ui.core.AllInTitleInfo
 fun QuestionTabPrivacySection(
     isPublic: Boolean,
     setIsPublic: (Boolean) -> Unit,
-    nbFriends: Int,
-    selectedFriends: MutableList<Int>,
+    friends: List<User>,
+    selectedFriends: MutableList<String>,
     interactionSource: MutableInteractionSource,
 ) {
     AllInTitleInfo(
@@ -82,25 +85,25 @@ fun QuestionTabPrivacySection(
             }
         } else {
             AllInRetractableCard(
-                text = stringResource(
-                    id = R.string.n_friends_available,
-                    nbFriends,
-                    nbFriends
+                text = pluralStringResource(
+                    id = R.plurals.n_friends_available,
+                    friends.size,
+                    friends.size
                 ),
                 borderWidth = 1.dp,
-                boldText = nbFriends.toString(),
+                boldText = friends.size.toString(),
                 isOpen = isOpen,
                 setIsOpen = { isOpen = it }
             ) {
                 LazyColumn(
-                    modifier = Modifier.height(165.dp)
+                    modifier = Modifier.height(440.dp)
                 ) {
-                    items(nbFriends) {
+                    itemsIndexed(friends, key = { _, it -> it.id }) { idx, it ->
                         var isSelected by remember {
-                            mutableStateOf(selectedFriends.contains(it))
+                            mutableStateOf(selectedFriends.contains(it.id))
                         }
 
-                        if (it != 0) {
+                        if (idx != 0) {
                             HorizontalDivider(color = AllInTheme.themeColors.border)
                         }
                         BetCreationScreenFriendLine(
@@ -109,9 +112,9 @@ fun QuestionTabPrivacySection(
                             isSelected = isSelected
                         ) {
                             if (isSelected) {
-                                selectedFriends.remove(it)
+                                selectedFriends.remove(it.id)
                             } else {
-                                selectedFriends.add(it)
+                                selectedFriends.add(it.id)
                             }
                             isSelected = !isSelected
                         }

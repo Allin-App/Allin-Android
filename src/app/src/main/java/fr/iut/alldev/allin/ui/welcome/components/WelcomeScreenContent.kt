@@ -13,8 +13,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeContentPadding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,13 +29,11 @@ import androidx.compose.ui.unit.sp
 import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.core.AllInButton
-import fr.iut.alldev.allin.ui.core.AllInLoading
 
 @Composable
 fun WelcomeScreenContent(
     navigateToRegister: () -> Unit,
-    navigateToLogin: () -> Unit,
-    loading: Boolean
+    navigateToLogin: () -> Unit
 ) {
     Box(
         Modifier
@@ -115,8 +111,6 @@ fun WelcomeScreenContent(
             }
         }
     }
-
-    AllInLoading(visible = loading)
 }
 
 @Preview
@@ -126,8 +120,7 @@ private fun WelcomeScreenContentPreview() {
     AllInTheme {
         WelcomeScreenContent(
             navigateToRegister = { },
-            navigateToLogin = { },
-            loading = false
+            navigateToLogin = { }
         )
     }
 }
