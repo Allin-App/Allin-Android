@@ -36,7 +36,7 @@ class SplashScreenViewModel @Inject constructor(
                     emit(State.Loaded(false))
                 }
             } ?: emit(State.Loaded(false))
-            
+
         }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), State.Loading)
     }
 

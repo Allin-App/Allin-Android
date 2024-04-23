@@ -6,12 +6,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -52,6 +53,7 @@ import fr.iut.alldev.allin.data.model.bet.MatchBet
 import fr.iut.alldev.allin.data.model.bet.NO_VALUE
 import fr.iut.alldev.allin.data.model.bet.YES_VALUE
 import fr.iut.alldev.allin.data.model.bet.vo.BetDetail
+import fr.iut.alldev.allin.ext.asPaddingValues
 import fr.iut.alldev.allin.ext.formatToSimple
 import fr.iut.alldev.allin.ext.getDateEndLabelId
 import fr.iut.alldev.allin.ext.getDateStartLabelId
@@ -137,7 +139,7 @@ class BetStatusBottomSheetBetDisplayer(
                                 source: NestedScrollSource
                             ) = available.copy(x = 0f)
                         }),
-                    contentPadding = PaddingValues(horizontal = 20.dp)
+                    contentPadding = WindowInsets.navigationBars.asPaddingValues(horizontal = 20.dp)
                 ) {
                     item {
                         Spacer(modifier = Modifier.height(20.dp))
@@ -208,7 +210,6 @@ class BetStatusBottomSheetBetDisplayer(
                         if (betDetail.bet.betStatus != BetStatus.FINISHED && betDetail.userParticipation == null) {
                             Spacer(modifier = Modifier.height(75.dp))
                         }
-                        Spacer(modifier = Modifier.navigationBarsPadding())
                     }
                 }
             }

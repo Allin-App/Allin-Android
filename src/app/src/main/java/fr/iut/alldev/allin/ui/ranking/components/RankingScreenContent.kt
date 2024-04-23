@@ -1,12 +1,11 @@
 package fr.iut.alldev.allin.ui.ranking.components
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Text
@@ -20,15 +19,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.data.model.User
+import fr.iut.alldev.allin.ext.asPaddingValues
 import fr.iut.alldev.allin.theme.AllInTheme
 
 @Composable
 fun RankingScreenContent(
     users: List<User>
 ) {
+
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(start = 24.dp, end = 24.dp, top = 18.dp),
+        contentPadding = WindowInsets.navigationBars.asPaddingValues(start = 24.dp, end = 24.dp, top = 18.dp),
         verticalArrangement = Arrangement.spacedBy(11.dp),
     ) {
         item {
@@ -71,10 +72,6 @@ fun RankingScreenContent(
                 username = user.username,
                 coins = user.coins
             )
-        }
-
-        item {
-            Spacer(modifier = Modifier.navigationBarsPadding())
         }
     }
 }
