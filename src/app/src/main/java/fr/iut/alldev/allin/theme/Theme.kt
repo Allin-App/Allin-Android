@@ -38,6 +38,7 @@ fun AllInTheme(
         allInLoginPurple = Color(0xFF7F7BFB),
         allInBarPurple = Color(0xFF846AC9),
         allInBarPink = Color(0xFFFE2B8A),
+        allInBarViolet = Color(0xFFC249A8),
         allInBlue = Color(0xFF6a89fa),
         allInMint = Color(0xFFC4DEE9),
         allInDarkBlue = Color(0xFF323078),

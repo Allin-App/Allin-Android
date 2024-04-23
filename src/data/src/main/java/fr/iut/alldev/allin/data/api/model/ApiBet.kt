@@ -7,6 +7,7 @@ import fr.iut.alldev.allin.data.model.bet.BetResultDetail
 import fr.iut.alldev.allin.data.model.bet.BetStatus
 import fr.iut.alldev.allin.data.model.bet.BetType
 import fr.iut.alldev.allin.data.model.bet.CustomBet
+import fr.iut.alldev.allin.data.model.bet.MatchBet
 import fr.iut.alldev.allin.data.model.bet.NO_VALUE
 import fr.iut.alldev.allin.data.model.bet.YES_VALUE
 import fr.iut.alldev.allin.data.model.bet.YesNoBet
@@ -30,9 +31,9 @@ data class ResponseBet(
     var response: List<String>,
     val createdBy: String
 ) {
-    fun toBet(): Bet {
-        if (response.toSet() == setOf(YES_VALUE, NO_VALUE)) {
-            return YesNoBet(
+    fun toBet(): Bet = when {
+        response.toSet() == setOf(YES_VALUE, NO_VALUE) -> {
+            YesNoBet(
                 id = id ?: "",
                 theme = theme,
                 phrase = sentenceBet,
@@ -42,8 +43,25 @@ data class ResponseBet(
                 betStatus = status,
                 creator = createdBy
             )
-        } else {
-            return CustomBet(
+        }
+
+        type == BetType.MATCH -> {
+            MatchBet(
+                id = id ?: "",
+                theme = theme,
+                phrase = sentenceBet,
+                endRegisterDate = endRegistration,
+                endBetDate = endBet,
+                isPublic = !isPrivate,
+                betStatus = status,
+                creator = createdBy,
+                nameTeam1 = response.firstOrNull() ?: "",
+                nameTeam2 = response.lastOrNull() ?: ""
+            )
+        }
+
+        else -> {
+            CustomBet(
                 id = id ?: "",
                 theme = theme,
                 phrase = sentenceBet,
@@ -56,6 +74,7 @@ data class ResponseBet(
             )
         }
     }
+
 }
 
 @Keep

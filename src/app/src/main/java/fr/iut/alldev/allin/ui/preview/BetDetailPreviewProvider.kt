@@ -1,9 +1,12 @@
 package fr.iut.alldev.allin.ui.preview
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import fr.iut.alldev.allin.data.model.bet.CustomBet
+import fr.iut.alldev.allin.data.model.bet.MatchBet
 import fr.iut.alldev.allin.data.model.bet.NO_VALUE
 import fr.iut.alldev.allin.data.model.bet.Participation
 import fr.iut.alldev.allin.data.model.bet.YES_VALUE
+import fr.iut.alldev.allin.data.model.bet.YesNoBet
 import fr.iut.alldev.allin.data.model.bet.vo.BetAnswerDetail
 import fr.iut.alldev.allin.data.model.bet.vo.BetDetail
 
@@ -11,22 +14,70 @@ class BetDetailPreviewProvider : PreviewParameterProvider<BetDetail> {
     override val values = BetWithStatusPreviewProvider().values.map {
         BetDetail(
             bet = it,
-            answers = listOf(
-                BetAnswerDetail(
-                    response = YES_VALUE,
-                    totalStakes = 300,
-                    totalParticipants = 2,
-                    highestStake = 200,
-                    odds = 1.0f
-                ),
-                BetAnswerDetail(
-                    response = NO_VALUE,
-                    totalStakes = 150,
-                    totalParticipants = 1,
-                    highestStake = 150,
-                    odds = 2.0f
+            answers = when (it) {
+                is CustomBet -> listOf(
+                    BetAnswerDetail(
+                        response = "Answer 1",
+                        totalStakes = 300,
+                        totalParticipants = 8,
+                        highestStake = 200,
+                        odds = 1.0f
+                    ),
+                    BetAnswerDetail(
+                        response = "Answer 2",
+                        totalStakes = 300,
+                        totalParticipants = 4,
+                        highestStake = 200,
+                        odds = 1.0f
+                    ),
+                    BetAnswerDetail(
+                        response = "Answer 3",
+                        totalStakes = 300,
+                        totalParticipants = 2,
+                        highestStake = 200,
+                        odds = 1.0f
+                    ),
+                    BetAnswerDetail(
+                        response = "Answer 4",
+                        totalStakes = 300,
+                        totalParticipants = 1,
+                        highestStake = 200,
+                        odds = 1.0f
+                    )
                 )
-            ),
+                is MatchBet -> listOf(
+                    BetAnswerDetail(
+                        response = "The Monarchs",
+                        totalStakes = 300,
+                        totalParticipants = 2,
+                        highestStake = 200,
+                        odds = 1.0f
+                    ),
+                    BetAnswerDetail(
+                        response = "Climate Change",
+                        totalStakes = 150,
+                        totalParticipants = 1,
+                        highestStake = 150,
+                        odds = 2.0f
+                    )
+                )
+                is YesNoBet -> listOf(
+                    BetAnswerDetail(
+                        response = YES_VALUE,
+                        totalStakes = 300,
+                        totalParticipants = 2,
+                        highestStake = 200,
+                        odds = 1.0f
+                    ),
+                    BetAnswerDetail(
+                        response = NO_VALUE,
+                        totalStakes = 150,
+                        totalParticipants = 1,
+                        highestStake = 150,
+                        odds = 2.0f
+                    )
+                )
+            },
             participations = listOf(
                 Participation(
                     betId = it.id,

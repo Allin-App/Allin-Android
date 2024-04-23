@@ -56,15 +56,15 @@ fun BinaryStatBar(
 }
 
 
-private class YesNoStatBarPreviewProvider : PreviewParameterProvider<Float> {
+private class BinaryStatBarPreviewProvider : PreviewParameterProvider<Float> {
     override val values = sequenceOf(0f, .33f, .5f, .66f, 1f)
 }
 
 
 @Preview
 @Composable
-private fun YesNoStatBarPreview(
-    @PreviewParameter(YesNoStatBarPreviewProvider::class) percentage: Float,
+private fun BinaryStatBarPreview(
+    @PreviewParameter(BinaryStatBarPreviewProvider::class) percentage: Float,
 ) {
     AllInTheme {
         BinaryStatBar(

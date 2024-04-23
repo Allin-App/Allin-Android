@@ -4,17 +4,17 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -24,58 +24,60 @@ import fr.iut.alldev.allin.theme.AllInTheme
 @Composable
 fun StatBar(
     percentage: Float,
+    modifier: Modifier = Modifier,
+    leadingBrush: Brush = AllInTheme.colors.allInBar1stGradient,
+    trailingBrush: Brush = AllInTheme.colors.allInBar2ndGradient,
+    icon: (@Composable () -> Unit)? = null,
 ) {
-    val radius100percent = if (percentage == 1f) 50 else 0
-    val radius0percent = if (percentage == 0f) 50 else 0
-    Box {
+    Box(modifier = modifier) {
         Row(
-            Modifier.align(Alignment.Center)
+            modifier = Modifier.align(Alignment.Center),
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Box(
                 modifier = Modifier
                     .height(20.dp)
                     .fillMaxWidth(percentage)
+                    .padding(end = if (percentage == 1f) 25.dp else 0.dp)
                     .clip(
                         AbsoluteRoundedCornerShape(
                             topLeftPercent = 50,
                             bottomLeftPercent = 50,
-                            topRightPercent = radius100percent,
-                            bottomRightPercent = radius100percent
+                            topRightPercent = 0,
+                            bottomRightPercent = 0
                         )
                     )
-                    .background(AllInTheme.colors.allInBar1stGradient)
-
+                    .background(leadingBrush)
             )
-            if (percentage != 0f && percentage != 1f) {
-                Spacer(modifier = Modifier.width(15.dp))
-            }
             Box(
                 modifier = Modifier
                     .height(20.dp)
                     .fillMaxWidth()
+                    .padding(start = if (percentage == 0f) 25.dp else 15.dp)
                     .clip(
                         AbsoluteRoundedCornerShape(
-                            topLeftPercent = radius0percent,
-                            bottomLeftPercent = radius0percent,
+                            topLeftPercent = 0,
+                            bottomLeftPercent = 0,
                             topRightPercent = 50,
                             bottomRightPercent = 50
                         )
                     )
-                    .background(AllInTheme.colors.allInBar2ndGradient)
+                    .background(trailingBrush)
             )
+
         }
         PercentagePositionnedElement(percentage = percentage) {
-            when (percentage) {
+            icon?.invoke() ?: when (percentage) {
                 0f -> Icon(
                     painter = painterResource(id = R.drawable.fire_solid),
-                    tint = AllInTheme.colors.allInBarPink,
+                    tint = AllInTheme.colors.allInPink,
                     contentDescription = null,
                     modifier = Modifier.size(32.dp)
                 )
 
                 1f -> Icon(
                     painter = painterResource(id = R.drawable.fire_solid),
-                    tint = AllInTheme.colors.allInBarPurple,
+                    tint = AllInTheme.colors.allInPurple,
                     contentDescription = null,
                     modifier = Modifier.size(32.dp)
                 )
