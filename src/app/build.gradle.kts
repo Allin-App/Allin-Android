@@ -93,6 +93,12 @@ android {
 easylauncher {
     buildTypes {
         register(BuildType.DEBUG.name).configure {
+            filters(redRibbonFilter())
+        }
+    }
+
+    productFlavors {
+        register("dev") {
             filters(chromeLike())
         }
     }
