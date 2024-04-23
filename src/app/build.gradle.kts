@@ -75,6 +75,19 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
+    flavorDimensions += listOf("env")
+    productFlavors {
+        create("dev") {
+            dimension = "env"
+            versionNameSuffix = "-dev"
+            applicationIdSuffix = ".dev"
+        }
+
+        create("prod") {
+            dimension = "env"
+        }
+    }
 }
 
 easylauncher {
