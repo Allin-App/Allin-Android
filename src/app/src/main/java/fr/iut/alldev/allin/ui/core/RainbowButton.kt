@@ -11,6 +11,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 
 @Composable
@@ -19,7 +20,7 @@ fun RainbowButton(
     text: String,
     onClick: () -> Unit,
     enabled: Boolean = true,
-    rippleColor: Color = AllInTheme.colors.allInBlue,
+    rippleColor: Color = AllInColorToken.allInBlue,
 ) {
     AllInRipple(rippleColor) {
         AllInCard(
@@ -32,11 +33,11 @@ fun RainbowButton(
                 with(AllInTheme.typography.h2) {
                     if (enabled) {
                         copy(
-                            brush = AllInTheme.colors.allInTextGradient
+                            brush = AllInColorToken.allInTextGradient
                         )
                     } else {
                         copy(
-                            color = AllInTheme.themeColors.disabledBorder
+                            color = AllInTheme.colors.disabledBorder
                         )
                     }
                 }

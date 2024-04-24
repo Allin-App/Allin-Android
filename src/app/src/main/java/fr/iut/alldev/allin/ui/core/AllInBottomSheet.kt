@@ -14,17 +14,17 @@ import racra.compose.smooth_corner_rect_library.AbsoluteSmoothCornerShape
 @Composable
 fun AllInBottomSheet(
     sheetVisibility: Boolean,
-    onDismiss: ()->Unit,
+    onDismiss: () -> Unit,
     state: SheetState,
     scrimColor: Color = BottomSheetDefaults.ScrimColor,
-    containerColor: Color = AllInTheme.themeColors.background,
-    dragHandle: (@Composable ()->Unit)? = { BottomSheetDefaults.DragHandle() },
-    content: @Composable ColumnScope.()->Unit
+    containerColor: Color = AllInTheme.colors.background,
+    dragHandle: (@Composable () -> Unit)? = { BottomSheetDefaults.DragHandle() },
+    content: @Composable ColumnScope.() -> Unit
 ) {
     val localDensity = LocalDensity.current
     val localLayoutDirection = LocalLayoutDirection.current
 
-    if(sheetVisibility) {
+    if (sheetVisibility) {
         ModalBottomSheet(
             onDismissRequest = onDismiss,
             sheetState = state,

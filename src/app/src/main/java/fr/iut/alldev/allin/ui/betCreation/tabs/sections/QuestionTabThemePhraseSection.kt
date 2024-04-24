@@ -14,7 +14,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import fr.iut.alldev.allin.R
-import fr.iut.alldev.allin.theme.AllInTheme
+import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.ui.core.AllInTextField
 import fr.iut.alldev.allin.ui.core.AllInTitleInfo
 
@@ -44,7 +44,7 @@ internal fun QuestionTabThemePhraseSection(
         placeholderFontSize = 13.sp,
         onValueChange = setBetTheme,
         errorText = betThemeError,
-        borderColor = AllInTheme.colors.white
+        borderColor = AllInColorToken.white
     )
     Spacer(modifier = Modifier.height(10.dp))
     AllInTitleInfo(
@@ -65,6 +65,6 @@ internal fun QuestionTabThemePhraseSection(
         multiLine = true,
         onValueChange = setBetPhrase,
         errorText = betPhraseError,
-        borderColor = AllInTheme.colors.white
+        borderColor = AllInColorToken.white
     )
 }

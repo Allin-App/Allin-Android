@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.tooling.preview.Preview
+import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.core.AllInTextIcon
 import fr.iut.alldev.allin.ui.core.IconPosition
@@ -24,7 +25,7 @@ fun BinaryDetailsLine(
     ) {
         AllInTextIcon(
             text = yesText,
-            color = AllInTheme.colors.allInBlue,
+            color = AllInColorToken.allInBlue,
             icon = icon,
             position = IconPosition.LEADING,
             size = 15,
@@ -32,7 +33,7 @@ fun BinaryDetailsLine(
         )
         AllInTextIcon(
             text = noText,
-            color = AllInTheme.colors.allInBarPink,
+            color = AllInColorToken.allInBarPink,
             icon = icon,
             position = IconPosition.TRAILING,
             size = 15,

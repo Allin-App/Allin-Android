@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import fr.iut.alldev.allin.R
+import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.core.AllInAlertDialog
 import fr.iut.alldev.allin.ui.core.AllInGradientButton
@@ -70,7 +71,7 @@ fun LoginScreen(
     Box(
         Modifier
             .fillMaxSize()
-            .background(AllInTheme.themeColors.mainSurface)
+            .background(AllInTheme.colors.mainSurface)
             .padding(horizontal = 44.dp)
             .safeContentPadding()
             .verticalScroll(rememberScrollState())
@@ -81,7 +82,7 @@ fun LoginScreen(
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 text = stringResource(id = R.string.Login_title),
-                color = AllInTheme.themeColors.onMainSurface,
+                color = AllInTheme.colors.onMainSurface,
                 style = AllInTheme.typography.sm1,
                 textAlign = TextAlign.Center,
                 fontSize = 40.sp
@@ -90,7 +91,7 @@ fun LoginScreen(
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 text = stringResource(id = R.string.Login_subtitle),
-                color = AllInTheme.themeColors.onMainSurface,
+                color = AllInTheme.colors.onMainSurface,
                 style = AllInTheme.typography.p1,
                 textAlign = TextAlign.Center,
                 fontSize = 23.sp
@@ -120,7 +121,7 @@ fun LoginScreen(
             ClickableText(
                 text = AnnotatedString(stringResource(id = R.string.forgot_password)),
                 style = AllInTheme.typography.sm2.copy(
-                    color = AllInTheme.themeColors.onMainSurface,
+                    color = AllInTheme.colors.onMainSurface,
                     fontSize = 15.sp,
                 ),
                 modifier = Modifier
@@ -151,7 +152,7 @@ fun LoginScreen(
             ) {
                 Text(
                     text = stringResource(id = R.string.no_account),
-                    color = AllInTheme.themeColors.onMainSurface,
+                    color = AllInTheme.colors.onMainSurface,
                     fontSize = 15.sp,
                     style = AllInTheme.typography.p1,
                     modifier = Modifier.padding(end = 5.dp)
@@ -159,7 +160,7 @@ fun LoginScreen(
                 ClickableText(
                     text = AnnotatedString(stringResource(id = R.string.Register)),
                     style = AllInTheme.typography.p1.copy(
-                        color = AllInTheme.colors.allInPurple,
+                        color = AllInColorToken.allInPurple,
                         fontSize = 15.sp,
                         fontWeight = FontWeight.Bold
                     )

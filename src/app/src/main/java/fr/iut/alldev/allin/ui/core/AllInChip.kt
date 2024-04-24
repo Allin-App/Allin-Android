@@ -13,6 +13,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 import racra.compose.smooth_corner_rect_library.AbsoluteSmoothCornerShape
 
@@ -24,14 +25,14 @@ fun AllInChip(
     isSelected: Boolean = false,
     onClick: () -> Unit = {},
     radius: Dp = 50.dp,
-    selectedColor: Color = AllInTheme.colors.allInPurple,
-    unselectedColor: Color = AllInTheme.themeColors.background,
+    selectedColor: Color = AllInColorToken.allInPurple,
+    unselectedColor: Color = AllInTheme.colors.background,
 ) {
     Card(
         modifier = modifier,
         shape = AbsoluteSmoothCornerShape(radius, 100),
         onClick = onClick,
-        border = if (!isSelected) BorderStroke(1.dp, AllInTheme.themeColors.border) else null,
+        border = if (!isSelected) BorderStroke(1.dp, AllInTheme.colors.border) else null,
         colors = CardDefaults.cardColors(
             containerColor = if (isSelected) selectedColor else unselectedColor
         )
@@ -45,7 +46,7 @@ fun AllInChip(
                     .alpha(if (isSelected) 0f else 1f),
                 textAlign = TextAlign.Center,
                 style = AllInTheme.typography.p1,
-                color = AllInTheme.themeColors.onBackground2
+                color = AllInTheme.colors.onBackground2
             )
             if (isSelected) {
                 Text(
@@ -53,7 +54,7 @@ fun AllInChip(
                     modifier = modifier.align(Alignment.Center),
                     textAlign = TextAlign.Center,
                     style = AllInTheme.typography.h1,
-                    color = AllInTheme.colors.white
+                    color = AllInColorToken.white
                 )
             }
         }

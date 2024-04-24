@@ -26,6 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import fr.iut.alldev.allin.R
+import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.core.AllInBottomSheet
 import fr.iut.alldev.allin.ui.core.AllInButton
@@ -58,7 +59,7 @@ fun BetStatusParticipationBottomSheet(
         sheetVisibility = sheetVisibility,
         onDismiss = onDismiss,
         state = state,
-        containerColor = AllInTheme.themeColors.background2
+        containerColor = AllInTheme.colors.background2
     ) {
         BetStatusParticipationBottomSheetContent(
             betPhrase = betPhrase,
@@ -103,15 +104,15 @@ private fun BetStatusParticipationBottomSheetContent(
         Text(
             text = stringResource(id = R.string.place_your_bets),
             style = AllInTheme.typography.h2,
-            color = AllInTheme.themeColors.onMainSurface,
+            color = AllInTheme.colors.onMainSurface,
             fontSize = 20.sp,
             modifier = Modifier.padding(start = 18.dp)
         )
         AllInTopBarCoinCounter(
             amount = coinAmount,
-            backgroundColor = AllInTheme.colors.allInBlue,
-            textColor = AllInTheme.colors.white,
-            iconColor = AllInTheme.colors.white,
+            backgroundColor = AllInColorToken.allInBlue,
+            textColor = AllInColorToken.white,
+            iconColor = AllInColorToken.white,
         )
     }
     Column(
@@ -120,7 +121,7 @@ private fun BetStatusParticipationBottomSheetContent(
         Text(
             text = betPhrase,
             style = AllInTheme.typography.p2,
-            color = AllInTheme.themeColors.onMainSurface,
+            color = AllInTheme.colors.onMainSurface,
             modifier = Modifier.padding(vertical = 30.dp)
         )
         AllInSelectionBox(
@@ -137,7 +138,7 @@ private fun BetStatusParticipationBottomSheetContent(
             setValue = setStake,
             textStyle = AllInTheme.typography.h1.copy(
                 fontSize = 20.sp,
-                color = AllInTheme.themeColors.onBackground
+                color = AllInTheme.colors.onBackground
             ),
             placeholder = stringResource(id = R.string.bet_result_stake),
             trailingIcon = AllInTheme.icons.allCoins(),
@@ -146,10 +147,10 @@ private fun BetStatusParticipationBottomSheetContent(
         )
     }
     Spacer(modifier = Modifier.height(100.dp))
-    HorizontalDivider(color = AllInTheme.themeColors.border)
+    HorizontalDivider(color = AllInTheme.colors.border)
     Column(
         modifier = Modifier
-            .background(AllInTheme.themeColors.background)
+            .background(AllInTheme.colors.background)
             .padding(7.dp),
         verticalArrangement = Arrangement.spacedBy(7.dp)
     ) {
@@ -161,18 +162,18 @@ private fun BetStatusParticipationBottomSheetContent(
             Text(
                 text = stringResource(id = R.string.Possible_winnings),
                 style = AllInTheme.typography.p1,
-                color = AllInTheme.themeColors.onBackground
+                color = AllInTheme.colors.onBackground
             )
             AllInCoinCount(
                 amount = stake?.let { (it + (it * odds)).roundToInt() } ?: 0,
-                color = AllInTheme.themeColors.onBackground
+                color = AllInTheme.colors.onBackground
             )
         }
         AllInButton(
             enabled = enabled,
-            color = AllInTheme.colors.allInPurple,
+            color = AllInColorToken.allInPurple,
             text = stringResource(id = R.string.Participate),
-            textColor = AllInTheme.colors.white,
+            textColor = AllInColorToken.white,
             radius = 5.dp,
             onClick = onButtonClick,
             modifier = Modifier.navigationBarsPadding()

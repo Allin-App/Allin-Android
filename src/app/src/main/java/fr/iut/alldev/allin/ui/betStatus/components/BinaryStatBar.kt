@@ -11,6 +11,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.sp
 import fr.iut.alldev.allin.data.ext.toPercentageString
+import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.core.PercentagePositionnedElement
 import fr.iut.alldev.allin.ui.core.StatBar
@@ -26,7 +27,7 @@ fun BinaryStatBar(
         Row {
             Text(
                 text = response1,
-                color = AllInTheme.colors.allInBlue,
+                color = AllInColorToken.allInBlue,
                 style = AllInTheme.typography.h1,
                 fontStyle = FontStyle.Italic,
                 fontSize = 30.sp,
@@ -37,7 +38,7 @@ fun BinaryStatBar(
                 style = AllInTheme.typography.h1,
                 fontStyle = FontStyle.Italic,
                 fontSize = 30.sp,
-                color = AllInTheme.colors.allInBarPink,
+                color = AllInColorToken.allInBarPink,
                 textAlign = TextAlign.End,
                 modifier = Modifier.weight(1f)
             )
@@ -49,7 +50,7 @@ fun BinaryStatBar(
             Text(
                 text = response1Percentage.toPercentageString(),
                 style = AllInTheme.typography.sm1,
-                color = AllInTheme.colors.allInBarPurple
+                color = AllInColorToken.allInBarPurple
             )
         }
     }

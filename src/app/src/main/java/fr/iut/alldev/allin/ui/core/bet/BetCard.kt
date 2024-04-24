@@ -51,7 +51,7 @@ fun BetCard(
         }
         HorizontalDivider(
             thickness = 1.dp,
-            color = AllInTheme.themeColors.border
+            color = AllInTheme.colors.border
         )
         content()
     }

@@ -21,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import fr.iut.alldev.allin.R
+import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 
 @Composable
@@ -34,8 +35,8 @@ fun ProfilePicture(
     Card(
         modifier = modifier.size(size),
         shape = shape,
-        colors = CardDefaults.cardColors(containerColor = AllInTheme.colors.allInDarkGrey100),
-        border = borderWidth?.let { BorderStroke(it, AllInTheme.colors.allInDarkGrey50) }
+        colors = CardDefaults.cardColors(containerColor = AllInColorToken.allInDarkGrey100),
+        border = borderWidth?.let { BorderStroke(it, AllInColorToken.allInDarkGrey50) }
     ) {
         Box(Modifier.fillMaxSize()) {
             image?.let {
@@ -50,7 +51,7 @@ fun ProfilePicture(
             } ?: run {
                 Icon(
                     imageVector = Icons.Default.PhotoCamera,
-                    tint = AllInTheme.colors.white,
+                    tint = AllInColorToken.white,
                     contentDescription = null,
                     modifier = Modifier
                         .align(Alignment.Center)

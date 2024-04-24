@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.ext.shadow
+import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.core.AllInCard
 import fr.iut.alldev.allin.ui.core.HighlightedText
@@ -43,8 +44,8 @@ fun BetScreenPopularCard(
                 if (isSystemInDarkTheme()) {
                     it.shadow(
                         colors = listOf(
-                            AllInTheme.colors.allInPink,
-                            AllInTheme.colors.allInBlue
+                            AllInColorToken.allInPink,
+                            AllInColorToken.allInBlue
                         ),
                         blurRadius = 10.dp,
                         alpha = .5f,
@@ -60,9 +61,9 @@ fun BetScreenPopularCard(
                 }
             }
             .fillMaxWidth(),
-        backgroundColor = AllInTheme.colors.allInDark,
+        backgroundColor = AllInColorToken.allInDark,
         borderWidth = 2.dp,
-        borderBrush = AllInTheme.colors.allInMainGradient
+        borderBrush = AllInColorToken.allInMainGradient
     ) {
         Column(modifier = Modifier.padding(13.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -70,19 +71,19 @@ fun BetScreenPopularCard(
                     painter = painterResource(id = R.drawable.allin_fire),
                     modifier = Modifier.size(15.dp),
                     contentDescription = null,
-                    tint = AllInTheme.colors.allInPink
+                    tint = AllInColorToken.allInPink
                 )
                 Spacer(modifier = Modifier.width(3.dp))
                 Text(
                     text = stringResource(id = R.string.Popular),
-                    color = AllInTheme.colors.allInPink,
+                    color = AllInColorToken.allInPink,
                     fontSize = 17.sp,
                     style = AllInTheme.typography.h2
                 )
             }
             Text(
                 text = title,
-                color = AllInTheme.colors.white,
+                color = AllInColorToken.white,
                 fontSize = 20.sp,
                 style = AllInTheme.typography.h1,
                 modifier = Modifier.padding(vertical = 22.dp)
@@ -97,15 +98,15 @@ fun BetScreenPopularCard(
                     query = nbPlayers.toString(),
                     highlightStyle = SpanStyle(
                         fontWeight = FontWeight.Bold,
-                        color = AllInTheme.colors.allInPink
+                        color = AllInColorToken.allInPink
                     ),
-                    color = AllInTheme.colors.white,
+                    color = AllInColorToken.white,
                     style = AllInTheme.typography.p1,
                     fontSize = 15.sp
                 )
                 Text(
                     text = " - ",
-                    color = AllInTheme.colors.white,
+                    color = AllInColorToken.white,
                     style = AllInTheme.typography.p1,
                     fontSize = 15.sp
                 )
@@ -123,9 +124,9 @@ fun BetScreenPopularCard(
                     query = pointsText,
                     highlightStyle = SpanStyle(
                         fontWeight = FontWeight.Bold,
-                        color = AllInTheme.colors.allInPink
+                        color = AllInColorToken.allInPink
                     ),
-                    color = AllInTheme.colors.white,
+                    color = AllInColorToken.white,
                     style = AllInTheme.typography.p1,
                     fontSize = 15.sp
                 )

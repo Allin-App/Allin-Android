@@ -21,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 
 
@@ -77,7 +78,7 @@ private fun AllInTextIconPreview() {
         AllInTextIcon(
             text = "value",
             icon = rememberVectorPainter(image = Icons.Default.Fireplace),
-            color = AllInTheme.colors.allInBlue
+            color = AllInColorToken.allInBlue
         )
     }
 }
@@ -89,8 +90,8 @@ private fun AllInTextIconReversePreview() {
         AllInTextIcon(
             text = "value",
             icon = AllInTheme.icons.allCoins(),
-            color = AllInTheme.colors.allInBlue,
-            brush = AllInTheme.colors.allInMainGradient,
+            color = AllInColorToken.allInBlue,
+            brush = AllInColorToken.allInMainGradient,
             position = IconPosition.LEADING
         )
     }

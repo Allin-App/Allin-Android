@@ -27,6 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import fr.iut.alldev.allin.R
+import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.core.AllInButton
 
@@ -39,7 +40,7 @@ fun WelcomeScreenContent(
         Modifier
             .fillMaxWidth()
             .fillMaxHeight(.5f)
-            .background(AllInTheme.colors.allInLoginGradient)
+            .background(AllInColorToken.allInLoginGradient)
     )
     Box(
         Modifier
@@ -47,7 +48,7 @@ fun WelcomeScreenContent(
             .background(
                 Brush.verticalGradient(
                     .2f to Color.Transparent,
-                    .5f to AllInTheme.themeColors.background
+                    .5f to AllInTheme.colors.background
                 )
             )
     ) {
@@ -60,7 +61,7 @@ fun WelcomeScreenContent(
         ) {
             Text(
                 text = stringResource(id = R.string.welcome_title),
-                color = AllInTheme.themeColors.onBackground,
+                color = AllInTheme.colors.onBackground,
                 fontSize = 30.sp,
                 style = AllInTheme.typography.h1
             )
@@ -68,22 +69,22 @@ fun WelcomeScreenContent(
                 text = stringResource(id = R.string.welcome_appname),
                 fontSize = 60.sp,
                 style = AllInTheme.typography.h1.copy(
-                    brush = AllInTheme.colors.allInMainGradient
+                    brush = AllInColorToken.allInMainGradient
                 )
             )
             Spacer(modifier = Modifier.height(43.dp))
             Text(
                 text = stringResource(id = R.string.welcome_subtitle),
-                color = AllInTheme.themeColors.onBackground,
+                color = AllInTheme.colors.onBackground,
                 fontSize = 15.sp,
                 style = AllInTheme.typography.p1
             )
             Spacer(modifier = Modifier.height(78.dp))
 
             AllInButton(
-                color = AllInTheme.themeColors.tint1,
+                color = AllInTheme.colors.tint1,
                 text = stringResource(id = R.string.join),
-                textColor = AllInTheme.themeColors.background,
+                textColor = AllInTheme.colors.background,
                 onClick = navigateToRegister,
                 modifier = Modifier.padding(bottom = 13.dp)
             )
@@ -94,7 +95,7 @@ fun WelcomeScreenContent(
             ) {
                 Text(
                     text = stringResource(id = R.string.already_have_account),
-                    color = AllInTheme.themeColors.tint1,
+                    color = AllInTheme.colors.tint1,
                     fontSize = 15.sp,
                     style = AllInTheme.typography.p1,
                     modifier = Modifier.padding(end = 5.dp)
@@ -102,7 +103,7 @@ fun WelcomeScreenContent(
                 ClickableText(
                     text = AnnotatedString(stringResource(id = R.string.Login)),
                     style = AllInTheme.typography.p1.copy(
-                        color = AllInTheme.themeColors.tint1,
+                        color = AllInTheme.colors.tint1,
                         fontSize = 15.sp,
                         fontWeight = FontWeight.Bold
                     ),

@@ -76,9 +76,11 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun openBetDetail(bet: Bet) {
+    fun openBetDetail(bet: Bet, onGetBet: (BetDetail) -> Unit) {
         viewModelScope.launch {
-            selectedBet.value = betRepository.getBet(bet.id, keystoreManager.getTokenOrEmpty())
+            val betDetail = betRepository.getBet(bet.id, keystoreManager.getTokenOrEmpty())
+            selectedBet.value = betDetail
+            onGetBet(betDetail)
         }
     }
 

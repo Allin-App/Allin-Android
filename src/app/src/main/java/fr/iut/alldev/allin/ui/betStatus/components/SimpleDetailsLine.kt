@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.tooling.preview.Preview
+import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.core.AllInTextIcon
 import fr.iut.alldev.allin.ui.core.IconPosition
@@ -24,9 +25,9 @@ fun SimpleDetailsLine(
         AllInTextIcon(
             text = text,
             color = if (isWin) {
-                AllInTheme.colors.allInBarViolet
+                AllInColorToken.allInBarViolet
             } else {
-                AllInTheme.colors.allInBlue
+                AllInColorToken.allInBlue
             },
             icon = icon,
             position = IconPosition.TRAILING,

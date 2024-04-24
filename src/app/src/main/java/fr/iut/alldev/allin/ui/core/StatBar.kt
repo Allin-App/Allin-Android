@@ -19,14 +19,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import fr.iut.alldev.allin.R
+import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 
 @Composable
 fun StatBar(
     percentage: Float,
     modifier: Modifier = Modifier,
-    leadingBrush: Brush = AllInTheme.colors.allInBar1stGradient,
-    trailingBrush: Brush = AllInTheme.colors.allInBar2ndGradient,
+    leadingBrush: Brush = AllInColorToken.allInBar1stGradient,
+    trailingBrush: Brush = AllInColorToken.allInBar2ndGradient,
     icon: (@Composable () -> Unit)? = null,
 ) {
     Box(modifier = modifier) {
@@ -70,14 +71,14 @@ fun StatBar(
             icon?.invoke() ?: when (percentage) {
                 0f -> Icon(
                     painter = painterResource(id = R.drawable.fire_solid),
-                    tint = AllInTheme.colors.allInPink,
+                    tint = AllInColorToken.allInPink,
                     contentDescription = null,
                     modifier = Modifier.size(32.dp)
                 )
 
                 1f -> Icon(
                     painter = painterResource(id = R.drawable.fire_solid),
-                    tint = AllInTheme.colors.allInPurple,
+                    tint = AllInColorToken.allInPurple,
                     contentDescription = null,
                     modifier = Modifier.size(32.dp)
                 )

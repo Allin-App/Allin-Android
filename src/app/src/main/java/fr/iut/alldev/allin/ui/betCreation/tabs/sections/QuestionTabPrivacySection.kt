@@ -116,7 +116,7 @@ fun QuestionTabPrivacySection(
                         }
 
                         if (idx != 0) {
-                            HorizontalDivider(color = AllInTheme.themeColors.border)
+                            HorizontalDivider(color = AllInTheme.colors.border)
                         }
                         BetCreationScreenFriendLine(
                             username = "Dave",

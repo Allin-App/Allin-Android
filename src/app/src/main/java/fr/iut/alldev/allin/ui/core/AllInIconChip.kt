@@ -18,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 import racra.compose.smooth_corner_rect_library.AbsoluteSmoothCornerShape
 
@@ -28,16 +29,16 @@ fun AllInIconChip(
     isSelected: Boolean = false,
     onClick: () -> Unit = {},
     radius: Dp = 15.dp,
-    selectedColor: Color = AllInTheme.colors.allInPurple,
-    unselectedColor: Color = AllInTheme.themeColors.background,
+    selectedColor: Color = AllInColorToken.allInPurple,
+    unselectedColor: Color = AllInTheme.colors.background,
     leadingIcon: ImageVector,
 ) {
-    val contentColor = if (isSelected) AllInTheme.colors.white else selectedColor
+    val contentColor = if (isSelected) AllInColorToken.white else selectedColor
     Card(
         modifier = modifier,
         shape = AbsoluteSmoothCornerShape(radius, 100),
         onClick = onClick,
-        border = if (!isSelected) BorderStroke(1.dp, AllInTheme.themeColors.border) else null,
+        border = if (!isSelected) BorderStroke(1.dp, AllInTheme.colors.border) else null,
         colors = CardDefaults.cardColors(
             containerColor = if (isSelected) selectedColor else unselectedColor
         )

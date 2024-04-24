@@ -50,6 +50,7 @@ import fr.iut.alldev.allin.data.model.bet.YesNoBet
 import fr.iut.alldev.allin.data.model.bet.vo.BetAnswerDetail
 import fr.iut.alldev.allin.data.model.bet.vo.BetDetail
 import fr.iut.alldev.allin.ext.formatToSimple
+import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.core.AllInBottomSheet
 import fr.iut.alldev.allin.ui.core.AllInButton
@@ -89,13 +90,13 @@ fun BetConfirmationBottomSheetAnswer(
     text: String,
     odds: Float,
     modifier: Modifier = Modifier,
-    color: Color = AllInTheme.colors.allInBlue,
+    color: Color = AllInColorToken.allInBlue,
     isSelected: Boolean,
     locale: Locale,
     onClick: () -> Unit
 ) {
-    val backColor = if (isSelected) AllInTheme.colors.allInPurple else AllInTheme.colors.white
-    val contentColor = if (isSelected) AllInTheme.colors.white else null
+    val backColor = if (isSelected) AllInColorToken.allInPurple else AllInColorToken.white
+    val contentColor = if (isSelected) AllInColorToken.white else null
 
     AllInCard(
         backgroundColor = backColor,
@@ -117,7 +118,7 @@ fun BetConfirmationBottomSheetAnswer(
 
             AllInCard(
                 radius = 50.dp,
-                backgroundColor = contentColor ?: AllInTheme.colors.allInPurple,
+                backgroundColor = contentColor ?: AllInColorToken.allInPurple,
                 modifier = Modifier.align(Alignment.CenterEnd)
             ) {
                 Box(Modifier.padding(vertical = 4.dp, horizontal = 8.dp)) {
@@ -191,7 +192,7 @@ fun ConfirmationAnswers(
 
                         BetConfirmationBottomSheetAnswer(
                             text = it.response,
-                            color = AllInTheme.colors.allInBarPink,
+                            color = AllInColorToken.allInBarPink,
                             odds = it.odds,
                             locale = locale,
                             onClick = { onClick(it.response) },
@@ -240,7 +241,7 @@ fun ConfirmationAnswers(
 
                         BetConfirmationBottomSheetAnswer(
                             text = it.response,
-                            color = AllInTheme.colors.allInBarPink,
+                            color = AllInColorToken.allInBarPink,
                             odds = it.odds,
                             locale = locale,
                             onClick = { onClick(it.response) },
@@ -264,7 +265,7 @@ fun BetConfirmationBottomSheetContent(
 ) {
     var selectedAnswer by remember { mutableStateOf<String?>(null) }
 
-    AllInMarqueeBox(backgroundColor = AllInTheme.colors.allInDarkGrey300) {
+    AllInMarqueeBox(backgroundColor = AllInColorToken.allInDarkGrey300) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -279,7 +280,7 @@ fun BetConfirmationBottomSheetContent(
             ) {
                 Icon(
                     imageVector = Icons.Default.Close,
-                    tint = AllInTheme.colors.white,
+                    tint = AllInColorToken.white,
                     contentDescription = null,
                     modifier = Modifier.size(24.dp)
                 )
@@ -288,7 +289,7 @@ fun BetConfirmationBottomSheetContent(
             Icon(
                 painter = AllInTheme.icons.logo(),
                 contentDescription = null,
-                tint = AllInTheme.colors.white,
+                tint = AllInColorToken.white,
                 modifier = Modifier
                     .size(40.dp)
                     .align(Alignment.TopCenter)
@@ -310,14 +311,14 @@ fun BetConfirmationBottomSheetContent(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .background(AllInTheme.colors.allInMainGradient)
+                            .background(AllInColorToken.allInMainGradient)
                             .padding(16.dp),
                         horizontalArrangement = Arrangement.Center,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
                             text = stringResource(id = R.string.Finished),
-                            color = AllInTheme.colors.white,
+                            color = AllInColorToken.white,
                             style = AllInTheme.typography.h1,
                             fontSize = 24.sp
                         )
@@ -325,7 +326,7 @@ fun BetConfirmationBottomSheetContent(
                 }
                 Text(
                     text = "Ce bet est arrivé à la date de fin. Vous devez à présent distribuer les gains en validant le pari gagnant.",
-                    color = AllInTheme.colors.allInLightGrey200,
+                    color = AllInColorToken.allInLightGrey200,
                     style = AllInTheme.typography.p2,
                     textAlign = TextAlign.Center
                 )
@@ -335,7 +336,7 @@ fun BetConfirmationBottomSheetContent(
                 Text(
                     text = "Veuillez choisir la réponse finale :",
                     fontSize = 20.sp,
-                    color = AllInTheme.colors.white,
+                    color = AllInColorToken.white,
                     style = AllInTheme.typography.h1,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -346,9 +347,9 @@ fun BetConfirmationBottomSheetContent(
             }
             if (selectedAnswer != null) {
                 AllInButton(
-                    color = AllInTheme.colors.allInPurple,
+                    color = AllInColorToken.allInPurple,
                     text = stringResource(id = R.string.Validate),
-                    textColor = AllInTheme.colors.white,
+                    textColor = AllInColorToken.white,
                     radius = 5.dp,
                     onClick = { selectedAnswer?.let(onConfirm) },
                     modifier = Modifier.align(Alignment.BottomCenter)

@@ -17,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import fr.iut.alldev.allin.R
+import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.core.ProfilePicture
 
@@ -39,7 +40,7 @@ fun DrawerHeader(
         Text(
             text = username,
             fontSize = 20.sp,
-            color = AllInTheme.colors.allInLightGrey200,
+            color = AllInColorToken.allInLightGrey200,
             textAlign = TextAlign.Center,
             style = AllInTheme.typography.h2,
         )

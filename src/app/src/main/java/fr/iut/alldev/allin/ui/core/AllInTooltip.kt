@@ -13,6 +13,7 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.*
+import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 import racra.compose.smooth_corner_rect_library.AbsoluteSmoothCornerShape
 
@@ -30,7 +31,7 @@ fun AllInTooltip(
             AllInPlainTooltip {
                 Text(
                     text = text,
-                    color = AllInTheme.colors.allInLightGrey200,
+                    color = AllInColorToken.allInLightGrey200,
                     style = AllInTheme.typography.p1,
                     fontSize = 12.sp
                 )
@@ -60,9 +61,9 @@ private val AllInPlainTooltipContentPadding =
 @Composable
 fun AllInPlainTooltip(
     modifier: Modifier = Modifier,
-    containerColor: Color = AllInTheme.colors.allInDark,
+    containerColor: Color = AllInColorToken.allInDark,
     borderWidth: Dp = 1.dp,
-    borderColor: Color = AllInTheme.colors.allInDarkGrey100,
+    borderColor: Color = AllInColorToken.allInDarkGrey100,
     shape: Shape = AbsoluteSmoothCornerShape(10.dp, 100),
     content: @Composable () -> Unit,
 ) {
@@ -120,7 +121,7 @@ private fun AllInTooltipPreview() {
         AllInPlainTooltip(content = {
             Text(
                 text = "Généralement une question qui sera répondu par les utilisateurs.",
-                color = AllInTheme.colors.allInLightGrey200,
+                color = AllInColorToken.allInLightGrey200,
                 style = AllInTheme.typography.p1,
                 fontSize = 10.sp
             )

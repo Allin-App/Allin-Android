@@ -34,6 +34,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import fr.iut.alldev.allin.R
+import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 
 
@@ -66,13 +67,13 @@ private fun AllInSelectionLine(
             Icon(
                 imageVector = it,
                 contentDescription = null,
-                tint = AllInTheme.colors.allInPurple,
+                tint = AllInColorToken.allInPurple,
                 modifier = Modifier.size(20.dp)
             )
         }
         Text(
             text = text,
-            color = AllInTheme.colors.allInPurple,
+            color = AllInColorToken.allInPurple,
             style = AllInTheme.typography.h2,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.weight(1f)
@@ -81,7 +82,7 @@ private fun AllInSelectionLine(
             Icon(
                 imageVector = trailingIcon,
                 contentDescription = null,
-                tint = AllInTheme.colors.allInPurple,
+                tint = AllInColorToken.allInPurple,
                 modifier = Modifier
                     .size(30.dp)
             )
@@ -105,7 +106,7 @@ fun AllInSelectionBox(
         modifier = modifier.fillMaxWidth(),
         radius = 10.dp,
         borderWidth = borderWidth,
-        borderColor = AllInTheme.colors.allInPurple.copy(alpha = .42f)
+        borderColor = AllInColorToken.allInPurple.copy(alpha = .42f)
     ) {
         Column(
             Modifier.animateContentSize()
@@ -125,7 +126,7 @@ fun AllInSelectionBox(
             )
             AnimatedVisibility(isOpen) {
                 Column {
-                    HorizontalDivider(color = AllInTheme.themeColors.border)
+                    HorizontalDivider(color = AllInTheme.colors.border)
                     elements.filter { it != selected }.forEach { element ->
                         AllInSelectionLine(
                             text = stringResource(id = element.textId),
@@ -188,7 +189,7 @@ private fun AllInSelectionLine(
             Icon(
                 imageVector = trailingIcon,
                 contentDescription = null,
-                tint = AllInTheme.colors.allInPurple,
+                tint = AllInColorToken.allInPurple,
                 modifier = Modifier
                     .size(30.dp)
             )
@@ -211,7 +212,7 @@ fun AllInSelectionBox(
         modifier = modifier.fillMaxWidth(),
         radius = 10.dp,
         borderWidth = borderWidth,
-        borderColor = AllInTheme.colors.allInPurple.copy(alpha = .42f)
+        borderColor = AllInColorToken.allInPurple.copy(alpha = .42f)
     ) {
         Column(Modifier.animateContentSize()) {
             AllInSelectionLine(
@@ -224,7 +225,7 @@ fun AllInSelectionBox(
             )
             AnimatedVisibility(isOpen) {
                 Column {
-                    HorizontalDivider(color = AllInTheme.themeColors.border)
+                    HorizontalDivider(color = AllInTheme.colors.border)
                     elements.filter { it != selected }.forEach { element ->
                         AllInSelectionLine(
                             element = element,

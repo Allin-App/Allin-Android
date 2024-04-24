@@ -41,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.window.DialogWindowProvider
+import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 import kotlin.math.PI
 import kotlin.math.abs
@@ -50,7 +51,7 @@ import kotlin.math.max
 fun AllInLoading(
     modifier: Modifier = Modifier,
     visible: Boolean,
-    brush: Brush = AllInTheme.colors.allInMainGradient,
+    brush: Brush = AllInColorToken.allInMainGradient,
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     AnimatedVisibility(
@@ -76,7 +77,7 @@ fun AllInLoading(
                         indication = null,
                         onClick = {}
                     )
-                    .background(AllInTheme.themeColors.mainSurface.copy(alpha = .4f))
+                    .background(AllInTheme.colors.mainSurface.copy(alpha = .4f))
             ) {
                 AllInCircularProgressIndicator(
                     modifier = Modifier
@@ -93,7 +94,7 @@ fun AllInLoading(
 @Composable
 fun AllInCircularProgressIndicator(
     modifier: Modifier = Modifier,
-    brush: Brush = AllInTheme.colors.allInMainGradient,
+    brush: Brush = AllInColorToken.allInMainGradient,
     strokeWidth: Dp = ProgressIndicatorDefaults.CircularStrokeWidth,
     strokeCap: StrokeCap = ProgressIndicatorDefaults.CircularIndeterminateStrokeCap,
 ) {

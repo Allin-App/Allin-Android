@@ -19,6 +19,7 @@ import fr.iut.alldev.allin.data.model.bet.BetStatus
 import fr.iut.alldev.allin.ext.getColor
 import fr.iut.alldev.allin.ext.getTextColor
 import fr.iut.alldev.allin.ext.getTitleId
+import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.betStatus.SHEET_HEIGHT
 import fr.iut.alldev.allin.ui.preview.BetStatusPreviewProvider
@@ -50,7 +51,7 @@ fun BetStatusBottomSheetBack(
             )
             Icon(
                 painter = painterResource(id = R.drawable.allin_exit),
-                tint = AllInTheme.colors.white,
+                tint = AllInColorToken.white,
                 contentDescription = null
             )
         }

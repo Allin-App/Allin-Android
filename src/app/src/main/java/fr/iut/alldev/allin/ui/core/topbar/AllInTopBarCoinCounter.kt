@@ -16,15 +16,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 
 @Composable
 fun AllInTopBarCoinCounter(
     amount: Int,
     modifier: Modifier = Modifier,
-    backgroundColor: Color = AllInTheme.colors.white,
-    textColor: Color = AllInTheme.colors.allInDark,
-    iconColor: Color = AllInTheme.colors.allInBlue,
+    backgroundColor: Color = AllInColorToken.white,
+    textColor: Color = AllInColorToken.allInDark,
+    iconColor: Color = AllInColorToken.allInBlue,
 ) {
     Card(
         modifier = modifier.wrapContentSize(),

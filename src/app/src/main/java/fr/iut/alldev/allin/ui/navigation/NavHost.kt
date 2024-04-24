@@ -83,7 +83,7 @@ fun AllInNavHost(
         },
         modifier = modifier
             .fillMaxSize()
-            .background(AllInTheme.themeColors.mainSurface),
+            .background(AllInTheme.colors.mainSurface),
     ) {
         allInSplashScreen(navController)
         allInWelcomeScreen(navController)

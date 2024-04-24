@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.ext.asPaddingValues
+import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.core.AllInGradientButton
 import fr.iut.alldev.allin.ui.core.AllInLoading
@@ -65,7 +66,7 @@ fun RegisterScreenContent(
     Box(
         Modifier
             .fillMaxSize()
-            .background(AllInTheme.themeColors.mainSurface)
+            .background(AllInTheme.colors.mainSurface)
     ) {
         LazyColumn(
             verticalArrangement = Arrangement.Center,
@@ -77,7 +78,7 @@ fun RegisterScreenContent(
                         .padding(top = 16.dp)
                         .fillMaxWidth(),
                     text = stringResource(id = R.string.Hello_x, username),
-                    color = AllInTheme.themeColors.onMainSurface,
+                    color = AllInTheme.colors.onMainSurface,
                     style = AllInTheme.typography.sm1,
                     textAlign = TextAlign.Center,
                     fontSize = 40.sp,
@@ -87,7 +88,7 @@ fun RegisterScreenContent(
                 Text(
                     modifier = Modifier.fillMaxWidth(),
                     text = stringResource(id = R.string.Register_title),
-                    color = AllInTheme.themeColors.onMainSurface,
+                    color = AllInTheme.colors.onMainSurface,
                     style = AllInTheme.typography.sm1,
                     textAlign = TextAlign.Center,
                     fontSize = 40.sp
@@ -96,7 +97,7 @@ fun RegisterScreenContent(
                 Text(
                     modifier = Modifier.fillMaxWidth(),
                     text = stringResource(id = R.string.Register_subtitle),
-                    color = AllInTheme.themeColors.onMainSurface,
+                    color = AllInTheme.colors.onMainSurface,
                     style = AllInTheme.typography.p1,
                     textAlign = TextAlign.Center,
                     fontSize = 23.sp
@@ -155,7 +156,7 @@ fun RegisterScreenContent(
                 .background(
                     Brush.verticalGradient(
                         .2f to Color.Transparent,
-                        .5f to AllInTheme.themeColors.background
+                        .5f to AllInTheme.colors.background
                     )
                 )
                 .padding(40.dp)
@@ -172,7 +173,7 @@ fun RegisterScreenContent(
             ) {
                 Text(
                     text = stringResource(id = R.string.already_have_account),
-                    color = AllInTheme.themeColors.onMainSurface,
+                    color = AllInTheme.colors.onMainSurface,
                     fontSize = 15.sp,
                     style = AllInTheme.typography.p1,
                     modifier = Modifier.padding(end = 5.dp)
@@ -180,7 +181,7 @@ fun RegisterScreenContent(
                 ClickableText(
                     text = AnnotatedString(stringResource(id = R.string.Login)),
                     style = AllInTheme.typography.p1.copy(
-                        color = AllInTheme.colors.allInPurple,
+                        color = AllInColorToken.allInPurple,
                         fontSize = 15.sp,
                         fontWeight = FontWeight.Bold
                     )

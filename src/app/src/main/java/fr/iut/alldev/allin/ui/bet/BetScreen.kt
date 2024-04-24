@@ -90,7 +90,7 @@ fun BetScreen(
                 modifier = Modifier
                     .background(
                         Brush.verticalGradient(
-                            0.5f to AllInTheme.themeColors.mainSurface,
+                            0.5f to AllInTheme.colors.mainSurface,
                             1f to Color.Transparent
                         )
                     )

@@ -50,6 +50,7 @@ import androidx.core.os.ConfigurationCompat
 import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.data.ext.formatToMediumDateNoYear
 import fr.iut.alldev.allin.data.ext.formatToTime
+import fr.iut.alldev.allin.data.model.User
 import fr.iut.alldev.allin.data.model.bet.BetStatus
 import fr.iut.alldev.allin.data.model.bet.CustomBet
 import fr.iut.alldev.allin.data.model.bet.MatchBet
@@ -60,6 +61,7 @@ import fr.iut.alldev.allin.ext.asPaddingValues
 import fr.iut.alldev.allin.ext.formatToSimple
 import fr.iut.alldev.allin.ext.getDateEndLabelId
 import fr.iut.alldev.allin.ext.getDateStartLabelId
+import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.betStatus.components.BetStatusWinner
 import fr.iut.alldev.allin.ui.betStatus.components.BinaryDetailsLine
@@ -82,6 +84,7 @@ class BetStatusBottomSheetBetDisplayer(
     @Composable
     private fun DisplayBet(
         betDetail: BetDetail,
+        currentUser: User,
         statBar: LazyListScope.() -> Unit
     ) {
         Box(Modifier) {
@@ -116,18 +119,18 @@ class BetStatusBottomSheetBetDisplayer(
                 if (betDetail.bet.betStatus == BetStatus.FINISHED) {
                     BetStatusWinner(
                         answer = YES_VALUE,
-                        color = AllInTheme.colors.allInBlue,
+                        color = AllInColorToken.allInBlue,
                         coinAmount = 442,
                         username = "Imri",
                         multiplier = 1.2f
                     )
                 } else {
-                    HorizontalDivider(color = AllInTheme.themeColors.border)
+                    HorizontalDivider(color = AllInTheme.colors.border)
                 }
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxHeight()
-                        .background(AllInTheme.themeColors.background2)
+                        .background(AllInTheme.colors.background2)
                         .nestedScroll(object : NestedScrollConnection {
                             override fun onPostScroll(
                                 consumed: Offset,
@@ -145,7 +148,7 @@ class BetStatusBottomSheetBetDisplayer(
                             Text(
                                 text = stringResource(id = R.string.bet_status_participants_list),
                                 fontSize = 20.sp,
-                                color = AllInTheme.themeColors.onMainSurface,
+                                color = AllInTheme.colors.onMainSurface,
                                 style = AllInTheme.typography.h1,
                                 modifier = Modifier.padding(vertical = 36.dp)
                             )
@@ -159,7 +162,7 @@ class BetStatusBottomSheetBetDisplayer(
                                 allCoinsAmount = it.stake
                             )
                             HorizontalDivider(
-                                color = AllInTheme.themeColors.border,
+                                color = AllInTheme.colors.border,
                                 modifier = Modifier.padding(vertical = 8.dp, horizontal = 25.dp)
                             )
                         }
@@ -181,14 +184,18 @@ class BetStatusBottomSheetBetDisplayer(
                     }
                 }
             }
-            if (betDetail.bet.betStatus != BetStatus.FINISHED && betDetail.userParticipation == null) {
+            if (
+                betDetail.bet.betStatus != BetStatus.FINISHED &&
+                betDetail.userParticipation == null &&
+                betDetail.bet.creator != currentUser.username
+            ) {
                 RainbowButton(
                     modifier = Modifier
                         .align(Alignment.BottomCenter)
                         .background(
                             Brush.verticalGradient(
                                 .2f to Color.Transparent,
-                                .5f to AllInTheme.themeColors.background2
+                                .5f to AllInTheme.colors.background2
                             )
                         )
                         .padding(7.dp)
@@ -249,7 +256,8 @@ class BetStatusBottomSheetBetDisplayer(
 
     private fun LazyListScope.displayMultiStatBar(
         betDetail: BetDetail,
-        responses: List<String>
+        responses: List<String>,
+        locale: Locale
     ) {
         val responsesWithDetail = responses.mapNotNull {
             betDetail.getAnswerOfResponse(it)
@@ -259,9 +267,6 @@ class BetStatusBottomSheetBetDisplayer(
 
         itemsIndexed(responsesWithDetail.toList().sortedByDescending { it.second }) { idx, (answer, percentage) ->
             val isWin = remember { idx == 0 }
-
-            val configuration = LocalConfiguration.current
-            val locale = remember { ConfigurationCompat.getLocales(configuration).get(0) ?: Locale.getDefault() }
 
             SimpleStatBar(
                 percentage = percentage,
@@ -295,8 +300,8 @@ class BetStatusBottomSheetBetDisplayer(
     }
 
     @Composable
-    override fun DisplayYesNoBet(betDetail: BetDetail) {
-        DisplayBet(betDetail = betDetail) {
+    override fun DisplayYesNoBet(betDetail: BetDetail, currentUser: User) {
+        DisplayBet(betDetail = betDetail, currentUser = currentUser) {
             displayBinaryStatBar(
                 betDetail = betDetail,
                 response1 = YES_VALUE,
@@ -308,10 +313,10 @@ class BetStatusBottomSheetBetDisplayer(
     }
 
     @Composable
-    override fun DisplayMatchBet(betDetail: BetDetail) {
+    override fun DisplayMatchBet(betDetail: BetDetail, currentUser: User) {
         val matchBet = remember { betDetail.bet as MatchBet }
 
-        DisplayBet(betDetail = betDetail) {
+        DisplayBet(betDetail = betDetail, currentUser = currentUser) {
             displayBinaryStatBar(
                 betDetail = betDetail,
                 response1 = matchBet.nameTeam1,
@@ -321,10 +326,12 @@ class BetStatusBottomSheetBetDisplayer(
     }
 
     @Composable
-    override fun DisplayCustomBet(betDetail: BetDetail) {
+    override fun DisplayCustomBet(betDetail: BetDetail, currentUser: User) {
         val customBet = remember { betDetail.bet as CustomBet }
+        val configuration = LocalConfiguration.current
+        val locale = remember { ConfigurationCompat.getLocales(configuration).get(0) ?: Locale.getDefault() }
 
-        DisplayBet(betDetail = betDetail) {
+        DisplayBet(betDetail = betDetail, currentUser = currentUser) {
             if (customBet.possibleAnswers.size == 2) {
                 displayBinaryStatBar(
                     betDetail = betDetail,
@@ -334,7 +341,8 @@ class BetStatusBottomSheetBetDisplayer(
             } else {
                 displayMultiStatBar(
                     betDetail = betDetail,
-                    responses = customBet.getResponses()
+                    responses = customBet.getResponses(),
+                    locale = locale
                 )
             }
         }
@@ -356,14 +364,14 @@ fun BetStatusParticipant(
             text = username,
             fontWeight = FontWeight.Bold,
             style = AllInTheme.typography.h2,
-            color = AllInTheme.themeColors.onMainSurface,
+            color = AllInTheme.colors.onMainSurface,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier.weight(1f)
         )
         AllInCoinCount(
             amount = allCoinsAmount,
-            color = AllInTheme.colors.allInPurple
+            color = AllInColorToken.allInPurple
         )
     }
 }
@@ -375,8 +383,11 @@ private fun BetStatusBottomSheetPreview(
     @PreviewParameter(BetDetailPreviewProvider::class) bet: BetDetail
 ) {
     AllInTheme {
-        BetStatusBottomSheetBetDisplayer {
-
-        }.DisplayBet(bet)
+        BetStatusBottomSheetBetDisplayer(
+            openParticipateSheet = {}
+        ).DisplayBet(
+            betDetail = bet,
+            currentUser = User(id = "x", username = "aaa", email = "aaa", coins = 150)
+        )
     }
 }

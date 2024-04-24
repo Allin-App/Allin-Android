@@ -17,6 +17,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import fr.iut.alldev.allin.R
+import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 
 @Composable
@@ -25,7 +26,7 @@ fun AllInTopBar(
     coinAmount: Int,
 ) {
     TopAppBar(
-        modifier = Modifier.background(AllInTheme.colors.allInMainGradient),
+        modifier = Modifier.background(AllInColorToken.allInMainGradient),
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = Color.Transparent
         ),
@@ -50,7 +51,7 @@ fun AllInTopBar(
                 Icon(
                     painter = AllInTheme.icons.logo(),
                     contentDescription = null,
-                    tint = AllInTheme.colors.white,
+                    tint = AllInColorToken.white,
                     modifier = Modifier
                         .size(40.dp)
                         .align(Alignment.Center)

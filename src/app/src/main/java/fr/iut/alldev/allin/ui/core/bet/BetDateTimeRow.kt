@@ -28,7 +28,7 @@ fun BetDateTimeRow(
             text = label,
             fontSize = 15.sp,
             style = AllInTheme.typography.sm2,
-            color = AllInTheme.themeColors.onBackground2
+            color = AllInTheme.colors.onBackground2
         )
         BetDateTimeChip(date)
         BetDateTimeChip(time)

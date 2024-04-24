@@ -9,6 +9,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import fr.iut.alldev.allin.R
+import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 
 @Composable
@@ -43,16 +44,16 @@ fun AllInAlertDialog(
                         text = confirmText,
                         fontSize = 15.sp,
                         style = AllInTheme.typography.h1.copy(
-                            brush = AllInTheme.colors.allInMainGradient
+                            brush = AllInColorToken.allInMainGradient
                         )
                     )
                 }
 
             },
             onDismissRequest = onDismiss,
-            containerColor = AllInTheme.themeColors.mainSurface,
-            titleContentColor = AllInTheme.themeColors.onMainSurface,
-            textContentColor = AllInTheme.themeColors.onBackground2,
+            containerColor = AllInTheme.colors.mainSurface,
+            titleContentColor = AllInTheme.colors.onMainSurface,
+            textContentColor = AllInTheme.colors.onBackground2,
         )
     }
 }

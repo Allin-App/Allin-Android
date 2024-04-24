@@ -35,24 +35,24 @@ fun BetTitleHeader(
                 query = creator,
                 highlightStyle = SpanStyle(
                     fontWeight = FontWeight.Bold,
-                    color = AllInTheme.themeColors.onMainSurface
+                    color = AllInTheme.colors.onMainSurface
                 ),
                 fontSize = 12.sp,
                 style = AllInTheme.typography.p2,
-                color = AllInTheme.themeColors.onBackground2
+                color = AllInTheme.colors.onBackground2
             )
         }
         Spacer(modifier = Modifier.height(11.dp))
         Text(
             text = category,
             fontSize = 15.sp,
-            color = AllInTheme.themeColors.onBackground2,
+            color = AllInTheme.colors.onBackground2,
             style = AllInTheme.typography.sm2
         )
         Text(
             text = title,
             fontSize = 20.sp,
-            color = AllInTheme.themeColors.onMainSurface,
+            color = AllInTheme.colors.onMainSurface,
             style = AllInTheme.typography.h1
         )
     }

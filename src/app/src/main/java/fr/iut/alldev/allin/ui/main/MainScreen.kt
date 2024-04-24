@@ -26,6 +26,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import fr.iut.alldev.allin.data.model.bet.BetStatus
 import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.betStatus.BetStatusBottomSheet
 import fr.iut.alldev.allin.ui.betStatus.vo.BetStatusBottomSheetBetDisplayer
@@ -138,15 +139,22 @@ fun MainScreen(
                 modifier = Modifier
                     .padding(top = it.calculateTopPadding())
                     .fillMaxSize()
-                    .background(AllInTheme.themeColors.mainSurface),
+                    .background(AllInTheme.colors.mainSurface),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 AllInDrawerNavHost(
                     navController = navController,
                     selectBet = { bet, participate ->
-                        mainViewModel.openBetDetail(bet)
-                        setParticipateSheetVisibility(participate)
-                        setStatusVisibility(true)
+                        mainViewModel.openBetDetail(bet) { detail ->
+                            setStatusVisibility(true)
+                            if (
+                                detail.bet.betStatus == BetStatus.IN_PROGRESS &&
+                                detail.userParticipation == null &&
+                                detail.bet.creator != currentUser?.username
+                            ) {
+                                setParticipateSheetVisibility(participate)
+                            }
+                        }
                     },
                     setLoading = setLoading,
                     putSnackbarContent = { mainViewModel.putSnackbarContent(it) }
@@ -175,7 +183,9 @@ fun MainScreen(
         sheetBackVisibility = sheetBackVisibility.value,
         onDismiss = { setStatusVisibility(false) },
         betDetail = selectedBet,
-        displayBet = { betStatusDisplayer.DisplayBet(it) },
+        displayBet = { detail ->
+            currentUser?.let { user -> betStatusDisplayer.DisplayBet(betDetail = detail, currentUser = user) }
+        },
         userCoinAmount = userCoins ?: 0,
         onParticipate = { stake, response -> mainViewModel.participateToBet(stake, response) },
         participateSheetVisibility = participateSheetVisibility,

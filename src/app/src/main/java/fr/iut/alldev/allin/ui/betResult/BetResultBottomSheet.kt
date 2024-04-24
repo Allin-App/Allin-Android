@@ -22,6 +22,7 @@ import fr.iut.alldev.allin.data.ext.formatToTime
 import fr.iut.alldev.allin.data.model.bet.Bet
 import fr.iut.alldev.allin.data.model.bet.BetStatus
 import fr.iut.alldev.allin.data.model.bet.YesNoBet
+import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.betResult.components.BetResultBottomSheetBetCard
 import fr.iut.alldev.allin.ui.betResult.components.BetResultBottomSheetContentCoinAmount
@@ -70,7 +71,7 @@ fun BetResultBottomSheetContent(
     odds: Float,
     onClose: () -> Unit
 ) {
-    AllInMarqueeBox(backgroundBrush = AllInTheme.colors.allInMainGradientReverse) {
+    AllInMarqueeBox(backgroundBrush = AllInColorToken.allInMainGradientReverse) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -85,7 +86,7 @@ fun BetResultBottomSheetContent(
             ) {
                 Icon(
                     imageVector = Icons.Default.Close,
-                    tint = AllInTheme.colors.white,
+                    tint = AllInColorToken.white,
                     contentDescription = null,
                     modifier = Modifier.size(24.dp)
                 )
@@ -94,7 +95,7 @@ fun BetResultBottomSheetContent(
             Icon(
                 painter = AllInTheme.icons.logo(),
                 contentDescription = null,
-                tint = AllInTheme.colors.white,
+                tint = AllInColorToken.white,
                 modifier = Modifier
                     .size(40.dp)
                     .align(Alignment.TopCenter)

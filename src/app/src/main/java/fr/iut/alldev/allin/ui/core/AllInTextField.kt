@@ -25,6 +25,7 @@ import androidx.core.text.isDigitsOnly
 import fr.iut.alldev.allin.ext.formatToSimple
 import fr.iut.alldev.allin.ext.toFloatOrNull
 import fr.iut.alldev.allin.ext.verifyIsFloat
+import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 import racra.compose.smooth_corner_rect_library.AbsoluteSmoothCornerShape
 import java.util.Locale
@@ -46,10 +47,10 @@ fun AllInTextField(
     keyboardType: KeyboardType = KeyboardType.Text,
     imeAction: ImeAction = ImeAction.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
-    borderColor: Color = AllInTheme.themeColors.onBackground2,
-    containerColor: Color = AllInTheme.themeColors.background,
-    textColor: Color = AllInTheme.themeColors.onMainSurface,
-    placeholderColor: Color = AllInTheme.themeColors.onBackground2,
+    borderColor: Color = AllInTheme.colors.onBackground2,
+    containerColor: Color = AllInTheme.colors.background,
+    textColor: Color = AllInTheme.colors.onMainSurface,
+    placeholderColor: Color = AllInTheme.colors.onBackground2,
     onValueChange: (String) -> Unit,
 ) {
     OutlinedTextField(
@@ -83,7 +84,7 @@ fun AllInTextField(
                 Icon(
                     painter = it,
                     contentDescription = null,
-                    tint = AllInTheme.colors.allInLightGrey300
+                    tint = AllInColorToken.allInLightGrey300
                 )
             }
         },
@@ -131,7 +132,7 @@ fun AllInPasswordField(
                 Icon(
                     imageVector = if (hidden) Icons.Default.VisibilityOff else Icons.Default.Visibility,
                     contentDescription = null,
-                    tint = AllInTheme.colors.allInLightGrey300
+                    tint = AllInColorToken.allInLightGrey300
                 )
             }
         },

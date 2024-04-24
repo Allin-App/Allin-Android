@@ -33,7 +33,7 @@ import fr.iut.alldev.allin.theme.AllInTheme
 @Composable
 fun AllInDetailsDrawer(
     text: String = stringResource(id = R.string.Details),
-    textColor: Color = AllInTheme.themeColors.onBackground2,
+    textColor: Color = AllInTheme.colors.onBackground2,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     val interactionSource = remember { MutableInteractionSource() }

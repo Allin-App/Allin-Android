@@ -74,7 +74,7 @@ class MockAllInApi : AllInApi {
                 response = body.response,
                 type = BetType.BINARY,
                 status = BetStatus.WAITING,
-                createdBy = ""
+                createdBy = getUserFromToken(token)?.first?.username ?: ""
             )
         )
     }

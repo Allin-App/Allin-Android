@@ -7,7 +7,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.data.model.bet.BetStatus
-import fr.iut.alldev.allin.theme.AllInTheme
+import fr.iut.alldev.allin.theme.AllInColorToken
 
 @StringRes
 fun BetStatus.getTitleId(): Int {
@@ -39,20 +39,20 @@ fun BetStatus.getDateEndLabelId(): Int {
 @Composable
 fun BetStatus.getColor(): Color {
     return when (this) {
-        BetStatus.FINISHED -> AllInTheme.colors.allInBetFinish
-        BetStatus.IN_PROGRESS -> AllInTheme.colors.allInBetInProgress
-        BetStatus.WAITING -> AllInTheme.colors.allInBetWaiting
-        else -> AllInTheme.colors.allInBetFinish // TODO
+        BetStatus.FINISHED -> AllInColorToken.allInBetFinish
+        BetStatus.IN_PROGRESS -> AllInColorToken.allInBetInProgress
+        BetStatus.WAITING -> AllInColorToken.allInBetWaiting
+        else -> AllInColorToken.allInBetFinish // TODO
     }
 }
 
 @Composable
 fun BetStatus.getTextColor(): Color {
     return when (this) {
-        BetStatus.FINISHED -> AllInTheme.colors.allInBetFinishText
-        BetStatus.IN_PROGRESS -> AllInTheme.colors.allInBetInProgressText
-        BetStatus.WAITING -> AllInTheme.colors.allInBetWaitingText
-        else -> AllInTheme.colors.allInBetFinishText // TODO
+        BetStatus.FINISHED -> AllInColorToken.allInBetFinishText
+        BetStatus.IN_PROGRESS -> AllInColorToken.allInBetInProgressText
+        BetStatus.WAITING -> AllInColorToken.allInBetWaitingText
+        else -> AllInColorToken.allInBetFinishText // TODO
     }
 }
 
@@ -70,8 +70,8 @@ fun BetStatus.getBetHistoryPhrase(won: Boolean): Int {
 fun BetStatus.getBetHistoryStatusColor(won: Boolean): Brush {
     return when (this) {
         BetStatus.FINISHED ->
-            if (won) AllInTheme.colors.allInMainGradient else AllInTheme.colors.allInDarkGradient
+            if (won) AllInColorToken.allInMainGradient else AllInColorToken.allInDarkGradient
 
-        else -> SolidColor(AllInTheme.colors.allInDarkGrey100)
+        else -> SolidColor(AllInColorToken.allInDarkGrey100)
     }
 }

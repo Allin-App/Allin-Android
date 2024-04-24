@@ -7,7 +7,7 @@ import androidx.compose.material.icons.filled.Info
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import fr.iut.alldev.allin.theme.AllInTheme
+import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.ui.core.snackbar.SnackbarType.ERROR
 import fr.iut.alldev.allin.ui.core.snackbar.SnackbarType.STANDARD
 import fr.iut.alldev.allin.ui.core.snackbar.SnackbarType.SUCCESS
@@ -21,9 +21,9 @@ enum class SnackbarType {
 @Composable
 fun SnackbarType.getBackgroundColor(): Color =
     when (this) {
-        STANDARD -> AllInTheme.colors.allInDark
-        SUCCESS -> AllInTheme.colors.allInPurple
-        ERROR -> AllInTheme.colors.allInBetWaiting
+        STANDARD -> AllInColorToken.allInDark
+        SUCCESS -> AllInColorToken.allInPurple
+        ERROR -> AllInColorToken.allInBetWaiting
     }
 
 @Composable

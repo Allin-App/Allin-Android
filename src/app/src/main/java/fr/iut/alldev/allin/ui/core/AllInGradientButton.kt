@@ -10,6 +10,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import fr.iut.alldev.allin.ext.shadow
+import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 
 @Composable
@@ -23,8 +24,8 @@ fun AllInGradientButton(
         modifier = modifier
             .shadow(
                 colors = listOf(
-                    AllInTheme.colors.allInPink,
-                    AllInTheme.colors.allInBlue
+                    AllInColorToken.allInPink,
+                    AllInColorToken.allInBlue
                 ),
                 blurRadius = 20.dp,
                 alpha = .5f,
@@ -32,13 +33,13 @@ fun AllInGradientButton(
             )
             .fillMaxWidth(),
         radius = 10.dp,
-        backgroundBrush = AllInTheme.colors.allInMainGradient
+        backgroundBrush = AllInColorToken.allInMainGradient
     ) {
         Text(
             text = text,
             textAlign = TextAlign.Center,
             style = AllInTheme.typography.h2,
-            color = AllInTheme.colors.white,
+            color = AllInColorToken.white,
             fontSize = 20.sp,
             modifier = Modifier
                 .padding(vertical = 15.dp)

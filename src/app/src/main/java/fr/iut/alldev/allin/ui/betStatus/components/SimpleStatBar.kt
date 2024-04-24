@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.data.ext.toPercentageString
+import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 
 @Composable
@@ -34,9 +35,9 @@ fun SimpleStatBar(
         Text(
             text = response,
             color = if (isWin) {
-                AllInTheme.colors.allInBarPink
+                AllInColorToken.allInBarPink
             } else {
-                AllInTheme.colors.allInBlue
+                AllInColorToken.allInBlue
             },
             style = AllInTheme.typography.sm2,
             fontStyle = FontStyle.Italic,
@@ -60,9 +61,9 @@ fun SimpleStatBar(
                     )
                     .background(
                         if (isWin) {
-                            AllInTheme.colors.allInBar2ndGradient
+                            AllInColorToken.allInBar2ndGradient
                         } else {
-                            AllInTheme.colors.allInBar1stGradient
+                            AllInColorToken.allInBar1stGradient
                         }
                     )
             )
@@ -70,12 +71,14 @@ fun SimpleStatBar(
             Icon(
                 painter = painterResource(id = R.drawable.fire_solid),
                 tint = if (isWin) {
-                    AllInTheme.colors.allInBarViolet
+                    AllInColorToken.allInBarViolet
                 } else {
-                    AllInTheme.colors.allInBarPurple
+                    AllInColorToken.allInBarPurple
                 },
                 contentDescription = null,
-                modifier = Modifier.size(32.dp).offset((-7).dp)
+                modifier = Modifier
+                    .size(32.dp)
+                    .offset((-7).dp)
             )
             Text(
                 modifier = Modifier.let { itModifier ->
@@ -87,9 +90,9 @@ fun SimpleStatBar(
                     fontSize = if (isWin) 24.sp else 16.sp
                 ),
                 color = if (isWin) {
-                    AllInTheme.colors.allInBarViolet
+                    AllInColorToken.allInBarViolet
                 } else {
-                    AllInTheme.colors.allInBarPurple
+                    AllInColorToken.allInBarPurple
                 }
             )
         }

@@ -11,6 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 
 @Composable
@@ -34,7 +35,7 @@ fun AllInButton(
             text = text,
             textAlign = TextAlign.Center,
             style = AllInTheme.typography.h2,
-            color = if(enabled) textColor else AllInTheme.themeColors.disabledBorder,
+            color = if (enabled) textColor else AllInTheme.colors.disabledBorder,
             fontSize = 20.sp,
             modifier = Modifier
                 .padding(vertical = 15.dp)
@@ -48,7 +49,7 @@ fun AllInButton(
 private fun AllInButtonPreview() {
     AllInTheme {
         AllInButton(
-            color = AllInTheme.colors.allInLoginPurple,
+            color = AllInColorToken.allInLoginPurple,
             text = "Connexion",
             textColor = Color.White
         ) {
@@ -62,7 +63,7 @@ private fun AllInButtonPreview() {
 private fun AllInButtonDisabledPreview() {
     AllInTheme {
         AllInButton(
-            color = AllInTheme.colors.allInLoginPurple,
+            color = AllInColorToken.allInLoginPurple,
             text = "Connexion",
             textColor = Color.White,
             enabled = false

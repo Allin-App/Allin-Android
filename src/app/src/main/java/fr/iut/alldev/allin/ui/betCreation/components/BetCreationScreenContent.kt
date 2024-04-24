@@ -102,7 +102,7 @@ fun BetCreationScreenContent(
                 .background(
                     Brush.verticalGradient(
                         0f to Color.Transparent,
-                        0.50f to AllInTheme.themeColors.mainSurface
+                        0.50f to AllInTheme.colors.mainSurface
                     )
                 ),
         ) {

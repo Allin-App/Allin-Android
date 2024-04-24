@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import fr.iut.alldev.allin.R
+import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 import java.util.*
 
@@ -36,7 +37,7 @@ fun AllInTimePicker(
                 Text(
                     text = stringResource(id = R.string.Validate),
                     style = AllInTheme.typography.h1.copy(
-                        brush = AllInTheme.colors.allInMainGradient
+                        brush = AllInColorToken.allInMainGradient
                     )
                 )
             }
@@ -45,7 +46,7 @@ fun AllInTimePicker(
             TextButton(onClick = onDismiss) {
                 Text(
                     text = stringResource(id = R.string.Cancel),
-                    color = AllInTheme.themeColors.onBackground2,
+                    color = AllInTheme.colors.onBackground2,
                     style = AllInTheme.typography.sm1
                 )
             }
@@ -54,16 +55,16 @@ fun AllInTimePicker(
             TimePicker(
                 state = timePickerState,
                 colors = TimePickerDefaults.colors(
-                    selectorColor = AllInTheme.colors.allInPurple,
-                    containerColor = AllInTheme.themeColors.background,
-                    clockDialColor = AllInTheme.themeColors.background2,
-                    clockDialUnselectedContentColor = AllInTheme.themeColors.onMainSurface,
-                    clockDialSelectedContentColor = AllInTheme.themeColors.background2,
+                    selectorColor = AllInColorToken.allInPurple,
+                    containerColor = AllInTheme.colors.background,
+                    clockDialColor = AllInTheme.colors.background2,
+                    clockDialUnselectedContentColor = AllInTheme.colors.onMainSurface,
+                    clockDialSelectedContentColor = AllInTheme.colors.background2,
 
                     )
             )
         },
-        containerColor = AllInTheme.themeColors.mainSurface
+        containerColor = AllInTheme.colors.mainSurface
     )
 }
 

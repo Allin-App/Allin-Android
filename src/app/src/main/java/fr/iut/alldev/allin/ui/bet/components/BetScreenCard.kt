@@ -59,11 +59,11 @@ fun BetScreenCard(
         }
         HorizontalDivider(
             thickness = 1.dp,
-            color = AllInTheme.themeColors.border
+            color = AllInTheme.colors.border
         )
         Column(
             Modifier
-                .background(AllInTheme.themeColors.background2)
+                .background(AllInTheme.colors.background2)
         ) {
             Row(
                 modifier = Modifier
@@ -80,7 +80,7 @@ fun BetScreenCard(
                         players.size
                     ),
                     style = AllInTheme.typography.sm2,
-                    color = AllInTheme.themeColors.onBackground2
+                    color = AllInTheme.colors.onBackground2
                 )
             }
             RainbowButton(

@@ -2,91 +2,12 @@ package fr.iut.alldev.allin.theme
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.SolidColor
 
 @Immutable
 data class AllInColors(
-    val allInDark: Color,
-    val allInDarkGrey300: Color,
-    val allInDarkGrey200: Color,
-    val allInDarkGrey100: Color,
-    val allInDarkGrey50: Color,
-    val allInGrey: Color,
-    val allInLightGrey300: Color,
-    val allInLightGrey200: Color,
-    val allInLightGrey100: Color,
-    val allInLightGrey50: Color,
-    val allInWhite: Color,
-    val white: Color,
-    val black: Color,
-    val allInPink: Color,
-    val allInMint: Color,
-    val allInPurple: Color,
-    val allInLoginPurple: Color,
-    val allInBlue: Color,
-    val allInDarkBlue: Color,
-    val allInBarPurple: Color,
-    val allInBarPink: Color,
-    val allInBarViolet: Color,
-    val allInBetFinish: Color,
-    val allInBetInProgress: Color,
-    val allInBetWaiting: Color,
-    val allInBetFinishText: Color,
-    val allInBetInProgressText: Color,
-    val allInBetWaitingText: Color,
-    val allInMainGradient: Brush,
-    val allInMainGradientReverse: Brush,
-    val allInBar1stGradient: Brush,
-    val allInBar2ndGradient: Brush,
-    val allInTextGradient: Brush,
-    val allInLoginGradient: Brush,
-    val allInDarkGradient: Brush,
-)
-
-internal val LocalColors = staticCompositionLocalOf {
-    AllInColors(
-        allInDark = Color.Unspecified,
-        allInDarkGrey300 = Color.Unspecified,
-        allInDarkGrey200 = Color.Unspecified,
-        allInDarkGrey100 = Color.Unspecified,
-        allInDarkGrey50 = Color.Unspecified,
-        allInGrey = Color.Unspecified,
-        allInLightGrey300 = Color.Unspecified,
-        allInLightGrey200 = Color.Unspecified,
-        allInLightGrey100 = Color.Unspecified,
-        allInLightGrey50 = Color.Unspecified,
-        allInWhite = Color.Unspecified,
-        white = Color.Unspecified,
-        black = Color.Unspecified,
-        allInPink = Color.Unspecified,
-        allInPurple = Color.Unspecified,
-        allInLoginPurple = Color.Unspecified,
-        allInBarPurple = Color.Unspecified,
-        allInBarPink = Color.Unspecified,
-        allInBarViolet = Color.Unspecified,
-        allInBlue = Color.Unspecified,
-        allInMint = Color.Unspecified,
-        allInDarkBlue = Color.Unspecified,
-        allInBetFinish = Color.Unspecified,
-        allInBetInProgress = Color.Unspecified,
-        allInBetWaiting = Color.Unspecified,
-        allInBetFinishText = Color.Unspecified,
-        allInBetInProgressText = Color.Unspecified,
-        allInBetWaitingText = Color.Unspecified,
-        allInMainGradient = SolidColor(Color.Unspecified),
-        allInMainGradientReverse = SolidColor(Color.Unspecified),
-        allInBar1stGradient = SolidColor(Color.Unspecified),
-        allInBar2ndGradient = SolidColor(Color.Unspecified),
-        allInTextGradient = SolidColor(Color.Unspecified),
-        allInLoginGradient = SolidColor(Color.Unspecified),
-        allInDarkGradient = SolidColor(Color.Unspecified)
-    )
-}
-
-@Immutable
-data class AllInThemeColors(
     val mainSurface: Color,
     val onMainSurface: Color,
     val background: Color,
@@ -99,8 +20,8 @@ data class AllInThemeColors(
     val disabledBorder: Color,
 )
 
-internal val LocalThemeColors = staticCompositionLocalOf {
-    AllInThemeColors(
+internal val LocalColors = staticCompositionLocalOf {
+    AllInColors(
         mainSurface = Color.Unspecified,
         onMainSurface = Color.Unspecified,
         background = Color.Unspecified,
@@ -111,5 +32,77 @@ internal val LocalThemeColors = staticCompositionLocalOf {
         border = Color.Unspecified,
         disabled = Color.Unspecified,
         disabledBorder = Color.Unspecified
+    )
+}
+
+internal object AllInColorToken {
+    val black = Color(0xFF000000)
+    val allInDark = Color(0xFF2A2A2A)
+    val allInDarkGrey300 = Color(0xFF1c1c1c)
+    val allInDarkGrey200 = Color(0xFF262626)
+    val allInDarkGrey100 = Color(0xFF393939)
+    val allInDarkGrey50 = Color(0xFF454545)
+    val allInGrey = Color(0xFF525252)
+    val allInLightGrey300 = Color(0XFFAAAAAA)
+    val allInLightGrey200 = Color(0XFFC5C5C5)
+    val allInLightGrey100 = Color(0XFFEBEBEB)
+    val allInLightGrey50 = Color(0XFFF7F7F7)
+    val allInWhite = Color(0xFFEBEBF6)
+    val white = Color(0xFFFFFFFF)
+
+    val allInDarkBlue = Color(0xFF323078)
+    val allInBlue = Color(0xFF6a89fa)
+    val allInPurple = Color(0xFF7D79FF)
+    val allInLoginPurple = Color(0xFF7F7BFB)
+    val allInBarPurple = Color(0xFF846AC9)
+    val allInPink = Color(0xFFFF2A89)
+    val allInBarPink = Color(0xFFFE2B8A)
+    val allInBarViolet = Color(0xFFC249A8)
+    val allInMint = Color(0xFFC4DEE9)
+
+    val allInBetFinish = Color(0xFF353535)
+    val allInBetInProgress = Color(0xFF604BDB)
+    val allInBetWaiting = Color(0xFFDF3B9A)
+
+    val allInBetFinishText = Color(0xFFA7A7A7)
+    val allInBetInProgressText = Color(0xFF4636A3)
+    val allInBetWaitingText = Color(0xFF852E6C)
+
+    val allInMainGradient = Brush.linearGradient(
+        0.0f to Color(0xFFf951a8),
+        0.5f to Color(0xFFaa7ef3),
+        1.0f to Color(0xFF199fee),
+        start = Offset(0f, Float.POSITIVE_INFINITY),
+        end = Offset(Float.POSITIVE_INFINITY, 0f)
+    )
+    val allInMainGradientReverse = Brush.linearGradient(
+        0.0f to Color(0xFF199fee),
+        0.5f to Color(0xFFaa7ef3),
+        1.0f to Color(0xFFf951a8),
+        start = Offset(0f, Float.POSITIVE_INFINITY),
+        end = Offset(Float.POSITIVE_INFINITY, 0f)
+    )
+    val allInBar1stGradient = Brush.horizontalGradient(
+        0.0f to Color(0xFF2599F8),
+        1.0f to Color(0xFF846AC9)
+    )
+    val allInBar2ndGradient = Brush.horizontalGradient(
+        0.0f to Color(0xFFFE2B8A),
+        1.0f to Color(0xFFC249A8)
+    )
+    val allInTextGradient = Brush.horizontalGradient(
+        0.0f to Color(0xFFF876C1),
+        1.0f to Color(0xFF2399F8)
+    )
+    val allInLoginGradient = Brush.linearGradient(
+        0.0f to Color(0xFFEC1794),
+        0.5f to Color(0xFFaa7ef3),
+        1.0f to Color(0xFF00EEEE),
+        start = Offset(0f, Float.POSITIVE_INFINITY),
+        end = Offset(Float.POSITIVE_INFINITY, 0f)
+    )
+    val allInDarkGradient = Brush.horizontalGradient(
+        0.0f to Color(0xFF595959),
+        1.0f to Color(0xFF000000)
     )
 }

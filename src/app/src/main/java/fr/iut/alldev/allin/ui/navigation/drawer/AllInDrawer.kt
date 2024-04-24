@@ -22,6 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import fr.iut.alldev.allin.R
+import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.navigation.TopLevelDestination
 import fr.iut.alldev.allin.ui.navigation.drawer.components.DrawerCell
@@ -47,7 +48,7 @@ fun AllInDrawer(
         drawerContent = {
             ModalDrawerSheet(
                 drawerShape = RectangleShape,
-                drawerContainerColor = AllInTheme.colors.allInDark
+                drawerContainerColor = AllInColorToken.allInDark
             ) {
                 DrawerHeader(
                     nbBets = nbBets,
@@ -75,7 +76,7 @@ fun AllInDrawer(
                     Text(
                         text = stringResource(id = R.string.Logout),
                         style = AllInTheme.typography.sm1,
-                        color = AllInTheme.colors.allInDarkGrey50,
+                        color = AllInColorToken.allInDarkGrey50,
                         fontSize = 16.sp
                     )
                 }
@@ -91,7 +92,7 @@ fun AllInDrawer(
                         Icon(
                             imageVector = Icons.Filled.Settings,
                             modifier = Modifier.size(40.dp),
-                            tint = AllInTheme.colors.allInDarkGrey50,
+                            tint = AllInColorToken.allInDarkGrey50,
                             contentDescription = null
                         )
                     }

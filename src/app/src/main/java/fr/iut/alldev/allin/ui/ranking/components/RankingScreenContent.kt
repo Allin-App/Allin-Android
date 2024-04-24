@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.sp
 import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.data.model.User
 import fr.iut.alldev.allin.ext.asPaddingValues
+import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 
 @Composable
@@ -36,7 +37,7 @@ fun RankingScreenContent(
             Text(
                 text = stringResource(id = R.string.ranking_title),
                 style = AllInTheme.typography.h1,
-                color = AllInTheme.colors.allInGrey,
+                color = AllInColorToken.allInGrey,
                 fontSize = 24.sp,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth()

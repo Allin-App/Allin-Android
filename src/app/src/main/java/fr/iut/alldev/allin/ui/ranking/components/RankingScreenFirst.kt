@@ -22,6 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
+import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.core.AllInCard
 import fr.iut.alldev.allin.ui.core.AllInCoinCount
@@ -58,7 +59,7 @@ fun RankingScreenFirst(
 
                 Text(
                     text = username,
-                    color = AllInTheme.themeColors.onBackground,
+                    color = AllInTheme.colors.onBackground,
                     style = AllInTheme.typography.h1,
                     textAlign = TextAlign.Center,
                     maxLines = 2,
@@ -68,18 +69,18 @@ fun RankingScreenFirst(
                 )
 
 
-                HorizontalDivider(color = AllInTheme.themeColors.border)
+                HorizontalDivider(color = AllInTheme.colors.border)
 
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(AllInTheme.themeColors.background2)
+                        .background(AllInTheme.colors.background2)
                         .padding(16.dp),
                     contentAlignment = Alignment.Center
                 ) {
                     AllInCoinCount(
                         amount = coins,
-                        color = AllInTheme.colors.allInPurple,
+                        color = AllInColorToken.allInPurple,
                         size = 20
                     )
                 }
@@ -97,13 +98,13 @@ fun RankingScreenFirst(
                 .padding(vertical = 55.dp)
                 .zIndex(500f)
                 .clip(CircleShape)
-                .background(AllInTheme.colors.allInPurple)
+                .background(AllInColorToken.allInPurple)
                 .size(30.dp),
             contentAlignment = Alignment.Center
         ) {
             Text(
                 text = "1",
-                color = AllInTheme.colors.white,
+                color = AllInColorToken.white,
                 style = AllInTheme.typography.h1,
                 fontSize = 20.sp,
                 modifier = Modifier.padding(4.dp)

@@ -63,7 +63,7 @@ fun AllInSections(
                 .fillMaxWidth()
                 .background(
                     Brush.verticalGradient(
-                        0.75f to AllInTheme.themeColors.mainSurface,
+                        0.75f to AllInTheme.colors.mainSurface,
                         1f to Color.Transparent
                     )
                 ),

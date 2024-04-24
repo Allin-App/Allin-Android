@@ -15,6 +15,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.core.AllInCard
 import fr.iut.alldev.allin.ui.core.AllInCoinCount
@@ -40,7 +41,7 @@ fun RankingScreenItem(
 
             Text(
                 text = "$position",
-                color = AllInTheme.colors.allInPurple,
+                color = AllInColorToken.allInPurple,
                 style = AllInTheme.typography.h1,
                 fontSize = 15.sp,
                 softWrap = false,
@@ -53,7 +54,7 @@ fun RankingScreenItem(
 
             Text(
                 text = username,
-                color = AllInTheme.themeColors.onBackground,
+                color = AllInTheme.colors.onBackground,
                 style = AllInTheme.typography.sm2,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
@@ -63,7 +64,7 @@ fun RankingScreenItem(
 
             AllInCoinCount(
                 amount = coins,
-                color = AllInTheme.colors.allInPurple
+                color = AllInColorToken.allInPurple
             )
         }
     }
