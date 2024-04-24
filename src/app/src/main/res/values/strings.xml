@@ -133,6 +133,10 @@
     <string name="bet_history_status_won">%s [icon] won !</string>
     <string name="bet_history_status_lost">%s [icon] lost !</string>
 
+    <!--Bet confirmation-->
+    <string name="bet_confirmation_text">This bet has now ended. You may now distribute the winnings by selecting the right answer.</string>
+    <string name="bet_confirmation_choose_response">Please select the final answer :</string>
+
     <!--Bet result-->
     <string name="bet_result_congratulations">CONGRATULATIONS</string>
     <string name="bet_result_you_win">You win</string>

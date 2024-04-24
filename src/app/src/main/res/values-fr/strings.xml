@@ -134,6 +134,10 @@
     <string name="bet_history_status_won">%s [icon] gagnés !</string>
     <string name="bet_history_status_lost">%s [icon] perdus !</string>
 
+    <!--Bet confirmation-->
+    <string name="bet_confirmation_text">Ce bet est arrivé à la date de fin. Vous devez à présent distribuer les gains en validant le pari gagnant.</string>
+    <string name="bet_confirmation_choose_response">Veuillez choisir la réponse finale :</string>
+
     <!--Bet result-->
     <string name="bet_result_congratulations">FÉLICITATIONS</string>
     <string name="bet_result_you_win">Vous remportez</string>

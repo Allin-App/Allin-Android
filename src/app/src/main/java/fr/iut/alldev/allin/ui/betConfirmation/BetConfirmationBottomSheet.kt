@@ -14,7 +14,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Icon
@@ -29,11 +30,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.scale
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -112,23 +114,27 @@ fun BetConfirmationBottomSheetAnswer(
                 text = text.uppercase(),
                 color = contentColor ?: color,
                 style = AllInTheme.typography.h1,
-                fontSize = 30.sp,
+                fontSize = 35.sp,
                 textAlign = TextAlign.Center,
-                modifier = Modifier.align(Alignment.Center)
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .padding(horizontal = 64.dp)
             )
 
-            AllInCard(
-                radius = 50.dp,
-                backgroundColor = contentColor ?: AllInColorToken.allInPurple,
-                modifier = Modifier.align(Alignment.CenterEnd)
+            Box(
+                modifier = Modifier
+                    .align(Alignment.CenterEnd)
+                    .clip(RoundedCornerShape(50.dp))
+                    .background(contentColor ?: AllInColorToken.allInPurple)
+                    .padding(vertical = 4.dp, horizontal = 8.dp)
             ) {
-                Box(Modifier.padding(vertical = 4.dp, horizontal = 8.dp)) {
-                    Text(
-                        text = "x${odds.formatToSimple(locale)}",
-                        color = backColor,
-                        style = AllInTheme.typography.h2
-                    )
-                }
+                Text(
+                    text = "x${odds.formatToSimple(locale)}",
+                    color = backColor,
+                    style = AllInTheme.typography.h2
+                )
             }
         }
     }
@@ -141,118 +147,39 @@ fun ConfirmationAnswers(
     onClick: (String) -> Unit
 ) {
     val configuration = LocalConfiguration.current
-    val locale =
-        remember { ConfigurationCompat.getLocales(configuration).get(0) ?: Locale.getDefault() }
+    val locale = remember { ConfigurationCompat.getLocales(configuration).get(0) ?: Locale.getDefault() }
+
+    val possibleAnswers = remember {
+        when (val bet = betDetail.bet) {
+            is CustomBet -> bet.possibleAnswers
+            is MatchBet -> listOf(bet.nameTeam1, bet.nameTeam2)
+            is YesNoBet -> listOf(YES_VALUE, NO_VALUE)
+        }
+    }
 
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        when (betDetail.bet) {
-            is CustomBet -> items((betDetail.bet as CustomBet).possibleAnswers) {
-                betDetail.getAnswerOfResponse(it)?.let {
-                    val opacity by animateFloatAsState(
-                        targetValue = if (selectedAnswer != null && selectedAnswer != it.response) .5f else 1f,
-                        label = ""
-                    )
+        itemsIndexed(possibleAnswers) { idx, it ->
+            betDetail.getAnswerOfResponse(it)?.let {
+                val opacity by animateFloatAsState(
+                    targetValue = if (selectedAnswer != null && selectedAnswer != it.response) .5f else 1f,
+                    label = ""
+                )
 
-                    BetConfirmationBottomSheetAnswer(
-                        text = it.response,
-                        odds = it.odds,
-                        locale = locale,
-                        onClick = { onClick(it.response) },
-                        isSelected = selectedAnswer == it.response,
-                        modifier = Modifier.alpha(opacity)
-                    )
-                }
-            }
-
-            is MatchBet -> {
-                val bet = (betDetail.bet as MatchBet)
-                item {
-                    betDetail.getAnswerOfResponse(bet.nameTeam1)?.let {
-                        val opacity by animateFloatAsState(
-                            targetValue = if (selectedAnswer != null && selectedAnswer != it.response) .5f else 1f,
-                            label = ""
-                        )
-                        BetConfirmationBottomSheetAnswer(
-                            text = it.response,
-                            odds = it.odds,
-                            locale = locale,
-                            onClick = { onClick(it.response) },
-                            isSelected = selectedAnswer == it.response,
-                            modifier = Modifier.alpha(opacity)
-                        )
-                    }
-                }
-                item {
-                    betDetail.getAnswerOfResponse(bet.nameTeam2)?.let {
-                        val opacity by animateFloatAsState(
-                            targetValue = if (selectedAnswer != null && selectedAnswer != it.response) .5f else 1f,
-                            label = ""
-                        )
-
-                        BetConfirmationBottomSheetAnswer(
-                            text = it.response,
-                            color = AllInColorToken.allInBarPink,
-                            odds = it.odds,
-                            locale = locale,
-                            onClick = { onClick(it.response) },
-                            isSelected = selectedAnswer == it.response,
-                            modifier = Modifier
-                                .alpha(opacity)
-                        )
-                    }
-                }
-            }
-
-            is YesNoBet -> {
-                item {
-                    betDetail.getAnswerOfResponse(YES_VALUE)?.let {
-                        val opacity by animateFloatAsState(
-                            targetValue = if (selectedAnswer != null && selectedAnswer != it.response) .5f else 1f,
-                            label = ""
-                        )
-                        val scale by animateFloatAsState(
-                            targetValue = if (selectedAnswer != null && selectedAnswer != it.response) .95f else 1f,
-                            label = ""
-                        )
-
-                        BetConfirmationBottomSheetAnswer(
-                            text = it.response,
-                            odds = it.odds,
-                            locale = locale,
-                            onClick = { onClick(it.response) },
-                            isSelected = selectedAnswer == it.response,
-                            modifier = Modifier
-                                .alpha(opacity)
-                                .scale(scale)
-                        )
-                    }
-                }
-                item {
-                    betDetail.getAnswerOfResponse(NO_VALUE)?.let {
-                        val opacity by animateFloatAsState(
-                            targetValue = if (selectedAnswer != null && selectedAnswer != it.response) .5f else 1f,
-                            label = ""
-                        )
-                        val scale by animateFloatAsState(
-                            targetValue = if (selectedAnswer != null && selectedAnswer != it.response) .95f else 1f,
-                            label = ""
-                        )
-
-                        BetConfirmationBottomSheetAnswer(
-                            text = it.response,
-                            color = AllInColorToken.allInBarPink,
-                            odds = it.odds,
-                            locale = locale,
-                            onClick = { onClick(it.response) },
-                            isSelected = selectedAnswer == it.response,
-                            modifier = Modifier
-                                .alpha(opacity)
-                                .scale(scale)
-                        )
-                    }
-                }
+                BetConfirmationBottomSheetAnswer(
+                    text = it.response,
+                    odds = it.odds,
+                    locale = locale,
+                    color = if (possibleAnswers.size == 2 && idx == 1) {
+                        AllInColorToken.allInBarPink
+                    } else {
+                        AllInColorToken.allInBlue
+                    },
+                    onClick = { onClick(it.response) },
+                    isSelected = selectedAnswer == it.response,
+                    modifier = Modifier.alpha(opacity)
+                )
             }
         }
     }
@@ -326,7 +253,7 @@ fun BetConfirmationBottomSheetContent(
                     }
                 }
                 Text(
-                    text = "Ce bet est arrivé à la date de fin. Vous devez à présent distribuer les gains en validant le pari gagnant.",
+                    text = stringResource(id = R.string.bet_confirmation_text),
                     color = AllInColorToken.allInLightGrey200,
                     style = AllInTheme.typography.p2,
                     textAlign = TextAlign.Center
@@ -335,8 +262,8 @@ fun BetConfirmationBottomSheetContent(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Text(
-                    text = "Veuillez choisir la réponse finale :",
-                    fontSize = 20.sp,
+                    text = stringResource(id = R.string.bet_confirmation_choose_response),
+                    fontSize = 18.sp,
                     color = AllInColorToken.white,
                     style = AllInTheme.typography.h1,
                     modifier = Modifier.fillMaxWidth()
@@ -374,7 +301,7 @@ private fun BetConfirmationBottomSheetContentPreview() {
                     endBetDate = ZonedDateTime.now(),
                     isPublic = true,
                     betStatus = BetStatus.FINISHED,
-                    creator = "creator",
+                    creator = "creator"
                 ),
                 answers = listOf(
                     BetAnswerDetail(
@@ -389,7 +316,7 @@ private fun BetConfirmationBottomSheetContentPreview() {
                         totalStakes = 150,
                         totalParticipants = 1,
                         highestStake = 150,
-                        odds = 2.0f
+                        odds = 2.255f
                     )
                 ),
                 participations = emptyList(),

@@ -2,6 +2,7 @@ package fr.iut.alldev.allin.ui.main
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
@@ -48,7 +49,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-const val EVENT_DISMISS_DELAY_MS = 300L
+const val EVENT_DISMISS_DELAY_MS = 150L
 
 private val topLevelDestinations = listOf(
     TopLevelDestination.PublicBets,
@@ -208,8 +209,8 @@ fun MainScreen(
                 var dailyRewardVisible by remember { mutableStateOf(true) }
                 AnimatedVisibility(
                     visible = dailyRewardVisible,
-                    enter = fadeIn(),
-                    exit = fadeOut()
+                    enter = fadeIn(tween(EVENT_DISMISS_DELAY_MS.toInt())),
+                    exit = fadeOut(tween(EVENT_DISMISS_DELAY_MS.toInt()))
                 ) {
                     (events.firstOrNull() as? DailyReward)?.let {
                         it.Display(
