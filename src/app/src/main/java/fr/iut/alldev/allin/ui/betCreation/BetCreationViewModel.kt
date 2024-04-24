@@ -5,11 +5,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import fr.iut.alldev.allin.data.api.interceptors.AllInAPIException
-import fr.iut.alldev.allin.data.model.User
 import fr.iut.alldev.allin.data.model.bet.BetFactory
 import fr.iut.alldev.allin.data.model.bet.BetType
 import fr.iut.alldev.allin.data.repository.BetRepository
-import fr.iut.alldev.allin.di.AllInCurrentUser
+import fr.iut.alldev.allin.data.repository.UserRepository
 import fr.iut.alldev.allin.ext.FieldErrorState
 import fr.iut.alldev.allin.keystore.AllInKeystoreManager
 import kotlinx.coroutines.launch
@@ -19,9 +18,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class BetCreationViewModel @Inject constructor(
-    @AllInCurrentUser val currentUser: User,
     private val betRepository: BetRepository,
-    private val keystoreManager: AllInKeystoreManager
+    private val keystoreManager: AllInKeystoreManager,
+    private val userRepository: UserRepository
 ) : ViewModel() {
 
     private var hasError = mutableStateOf(false)
@@ -98,21 +97,23 @@ class BetCreationViewModel @Inject constructor(
 
             if (!hasError.value) {
                 try {
-                    val bet = BetFactory.createBet(
-                        id = "",
-                        betType = selectedBetType.value,
-                        theme = theme.value,
-                        phrase = phrase.value,
-                        endRegisterDate = registerDate.value,
-                        endBetDate = betDate.value,
-                        isPublic = isPublic.value,
-                        nameTeam1 = "",
-                        nameTeam2 = "",
-                        possibleAnswers = listOf(),
-                        creator = currentUser.username
-                    )
-                    betRepository.createBet(bet, keystoreManager.getTokenOrEmpty())
-                    onSuccess()
+                    userRepository.currentUser.value?.let { currentUser ->
+                        val bet = BetFactory.createBet(
+                            id = "",
+                            betType = selectedBetType.value,
+                            theme = theme.value,
+                            phrase = phrase.value,
+                            endRegisterDate = registerDate.value,
+                            endBetDate = betDate.value,
+                            isPublic = isPublic.value,
+                            nameTeam1 = "",
+                            nameTeam2 = "",
+                            possibleAnswers = listOf(),
+                            creator = currentUser.username
+                        )
+                        betRepository.createBet(bet, keystoreManager.getTokenOrEmpty())
+                        onSuccess()
+                    } ?: onError()
                 } catch (e: AllInAPIException) {
                     Timber.e(e)
                     onError()

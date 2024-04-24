@@ -23,6 +23,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import fr.iut.alldev.allin.theme.AllInTheme
@@ -58,7 +59,8 @@ fun MainScreen(
     val scope = rememberCoroutineScope()
 
     val (loading, setLoading) = remember { mainViewModel.loading }
-    val currentUser = remember { mainViewModel.currentUserState }
+    val currentUser by mainViewModel.currentUser.collectAsStateWithLifecycle()
+    val userCoins by mainViewModel.userCoins.collectAsStateWithLifecycle()
     val selectedBet by remember { mainViewModel.selectedBet }
     val statusVisibility = remember { mutableStateOf(false) }
     val sheetBackVisibility = remember { mutableStateOf(false) }
@@ -113,7 +115,7 @@ fun MainScreen(
         drawerState = drawerState,
         destinations = topLevelDestinations,
         scope = scope,
-        username = currentUser.user.username,
+        username = currentUser?.username ?: "",
         nbFriends = 5,
         nbBets = 35,
         bestWin = 362,
@@ -122,13 +124,13 @@ fun MainScreen(
             navController.popUpTo(route, startDestination)
         },
         logout = {
-            mainViewModel.deleteToken()
+            mainViewModel.onLogout()
             navigateToWelcomeScreen()
         }
     ) {
         AllInScaffold(
             onMenuClicked = { scope.launch { drawerState.open() } },
-            coinAmount = currentUser.userCoins.intValue,
+            coinAmount = userCoins ?: 0,
             drawerState = drawerState,
             snackbarHostState = snackbarHostState
         ) {
@@ -174,7 +176,7 @@ fun MainScreen(
         onDismiss = { setStatusVisibility(false) },
         betDetail = selectedBet,
         displayBet = { betStatusDisplayer.DisplayBet(it) },
-        userCoinAmount = mainViewModel.currentUserState.userCoins,
+        userCoinAmount = userCoins ?: 0,
         onParticipate = { stake, response -> mainViewModel.participateToBet(stake, response) },
         participateSheetVisibility = participateSheetVisibility,
         setParticipateSheetVisibility = setParticipateSheetVisibility

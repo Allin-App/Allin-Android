@@ -8,7 +8,7 @@ import fr.iut.alldev.allin.data.repository.UserRepository
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
-    private val api: AllInApi,
+    private val api: AllInApi
 ) : UserRepository() {
 
     override suspend fun login(username: String, password: String): String? {
@@ -18,13 +18,13 @@ class UserRepositoryImpl @Inject constructor(
                 password = password
             )
         )
-        currentUser = response.toUser()
+        updateUser(response.toUser())
         return response.token
     }
 
     override suspend fun login(token: String): String? {
         val response = api.login(token = token.formatBearerToken())
-        currentUser = response.toUser()
+        updateUser(response.toUser())
         return response.token
     }
 
@@ -37,7 +37,7 @@ class UserRepositoryImpl @Inject constructor(
                 password = password
             )
         )
-        currentUser = response.toUser()
+        updateUser(response.toUser())
         return response.token
     }
 }

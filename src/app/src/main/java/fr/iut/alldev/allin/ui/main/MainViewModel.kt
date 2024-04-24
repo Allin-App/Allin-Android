@@ -1,42 +1,38 @@
 package fr.iut.alldev.allin.ui.main
 
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import fr.iut.alldev.allin.data.model.User
 import fr.iut.alldev.allin.data.model.bet.Bet
 import fr.iut.alldev.allin.data.model.bet.Participation
 import fr.iut.alldev.allin.data.model.bet.vo.BetDetail
 import fr.iut.alldev.allin.data.repository.BetRepository
-import fr.iut.alldev.allin.di.AllInCurrentUser
+import fr.iut.alldev.allin.data.repository.UserRepository
 import fr.iut.alldev.allin.keystore.AllInKeystoreManager
 import fr.iut.alldev.allin.ui.core.snackbar.SnackbarType
 import fr.iut.alldev.allin.ui.main.event.AllInEvent
 import fr.iut.alldev.allin.ui.main.event.ToConfirmBet
 import fr.iut.alldev.allin.ui.main.event.WonBet
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class UserState(val user: User) {
-    val userCoins = mutableIntStateOf(user.coins)
-}
-
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    @AllInCurrentUser val currentUser: User,
+    private val userRepository: UserRepository,
     private val betRepository: BetRepository,
     private val keystoreManager: AllInKeystoreManager
 ) : ViewModel() {
 
     var loading = mutableStateOf(false)
 
-    val currentUserState = UserState(currentUser)
+    val currentUser = userRepository.currentUser.asStateFlow()
+    val userCoins = userRepository.userCoins.asStateFlow()
     val selectedBet = mutableStateOf<BetDetail?>(null)
     val dismissedEvents = mutableStateListOf<AllInEvent>()
     val events = mutableStateListOf<AllInEvent>()
@@ -67,11 +63,13 @@ class MainViewModel @Inject constructor(
                             }
                         )
                     })
-                    addAll(betRepository.getWon(token).map { result ->
-                        WonBet(
-                            user = currentUser,
-                            betResult = result
-                        )
+                    addAll(betRepository.getWon(token).mapNotNull { result ->
+                        currentUser.value?.let {
+                            WonBet(
+                                user = it,
+                                betResult = result
+                            )
+                        }
                     })
                 }.filter { it !in dismissedEvents }
             )
@@ -84,9 +82,21 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun deleteToken() {
+    fun onLogout() {
         viewModelScope.launch {
             keystoreManager.deleteToken()
+            userRepository.currentUser.emit(null)
+            userRepository.userCoins.emit(null)
+        }
+    }
+
+    private fun decreaseCoins(amount: Int) {
+        viewModelScope.launch {
+            userRepository.userCoins.value?.let {
+                val newAmount = it - amount
+                userRepository.userCoins.emit(newAmount)
+
+            }
         }
     }
 
@@ -94,15 +104,17 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 loading.value = true
-                currentUserState.userCoins.intValue -= stake
-                selectedBet.value?.bet?.let {
-                    val participation = Participation(
-                        betId = it.id,
-                        username = currentUser.username,
-                        response = response,
-                        stake = stake
-                    )
-                    betRepository.participateToBet(participation, keystoreManager.getTokenOrEmpty())
+                currentUser.value?.let { user ->
+                    decreaseCoins(stake)
+                    selectedBet.value?.bet?.let {
+                        val participation = Participation(
+                            betId = it.id,
+                            username = user.username,
+                            response = response,
+                            stake = stake
+                        )
+                        betRepository.participateToBet(participation, keystoreManager.getTokenOrEmpty())
+                    }
                 }
                 loading.value = false
             }
