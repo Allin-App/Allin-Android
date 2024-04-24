@@ -11,7 +11,7 @@ data class WonBet(
     private val betResult: BetResultDetail,
 ) : AllInEvent() {
     @Composable
-    override fun Display(
+    fun Display(
         sheetState: SheetState,
         onDismiss: () -> Unit
     ) {

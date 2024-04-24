@@ -1,6 +1,9 @@
 package fr.iut.alldev.allin.ui.main
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -33,12 +36,19 @@ import fr.iut.alldev.allin.ui.betStatus.vo.BetStatusBottomSheetBetDisplayer
 import fr.iut.alldev.allin.ui.core.AllInLoading
 import fr.iut.alldev.allin.ui.core.snackbar.AllInSnackbarVisualsImpl
 import fr.iut.alldev.allin.ui.main.components.AllInScaffold
+import fr.iut.alldev.allin.ui.main.event.DailyReward
+import fr.iut.alldev.allin.ui.main.event.ToConfirmBet
+import fr.iut.alldev.allin.ui.main.event.WonBet
 import fr.iut.alldev.allin.ui.navigation.AllInDrawerNavHost
 import fr.iut.alldev.allin.ui.navigation.Routes
 import fr.iut.alldev.allin.ui.navigation.TopLevelDestination
 import fr.iut.alldev.allin.ui.navigation.drawer.AllInDrawer
 import fr.iut.alldev.allin.ui.navigation.popUpTo
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import timber.log.Timber
+
+const val EVENT_DISMISS_DELAY_MS = 300L
 
 private val topLevelDestinations = listOf(
     TopLevelDestination.PublicBets,
@@ -111,7 +121,6 @@ fun MainScreen(
         }
     )
 
-
     AllInDrawer(
         drawerState = drawerState,
         destinations = topLevelDestinations,
@@ -169,11 +178,53 @@ fun MainScreen(
         }
     }
 
-
     events.firstOrNull()?.let {
-        it.Display(sheetState = eventBottomSheetState) {
-            mainViewModel.dismissedEvents += it
-            events.removeFirstOrNull()
+        when (val event = it) {
+            is ToConfirmBet -> {
+                Timber.d("ToConfirmBet")
+                event.Display(sheetState = eventBottomSheetState) {
+                    mainViewModel.dismissedEvents += it
+                    scope.launch {
+                        eventBottomSheetState.hide()
+                        delay(EVENT_DISMISS_DELAY_MS)
+                        events.removeFirstOrNull()
+                    }
+                }
+            }
+
+            is WonBet -> {
+                Timber.d("WonBet")
+                event.Display(sheetState = eventBottomSheetState) {
+                    mainViewModel.dismissedEvents += it
+                    scope.launch {
+                        eventBottomSheetState.hide()
+                        delay(EVENT_DISMISS_DELAY_MS)
+                        events.removeFirstOrNull()
+                    }
+                }
+            }
+
+            is DailyReward -> {
+                var dailyRewardVisible by remember { mutableStateOf(true) }
+                AnimatedVisibility(
+                    visible = dailyRewardVisible,
+                    enter = fadeIn(),
+                    exit = fadeOut()
+                ) {
+                    (events.firstOrNull() as? DailyReward)?.let {
+                        it.Display(
+                            onDismiss = {
+                                dailyRewardVisible = false
+                                mainViewModel.dismissedEvents += it
+                                scope.launch {
+                                    delay(EVENT_DISMISS_DELAY_MS)
+                                    events.removeFirstOrNull()
+                                }
+                            }
+                        )
+                    }
+                }
+            }
         }
     }
 
@@ -191,6 +242,7 @@ fun MainScreen(
         participateSheetVisibility = participateSheetVisibility,
         setParticipateSheetVisibility = setParticipateSheetVisibility
     )
+
     AllInLoading(visible = loading)
 }
 

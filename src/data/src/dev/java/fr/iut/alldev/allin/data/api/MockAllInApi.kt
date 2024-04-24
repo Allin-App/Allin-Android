@@ -336,7 +336,7 @@ class MockAllInApi : AllInApi {
                 response = listOf("The Monarchs", "Climate Change"),
                 createdBy = "User 1",
                 type = BetType.MATCH,
-                status = BetStatus.IN_PROGRESS,
+                status = BetStatus.CLOSING,
             )
         )
 

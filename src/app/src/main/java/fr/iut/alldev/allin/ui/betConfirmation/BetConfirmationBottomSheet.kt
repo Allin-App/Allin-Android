@@ -112,7 +112,8 @@ fun BetConfirmationBottomSheetAnswer(
                 text = text.uppercase(),
                 color = contentColor ?: color,
                 style = AllInTheme.typography.h1,
-                fontSize = 40.sp,
+                fontSize = 30.sp,
+                textAlign = TextAlign.Center,
                 modifier = Modifier.align(Alignment.Center)
             )
 

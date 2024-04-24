@@ -14,6 +14,7 @@ import fr.iut.alldev.allin.data.repository.UserRepository
 import fr.iut.alldev.allin.keystore.AllInKeystoreManager
 import fr.iut.alldev.allin.ui.core.snackbar.SnackbarType
 import fr.iut.alldev.allin.ui.main.event.AllInEvent
+import fr.iut.alldev.allin.ui.main.event.DailyReward
 import fr.iut.alldev.allin.ui.main.event.ToConfirmBet
 import fr.iut.alldev.allin.ui.main.event.WonBet
 import kotlinx.coroutines.Dispatchers
@@ -52,6 +53,8 @@ class MainViewModel @Inject constructor(
             val token = keystoreManager.getTokenOrEmpty()
             events.addAll(
                 buildList {
+                    add(DailyReward(125))
+
                     addAll(betRepository.getToConfirm(token).map { bet ->
                         ToConfirmBet(
                             betDetail = bet,

@@ -143,4 +143,8 @@
     <!--Ranking-->
     <string name="ranking_title">Ranking</string>
 
+    <!--Daily reward-->
+    <string name="daily_reward_title">Daily reward</string>
+    <string name="daily_reward_subtitle">Your daily reward is unlocked every day at 00:00 UTC and allows you to get between 10 and 150 Allcoins.</string>
+
 </resources>
