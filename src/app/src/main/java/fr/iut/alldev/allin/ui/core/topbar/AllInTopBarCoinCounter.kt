@@ -70,8 +70,13 @@ fun AllInTopBarCoinCounter(
                         targetState = char,
                         transitionSpec = {
                             val delayMillis = (countString.indices.count() - i) * 50
-                            (slideInVertically(tween(delayMillis)) { it } togetherWith
-                                    slideOutVertically(tween(delayMillis)) { -it })
+                            if (oldAmount <= amount) {
+                                (slideInVertically(tween(delayMillis)) { it } togetherWith
+                                        slideOutVertically(tween(delayMillis)) { -it })
+                            } else {
+                                (slideInVertically(tween(delayMillis)) { -it } togetherWith
+                                        slideOutVertically(tween(delayMillis)) { it })
+                            }
                         },
                         label = ""
                     ) { char ->
