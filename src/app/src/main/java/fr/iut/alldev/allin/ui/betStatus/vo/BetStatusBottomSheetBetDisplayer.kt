@@ -85,6 +85,7 @@ class BetStatusBottomSheetBetDisplayer(
     private fun DisplayBet(
         betDetail: BetDetail,
         currentUser: User,
+        winnerColor: @Composable () -> Color,
         statBar: LazyListScope.() -> Unit
     ) {
         Box(Modifier) {
@@ -117,13 +118,16 @@ class BetStatusBottomSheetBetDisplayer(
                     Spacer(modifier = Modifier.height(20.dp))
                 }
                 if (betDetail.bet.betStatus == BetStatus.FINISHED) {
-                    BetStatusWinner(
-                        answer = YES_VALUE,
-                        color = AllInColorToken.allInBlue,
-                        coinAmount = 442,
-                        username = "Imri",
-                        multiplier = 1.2f
-                    )
+                    betDetail.wonParticipation?.let { wonParticipation ->
+                        BetStatusWinner(
+                            answer = wonParticipation.response,
+                            color = winnerColor(),
+                            coinAmount = wonParticipation.stake,
+                            username = wonParticipation.username,
+                            multiplier = betDetail.getAnswerOfResponse(wonParticipation.response)
+                                ?.odds ?: .5f
+                        )
+                    }
                 } else {
                     HorizontalDivider(color = AllInTheme.colors.border)
                 }
@@ -301,13 +305,20 @@ class BetStatusBottomSheetBetDisplayer(
 
     @Composable
     override fun DisplayYesNoBet(betDetail: BetDetail, currentUser: User) {
-        DisplayBet(betDetail = betDetail, currentUser = currentUser) {
+        DisplayBet(
+            betDetail = betDetail,
+            currentUser = currentUser,
+            winnerColor = {
+                if (betDetail.wonParticipation?.response == YES_VALUE) AllInColorToken.allInBlue
+                else AllInColorToken.allInPink
+            }
+        ) {
             displayBinaryStatBar(
                 betDetail = betDetail,
                 response1 = YES_VALUE,
                 response2 = NO_VALUE,
                 response1Display = { stringResource(id = R.string.Yes).uppercase() },
-                response2Display = { stringResource(id = R.string.No).uppercase() }
+                response2Display = { stringResource(id = R.string.No).uppercase() },
             )
         }
     }
@@ -316,7 +327,14 @@ class BetStatusBottomSheetBetDisplayer(
     override fun DisplayMatchBet(betDetail: BetDetail, currentUser: User) {
         val matchBet = remember { betDetail.bet as MatchBet }
 
-        DisplayBet(betDetail = betDetail, currentUser = currentUser) {
+        DisplayBet(
+            betDetail = betDetail,
+            currentUser = currentUser,
+            winnerColor = {
+                if (betDetail.wonParticipation?.response == matchBet.nameTeam1) AllInColorToken.allInBlue
+                else AllInColorToken.allInPink
+            }
+        ) {
             displayBinaryStatBar(
                 betDetail = betDetail,
                 response1 = matchBet.nameTeam1,
@@ -331,7 +349,18 @@ class BetStatusBottomSheetBetDisplayer(
         val configuration = LocalConfiguration.current
         val locale = remember { ConfigurationCompat.getLocales(configuration).get(0) ?: Locale.getDefault() }
 
-        DisplayBet(betDetail = betDetail, currentUser = currentUser) {
+        DisplayBet(
+            betDetail = betDetail,
+            currentUser = currentUser,
+            winnerColor = {
+                val isBinary = remember { customBet.possibleAnswers.size == 2 }
+
+                if (isBinary) {
+                    if (betDetail.wonParticipation?.response == customBet.possibleAnswers.first()) AllInColorToken.allInBlue
+                    else AllInColorToken.allInPink
+                } else AllInTheme.colors.onMainSurface
+            }
+        ) {
             if (customBet.possibleAnswers.size == 2) {
                 displayBinaryStatBar(
                     betDetail = betDetail,

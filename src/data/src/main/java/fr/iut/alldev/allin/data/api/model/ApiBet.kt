@@ -115,15 +115,16 @@ data class ResponseBetDetail(
     val bet: ResponseBet,
     val answers: List<ResponseBetAnswerDetail>,
     val participations: List<ResponseParticipation>,
-    val userParticipation: ResponseParticipation? = null
+    val userParticipation: ResponseParticipation? = null,
+    val wonParticipation: ResponseParticipation? = null
 ) {
     fun toBetDetail() =
         BetDetail(
             bet = bet.toBet(),
             answers = answers.map { it.toAnswerDetail() },
             participations = participations.map { it.toParticipation() },
-            userParticipation = userParticipation?.toParticipation()
-
+            userParticipation = userParticipation?.toParticipation(),
+            wonParticipation = wonParticipation?.toParticipation()
         )
 }
 

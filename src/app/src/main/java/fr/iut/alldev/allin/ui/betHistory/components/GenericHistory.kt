@@ -30,6 +30,7 @@ fun <T> GenericHistory(
     getStatus: (T) -> BetStatus,
     getNbCoins: (T) -> Int,
     getWon: (T) -> Boolean,
+    onClick: (T) -> Unit,
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -56,7 +57,8 @@ fun <T> GenericHistory(
                 time = getEndBetTime(it),
                 status = getStatus(it),
                 nbCoins = getNbCoins(it),
-                won = getWon(it)
+                won = getWon(it),
+                onClick = { onClick(it) }
             )
         }
     }

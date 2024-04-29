@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import fr.iut.alldev.allin.data.model.bet.BetStatus
 import fr.iut.alldev.allin.ext.getDateStartLabelId
 import fr.iut.alldev.allin.theme.AllInTheme
+import fr.iut.alldev.allin.ui.core.AllInBouncyCard
 import fr.iut.alldev.allin.ui.core.AllInCard
 
 @Composable
@@ -32,6 +33,47 @@ fun BetCard(
     AllInCard(
         modifier = modifier.fillMaxWidth(),
         radius = 16.dp
+    ) {
+        Column(
+            Modifier.padding(horizontal = 19.dp, vertical = 11.dp)
+        ) {
+            BetTitleHeader(
+                title = title,
+                category = category,
+                creator = creator,
+                modifier = Modifier.fillMaxWidth()
+            )
+            Spacer(modifier = Modifier.height(11.dp))
+            BetDateTimeRow(
+                label = stringResource(id = status.getDateStartLabelId()),
+                date = date,
+                time = time
+            )
+        }
+        HorizontalDivider(
+            thickness = 1.dp,
+            color = AllInTheme.colors.border
+        )
+        content()
+    }
+}
+
+@Composable
+fun BetCard(
+    modifier: Modifier = Modifier,
+    title: String,
+    creator: String,
+    category: String,
+    date: String,
+    time: String,
+    status: BetStatus,
+    onClick: () -> Unit,
+    content: @Composable () -> Unit
+) {
+    AllInBouncyCard(
+        modifier = modifier.fillMaxWidth(),
+        radius = 16.dp,
+        onClick = onClick
     ) {
         Column(
             Modifier.padding(horizontal = 19.dp, vertical = 11.dp)

@@ -31,6 +31,9 @@ interface AllInApi {
     @POST("bets/add")
     suspend fun createBet(@Header("Authorization") token: String, @Body body: RequestBet)
 
+    @GET("users/gift")
+    suspend fun dailyGift(@Header("Authorization") token: String): Int
+
     @GET("bets/gets")
     suspend fun getAllBets(@Header("Authorization") token: String): List<ResponseBet>
 

@@ -1,6 +1,7 @@
 package fr.iut.alldev.allin.data.api
 
 import fr.iut.alldev.allin.data.api.interceptors.AllInAPIException
+import fr.iut.alldev.allin.data.api.interceptors.AllInUnauthorizedException
 import fr.iut.alldev.allin.data.api.model.CheckUser
 import fr.iut.alldev.allin.data.api.model.RequestBet
 import fr.iut.alldev.allin.data.api.model.RequestParticipation
@@ -8,6 +9,7 @@ import fr.iut.alldev.allin.data.api.model.RequestUser
 import fr.iut.alldev.allin.data.api.model.ResponseBet
 import fr.iut.alldev.allin.data.api.model.ResponseBetAnswerDetail
 import fr.iut.alldev.allin.data.api.model.ResponseBetDetail
+import fr.iut.alldev.allin.data.api.model.ResponseBetResult
 import fr.iut.alldev.allin.data.api.model.ResponseBetResultDetail
 import fr.iut.alldev.allin.data.api.model.ResponseParticipation
 import fr.iut.alldev.allin.data.api.model.ResponseUser
@@ -15,11 +17,38 @@ import fr.iut.alldev.allin.data.model.bet.BetStatus
 import fr.iut.alldev.allin.data.model.bet.BetType
 import fr.iut.alldev.allin.data.model.bet.NO_VALUE
 import fr.iut.alldev.allin.data.model.bet.YES_VALUE
-import fr.iut.alldev.allin.data.model.bet.vo.BetResult
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import java.time.Duration
 import java.time.ZonedDateTime
 import java.util.UUID
 
 class MockAllInApi : AllInApi {
+
+    init {
+        CoroutineScope(Dispatchers.Default).launch {
+            while (true) {
+                delay(10_000)
+                updateBets(ZonedDateTime.now())
+            }
+        }
+    }
+
+    private fun updateBets(date: ZonedDateTime) {
+        mockBets.forEachIndexed { idx, bet ->
+            if (bet.status != BetStatus.CANCELLED && bet.status != BetStatus.FINISHED) {
+                if (date >= bet.endRegistration) {
+                    if (date >= bet.endBet) {
+                        mockBets[idx] = bet.copy(status = BetStatus.CLOSING)
+                    } else {
+                        mockBets[idx] = bet.copy(status = BetStatus.IN_PROGRESS)
+                    }
+                }
+            }
+        }
+    }
 
     private fun getUserFromToken(token: String) =
         mockUsers.find { it.first.token == token.removePrefix("Bearer ") }
@@ -79,6 +108,31 @@ class MockAllInApi : AllInApi {
         )
     }
 
+    override suspend fun dailyGift(token: String): Int {
+        getUserFromToken(token) ?: throw AllInAPIException("Invalid login/password.")
+        if (mockGifts[token] == null) {
+            mockGifts[token] = ZonedDateTime.now().minusDays(1)
+        }
+
+        val duration = Duration.between(mockGifts[token], ZonedDateTime.now())
+        if (duration.toDays() >= 1) {
+            val amount = (10..150).random()
+            mockGifts[token] = ZonedDateTime.now()
+
+
+            mockUsers.replaceAll {
+                if (it.first.token == token) {
+                    it.copy(
+                        first = it.first.copy(
+                            nbCoins = it.first.nbCoins + amount
+                        )
+                    )
+                } else it
+            }
+            return amount
+        } else throw AllInUnauthorizedException("Gift already taken today")
+    }
+
     override suspend fun getAllBets(token: String): List<ResponseBet> {
         getUserFromToken(token) ?: throw AllInAPIException("Invalid login/password.")
         return mockBets
@@ -105,7 +159,7 @@ class MockAllInApi : AllInApi {
         getUserFromToken(token) ?: throw AllInAPIException("Invalid login/password.")
         val bet = mockBets.find { it.id == id } ?: throw AllInAPIException("Unauthorized")
         mockResults.add(
-            BetResult(
+            ResponseBetResult(
                 betId = id,
                 result = value
             )
@@ -118,25 +172,72 @@ class MockAllInApi : AllInApi {
         val user = getUserFromToken(token) ?: throw AllInAPIException("Invalid login/password.")
         val betParticipations = mockParticipations.filter { it.betId == bet.id }
         val userParticipation = betParticipations.find { it.username == user.first.username }
+        val wonParticipation = if (bet.status == BetStatus.FINISHED) {
+            val result = mockResults.find { it.betId == bet.id }
+            betParticipations.filter { it.answer == result?.result }.maxByOrNull { it.stake }
+        } else null
 
         return ResponseBetDetail(
             bet = bet,
             answers = getAnswerDetails(bet, betParticipations),
             participations = betParticipations,
-            userParticipation = userParticipation
+            userParticipation = userParticipation,
+            wonParticipation = wonParticipation
         )
     }
 
     override suspend fun getBetCurrent(token: String): List<ResponseBetDetail> {
-        return emptyList()
+        val user = getUserFromToken(token) ?: throw AllInAPIException("Invalid login/password.")
+        val betParticipations = mockParticipations.filter { it.username == user.first.username }
+        return betParticipations.map { p ->
+            getBet(token, p.betId)
+        }.filter {
+            it.bet.status !in listOf(BetStatus.FINISHED, BetStatus.CANCELLED)
+        }
     }
 
     override suspend fun getBetHistory(token: String): List<ResponseBetResultDetail> {
-        return emptyList()
+        val user = getUserFromToken(token) ?: throw AllInAPIException("Invalid login/password.")
+        val betParticipations = mockParticipations.filter { it.username == user.first.username }
+        return betParticipations.map { p ->
+            getBet(token, p.betId)
+        }.filter {
+            it.bet.status in listOf(BetStatus.FINISHED, BetStatus.CANCELLED)
+        }.mapNotNull { bet ->
+            val participation = bet.userParticipation ?: return@mapNotNull null
+            val result = mockResults.find { it.betId == bet.bet.id } ?: return@mapNotNull null
+            ResponseBetResultDetail(
+                betResult = result,
+                bet = bet.bet,
+                participation = participation,
+                amount = participation.stake, // TODO won amount
+                won = participation.answer == result.result
+            )
+        }
     }
 
     override suspend fun getWon(token: String): List<ResponseBetResultDetail> {
-        return emptyList()
+        return getBetHistory(token).filter {
+            val isWon = it.won && mockWon[token]?.contains(it.bet.id ?: "") != true
+            if (isWon) {
+                mockWon[token]?.add(it.bet.id ?: "") ?: run {
+                    mockWon[token] = mutableListOf(it.bet.id ?: "")
+                }
+
+                mockUsers.replaceAll { user ->
+                    if (user.first.token == token) {
+                        user.copy(
+                            first = user.first.copy(
+                                nbCoins = user.first.nbCoins + it.amount
+                            )
+                        )
+                    } else user
+                }
+
+                true
+            } else false
+
+        }
     }
 
     override suspend fun participateToBet(token: String, body: RequestParticipation) {
@@ -340,7 +441,11 @@ class MockAllInApi : AllInApi {
             )
         )
 
-        private val mockResults by lazy { mutableListOf<BetResult>() }
+        private val mockResults by lazy { mutableListOf<ResponseBetResult>() }
+
+        private val mockWon by lazy { mutableMapOf<String, MutableList<String>>() }
+
+        private val mockGifts by lazy { mutableMapOf<String, ZonedDateTime>() }
     }
 
 }

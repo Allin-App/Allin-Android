@@ -137,7 +137,7 @@ internal fun AllInDrawerNavHost(
             route = Routes.BET_HISTORY
         ) {
             backHandlers()
-            BetHistoryScreen()
+            BetHistoryScreen(selectBet = selectBet)
         }
 
         composable(
@@ -151,7 +151,7 @@ internal fun AllInDrawerNavHost(
             route = Routes.BET_CURRENT
         ) {
             backHandlers()
-            BetCurrentScreen()
+            BetCurrentScreen(selectBet = selectBet)
         }
     }
 }

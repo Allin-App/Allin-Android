@@ -26,7 +26,7 @@ class BetRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getCurrentBets(token: String): List<BetDetail> {
-        return api.getToConfirm(token.formatBearerToken()).map {
+        return api.getBetCurrent(token.formatBearerToken()).map {
             it.toBetDetail()
         }
     }
@@ -53,7 +53,6 @@ class BetRepositoryImpl @Inject constructor(
 
     override suspend fun getWon(token: String): List<BetResultDetail> =
         api.getWon(token.formatBearerToken()).map { it.toBetResultDetail() }
-
 
     override suspend fun confirmBet(token: String, id: String, response: String) {
         api.confirmBet(token.formatBearerToken(), id, response)

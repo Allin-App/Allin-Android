@@ -320,7 +320,8 @@ private fun BetConfirmationBottomSheetContentPreview() {
                     )
                 ),
                 participations = emptyList(),
-                userParticipation = null
+                userParticipation = null,
+                wonParticipation = null
             ),
             onConfirm = { }
         ) {

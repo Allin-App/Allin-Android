@@ -38,7 +38,7 @@ fun BetStatusWinner(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(color.copy(alpha = .2f))
-                .padding(vertical = 20.dp)
+                .padding(20.dp)
         ) {
             AllInTextIcon(
                 text = answer,

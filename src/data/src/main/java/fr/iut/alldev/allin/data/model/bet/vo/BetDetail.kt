@@ -7,7 +7,8 @@ data class BetDetail(
     val bet: Bet,
     val answers: List<BetAnswerDetail>,
     val participations: List<Participation>,
-    val userParticipation: Participation?
+    val userParticipation: Participation?,
+    val wonParticipation: Participation?
 ) {
     fun getAnswerOfResponse(response: String) =
         answers.find { it.response == response }

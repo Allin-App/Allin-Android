@@ -37,7 +37,7 @@ class BetCurrentViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             _bets.emit(
-                betRepository.getToConfirm(keystoreManager.getTokenOrEmpty())
+                betRepository.getCurrentBets(keystoreManager.getTokenOrEmpty())
             )
         }
     }

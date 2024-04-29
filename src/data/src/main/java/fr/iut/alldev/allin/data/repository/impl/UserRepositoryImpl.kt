@@ -18,13 +18,13 @@ class UserRepositoryImpl @Inject constructor(
                 password = password
             )
         )
-        updateUser(response.toUser())
+        _currentUser.emit(response.toUser())
         return response.token
     }
 
     override suspend fun login(token: String): String? {
         val response = api.login(token = token.formatBearerToken())
-        updateUser(response.toUser())
+        _currentUser.emit(response.toUser())
         return response.token
     }
 
@@ -37,7 +37,10 @@ class UserRepositoryImpl @Inject constructor(
                 password = password
             )
         )
-        updateUser(response.toUser())
+        _currentUser.emit(response.toUser())
         return response.token
     }
+
+    override suspend fun dailyGift(token: String): Int =
+        api.dailyGift(token)
 }

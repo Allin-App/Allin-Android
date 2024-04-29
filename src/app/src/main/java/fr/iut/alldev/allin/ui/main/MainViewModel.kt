@@ -18,7 +18,6 @@ import fr.iut.alldev.allin.ui.main.event.DailyReward
 import fr.iut.alldev.allin.ui.main.event.ToConfirmBet
 import fr.iut.alldev.allin.ui.main.event.WonBet
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -32,8 +31,7 @@ class MainViewModel @Inject constructor(
 
     var loading = mutableStateOf(false)
 
-    val currentUser = userRepository.currentUser.asStateFlow()
-    val userCoins = userRepository.userCoins.asStateFlow()
+    val currentUser = userRepository.currentUser
     val selectedBet = mutableStateOf<BetDetail?>(null)
     val dismissedEvents = mutableStateListOf<AllInEvent>()
     val events = mutableStateListOf<AllInEvent>()
@@ -53,27 +51,34 @@ class MainViewModel @Inject constructor(
             val token = keystoreManager.getTokenOrEmpty()
             events.addAll(
                 buildList {
-                    add(DailyReward(125))
+                    runCatching {
+                        add(DailyReward(userRepository.dailyGift(token)))
+                    }
 
-                    addAll(betRepository.getToConfirm(token).map { bet ->
-                        ToConfirmBet(
-                            betDetail = bet,
-                            onConfirm = {
-                                confirmBet(
-                                    response = it,
-                                    betId = bet.bet.id
+                    runCatching {
+                        addAll(betRepository.getToConfirm(token).map { bet ->
+                            ToConfirmBet(
+                                betDetail = bet,
+                                onConfirm = {
+                                    confirmBet(
+                                        response = it,
+                                        betId = bet.bet.id
+                                    )
+                                }
+                            )
+                        })
+                    }
+
+                    runCatching {
+                        addAll(betRepository.getWon(token).mapNotNull { result ->
+                            currentUser.value?.let {
+                                WonBet(
+                                    user = it,
+                                    betResult = result
                                 )
                             }
-                        )
-                    })
-                    addAll(betRepository.getWon(token).mapNotNull { result ->
-                        currentUser.value?.let {
-                            WonBet(
-                                user = it,
-                                betResult = result
-                            )
-                        }
-                    })
+                        })
+                    }
                 }.filter { it !in dismissedEvents }
             )
         }
@@ -90,17 +95,23 @@ class MainViewModel @Inject constructor(
     fun onLogout() {
         viewModelScope.launch {
             keystoreManager.deleteToken()
-            userRepository.currentUser.emit(null)
-            userRepository.userCoins.emit(null)
+            userRepository.resetCurrentUser()
+        }
+    }
+
+
+    fun increaseCoins(amount: Int) {
+        viewModelScope.launch {
+            currentUser.value?.let {
+                userRepository.updateCurrentUserCoins(it.coins + amount)
+            }
         }
     }
 
     private fun decreaseCoins(amount: Int) {
         viewModelScope.launch {
-            userRepository.userCoins.value?.let {
-                val newAmount = it - amount
-                userRepository.userCoins.emit(newAmount)
-
+            currentUser.value?.let {
+                userRepository.updateCurrentUserCoins(it.coins - amount)
             }
         }
     }

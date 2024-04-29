@@ -8,10 +8,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.data.ext.formatToMediumDateNoYear
 import fr.iut.alldev.allin.data.ext.formatToTime
+import fr.iut.alldev.allin.data.model.bet.Bet
 import fr.iut.alldev.allin.ui.betHistory.components.GenericHistory
 
 @Composable
 fun BetCurrentScreen(
+    selectBet: (Bet, Boolean) -> Unit,
     viewModel: BetCurrentViewModel = hiltViewModel()
 ) {
     val bets by viewModel.bets.collectAsState()
@@ -25,6 +27,7 @@ fun BetCurrentScreen(
         getEndBetTime = { it.bet.endBetDate.formatToTime() },
         getStatus = { it.bet.betStatus },
         getNbCoins = { it.userParticipation?.stake ?: 0 },
-        getWon = { true }
+        getWon = { true },
+        onClick = { selectBet(it.bet, false) },
     )
 }

@@ -72,7 +72,6 @@ fun MainScreen(
 
     val (loading, setLoading) = remember { mainViewModel.loading }
     val currentUser by mainViewModel.currentUser.collectAsStateWithLifecycle()
-    val userCoins by mainViewModel.userCoins.collectAsStateWithLifecycle()
     val selectedBet by remember { mainViewModel.selectedBet }
     val statusVisibility = remember { mutableStateOf(false) }
     val sheetBackVisibility = remember { mutableStateOf(false) }
@@ -141,7 +140,7 @@ fun MainScreen(
     ) {
         AllInScaffold(
             onMenuClicked = { scope.launch { drawerState.open() } },
-            coinAmount = userCoins ?: 0,
+            coinAmount = currentUser?.coins ?: 0,
             drawerState = drawerState,
             snackbarHostState = snackbarHostState
         ) {
@@ -200,6 +199,7 @@ fun MainScreen(
                     scope.launch {
                         eventBottomSheetState.hide()
                         delay(EVENT_DISMISS_DELAY_MS)
+                        mainViewModel.increaseCoins(event.betResult.amount)
                         events.removeFirstOrNull()
                     }
                 }
@@ -215,6 +215,7 @@ fun MainScreen(
                     (events.firstOrNull() as? DailyReward)?.let {
                         it.Display(
                             onDismiss = {
+                                mainViewModel.increaseCoins(it.amount)
                                 dailyRewardVisible = false
                                 mainViewModel.dismissedEvents += it
                                 scope.launch {
@@ -238,7 +239,7 @@ fun MainScreen(
         displayBet = { detail ->
             currentUser?.let { user -> betStatusDisplayer.DisplayBet(betDetail = detail, currentUser = user) }
         },
-        userCoinAmount = userCoins ?: 0,
+        userCoinAmount = currentUser?.coins ?: 0,
         onParticipate = { stake, response -> mainViewModel.participateToBet(stake, response) },
         participateSheetVisibility = participateSheetVisibility,
         setParticipateSheetVisibility = setParticipateSheetVisibility
