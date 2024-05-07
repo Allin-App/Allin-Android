@@ -2,15 +2,14 @@ package fr.iut.alldev.allin
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
-import racra.compose.smooth_corner_rect_library.BuildConfig
 import timber.log.Timber
 
 @HiltAndroidApp
-class AllInApplication : Application(){
+class AllInApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        if(BuildConfig.DEBUG){
+        if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
     }

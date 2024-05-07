@@ -8,12 +8,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBars
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -56,8 +53,10 @@ import fr.iut.alldev.allin.data.model.bet.CustomBet
 import fr.iut.alldev.allin.data.model.bet.MatchBet
 import fr.iut.alldev.allin.data.model.bet.NO_VALUE
 import fr.iut.alldev.allin.data.model.bet.YES_VALUE
+import fr.iut.alldev.allin.data.model.bet.vo.BetAnswerDetail
 import fr.iut.alldev.allin.data.model.bet.vo.BetDetail
 import fr.iut.alldev.allin.ext.asPaddingValues
+import fr.iut.alldev.allin.ext.bottomSheetNavigationBarsInsets
 import fr.iut.alldev.allin.ext.formatToSimple
 import fr.iut.alldev.allin.ext.getDateEndLabelId
 import fr.iut.alldev.allin.ext.getDateStartLabelId
@@ -82,7 +81,7 @@ class BetStatusBottomSheetBetDisplayer(
     val openParticipateSheet: () -> Unit
 ) : BetDisplayer {
     @Composable
-    private fun DisplayBet(
+    private fun DisplayBetDail(
         betDetail: BetDetail,
         currentUser: User,
         winnerColor: @Composable () -> Color,
@@ -142,7 +141,7 @@ class BetStatusBottomSheetBetDisplayer(
                                 source: NestedScrollSource
                             ) = available.copy(x = 0f)
                         }),
-                    contentPadding = WindowInsets.navigationBars.asPaddingValues(top = 20.dp, start = 20.dp, end = 20.dp)
+                    contentPadding = bottomSheetNavigationBarsInsets().asPaddingValues(top = 20.dp, start = 20.dp, end = 20.dp)
                 ) {
 
                     statBar(this)
@@ -202,8 +201,7 @@ class BetStatusBottomSheetBetDisplayer(
                                 .5f to AllInTheme.colors.background2
                             )
                         )
-                        .padding(7.dp)
-                        .navigationBarsPadding(),
+                        .padding(bottomSheetNavigationBarsInsets().asPaddingValues(7.dp)),
                     text = stringResource(id = R.string.Participate),
                     enabled = betDetail.bet.betStatus == BetStatus.IN_PROGRESS,
                     onClick = openParticipateSheet
@@ -223,11 +221,11 @@ class BetStatusBottomSheetBetDisplayer(
             val configuration = LocalConfiguration.current
             val locale = remember { ConfigurationCompat.getLocales(configuration).get(0) ?: Locale.getDefault() }
 
-            val response1Answer = remember { betDetail.getAnswerOfResponse(response1) }
-            val response2Answer = remember { betDetail.getAnswerOfResponse(response2) }
+            val response1Answer = remember(betDetail) { betDetail.getAnswerOfResponse(response1) }
+            val response2Answer = remember(betDetail) { betDetail.getAnswerOfResponse(response2) }
 
             BinaryStatBar(
-                response1Percentage = remember {
+                response1Percentage = remember(betDetail) {
                     response1Answer?.let { betDetail.getPercentageOfAnswer(response1Answer) } ?: 0f
                 },
                 response1 = response1Display(),
@@ -259,17 +257,10 @@ class BetStatusBottomSheetBetDisplayer(
     }
 
     private fun LazyListScope.displayMultiStatBar(
-        betDetail: BetDetail,
-        responses: List<String>,
+        responsesWithDetail: List<Pair<BetAnswerDetail, Float>>,
         locale: Locale
     ) {
-        val responsesWithDetail = responses.mapNotNull {
-            betDetail.getAnswerOfResponse(it)
-        }.associateWith {
-            betDetail.getPercentageOfAnswer(it)
-        }
-
-        itemsIndexed(responsesWithDetail.toList().sortedByDescending { it.second }) { idx, (answer, percentage) ->
+        itemsIndexed(responsesWithDetail) { idx, (answer, percentage) ->
             val isWin = remember { idx == 0 }
 
             SimpleStatBar(
@@ -305,7 +296,7 @@ class BetStatusBottomSheetBetDisplayer(
 
     @Composable
     override fun DisplayYesNoBet(betDetail: BetDetail, currentUser: User) {
-        DisplayBet(
+        DisplayBetDail(
             betDetail = betDetail,
             currentUser = currentUser,
             winnerColor = {
@@ -327,7 +318,7 @@ class BetStatusBottomSheetBetDisplayer(
     override fun DisplayMatchBet(betDetail: BetDetail, currentUser: User) {
         val matchBet = remember { betDetail.bet as MatchBet }
 
-        DisplayBet(
+        DisplayBetDail(
             betDetail = betDetail,
             currentUser = currentUser,
             winnerColor = {
@@ -349,7 +340,19 @@ class BetStatusBottomSheetBetDisplayer(
         val configuration = LocalConfiguration.current
         val locale = remember { ConfigurationCompat.getLocales(configuration).get(0) ?: Locale.getDefault() }
 
-        DisplayBet(
+        val responsesWithDetail = remember(betDetail) {
+            if (customBet.possibleAnswers.size > 2) {
+                customBet.getResponses().mapNotNull {
+                    betDetail.getAnswerOfResponse(it)
+                }.associateWith {
+                    betDetail.getPercentageOfAnswer(it)
+                }
+                    .toList()
+                    .sortedByDescending { it.second }
+            } else emptyList()
+        }
+
+        DisplayBetDail(
             betDetail = betDetail,
             currentUser = currentUser,
             winnerColor = {
@@ -369,8 +372,7 @@ class BetStatusBottomSheetBetDisplayer(
                 )
             } else {
                 displayMultiStatBar(
-                    betDetail = betDetail,
-                    responses = customBet.getResponses(),
+                    responsesWithDetail = responsesWithDetail,
                     locale = locale
                 )
             }

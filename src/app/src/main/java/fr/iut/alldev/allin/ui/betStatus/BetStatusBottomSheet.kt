@@ -52,9 +52,7 @@ fun BetStatusBottomSheet(
         )
     ) {
         betDetail?.let {
-            BetStatusBottomSheetBack(
-                status = it.bet.betStatus
-            )
+            BetStatusBottomSheetBack(status = it.bet.betStatus)
         }
     }
 
@@ -89,8 +87,7 @@ fun BetStatusBottomSheet(
                     stake = stake,
                     setStake = { stake = it },
                     setElement = { idx -> selectedAnswer = idx },
-                    enabled = stake != null &&
-                            (stake ?: 0) <= userCoinAmount
+                    enabled = (stake ?: 0) != 0 && (stake ?: 0) <= userCoinAmount
                 ) {
                     stake?.let { stake ->
                         onParticipate(
@@ -99,7 +96,6 @@ fun BetStatusBottomSheet(
                         )
                     }
                 }
-
             }
         }
 

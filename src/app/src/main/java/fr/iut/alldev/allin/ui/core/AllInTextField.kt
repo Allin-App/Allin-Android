@@ -39,7 +39,8 @@ fun AllInTextField(
     maxChar: Int? = null,
     enabled: Boolean = true,
     trailingIcon: Painter? = null,
-    trailingContent: @Composable() (() -> Unit)? = null,
+    trailingIconColor: Color? = null,
+    trailingContent: @Composable (() -> Unit)? = null,
     placeholderFontSize: TextUnit = 18.sp,
     multiLine: Boolean = false,
     errorText: String? = null,
@@ -84,7 +85,7 @@ fun AllInTextField(
                 Icon(
                     painter = it,
                     contentDescription = null,
-                    tint = AllInColorToken.allInLightGrey300
+                    tint = trailingIconColor ?: AllInColorToken.allInLightGrey300
                 )
             }
         },
@@ -107,7 +108,6 @@ fun AllInTextField(
     )
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun AllInPasswordField(
     placeholder: String,
@@ -152,6 +152,11 @@ fun AllInFloatTextfield(
     textStyle: TextStyle = AllInTheme.typography.p1,
     placeholder: String? = null,
     trailingIcon: Painter? = null,
+    trailingIconColor: Color? = null,
+    borderColor: Color = AllInTheme.colors.onBackground2,
+    containerColor: Color = AllInTheme.colors.background,
+    textColor: Color = AllInTheme.colors.onMainSurface,
+    placeholderColor: Color = AllInTheme.colors.onBackground2,
     maxChar: Int? = 5,
     setValue: (Float?) -> Unit
 ) {
@@ -168,7 +173,12 @@ fun AllInFloatTextfield(
         maxChar = maxChar,
         textStyle = textStyle,
         trailingIcon = trailingIcon,
-        keyboardType = KeyboardType.Number
+        trailingIconColor = trailingIconColor,
+        keyboardType = KeyboardType.Number,
+        borderColor = borderColor,
+        containerColor = containerColor,
+        textColor = textColor,
+        placeholderColor = placeholderColor
     ) {
         it.verifyIsFloat(locale)?.let {
             stringValue = it
@@ -190,7 +200,12 @@ fun AllInIntTextField(
     textStyle: TextStyle = AllInTheme.typography.p1,
     placeholder: String? = null,
     trailingIcon: Painter? = null,
+    trailingIconColor: Color? = null,
     maxChar: Int? = 3,
+    borderColor: Color = AllInTheme.colors.onBackground2,
+    containerColor: Color = AllInTheme.colors.background,
+    textColor: Color = AllInTheme.colors.onMainSurface,
+    placeholderColor: Color = AllInTheme.colors.onBackground2,
     setValue: (Int?) -> Unit
 ) {
     AllInTextField(
@@ -199,8 +214,13 @@ fun AllInIntTextField(
         modifier = modifier,
         maxChar = maxChar,
         trailingIcon = trailingIcon,
+        trailingIconColor = trailingIconColor,
         textStyle = textStyle,
-        keyboardType = KeyboardType.NumberPassword
+        keyboardType = KeyboardType.NumberPassword,
+        borderColor = borderColor,
+        containerColor = containerColor,
+        textColor = textColor,
+        placeholderColor = placeholderColor
     ) {
         if (it.isEmpty()) setValue(null)
         else if (it.isDigitsOnly()) {
@@ -226,7 +246,6 @@ private fun AllInTextFieldPlaceholderPreview() {
 }
 
 
-@OptIn(ExperimentalFoundationApi::class)
 @Preview
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
@@ -240,8 +259,8 @@ private fun AllInTextFieldValuePreview() {
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun AllInTextFieldErrorPreview() {
     AllInTheme {
@@ -254,8 +273,8 @@ private fun AllInTextFieldErrorPreview() {
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun AllInTextFieldPasswordPreview() {
     AllInTheme {
@@ -269,6 +288,7 @@ private fun AllInTextFieldPasswordPreview() {
 }
 
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun AllInTextFieldMultilinePreview() {
     AllInTheme {

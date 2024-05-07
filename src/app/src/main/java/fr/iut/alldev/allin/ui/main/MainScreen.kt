@@ -71,7 +71,6 @@ fun MainScreen(
 
     val focusManager = LocalFocusManager.current
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-
     LaunchedEffect(key1 = drawerState.targetValue) {
         focusManager.clearFocus()
     }
@@ -99,33 +98,26 @@ fun MainScreen(
 
     val (loading, setLoading) = remember { mainViewModel.loading }
     val currentUser by mainViewModel.currentUser.collectAsStateWithLifecycle()
+
     val selectedBet by remember { mainViewModel.selectedBet }
-    val statusVisibility = remember { mutableStateOf(false) }
-    val sheetBackVisibility = remember { mutableStateOf(false) }
-    val setStatusVisibility = { it: Boolean ->
-        statusVisibility.value = it
-        if (it) sheetBackVisibility.value = true
-    }
+    var statusVisibility by remember { mutableStateOf(false) }
+    var statusVisibilityConfirm by remember { mutableStateOf<SheetValue?>(null) }
     val (participateSheetVisibility, setParticipateSheetVisibility) = remember { mutableStateOf(false) }
-
-    val events = remember { mainViewModel.events }
-    val eventBottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
-
+    val statusBottomSheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = true,
+        confirmValueChange = {
+            statusVisibilityConfirm = it
+            true
+        }
+    )
     val betStatusDisplayer = remember {
         BetStatusBottomSheetBetDisplayer(
             openParticipateSheet = { setParticipateSheetVisibility(true) }
         )
     }
 
-    val statusBottomSheetState = rememberModalBottomSheetState(
-        skipPartiallyExpanded = true,
-        confirmValueChange = {
-            if (it == SheetValue.Hidden) {
-                sheetBackVisibility.value = false
-            }
-            true
-        }
-    )
+    val events = remember { mainViewModel.events }
+    val eventBottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 
     AllInDrawer(
         drawerState = drawerState,
@@ -161,7 +153,7 @@ fun MainScreen(
                     navController = navController,
                     selectBet = { bet, participate ->
                         mainViewModel.openBetDetail(bet) { detail ->
-                            setStatusVisibility(true)
+                            statusVisibility = true
                             if (
                                 detail.bet.betStatus == BetStatus.IN_PROGRESS &&
                                 detail.userParticipation == null &&
@@ -238,9 +230,9 @@ fun MainScreen(
 
     BetStatusBottomSheet(
         state = statusBottomSheetState,
-        sheetVisibility = statusVisibility.value,
-        sheetBackVisibility = sheetBackVisibility.value,
-        onDismiss = { setStatusVisibility(false) },
+        sheetVisibility = statusVisibility,
+        sheetBackVisibility = statusBottomSheetState.targetValue == SheetValue.Expanded || statusVisibilityConfirm == SheetValue.Expanded,
+        onDismiss = { statusVisibility = false },
         betDetail = selectedBet,
         displayBet = { detail ->
             currentUser?.let { user -> betStatusDisplayer.DisplayBet(betDetail = detail, currentUser = user) }

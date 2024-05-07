@@ -319,36 +319,8 @@ class MockAllInApi : AllInApi {
             ResponseParticipation(
                 id = "",
                 betId = "UUID1",
-                username = mockUsers[2].first.username,
-                answer = YES_VALUE,
-                stake = 300
-            ),
-            ResponseParticipation(
-                id = "",
-                betId = "UUID1",
-                username = mockUsers[3].first.username,
-                answer = YES_VALUE,
-                stake = 25
-            ),
-            ResponseParticipation(
-                id = "",
-                betId = "UUID1",
-                username = mockUsers[4].first.username,
-                answer = NO_VALUE,
-                stake = 222
-            ),
-            ResponseParticipation(
-                id = "",
-                betId = "UUID1",
-                username = mockUsers[5].first.username,
-                answer = NO_VALUE,
-                stake = 222
-            ),
-            ResponseParticipation(
-                id = "",
-                betId = "UUID1",
                 username = mockUsers[6].first.username,
-                answer = NO_VALUE,
+                answer = YES_VALUE,
                 stake = 222
             ),
             ResponseParticipation(
@@ -364,27 +336,6 @@ class MockAllInApi : AllInApi {
                 username = mockUsers[2].first.username,
                 answer = "Answer 1",
                 stake = 200
-            ),
-            ResponseParticipation(
-                id = "",
-                betId = "UUID2",
-                username = mockUsers[3].first.username,
-                answer = "Answer 2",
-                stake = 200
-            ),
-            ResponseParticipation(
-                id = "",
-                betId = "UUID2",
-                username = mockUsers[4].first.username,
-                answer = "Answer 3",
-                stake = 100
-            ),
-            ResponseParticipation(
-                id = "",
-                betId = "UUID2",
-                username = mockUsers[5].first.username,
-                answer = "Answer 3",
-                stake = 400
             ),
             ResponseParticipation(
                 id = "",
@@ -431,13 +382,13 @@ class MockAllInApi : AllInApi {
                 id = "UUID3",
                 theme = "Sport",
                 sentenceBet = "Quelle équipe va gagner ?",
-                endRegistration = ZonedDateTime.now().minusDays(3),
-                endBet = ZonedDateTime.now().minusDays(2),
+                endRegistration = ZonedDateTime.now().plusDays(3),
+                endBet = ZonedDateTime.now().plusDays(2),
                 isPrivate = false,
                 response = listOf("The Monarchs", "Climate Change"),
                 createdBy = "User 1",
                 type = BetType.MATCH,
-                status = BetStatus.CLOSING,
+                status = BetStatus.IN_PROGRESS,
             )
         )
 

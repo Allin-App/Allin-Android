@@ -1,7 +1,11 @@
 package fr.iut.alldev.allin.ui.betStatus.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,7 +33,6 @@ fun BetStatusBottomSheetBack(
     status: BetStatus,
     modifier: Modifier = Modifier,
 ) {
-
     Box(
         modifier
             .fillMaxSize()
@@ -38,7 +41,9 @@ fun BetStatusBottomSheetBack(
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxHeight(1 - SHEET_HEIGHT)
+            modifier = Modifier
+                .background(status.getColor())
+                .fillMaxHeight(1 - SHEET_HEIGHT)
         ) {
             Text(
                 text = stringResource(id = status.getTitleId()),

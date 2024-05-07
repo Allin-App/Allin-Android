@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import fr.iut.alldev.allin.data.model.bet.Bet
 import fr.iut.alldev.allin.data.model.bet.Participation
+import fr.iut.alldev.allin.data.model.bet.vo.BetAnswerDetail
 import fr.iut.alldev.allin.data.model.bet.vo.BetDetail
 import fr.iut.alldev.allin.data.repository.BetRepository
 import fr.iut.alldev.allin.data.repository.UserRepository
@@ -122,13 +123,21 @@ class MainViewModel @Inject constructor(
                 loading.value = true
                 currentUser.value?.let { user ->
                     decreaseCoins(stake)
-                    selectedBet.value?.bet?.let {
+                    selectedBet.value?.let {
                         val participation = Participation(
-                            betId = it.id,
+                            betId = it.bet.id,
                             username = user.username,
                             response = response,
                             stake = stake
                         )
+
+                        selectedBet.value = it.copy(
+                            userParticipation = participation,
+                            participations = it.participations + participation,
+                            answers = getAnswerDetails(it.bet, it.participations + participation),
+
+                            )
+
                         betRepository.participateToBet(participation, keystoreManager.getTokenOrEmpty())
                     }
                 }
@@ -136,6 +145,20 @@ class MainViewModel @Inject constructor(
             }
         }
     }
+
+    private fun getAnswerDetails(bet: Bet, participations: List<Participation>): List<BetAnswerDetail> {
+        return bet.getResponses().map { response ->
+            val responseParticipations = participations.filter { it.response == response }
+            BetAnswerDetail(
+                response = response,
+                totalStakes = responseParticipations.sumOf { it.stake },
+                totalParticipants = responseParticipations.size,
+                highestStake = responseParticipations.maxOfOrNull { it.stake } ?: 0,
+                odds = if (participations.isEmpty()) 0.0f else responseParticipations.size / participations.size.toFloat()
+            )
+        }
+    }
+
 
     private fun confirmBet(response: String, betId: String) {
         viewModelScope.launch {
