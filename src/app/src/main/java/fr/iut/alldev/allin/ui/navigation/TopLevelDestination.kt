@@ -42,4 +42,11 @@ sealed class TopLevelDestination(
         subtitle = R.string.current_bets_subtitle,
         emoji = R.drawable.money_with_wings
     )
+
+    data object Ranking : TopLevelDestination(
+        route = Routes.RANKING,
+        title = R.string.ranking,
+        subtitle = R.string.ranking_subtitle,
+        emoji = R.drawable.ranking
+    )
 }

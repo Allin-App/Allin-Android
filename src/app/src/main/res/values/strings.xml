@@ -30,6 +30,8 @@
     <string name="Stake">Stake</string>
     <string name="Possible_winnings">Possible winnings</string>
     <string name="generic_error">Error</string>
+    <string name="network_error">An error occurred</string>
+    <string name="network_error_text">Make sure to be properly connected to the network then try again.</string>
 
     <!--Drawer-->
     <string name="bets">Bets</string>
@@ -44,6 +46,8 @@
     <string name="friends_subtitle">Challenge your folks by adding them as friends.</string>
     <string name="current_bets">Current bets</string>
     <string name="current_bets_subtitle">Manage your bets and reward the winners.</string>
+    <string name="ranking">Ranking</string>
+    <string name="ranking_subtitle">Browse your ranking with your friends.</string>
     <!--Welcome Page-->
     <string name="welcome_title">Welcome to</string>
     <string name="welcome_appname" translatable="false">Allin.</string>

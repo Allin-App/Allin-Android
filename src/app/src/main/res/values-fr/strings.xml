@@ -28,6 +28,8 @@
     <string name="Stake">Mise</string>
     <string name="Possible_winnings">Gains possibles</string>
     <string name="generic_error">Erreur</string>
+    <string name="network_error">Une erreur est survenue</string>
+    <string name="network_error_text">Assurez-vous d\'être bien connecté au réseau puis réessayez.</string>
 
     <!--Drawer-->
     <string name="bets">Bets</string>
@@ -42,6 +44,8 @@
     <string name="friends_subtitle">Défiez vos porches en les ajoutant en amis.</string>
     <string name="current_bets">Bets en cours</string>
     <string name="current_bets_subtitle">Gérez vos bets et récompensez les gagnants.</string>
+    <string name="ranking">Classement</string>
+    <string name="ranking_subtitle">Consultez votre classement parmi vos amis.</string>
     <!--Welcome Page-->
     <string name="welcome_title">Bienvenue sur</string>
     <string name="welcome_subtitle">Récupère tes Allcoins et viens parier avec tes amis pour prouver qui est le meilleur.</string>

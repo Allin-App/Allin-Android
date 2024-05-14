@@ -44,6 +44,7 @@ object Routes {
     const val BET_HISTORY = "BET_HISTORY"
     const val BET_CURRENT = "BET_CURRENT"
     const val FRIENDS = "FRIENDS"
+    const val RANKING = "RANKING"
 }
 
 private val fadingRoutes
@@ -66,7 +67,7 @@ internal fun NavHostController.popUpTo(route: String, baseRoute: String) {
 fun AllInNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    startDestination: String = Routes.SPLASH,
+    startDestination: String = Routes.SPLASH
 ) {
     NavHost(
         navController = navController,
@@ -141,7 +142,7 @@ internal fun AllInDrawerNavHost(
         }
 
         composable(
-            route = Routes.FRIENDS
+            route = Routes.RANKING
         ) {
             backHandlers()
             RankingScreen()

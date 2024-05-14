@@ -4,7 +4,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import fr.iut.alldev.allin.data.api.interceptors.AllInAPIException
 import fr.iut.alldev.allin.data.model.bet.BetFactory
 import fr.iut.alldev.allin.data.model.bet.BetType
 import fr.iut.alldev.allin.data.repository.BetRepository
@@ -114,7 +113,7 @@ class BetCreationViewModel @Inject constructor(
                         betRepository.createBet(bet, keystoreManager.getTokenOrEmpty())
                         onSuccess()
                     } ?: onError()
-                } catch (e: AllInAPIException) {
+                } catch (e: Exception) {
                     Timber.e(e)
                     onError()
                 }

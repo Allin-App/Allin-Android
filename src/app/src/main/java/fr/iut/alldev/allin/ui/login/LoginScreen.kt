@@ -46,7 +46,7 @@ import fr.iut.alldev.allin.ui.core.AllInTextField
 fun LoginScreen(
     navigateToDashboard: () -> Unit,
     navigateToRegister: () -> Unit,
-    loginViewModel: LoginViewModel = hiltViewModel(),
+    loginViewModel: LoginViewModel = hiltViewModel()
 ) {
     val focusManager = LocalFocusManager.current
 
@@ -170,7 +170,9 @@ fun LoginScreen(
             }
         }
     }
+
     AllInLoading(visible = loading)
+
     AllInAlertDialog(
         enabled = hasLoginError,
         title = stringResource(id = R.string.Login_Error_Title),

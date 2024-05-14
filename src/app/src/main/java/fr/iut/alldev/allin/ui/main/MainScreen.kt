@@ -56,6 +56,7 @@ private val topLevelDestinations = listOf(
     TopLevelDestination.BetCreation,
     TopLevelDestination.BetHistory,
     TopLevelDestination.Friends,
+    TopLevelDestination.Ranking,
     TopLevelDestination.CurrentBets
 )
 

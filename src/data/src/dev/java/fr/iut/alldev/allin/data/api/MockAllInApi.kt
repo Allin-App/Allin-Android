@@ -1,7 +1,5 @@
 package fr.iut.alldev.allin.data.api
 
-import fr.iut.alldev.allin.data.api.interceptors.AllInAPIException
-import fr.iut.alldev.allin.data.api.interceptors.AllInUnauthorizedException
 import fr.iut.alldev.allin.data.api.model.CheckUser
 import fr.iut.alldev.allin.data.api.model.RequestBet
 import fr.iut.alldev.allin.data.api.model.RequestParticipation
@@ -24,6 +22,8 @@ import kotlinx.coroutines.launch
 import java.time.Duration
 import java.time.ZonedDateTime
 import java.util.UUID
+
+class MockAllInApiException(override val message: String?) : Exception()
 
 class MockAllInApi : AllInApi {
 
@@ -71,12 +71,12 @@ class MockAllInApi : AllInApi {
 
     override suspend fun login(body: CheckUser): ResponseUser {
         return mockUsers.find { it.first.username == body.login && it.second == body.password }?.first
-            ?: throw AllInAPIException("Invalid login/password.")
+            ?: throw MockAllInApiException("Invalid login/password.")
     }
 
     override suspend fun login(token: String): ResponseUser {
         return getUserFromToken(token)?.first
-            ?: throw AllInAPIException("Invalid token")
+            ?: throw MockAllInApiException("Invalid token")
     }
 
     override suspend fun register(body: RequestUser): ResponseUser {
@@ -109,7 +109,7 @@ class MockAllInApi : AllInApi {
     }
 
     override suspend fun dailyGift(token: String): Int {
-        getUserFromToken(token) ?: throw AllInAPIException("Invalid login/password.")
+        getUserFromToken(token) ?: throw MockAllInApiException("Invalid login/password.")
         if (mockGifts[token] == null) {
             mockGifts[token] = ZonedDateTime.now().minusDays(1)
         }
@@ -130,16 +130,16 @@ class MockAllInApi : AllInApi {
                 } else it
             }
             return amount
-        } else throw AllInUnauthorizedException("Gift already taken today")
+        } else throw MockAllInApiException("Gift already taken today")
     }
 
     override suspend fun getAllBets(token: String): List<ResponseBet> {
-        getUserFromToken(token) ?: throw AllInAPIException("Invalid login/password.")
+        getUserFromToken(token) ?: throw MockAllInApiException("Invalid login/password.")
         return mockBets
     }
 
     override suspend fun getToConfirm(token: String): List<ResponseBetDetail> {
-        val user = getUserFromToken(token) ?: throw AllInAPIException("Invalid login/password.")
+        val user = getUserFromToken(token) ?: throw MockAllInApiException("Invalid login/password.")
         return mockBets.filter {
             it.createdBy == user.first.username && it.status == BetStatus.CLOSING
         }.map { bet ->
@@ -156,8 +156,8 @@ class MockAllInApi : AllInApi {
     }
 
     override suspend fun confirmBet(token: String, id: String, value: String) {
-        getUserFromToken(token) ?: throw AllInAPIException("Invalid login/password.")
-        val bet = mockBets.find { it.id == id } ?: throw AllInAPIException("Unauthorized")
+        getUserFromToken(token) ?: throw MockAllInApiException("Invalid login/password.")
+        val bet = mockBets.find { it.id == id } ?: throw MockAllInApiException("Unauthorized")
         mockResults.add(
             ResponseBetResult(
                 betId = id,
@@ -168,8 +168,8 @@ class MockAllInApi : AllInApi {
     }
 
     override suspend fun getBet(token: String, id: String): ResponseBetDetail {
-        val bet = mockBets.find { it.id == id } ?: throw AllInAPIException("Bet not found")
-        val user = getUserFromToken(token) ?: throw AllInAPIException("Invalid login/password.")
+        val bet = mockBets.find { it.id == id } ?: throw MockAllInApiException("Bet not found")
+        val user = getUserFromToken(token) ?: throw MockAllInApiException("Invalid login/password.")
         val betParticipations = mockParticipations.filter { it.betId == bet.id }
         val userParticipation = betParticipations.find { it.username == user.first.username }
         val wonParticipation = if (bet.status == BetStatus.FINISHED) {
@@ -187,7 +187,7 @@ class MockAllInApi : AllInApi {
     }
 
     override suspend fun getBetCurrent(token: String): List<ResponseBetDetail> {
-        val user = getUserFromToken(token) ?: throw AllInAPIException("Invalid login/password.")
+        val user = getUserFromToken(token) ?: throw MockAllInApiException("Invalid login/password.")
         val betParticipations = mockParticipations.filter { it.username == user.first.username }
         return betParticipations.map { p ->
             getBet(token, p.betId)
@@ -197,7 +197,7 @@ class MockAllInApi : AllInApi {
     }
 
     override suspend fun getBetHistory(token: String): List<ResponseBetResultDetail> {
-        val user = getUserFromToken(token) ?: throw AllInAPIException("Invalid login/password.")
+        val user = getUserFromToken(token) ?: throw MockAllInApiException("Invalid login/password.")
         val betParticipations = mockParticipations.filter { it.username == user.first.username }
         return betParticipations.map { p ->
             getBet(token, p.betId)
@@ -252,7 +252,7 @@ class MockAllInApi : AllInApi {
 
                 )
             )
-        } ?: throw AllInAPIException("Invalid token")
+        } ?: throw MockAllInApiException("Invalid token")
     }
 
     companion object {

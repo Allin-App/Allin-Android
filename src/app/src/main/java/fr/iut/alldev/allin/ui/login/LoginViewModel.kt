@@ -4,12 +4,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import fr.iut.alldev.allin.data.api.interceptors.AllInAPIException
 import fr.iut.alldev.allin.data.repository.UserRepository
 import fr.iut.alldev.allin.keystore.AllInKeystoreManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import retrofit2.HttpException
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,9 +24,7 @@ class LoginViewModel @Inject constructor(
 
     val username = mutableStateOf("")
     val password = mutableStateOf("")
-    fun onLogin(
-        navigateToDashboard: () -> Unit
-    ) {
+    fun onLogin(navigateToDashboard: () -> Unit) {
         viewModelScope.launch {
             loading.value = true
 
@@ -34,12 +33,14 @@ class LoginViewModel @Inject constructor(
                     userRepository
                         .login(username.value, password.value)
                         ?.let { token -> keystoreManager.putToken(token) }
-                } catch (e: AllInAPIException) {
+                    navigateToDashboard()
+                } catch (e: Exception) {
                     hasError.value = true
+
+                    if (e !is HttpException || e.code() != 404) {
+                        Timber.e(e)
+                    }
                 }
-            }
-            if (!hasError.value) {
-                navigateToDashboard()
             }
             loading.value = false
         }
