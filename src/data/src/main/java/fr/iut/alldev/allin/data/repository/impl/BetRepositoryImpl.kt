@@ -1,8 +1,11 @@
 package fr.iut.alldev.allin.data.repository.impl
 
 import fr.iut.alldev.allin.data.api.AllInApi
+import fr.iut.alldev.allin.data.api.AllInApi.Companion.asRequestBody
 import fr.iut.alldev.allin.data.api.AllInApi.Companion.formatBearerToken
+import fr.iut.alldev.allin.data.api.model.RequestBetFilters
 import fr.iut.alldev.allin.data.model.bet.Bet
+import fr.iut.alldev.allin.data.model.bet.BetFilter
 import fr.iut.alldev.allin.data.model.bet.BetResultDetail
 import fr.iut.alldev.allin.data.model.bet.Participation
 import fr.iut.alldev.allin.data.model.bet.vo.BetDetail
@@ -45,8 +48,11 @@ class BetRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun getAllBets(token: String): List<Bet> =
-        api.getAllBets(token.formatBearerToken()).map { it.toBet() }
+    override suspend fun getAllBets(token: String, filters: List<BetFilter>): List<Bet> =
+        api.getAllBets(
+            token.formatBearerToken(),
+            RequestBetFilters(filters)
+        ).map { it.toBet() }
 
     override suspend fun getToConfirm(token: String): List<BetDetail> =
         api.getToConfirm(token.formatBearerToken()).map { it.toBetDetail() }
@@ -55,7 +61,7 @@ class BetRepositoryImpl @Inject constructor(
         api.getWon(token.formatBearerToken()).map { it.toBetResultDetail() }
 
     override suspend fun confirmBet(token: String, id: String, response: String) {
-        api.confirmBet(token.formatBearerToken(), id, response)
+        api.confirmBet(token.formatBearerToken(), id, response.asRequestBody())
     }
 
 }

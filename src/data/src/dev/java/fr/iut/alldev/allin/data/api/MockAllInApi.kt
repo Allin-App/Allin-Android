@@ -2,6 +2,7 @@ package fr.iut.alldev.allin.data.api
 
 import fr.iut.alldev.allin.data.api.model.CheckUser
 import fr.iut.alldev.allin.data.api.model.RequestBet
+import fr.iut.alldev.allin.data.api.model.RequestBetFilters
 import fr.iut.alldev.allin.data.api.model.RequestParticipation
 import fr.iut.alldev.allin.data.api.model.RequestUser
 import fr.iut.alldev.allin.data.api.model.ResponseBet
@@ -19,6 +20,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import okhttp3.RequestBody
 import java.time.Duration
 import java.time.ZonedDateTime
 import java.util.UUID
@@ -133,7 +135,7 @@ class MockAllInApi : AllInApi {
         } else throw MockAllInApiException("Gift already taken today")
     }
 
-    override suspend fun getAllBets(token: String): List<ResponseBet> {
+    override suspend fun getAllBets(token: String, body: RequestBetFilters): List<ResponseBet> {
         getUserFromToken(token) ?: throw MockAllInApiException("Invalid login/password.")
         return mockBets
     }
@@ -155,13 +157,13 @@ class MockAllInApi : AllInApi {
         }
     }
 
-    override suspend fun confirmBet(token: String, id: String, value: String) {
+    override suspend fun confirmBet(token: String, id: String, value: RequestBody) {
         getUserFromToken(token) ?: throw MockAllInApiException("Invalid login/password.")
         val bet = mockBets.find { it.id == id } ?: throw MockAllInApiException("Unauthorized")
         mockResults.add(
             ResponseBetResult(
                 betId = id,
-                result = value
+                result = value.toString()
             )
         )
         mockBets[mockBets.indexOf(bet)] = bet.copy(status = BetStatus.FINISHED)

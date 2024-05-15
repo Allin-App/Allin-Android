@@ -106,6 +106,10 @@ class RegisterViewModel @Inject constructor(
                                 password.value
                             )
                             ?.let { token -> keystoreManager.putToken(token) }
+
+                        withContext(Dispatchers.Main) {
+                            navigateToDashboard()
+                        }
                     } catch (e: Exception) {
                         when {
                             e is HttpException && e.code() == 409 -> {
@@ -121,9 +125,6 @@ class RegisterViewModel @Inject constructor(
                         }
                     }
                 }
-            }
-            if (!hasError.value) {
-                navigateToDashboard()
             }
             loading.value = false
         }

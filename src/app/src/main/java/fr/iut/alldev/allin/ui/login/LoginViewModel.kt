@@ -33,7 +33,10 @@ class LoginViewModel @Inject constructor(
                     userRepository
                         .login(username.value, password.value)
                         ?.let { token -> keystoreManager.putToken(token) }
-                    navigateToDashboard()
+
+                    withContext(Dispatchers.Main) {
+                        navigateToDashboard()
+                    }
                 } catch (e: Exception) {
                     hasError.value = true
 

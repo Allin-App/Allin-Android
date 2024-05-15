@@ -2,6 +2,7 @@ package fr.iut.alldev.allin.data.api.model
 
 import androidx.annotation.Keep
 import fr.iut.alldev.allin.data.model.bet.Bet
+import fr.iut.alldev.allin.data.model.bet.BetFilter
 import fr.iut.alldev.allin.data.model.bet.BetResult
 import fr.iut.alldev.allin.data.model.bet.BetResultDetail
 import fr.iut.alldev.allin.data.model.bet.BetStatus
@@ -157,3 +158,8 @@ data class ResponseBetResultDetail(
             won = won
         )
 }
+
+@Serializable
+data class RequestBetFilters(
+    val filters: List<BetFilter>
+)

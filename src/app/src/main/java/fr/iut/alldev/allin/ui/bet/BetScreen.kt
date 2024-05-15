@@ -23,10 +23,9 @@ import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -35,10 +34,11 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.data.ext.formatToMediumDateNoYear
 import fr.iut.alldev.allin.data.ext.formatToTime
 import fr.iut.alldev.allin.data.model.bet.Bet
+import fr.iut.alldev.allin.data.model.bet.BetFilter
+import fr.iut.alldev.allin.ext.textId
 import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.bet.components.BetScreenCard
 import fr.iut.alldev.allin.ui.bet.components.BetScreenPopularCard
@@ -51,6 +51,7 @@ fun BetScreen(
     selectBet: (Bet, Boolean) -> Unit,
 ) {
     val bets by viewModel.bets.collectAsState()
+    val filters by viewModel.filters.collectAsState()
 
     val refreshing by viewModel.isRefreshing.collectAsState()
     val pullRefreshState = rememberPullRefreshState(refreshing, { viewModel.refresh() })
@@ -62,7 +63,7 @@ fun BetScreen(
             .padding(top = with(LocalDensity.current) {
                 progressAnimation.toDp()
             }),
-        contentPadding = WindowInsets.navigationBars.asPaddingValues()
+        contentPadding = WindowInsets.navigationBars.asPaddingValues(),
     ) {
         item {
             Box(
@@ -98,18 +99,24 @@ fun BetScreen(
                 horizontalArrangement = Arrangement.spacedBy(9.dp),
                 contentPadding = PaddingValues(horizontal = 23.dp)
             ) {
-                items(items) {
-                    var isSelected by remember { mutableStateOf(false) }
+                items(BetFilter.entries) {
+                    val isSelected by remember {
+                        derivedStateOf {
+                            filters.contains(it)
+                        }
+                    }
                     AllInChip(
-                        text = stringResource(id = it),
+                        text = stringResource(id = it.textId()),
                         isSelected = isSelected,
-                        onClick = {
-                            isSelected = !isSelected
-                        })
+                        onClick = { viewModel.toggleFilter(it) }
+                    )
                 }
             }
         }
-        itemsIndexed(bets) { idx, it ->
+        itemsIndexed(
+            items = bets,
+            key = { _, it -> it.id }
+        ) { idx, it ->
             BetScreenCard(
                 creator = it.creator,
                 category = it.theme,
@@ -119,7 +126,9 @@ fun BetScreen(
                 players = List(3) { null },
                 onClickParticipate = { selectBet(it, true) },
                 onClickCard = { selectBet(it, false) },
-                modifier = Modifier.padding(horizontal = 23.dp)
+                modifier = Modifier
+                    .animateItemPlacement()
+                    .padding(horizontal = 23.dp)
             )
             if (idx != bets.lastIndex) {
                 Spacer(modifier = Modifier.height(24.dp))
@@ -127,10 +136,3 @@ fun BetScreen(
         }
     }
 }
-
-val items = listOf(
-    R.string.Public,
-    R.string.Invitation,
-    R.string.Current,
-    R.string.Finished
-)

@@ -178,7 +178,7 @@ private fun BetStatusParticipationBottomSheetContent(
                 color = AllInTheme.colors.onBackground
             )
             AllInCoinCount(
-                amount = stake?.let { (it + (it * odds)).roundToInt() } ?: 0,
+                amount = stake?.let { (it * odds).roundToInt() } ?: 0,
                 color = AllInTheme.colors.onBackground
             )
         }
