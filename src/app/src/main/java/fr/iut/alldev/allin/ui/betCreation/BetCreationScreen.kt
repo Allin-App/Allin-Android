@@ -61,8 +61,8 @@ fun BetCreationScreen(
     var selectionElements by remember { mutableStateOf(listOf<SelectionElement>()) }
     var selectedBetTypeElement by remember { mutableStateOf<SelectionElement?>(null) }
 
-    val themeFieldName = stringResource(id = R.string.Theme)
-    val phraseFieldName = stringResource(id = R.string.Bet_Phrase)
+    val themeFieldName = stringResource(id = R.string.bet_creation_theme)
+    val phraseFieldName = stringResource(id = R.string.bet_creation_bet_phrase)
 
     LaunchedEffect(key1 = betTypes) {
         selectionElements = betTypes.map {

@@ -150,9 +150,9 @@ fun AllInSelectionBox(
 private fun AllInSelectionBoxClosedPreview() {
     AllInTheme {
         val elements = listOf(
-            SelectionElement(R.string.yes_no, Icons.AutoMirrored.Default.HelpOutline),
-            SelectionElement(R.string.sport_match, Icons.Default.SportsFootball),
-            SelectionElement(R.string.custom_answers, Icons.Default.PinEnd)
+            SelectionElement(R.string.bet_type_binary, Icons.AutoMirrored.Default.HelpOutline),
+            SelectionElement(R.string.bet_type_match, Icons.Default.SportsFootball),
+            SelectionElement(R.string.bet_type_custom, Icons.Default.PinEnd)
         )
         AllInSelectionBox(
             isOpen = false,
@@ -248,9 +248,9 @@ fun AllInSelectionBox(
 private fun AllInSelectionBoxOpenPreview() {
     AllInTheme {
         val elements = listOf(
-            SelectionElement(R.string.yes_no, Icons.AutoMirrored.Default.HelpOutline),
-            SelectionElement(R.string.sport_match, Icons.Default.SportsFootball),
-            SelectionElement(R.string.custom_answers, Icons.Default.Edit)
+            SelectionElement(R.string.bet_type_binary, Icons.AutoMirrored.Default.HelpOutline),
+            SelectionElement(R.string.bet_type_match, Icons.Default.SportsFootball),
+            SelectionElement(R.string.bet_type_custom, Icons.Default.Edit)
         )
         AllInSelectionBox(
             isOpen = true,

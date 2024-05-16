@@ -55,7 +55,7 @@ fun BetScreenCard(
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(11.dp))
-            BetDateTimeRow(label = stringResource(id = R.string.Starting), date = date, time = time)
+            BetDateTimeRow(label = stringResource(id = R.string.bet_starting), date = date, time = time)
         }
         HorizontalDivider(
             thickness = 1.dp,
@@ -75,7 +75,7 @@ fun BetScreenCard(
                 Spacer(modifier = Modifier.width(12.dp))
                 Text(
                     text = pluralStringResource(
-                        id = R.plurals.n_players_waiting,
+                        id = R.plurals.bet_players_waiting_format,
                         players.size,
                         players.size
                     ),
@@ -85,7 +85,7 @@ fun BetScreenCard(
             }
             RainbowButton(
                 modifier = Modifier.padding(6.dp),
-                text = stringResource(id = R.string.Participate),
+                text = stringResource(id = R.string.bet_participate),
                 onClick = onClickParticipate
             )
         }

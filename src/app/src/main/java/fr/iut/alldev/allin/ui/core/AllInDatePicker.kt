@@ -40,7 +40,7 @@ fun AllInDatePicker(
                 }
             ) {
                 Text(
-                    text = stringResource(id = R.string.Validate),
+                    text = stringResource(id = R.string.generic_validate),
                     style = AllInTheme.typography.h1.copy(
                         brush = AllInColorToken.allInMainGradient
                     )
@@ -50,7 +50,7 @@ fun AllInDatePicker(
         dismissButton = {
             TextButton(onClick = onDismiss) {
                 Text(
-                    text = stringResource(id = R.string.Cancel),
+                    text = stringResource(id = R.string.generic_cancel),
                     color = AllInTheme.colors.onBackground2,
                     style = AllInTheme.typography.sm1
                 )

@@ -77,7 +77,7 @@ fun RegisterScreenContent(
                     modifier = Modifier
                         .padding(top = 16.dp)
                         .fillMaxWidth(),
-                    text = stringResource(id = R.string.Hello_x, username),
+                    text = stringResource(id = R.string.register_hello_format, username),
                     color = AllInTheme.colors.onMainSurface,
                     style = AllInTheme.typography.sm1,
                     textAlign = TextAlign.Center,
@@ -87,7 +87,7 @@ fun RegisterScreenContent(
                 )
                 Text(
                     modifier = Modifier.fillMaxWidth(),
-                    text = stringResource(id = R.string.Register_title),
+                    text = stringResource(id = R.string.register_title),
                     color = AllInTheme.colors.onMainSurface,
                     style = AllInTheme.typography.sm1,
                     textAlign = TextAlign.Center,
@@ -96,7 +96,7 @@ fun RegisterScreenContent(
                 Spacer(modifier = Modifier.height(23.dp))
                 Text(
                     modifier = Modifier.fillMaxWidth(),
-                    text = stringResource(id = R.string.Register_subtitle),
+                    text = stringResource(id = R.string.register_subtitle),
                     color = AllInTheme.colors.onMainSurface,
                     style = AllInTheme.typography.p1,
                     textAlign = TextAlign.Center,
@@ -137,7 +137,7 @@ fun RegisterScreenContent(
                         onValueChange = setPassword
                     )
                     AllInPasswordField(
-                        placeholder = stringResource(id = R.string.confirm_password),
+                        placeholder = stringResource(id = R.string.register_confirm_password),
                         value = passwordValidation,
                         modifier = Modifier.fillMaxWidth(),
                         imeAction = ImeAction.Done,
@@ -163,7 +163,7 @@ fun RegisterScreenContent(
                 .navigationBarsPadding()
         ) {
             AllInGradientButton(
-                text = stringResource(id = R.string.Register),
+                text = stringResource(id = R.string.generic_register),
                 onClick = onRegister
             )
             Spacer(modifier = Modifier.height(30.dp))
@@ -172,14 +172,14 @@ fun RegisterScreenContent(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = stringResource(id = R.string.already_have_account),
+                    text = stringResource(id = R.string.register_already_have_account),
                     color = AllInTheme.colors.onMainSurface,
                     fontSize = 15.sp,
                     style = AllInTheme.typography.p1,
                     modifier = Modifier.padding(end = 5.dp)
                 )
                 ClickableText(
-                    text = AnnotatedString(stringResource(id = R.string.Login)),
+                    text = AnnotatedString(stringResource(id = R.string.generic_login)),
                     style = AllInTheme.typography.p1.copy(
                         color = AllInColorToken.allInPurple,
                         fontSize = 15.sp,

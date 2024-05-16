@@ -83,10 +83,12 @@ fun WelcomeScreenContent(
 
             AllInButton(
                 color = AllInTheme.colors.tint1,
-                text = stringResource(id = R.string.join),
+                text = stringResource(id = R.string.welcome_join_text),
                 textColor = AllInTheme.colors.background,
                 onClick = navigateToRegister,
-                modifier = Modifier.padding(bottom = 13.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 13.dp)
             )
 
             Row(
@@ -94,14 +96,14 @@ fun WelcomeScreenContent(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = stringResource(id = R.string.already_have_account),
+                    text = stringResource(id = R.string.register_already_have_account),
                     color = AllInTheme.colors.tint1,
                     fontSize = 15.sp,
                     style = AllInTheme.typography.p1,
                     modifier = Modifier.padding(end = 5.dp)
                 )
                 ClickableText(
-                    text = AnnotatedString(stringResource(id = R.string.Login)),
+                    text = AnnotatedString(stringResource(id = R.string.generic_login)),
                     style = AllInTheme.typography.p1.copy(
                         color = AllInTheme.colors.tint1,
                         fontSize = 15.sp,

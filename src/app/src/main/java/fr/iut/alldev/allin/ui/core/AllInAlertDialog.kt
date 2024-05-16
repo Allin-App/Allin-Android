@@ -17,7 +17,7 @@ fun AllInAlertDialog(
     enabled: Boolean = true,
     title: String,
     text: String,
-    confirmText: String = stringResource(id = R.string.Ok),
+    confirmText: String = stringResource(id = R.string.generic_ok),
     onDismiss: () -> Unit,
     onConfirm: () -> Unit = onDismiss,
 ) {

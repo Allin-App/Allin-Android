@@ -112,7 +112,7 @@ private fun BetStatusParticipationBottomSheetContent(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = stringResource(id = R.string.place_your_bets),
+            text = stringResource(id = R.string.bet_status_place_your_bets),
             style = AllInTheme.typography.h2,
             color = AllInTheme.colors.onMainSurface,
             fontSize = 20.sp,
@@ -173,7 +173,7 @@ private fun BetStatusParticipationBottomSheetContent(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = stringResource(id = R.string.Possible_winnings),
+                text = stringResource(id = R.string.participation_possible_winnings),
                 style = AllInTheme.typography.p1,
                 color = AllInTheme.colors.onBackground
             )
@@ -185,11 +185,11 @@ private fun BetStatusParticipationBottomSheetContent(
         AllInButton(
             enabled = enabled,
             color = AllInColorToken.allInPurple,
-            text = stringResource(id = R.string.Participate),
+            text = stringResource(id = R.string.bet_participate),
             textColor = AllInColorToken.white,
             radius = 5.dp,
             onClick = onButtonClick,
-            modifier = Modifier
+            modifier = Modifier.fillMaxWidth()
         )
 
         Spacer(modifier = Modifier.padding(bottomSheetNavigationBarsPadding()))

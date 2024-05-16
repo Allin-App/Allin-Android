@@ -8,13 +8,20 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.input.*
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
@@ -38,6 +45,9 @@ fun AllInTextField(
     placeholder: String? = null,
     maxChar: Int? = null,
     enabled: Boolean = true,
+    leadingIcon: Painter? = null,
+    leadingIconColor: Color? = null,
+    leadingContent: @Composable (() -> Unit)? = null,
     trailingIcon: Painter? = null,
     trailingIconColor: Color? = null,
     trailingContent: @Composable (() -> Unit)? = null,
@@ -86,6 +96,15 @@ fun AllInTextField(
                     painter = it,
                     contentDescription = null,
                     tint = trailingIconColor ?: AllInColorToken.allInLightGrey300
+                )
+            }
+        },
+        leadingIcon = leadingContent ?: leadingIcon?.let {
+            @Composable {
+                Icon(
+                    painter = it,
+                    contentDescription = null,
+                    tint = leadingIconColor ?: AllInColorToken.allInLightGrey300
                 )
             }
         },

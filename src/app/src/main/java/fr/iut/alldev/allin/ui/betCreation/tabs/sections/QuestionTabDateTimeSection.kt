@@ -17,10 +17,10 @@ import fr.iut.alldev.allin.ui.core.AllInTitleInfo
 
 @Composable
 internal fun QuestionTabDateTimeSection(
-    setRegisterDateDialog: (Boolean)->Unit,
-    setEndDateDialog: (Boolean)->Unit,
-    setRegisterTimeDialog: (Boolean)->Unit,
-    setEndTimeDialog: (Boolean)->Unit,
+    setRegisterDateDialog: (Boolean) -> Unit,
+    setEndDateDialog: (Boolean) -> Unit,
+    setRegisterTimeDialog: (Boolean) -> Unit,
+    setEndTimeDialog: (Boolean) -> Unit,
     registerDateError: String?,
     betDateError: String?,
     registerDate: String,
@@ -30,10 +30,10 @@ internal fun QuestionTabDateTimeSection(
     interactionSource: MutableInteractionSource
 ) {
     AllInTitleInfo(
-        text = stringResource(id = R.string.End_registration_date),
+        text = stringResource(id = R.string.bet_creation_end_registration_date),
         icon = Icons.AutoMirrored.Outlined.HelpOutline,
         modifier = Modifier.padding(start = 11.dp, bottom = 8.dp),
-        tooltipText = stringResource(id = R.string.Register_tooltip),
+        tooltipText = stringResource(id = R.string.bet_creation_register_end_date_tooltip),
         interactionSource = interactionSource
     )
     BetCreationScreenDateTimeRow(
@@ -42,15 +42,15 @@ internal fun QuestionTabDateTimeSection(
         onClickDate = { setRegisterDateDialog(true) },
         onClickTime = { setRegisterTimeDialog(true) },
     )
-    registerDateError?.let{
+    registerDateError?.let {
         AllInErrorLine(text = it)
     }
     Spacer(modifier = Modifier.height(12.dp))
     AllInTitleInfo(
-        text = stringResource(id = R.string.End_bet_date),
+        text = stringResource(id = R.string.bet_creation_end_bet_date),
         icon = Icons.AutoMirrored.Outlined.HelpOutline,
         modifier = Modifier.padding(start = 11.dp, bottom = 8.dp),
-        tooltipText = stringResource(id = R.string.BetEnd_tooltip),
+        tooltipText = stringResource(id = R.string.bet_creation_bet_end_date_tooltip),
         interactionSource = interactionSource
     )
     BetCreationScreenDateTimeRow(
@@ -59,7 +59,7 @@ internal fun QuestionTabDateTimeSection(
         onClickDate = { setEndDateDialog(true) },
         onClickTime = { setEndTimeDialog(true) },
     )
-    betDateError?.let{
+    betDateError?.let {
         AllInErrorLine(text = it)
     }
 }

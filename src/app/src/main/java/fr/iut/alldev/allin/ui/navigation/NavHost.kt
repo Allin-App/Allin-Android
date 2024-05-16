@@ -25,6 +25,7 @@ import fr.iut.alldev.allin.ui.betCreation.BetCreationScreen
 import fr.iut.alldev.allin.ui.betHistory.BetCurrentScreen
 import fr.iut.alldev.allin.ui.betHistory.BetHistoryScreen
 import fr.iut.alldev.allin.ui.core.snackbar.SnackbarType
+import fr.iut.alldev.allin.ui.friends.FriendsScreen
 import fr.iut.alldev.allin.ui.login.LoginScreen
 import fr.iut.alldev.allin.ui.main.MainScreen
 import fr.iut.alldev.allin.ui.main.MainViewModel
@@ -111,7 +112,6 @@ internal fun AllInDrawerNavHost(
         enterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None }
     ) {
-
         composable(route = Routes.PUBLIC_BETS) {
             backHandlers()
             BetScreen(
@@ -146,6 +146,13 @@ internal fun AllInDrawerNavHost(
         ) {
             backHandlers()
             RankingScreen()
+        }
+
+        composable(
+            route = Routes.FRIENDS
+        ) {
+            backHandlers()
+            FriendsScreen()
         }
 
         composable(

@@ -23,16 +23,16 @@ fun BetStatus.getTitleId(): Int {
 @StringRes
 fun BetStatus.getDateStartLabelId(): Int {
     return when (this) {
-        BetStatus.CLOSING, BetStatus.FINISHED, BetStatus.CANCELLED -> R.string.Started
-        else -> R.string.Starting
+        BetStatus.CLOSING, BetStatus.FINISHED, BetStatus.CANCELLED -> R.string.bet_started
+        else -> R.string.bet_starting
     }
 }
 
 @StringRes
 fun BetStatus.getDateEndLabelId(): Int {
     return when (this) {
-        BetStatus.CLOSING, BetStatus.FINISHED, BetStatus.CANCELLED -> R.string.Ended
-        else -> R.string.Ends
+        BetStatus.CLOSING, BetStatus.FINISHED, BetStatus.CANCELLED -> R.string.bet_ended
+        else -> R.string.bet_ends
     }
 }
 

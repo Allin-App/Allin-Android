@@ -51,9 +51,9 @@ fun DrawerHeader(
                 .padding(horizontal = 69.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            DrawerHeaderStat(label = stringResource(id = R.string.bets), value = nbBets)
-            DrawerHeaderStat(label = stringResource(id = R.string.best_win), value = bestWin)
-            DrawerHeaderStat(label = stringResource(id = R.string.friends), value = nbFriends)
+            DrawerHeaderStat(label = stringResource(id = R.string.drawer_bets), value = nbBets)
+            DrawerHeaderStat(label = stringResource(id = R.string.drawer_best_win), value = bestWin)
+            DrawerHeaderStat(label = stringResource(id = R.string.drawer_friends), value = nbFriends)
         }
     }
 }

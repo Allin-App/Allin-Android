@@ -10,43 +10,43 @@ sealed class TopLevelDestination(
 ) {
     data object PublicBets : TopLevelDestination(
         route = Routes.PUBLIC_BETS,
-        title = R.string.public_bets,
-        subtitle = R.string.public_bets_subtitle,
+        title = R.string.drawer_public_bets,
+        subtitle = R.string.drawer_public_bets_subtitle,
         emoji = R.drawable.globe
     )
 
     data object BetCreation : TopLevelDestination(
         route = Routes.BET_CREATION,
-        title = R.string.create_a_bet,
-        subtitle = R.string.create_a_bet_subtitle,
+        title = R.string.drawer_create_bet,
+        subtitle = R.string.drawer_create_bet_subtitle,
         emoji = R.drawable.video_game
     )
 
     data object BetHistory : TopLevelDestination(
         route = Routes.BET_HISTORY,
-        title = R.string.bet_history,
-        subtitle = R.string.bet_history_subtitle,
+        title = R.string.drawer_bet_history,
+        subtitle = R.string.drawer_bet_history_subtitle,
         emoji = R.drawable.eyes
     )
 
     data object Friends : TopLevelDestination(
         route = Routes.FRIENDS,
-        title = R.string.friends,
-        subtitle = R.string.friends_subtitle,
+        title = R.string.drawer_friends,
+        subtitle = R.string.drawer_friends_subtitle,
         emoji = R.drawable.holding_hands
     )
 
     data object CurrentBets : TopLevelDestination(
         route = Routes.BET_CURRENT,
-        title = R.string.current_bets,
-        subtitle = R.string.current_bets_subtitle,
+        title = R.string.drawer_current_bets,
+        subtitle = R.string.drawer_current_bets_subtitle,
         emoji = R.drawable.money_with_wings
     )
 
     data object Ranking : TopLevelDestination(
         route = Routes.RANKING,
-        title = R.string.ranking,
-        subtitle = R.string.ranking_subtitle,
+        title = R.string.drawer_ranking,
+        subtitle = R.string.drawer_ranking_subtitle,
         emoji = R.drawable.ranking
     )
 }

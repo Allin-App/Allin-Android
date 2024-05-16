@@ -50,8 +50,8 @@ fun BetCreationScreenAnswerTab(
                     modifier = Modifier.padding(vertical = 20.dp),
                     verticalArrangement = Arrangement.spacedBy(17.dp)
                 ) {
-                    BetCreationScreenBottomText(text = stringResource(id = R.string.yes_no_bottom_text_1))
-                    BetCreationScreenBottomText(text = stringResource(id = R.string.yes_no_bottom_text_2))
+                    BetCreationScreenBottomText(text = stringResource(id = R.string.bet_creation_yes_no_bottom_text_1))
+                    BetCreationScreenBottomText(text = stringResource(id = R.string.bet_creation_yes_no_bottom_text_2))
                 }
             }
 

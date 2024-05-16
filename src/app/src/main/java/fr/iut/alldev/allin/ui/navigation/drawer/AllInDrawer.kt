@@ -74,7 +74,7 @@ fun AllInDrawer(
                     modifier = Modifier.align(Alignment.CenterHorizontally)
                 ) {
                     Text(
-                        text = stringResource(id = R.string.Logout),
+                        text = stringResource(id = R.string.generic_logout),
                         style = AllInTheme.typography.sm1,
                         color = AllInColorToken.allInDarkGrey50,
                         fontSize = 16.sp

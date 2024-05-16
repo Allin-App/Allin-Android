@@ -44,10 +44,10 @@ fun QuestionTabPrivacySection(
     interactionSource: MutableInteractionSource,
 ) {
     AllInTitleInfo(
-        text = stringResource(id = R.string.Bet_privacy),
+        text = stringResource(id = R.string.bet_creation_bet_privacy),
         icon = Icons.AutoMirrored.Outlined.HelpOutline,
         modifier = Modifier.padding(start = 11.dp, bottom = 8.dp),
-        tooltipText = stringResource(id = R.string.Privacy_tooltip),
+        tooltipText = stringResource(id = R.string.bet_creation_privacy_tooltip),
         interactionSource = interactionSource
     )
     Row(
@@ -55,7 +55,7 @@ fun QuestionTabPrivacySection(
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         AllInIconChip(
-            text = stringResource(id = R.string.Public),
+            text = stringResource(id = R.string.bet_public),
             leadingIcon = Icons.Default.Public,
             onClick = {
                 setIsPublic(true)
@@ -63,7 +63,7 @@ fun QuestionTabPrivacySection(
             isSelected = isPublic
         )
         AllInIconChip(
-            text = stringResource(id = R.string.Private),
+            text = stringResource(id = R.string.bet_private),
             leadingIcon = Icons.Default.Lock,
             onClick = {
                 setIsPublic(false)
@@ -84,13 +84,13 @@ fun QuestionTabPrivacySection(
                 modifier = Modifier.padding(vertical = 20.dp),
                 verticalArrangement = Arrangement.spacedBy(17.dp)
             ) {
-                BetCreationScreenBottomText(text = stringResource(id = R.string.public_bottom_text_1))
-                BetCreationScreenBottomText(text = stringResource(id = R.string.public_bottom_text_2))
+                BetCreationScreenBottomText(text = stringResource(id = R.string.bet_creation_public_bottom_text_1))
+                BetCreationScreenBottomText(text = stringResource(id = R.string.bet_creation_public_bottom_text_2))
             }
         } else {
             AllInRetractableCard(
                 text = pluralStringResource(
-                    id = R.plurals.n_friends_available,
+                    id = R.plurals.bet_creation_friends_available_format,
                     friends.size,
                     friends.size
                 ),
@@ -137,9 +137,9 @@ fun QuestionTabPrivacySection(
                 modifier = Modifier.padding(vertical = 20.dp),
                 verticalArrangement = Arrangement.spacedBy(17.dp)
             ) {
-                BetCreationScreenBottomText(text = stringResource(id = R.string.private_bottom_text_1))
-                BetCreationScreenBottomText(text = stringResource(id = R.string.private_bottom_text_2))
-                BetCreationScreenBottomText(text = stringResource(id = R.string.private_bottom_text_3))
+                BetCreationScreenBottomText(text = stringResource(id = R.string.bet_creation_private_bottom_text_1))
+                BetCreationScreenBottomText(text = stringResource(id = R.string.bet_creation_private_bottom_text_2))
+                BetCreationScreenBottomText(text = stringResource(id = R.string.bet_creation_private_bottom_text_3))
             }
         }
     }

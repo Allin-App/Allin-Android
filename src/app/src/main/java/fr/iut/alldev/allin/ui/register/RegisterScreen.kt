@@ -36,9 +36,9 @@ fun RegisterScreen(
     val (password, setPassword) = remember { registerViewModel.password }
     val (passwordValidation, setPasswordValidation) = remember { registerViewModel.passwordValidation }
 
-    val usernameFieldName = stringResource(id = R.string.username)
-    val emailFieldName = stringResource(id = R.string.email)
-    val passwordFieldName = stringResource(id = R.string.password)
+    val usernameFieldName = stringResource(id = R.string.generic_username)
+    val emailFieldName = stringResource(id = R.string.generic_email)
+    val passwordFieldName = stringResource(id = R.string.generic_password)
 
     val keyboardActions = remember {
         KeyboardActions(

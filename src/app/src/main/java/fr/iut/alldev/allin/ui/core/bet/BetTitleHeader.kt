@@ -31,7 +31,7 @@ fun BetTitleHeader(
             Modifier.align(Alignment.End)
         ) {
             HighlightedText(
-                text = stringResource(id = R.string.Proposed_by_x, creator),
+                text = stringResource(id = R.string.bet_Proposed_by_format, creator),
                 query = creator,
                 highlightStyle = SpanStyle(
                     fontWeight = FontWeight.Bold,

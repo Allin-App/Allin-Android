@@ -245,7 +245,7 @@ fun BetConfirmationBottomSheetContent(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = stringResource(id = R.string.Finished),
+                            text = stringResource(id = R.string.bet_finished),
                             color = AllInColorToken.white,
                             style = AllInTheme.typography.h1,
                             fontSize = 24.sp
@@ -276,11 +276,13 @@ fun BetConfirmationBottomSheetContent(
             if (selectedAnswer != null) {
                 AllInButton(
                     color = AllInColorToken.allInPurple,
-                    text = stringResource(id = R.string.Validate),
+                    text = stringResource(id = R.string.generic_validate),
                     textColor = AllInColorToken.white,
                     radius = 5.dp,
                     onClick = { selectedAnswer?.let(onConfirm) },
-                    modifier = Modifier.align(Alignment.BottomCenter)
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .align(Alignment.BottomCenter)
                 )
             }
         }

@@ -202,7 +202,7 @@ class BetStatusBottomSheetBetDisplayer(
                             )
                         )
                         .padding(bottomSheetNavigationBarsInsets().asPaddingValues(7.dp)),
-                    text = stringResource(id = R.string.Participate),
+                    text = stringResource(id = R.string.bet_participate),
                     enabled = betDetail.bet.betStatus == BetStatus.IN_PROGRESS,
                     onClick = openParticipateSheet
                 )
@@ -308,8 +308,8 @@ class BetStatusBottomSheetBetDisplayer(
                 betDetail = betDetail,
                 response1 = YES_VALUE,
                 response2 = NO_VALUE,
-                response1Display = { stringResource(id = R.string.Yes).uppercase() },
-                response2Display = { stringResource(id = R.string.No).uppercase() },
+                response1Display = { stringResource(id = R.string.generic_yes).uppercase() },
+                response2Display = { stringResource(id = R.string.generic_no).uppercase() },
             )
         }
     }

@@ -75,7 +75,7 @@ fun BetScreenPopularCard(
                 )
                 Spacer(modifier = Modifier.width(3.dp))
                 Text(
-                    text = stringResource(id = R.string.Popular),
+                    text = stringResource(id = R.string.bet_popular),
                     color = AllInColorToken.allInPink,
                     fontSize = 17.sp,
                     style = AllInTheme.typography.h2
@@ -91,7 +91,7 @@ fun BetScreenPopularCard(
             Row(modifier = Modifier.align(alignment = Alignment.CenterHorizontally)) {
                 HighlightedText(
                     text = pluralStringResource(
-                        id = R.plurals.n_players,
+                        id = R.plurals.bet_players_format,
                         nbPlayers,
                         nbPlayers
                     ),
@@ -117,7 +117,7 @@ fun BetScreenPopularCard(
                 }
                 HighlightedText(
                     text = pluralStringResource(
-                        id = R.plurals.n_points_at_stake,
+                        id = R.plurals.bet_points_at_stake_format,
                         if (pointUnit.isEmpty()) ceil(points).toInt() else 2,
                         pointsText
                     ),

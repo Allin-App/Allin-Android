@@ -11,8 +11,8 @@ import fr.iut.alldev.allin.data.model.bet.BetFilter.PUBLIC
 @StringRes
 fun BetFilter.textId() =
     when (this) {
-        PUBLIC -> R.string.Public
-        INVITATION -> R.string.Invitation
-        IN_PROGRESS -> R.string.Current
-        FINISHED -> R.string.Finished
+        PUBLIC -> R.string.bet_public
+        INVITATION -> R.string.bet_invitation
+        IN_PROGRESS -> R.string.bet_current
+        FINISHED -> R.string.bet_finished
     }

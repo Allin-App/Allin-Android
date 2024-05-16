@@ -32,7 +32,7 @@ import fr.iut.alldev.allin.theme.AllInTheme
 
 @Composable
 fun AllInDetailsDrawer(
-    text: String = stringResource(id = R.string.Details),
+    text: String = stringResource(id = R.string.bet_status_details_drawer),
     textColor: Color = AllInTheme.colors.onBackground2,
     content: @Composable ColumnScope.() -> Unit,
 ) {

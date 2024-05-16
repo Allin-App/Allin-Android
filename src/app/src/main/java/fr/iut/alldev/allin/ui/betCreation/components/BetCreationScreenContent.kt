@@ -62,7 +62,7 @@ fun BetCreationScreenContent(
             onLoadSection = { focus.clearFocus() },
             modifier = Modifier.align(Alignment.TopCenter),
             sections = listOf(
-                SectionElement(stringResource(id = R.string.Question)) {
+                SectionElement(stringResource(id = R.string.bet_creation_question)) {
                     BetCreationScreenQuestionTab(
                         isPublic = isPublic,
                         setIsPublic = setIsPublic,
@@ -85,7 +85,7 @@ fun BetCreationScreenContent(
                         betDateError = betDateError
                     )
                 },
-                SectionElement(stringResource(id = R.string.Answer)) {
+                SectionElement(stringResource(id = R.string.bet_creation_answer)) {
                     BetCreationScreenAnswerTab(
                         selectedBetType = selectedBetType,
                         selected = selectedBetTypeElement,
@@ -107,7 +107,7 @@ fun BetCreationScreenContent(
                 ),
         ) {
             RainbowButton(
-                text = stringResource(id = R.string.Publish),
+                text = stringResource(id = R.string.bet_creation_publish),
                 modifier = Modifier
                     .padding(bottom = 14.dp)
                     .padding(horizontal = 20.dp)

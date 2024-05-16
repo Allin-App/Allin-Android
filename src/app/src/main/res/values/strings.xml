@@ -3,120 +3,129 @@
     <string name="app_name" translatable="false">Allin</string>
     <string name="float_and_unit" translatable="false">%.2g%s</string>
     <string name="int_and_unit" translatable="false">%d%s</string>
-    <string name="username">Username</string>
-    <string name="email">Email</string>
-    <string name="password">Password</string>
-    <string name="confirm_password">Confirm password</string>
-    <string name="Login">Login</string>
-    <string name="Logout">Logout</string>
-    <string name="already_have_account">Already have an account ?</string>
-    <string name="forgot_password">Forgot password ?</string>
-    <string name="no_account">Don\'t have an account ?</string>
-    <string name="Register">Register</string>
-    <string name="Validate">Validate</string>
-    <string name="Cancel">Cancel</string>
-    <string name="Ok">OK</string>
-    <string name="FieldError_Mandatory">This field is mandatory.</string>
-    <string name="FieldError_TooShort">The %s must contain at least %d characters.</string>
-    <string name="FieldError_BadFormat">The %s has bad format : %s.</string>
-    <string name="FieldError_NotIdentical">The fields are not identical.</string>
-    <string name="FieldError_NoSpecialCharacter">The %s must contain at least one special character : %s.</string>
-    <string name="FieldError_AlreadyUsed">%s is already used.</string>
-    <string name="FieldError_PastDate">The %s should be in the future.</string>
-    <string name="FieldError_DateOrder">The %s should come after the %s.</string>
-    <string name="Yes">Yes</string>
-    <string name="No">No</string>
-    <string name="Details">Details</string>
-    <string name="Stake">Stake</string>
-    <string name="Possible_winnings">Possible winnings</string>
+    <string name="generic_username">Username</string>
+    <string name="generic_email">Email</string>
+    <string name="generic_password">Password</string>
+    <string name="generic_login">Login</string>
+    <string name="generic_logout">Logout</string>
+    <string name="generic_register">Register</string>
+    <string name="generic_validate">Validate</string>
+    <string name="generic_cancel">Cancel</string>
+    <string name="generic_ok">OK</string>
+    <string name="generic_yes">Yes</string>
+    <string name="generic_no">No</string>
+    <string name="generic_search">Search</string>
+    <string name="generic_add">Add</string>
+    <string name="generic_delete">Delete</string>
+    <string name="generic_stake">Stake</string>
     <string name="generic_error">Error</string>
     <string name="network_error">An error occurred</string>
     <string name="network_error_text">Make sure to be properly connected to the network then try again.</string>
 
+    <!--Bet type-->
+    <string name="bet_type_binary">Yes / No</string>
+    <string name="bet_type_match">Sport match</string>
+    <string name="bet_type_custom">Custom answers</string>
+
+    <!--Field error-->
+    <string name="field_error_mandatory">This field is mandatory.</string>
+    <string name="field_error_too_short">The %s must contain at least %d characters.</string>
+    <string name="field_error_bad_format">The %s has bad format : %s.</string>
+    <string name="field_error_not_identical">The fields are not identical.</string>
+    <string name="field_error_no_special_character">The %s must contain at least one special character : %s.</string>
+    <string name="field_error_already_used">%s is already used.</string>
+    <string name="field_error_past_date">The %s should be in the future.</string>
+    <string name="field_error_date_order">The %s should come after the %s.</string>
+
     <!--Drawer-->
-    <string name="bets">Bets</string>
-    <string name="best_win">Best win</string>
-    <string name="friends">Friends</string>
-    <string name="public_bets">Public bets</string>
-    <string name="public_bets_subtitle">Browse the most popular bets of the moment.</string>
-    <string name="create_a_bet">Create a bet</string>
-    <string name="create_a_bet_subtitle">Create a net bet and get your friends participating.</string>
-    <string name="bet_history">Bet history</string>
-    <string name="bet_history_subtitle">View your current and finished bets.</string>
-    <string name="friends_subtitle">Challenge your folks by adding them as friends.</string>
-    <string name="current_bets">Current bets</string>
-    <string name="current_bets_subtitle">Manage your bets and reward the winners.</string>
-    <string name="ranking">Ranking</string>
-    <string name="ranking_subtitle">Browse your ranking with your friends.</string>
+    <string name="drawer_bets">Bets</string>
+    <string name="drawer_best_win">Best win</string>
+    <string name="drawer_friends">Friends</string>
+    <string name="drawer_public_bets">Public bets</string>
+    <string name="drawer_public_bets_subtitle">Browse the most popular bets of the moment.</string>
+    <string name="drawer_create_bet">Create a bet</string>
+    <string name="drawer_create_bet_subtitle">Create a net bet and get your friends participating.</string>
+    <string name="drawer_bet_history">Bet history</string>
+    <string name="drawer_bet_history_subtitle">View your current and finished bets.</string>
+    <string name="drawer_friends_subtitle">Challenge your folks by adding them as friends.</string>
+    <string name="drawer_current_bets">Current bets</string>
+    <string name="drawer_current_bets_subtitle">Manage your bets and reward the winners.</string>
+    <string name="drawer_ranking">Ranking</string>
+    <string name="drawer_ranking_subtitle">Browse your ranking with your friends.</string>
+
     <!--Welcome Page-->
     <string name="welcome_title">Welcome to</string>
     <string name="welcome_appname" translatable="false">Allin.</string>
     <string name="welcome_subtitle">Collect your Allcoins and come bet with your friend to prove who\'s best.</string>
-    <string name="join">Join</string>
+    <string name="welcome_join_text">Join</string>
+
     <!--Register Page-->
-    <string name="Hello_x">Hello, %s</string>
-    <string name="Register_title">We need this!</string>
-    <string name="Register_subtitle">Don\'t worry it\'s fast.</string>
+    <string name="register_hello_format">Hello, %s</string>
+    <string name="register_title">We need this!</string>
+    <string name="register_subtitle">Don\'t worry it\'s fast.</string>
+    <string name="register_confirm_password">Confirm password</string>
+    <string name="register_already_have_account">Already have an account ?</string>
+
     <!--Login Page-->
-    <string name="Login_title">Welcome back !</string>
-    <string name="Login_subtitle">We missed you.</string>
-    <string name="Login_Error_Title">Connection error</string>
-    <string name="Login_Error_Content">Failed to login\nPlease try again.</string>
+    <string name="login_title">Welcome back !</string>
+    <string name="login_subtitle">We missed you.</string>
+    <string name="login_error_title">Connection error</string>
+    <string name="login_error_content">Failed to login\nPlease try again.</string>
+    <string name="login_forgot_password">Forgot password ?</string>
+    <string name="login_no_account">Don\'t have an account ?</string>
+
     <!--Bet Creation Page-->
-    <string name="Question">Question</string>
-    <string name="Answer">Answer</string>
-    <string name="Publish">Publish the bet</string>
-    <string name="Theme_tooltip">The subject of the bet.</string>
-    <string name="Phrase_tooltip">Generally the question the participants will answer to.</string>
-    <string name="Register_tooltip">After this date, nobody will be able to register anymore.</string>
-    <string name="BetEnd_tooltip">After this date, the result will be announced.</string>
-    <string name="Privacy_tooltip">Determines who will be able to see the bet.</string>
-    <string name="Theme">Theme</string>
-    <string name="Theme_placeholder">Studies, sports, party…</string>
-    <string name="Bet_Phrase">Bet phrase</string>
-    <string name="Bet_Phrase_placeholder">Will David be missing this Monday in class ?</string>
-    <string name="End_registration_date">Registration end date</string>
-    <string name="End_bet_date">Bet end date</string>
-    <string name="Bet_privacy">Bet privacy</string>
-    <plurals name="n_friends_available">
+    <string name="bet_creation_question">Question</string>
+    <string name="bet_creation_answer">Answer</string>
+    <string name="bet_creation_publish">Publish the bet</string>
+    <string name="bet_creation_theme_tooltip">The subject of the bet.</string>
+    <string name="bet_creation_phrase_tooltip">Generally the question the participants will answer to.</string>
+    <string name="bet_creation_register_end_date_tooltip">After this date, nobody will be able to register anymore.</string>
+    <string name="bet_creation_bet_end_date_tooltip">After this date, the result will be announced.</string>
+    <string name="bet_creation_privacy_tooltip">Determines who will be able to see the bet.</string>
+    <string name="bet_creation_theme">Theme</string>
+    <string name="bet_creation_theme_placeholder">Studies, sports, party…</string>
+    <string name="bet_creation_bet_phrase">Bet phrase</string>
+    <string name="bet_creation_bet_phrase_placeholder">Will David be missing this Monday in class ?</string>
+    <string name="bet_creation_end_registration_date">Registration end date</string>
+    <string name="bet_creation_end_bet_date">Bet end date</string>
+    <string name="bet_creation_bet_privacy">Bet privacy</string>
+    <plurals name="bet_creation_friends_available_format">
         <item quantity="one">%d friend available</item>
         <item quantity="other">%d friends available</item>
     </plurals>
-    <string name="public_bottom_text_1">Your bet will be visible by all the users.</string>
-    <string name="public_bottom_text_2">Everyone will be able to join the bet.</string>
-    <string name="private_bottom_text_1">Your bet will only be visible by your friends.</string>
-    <string name="private_bottom_text_2">Only your friends will be able to join the bet.</string>
-    <string name="private_bottom_text_3">You can invite friends at any moment during the registration period.</string>
-    <string name="yes_no">Yes / No</string>
-    <string name="yes_no_bottom_text_1">The participants will have to respond with either YES or NO.</string>
-    <string name="yes_no_bottom_text_2">No other answer will be accepted.</string>
-    <string name="sport_match">Sport match</string>
-    <string name="custom_answers">Custom answers</string>
+    <string name="bet_creation_public_bottom_text_1">Your bet will be visible by all the users.</string>
+    <string name="bet_creation_public_bottom_text_2">Everyone will be able to join the bet.</string>
+    <string name="bet_creation_private_bottom_text_1">Your bet will only be visible by your friends.</string>
+    <string name="bet_creation_private_bottom_text_2">Only your friends will be able to join the bet.</string>
+    <string name="bet_creation_private_bottom_text_3">You can invite friends at any moment during the registration period.</string>
+    <string name="bet_creation_yes_no_bottom_text_1">The participants will have to respond with either YES or NO.</string>
+    <string name="bet_creation_yes_no_bottom_text_2">No other answer will be accepted.</string>
     <string name="bet_creation_error">Error while creating the bet. Please try again.</string>
     <string name="bet_creation_success_message">Bet created !</string>
 
     <!--Bet Page-->
-    <string name="Popular">Popular</string>
-    <string name="Public">Public</string>
-    <string name="Private">Private</string>
-    <string name="Invitation">Invitation</string>
-    <string name="Current">Current</string>
-    <string name="Finished">Finished</string>
-    <string name="Starting">Starting on</string>
-    <string name="Started">Started on</string>
-    <string name="Ends">Ends on</string>
-    <string name="Ended">Ended on</string>
-    <string name="Participate">Participate</string>
-    <string name="Proposed_by_x">Proposed by %1$s</string>
-    <plurals name="n_players_waiting">
+    <string name="bet_popular">Popular</string>
+    <string name="bet_public">Public</string>
+    <string name="bet_private">Private</string>
+    <string name="bet_invitation">Invitation</string>
+    <string name="bet_current">Current</string>
+    <string name="bet_finished">Finished</string>
+    <string name="bet_starting">Starting on</string>
+    <string name="bet_started">Started on</string>
+    <string name="bet_ends">Ends on</string>
+    <string name="bet_ended">Ended on</string>
+    <string name="bet_participate">Participate</string>
+    <string name="bet_Proposed_by_format">Proposed by %1$s</string>
+    <plurals name="bet_players_waiting_format">
         <item quantity="one">%d player waiting</item>
         <item quantity="other">%d players waiting</item>
     </plurals>
-    <plurals name="n_players">
+    <plurals name="bet_players_format">
         <item quantity="one">%d player</item>
         <item quantity="other">%d players</item>
     </plurals>
-    <plurals name="n_points_at_stake">
+    <plurals name="bet_points_at_stake_format">
         <item quantity="one">%s point at stake</item>
         <item quantity="other">%s points at stake</item>
     </plurals>
@@ -127,8 +136,10 @@
     <string name="bet_status_waiting">Waiting…</string>
     <string name="bet_status_closing">Closing…</string>
     <string name="bet_status_cancelled">Cancelled</string>
-    <string name="place_your_bets">Place your bets</string>
+    <string name="bet_status_place_your_bets">Place your bets</string>
     <string name="bet_status_participants_list">Participants</string>
+    <string name="bet_status_details_drawer">Details</string>
+    <string name="participation_possible_winnings">Possible winnings</string>
 
     <!--Bet history-->
     <string name="bet_history_current_title">Current</string>
@@ -150,6 +161,9 @@
 
     <!--Ranking-->
     <string name="ranking_title">Ranking</string>
+
+    <!--Friends-->
+    <string name="friends_title">Friends</string>
 
     <!--Daily reward-->
     <string name="daily_reward_title">Daily reward</string>
