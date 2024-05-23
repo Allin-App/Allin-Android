@@ -22,7 +22,6 @@ import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -34,6 +33,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import fr.iut.alldev.allin.data.ext.formatToMediumDateNoYear
 import fr.iut.alldev.allin.data.ext.formatToTime
 import fr.iut.alldev.allin.data.model.bet.Bet
@@ -50,10 +50,10 @@ fun BetScreen(
     viewModel: BetViewModel = hiltViewModel(),
     selectBet: (Bet, Boolean) -> Unit,
 ) {
-    val bets by viewModel.bets.collectAsState()
-    val filters by viewModel.filters.collectAsState()
+    val bets by viewModel.bets.collectAsStateWithLifecycle()
+    val filters by viewModel.filters.collectAsStateWithLifecycle()
 
-    val refreshing by viewModel.isRefreshing.collectAsState()
+    val refreshing by viewModel.isRefreshing.collectAsStateWithLifecycle()
     val pullRefreshState = rememberPullRefreshState(refreshing, { viewModel.refresh() })
     val progressAnimation by animateFloatAsState(pullRefreshState.progress * 15, label = "")
 
@@ -123,7 +123,7 @@ fun BetScreen(
                 title = it.phrase,
                 date = it.endRegisterDate.formatToMediumDateNoYear(),
                 time = it.endRegisterDate.formatToTime(),
-                players = List(3) { null },
+                players = emptyList(), // TODO : Players
                 onClickParticipate = { selectBet(it, true) },
                 onClickCard = { selectBet(it, false) },
                 modifier = Modifier

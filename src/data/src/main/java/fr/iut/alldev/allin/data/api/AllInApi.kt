@@ -3,6 +3,7 @@ package fr.iut.alldev.allin.data.api
 import fr.iut.alldev.allin.data.api.model.CheckUser
 import fr.iut.alldev.allin.data.api.model.RequestBet
 import fr.iut.alldev.allin.data.api.model.RequestBetFilters
+import fr.iut.alldev.allin.data.api.model.RequestFriend
 import fr.iut.alldev.allin.data.api.model.RequestParticipation
 import fr.iut.alldev.allin.data.api.model.RequestUser
 import fr.iut.alldev.allin.data.api.model.ResponseBet
@@ -26,6 +27,9 @@ interface AllInApi {
             this.toRequestBody("text/plain".toMediaTypeOrNull())
     }
 
+    // USERS
+    // ---------------------
+
     @POST("users/login")
     suspend fun login(@Body body: CheckUser): ResponseUser
 
@@ -35,11 +39,32 @@ interface AllInApi {
     @GET("users/token")
     suspend fun login(@Header("Authorization") token: String): ResponseUser
 
-    @POST("bets/add")
-    suspend fun createBet(@Header("Authorization") token: String, @Body body: RequestBet)
-
     @GET("users/gift")
     suspend fun dailyGift(@Header("Authorization") token: String): Int
+
+    // FRIENDS
+    // ---------------------
+
+    @GET("friends/add")
+    suspend fun getFriends(@Header("Authorization") token: String): List<ResponseUser>
+
+    @POST("friends/add")
+    suspend fun addFriend(
+        @Header("Authorization") token: String,
+        @Body request: RequestFriend
+    )
+
+    @POST("friends/delete")
+    suspend fun deleteFriend(
+        @Header("Authorization") token: String,
+        @Body request: RequestFriend
+    )
+
+    // BETS
+    // ---------------------
+
+    @POST("bets/add")
+    suspend fun createBet(@Header("Authorization") token: String, @Body body: RequestBet)
 
     @POST("bets/gets")
     suspend fun getAllBets(
@@ -57,12 +82,6 @@ interface AllInApi {
         @Body value: RequestBody
     )
 
-    @GET("betdetail/get/{id}")
-    suspend fun getBet(
-        @Header("Authorization") token: String,
-        @Path("id") id: String
-    ): ResponseBetDetail
-
     @GET("bets/current")
     suspend fun getBetCurrent(
         @Header("Authorization") token: String
@@ -77,6 +96,15 @@ interface AllInApi {
     suspend fun getWon(
         @Header("Authorization") token: String
     ): List<ResponseBetResultDetail>
+
+    @GET("betdetail/get/{id}")
+    suspend fun getBet(
+        @Header("Authorization") token: String,
+        @Path("id") id: String
+    ): ResponseBetDetail
+
+    // PARTICIPATIONS
+    // ---------------------
 
     @POST("participations/add")
     suspend fun participateToBet(

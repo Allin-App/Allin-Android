@@ -17,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import fr.iut.alldev.allin.R
+import fr.iut.alldev.allin.ext.asFallbackProfileUsername
 import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.core.ProfilePicture
@@ -34,6 +35,7 @@ fun DrawerHeader(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         ProfilePicture(
+            fallback = username.asFallbackProfileUsername(),
             borderWidth = 1.dp
         )
         Spacer(modifier = Modifier.height(12.dp))

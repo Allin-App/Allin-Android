@@ -48,7 +48,7 @@ import fr.iut.alldev.allin.data.model.bet.CustomBet
 import fr.iut.alldev.allin.data.model.bet.MatchBet
 import fr.iut.alldev.allin.data.model.bet.NO_VALUE
 import fr.iut.alldev.allin.data.model.bet.YES_VALUE
-import fr.iut.alldev.allin.data.model.bet.YesNoBet
+import fr.iut.alldev.allin.data.model.bet.BinaryBet
 import fr.iut.alldev.allin.data.model.bet.vo.BetAnswerDetail
 import fr.iut.alldev.allin.data.model.bet.vo.BetDetail
 import fr.iut.alldev.allin.ext.formatToSimple
@@ -153,7 +153,7 @@ fun ConfirmationAnswers(
         when (val bet = betDetail.bet) {
             is CustomBet -> bet.possibleAnswers
             is MatchBet -> listOf(bet.nameTeam1, bet.nameTeam2)
-            is YesNoBet -> listOf(YES_VALUE, NO_VALUE)
+            is BinaryBet -> listOf(YES_VALUE, NO_VALUE)
         }
     }
 
@@ -295,7 +295,7 @@ private fun BetConfirmationBottomSheetContentPreview() {
     AllInTheme {
         BetConfirmationBottomSheetContent(
             betDetail = BetDetail(
-                bet = YesNoBet(
+                bet = BinaryBet(
                     id = "1",
                     theme = "Theme",
                     phrase = "Phrase",

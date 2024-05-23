@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import fr.iut.alldev.allin.data.model.User
 import fr.iut.alldev.allin.ui.core.AllInLoading
 import fr.iut.alldev.allin.ui.friends.components.FriendsScreenContent
@@ -15,7 +16,7 @@ fun FriendsScreen(
     viewModel: FriendsScreenViewModel = hiltViewModel()
 ) {
     var search by remember { viewModel.search }
-    val state by remember { viewModel.state }
+    val state by viewModel.state.collectAsStateWithLifecycle()
 
     when (val s = state) {
         is FriendsScreenViewModel.State.Loaded -> {
@@ -33,8 +34,10 @@ fun FriendsScreen(
                 setSearch = { search = it },
                 onToggleDeleteFriend = {
                     deleted = if (deleted.contains(it)) {
+                        viewModel.addFriend(it.username)
                         deleted - it
                     } else {
+                        viewModel.removeFriend(it.username)
                         deleted + it
                     }
                 }

@@ -3,6 +3,7 @@ package fr.iut.alldev.allin.data.api
 import fr.iut.alldev.allin.data.api.model.CheckUser
 import fr.iut.alldev.allin.data.api.model.RequestBet
 import fr.iut.alldev.allin.data.api.model.RequestBetFilters
+import fr.iut.alldev.allin.data.api.model.RequestFriend
 import fr.iut.alldev.allin.data.api.model.RequestParticipation
 import fr.iut.alldev.allin.data.api.model.RequestUser
 import fr.iut.alldev.allin.data.api.model.ResponseBet
@@ -28,7 +29,6 @@ import java.util.UUID
 class MockAllInApiException(override val message: String?) : Exception()
 
 class MockAllInApi : AllInApi {
-
     init {
         CoroutineScope(Dispatchers.Default).launch {
             while (true) {
@@ -133,6 +133,27 @@ class MockAllInApi : AllInApi {
             }
             return amount
         } else throw MockAllInApiException("Gift already taken today")
+    }
+
+    override suspend fun getFriends(token: String): List<ResponseUser> {
+        val user = getUserFromToken(token) ?: throw MockAllInApiException("Invalid login/password.")
+        return mockFriends
+            .filter { it.first == user.first.id }
+            .mapNotNull { mockUsers.find { usr -> usr.first.id == it.second }?.first }
+    }
+
+    override suspend fun addFriend(token: String, request: RequestFriend) {
+        val user = getUserFromToken(token) ?: throw MockAllInApiException("Invalid login/password.")
+        val requestUser =
+            mockUsers.find { it.first.username == request.username } ?: throw MockAllInApiException("Requested user not found")
+        mockFriends.add(user.first.id to requestUser.first.id)
+    }
+
+    override suspend fun deleteFriend(token: String, request: RequestFriend) {
+        val user = getUserFromToken(token) ?: throw MockAllInApiException("Invalid login/password.")
+        val requestUser =
+            mockUsers.find { it.first.username == request.username } ?: throw MockAllInApiException("Requested user not found")
+        mockFriends.remove(user.first.id to requestUser.first.id)
     }
 
     override suspend fun getAllBets(token: String, body: RequestBetFilters): List<ResponseBet> {
@@ -399,6 +420,14 @@ class MockAllInApi : AllInApi {
         private val mockWon by lazy { mutableMapOf<String, MutableList<String>>() }
 
         private val mockGifts by lazy { mutableMapOf<String, ZonedDateTime>() }
+
+        private val mockFriends by lazy {
+            mutableSetOf(
+                "UUID 1" to "UUID 2",
+                "UUID 2" to "UUID 1",
+                "UUID 1" to "UUID 3"
+            )
+        }
     }
 
 }

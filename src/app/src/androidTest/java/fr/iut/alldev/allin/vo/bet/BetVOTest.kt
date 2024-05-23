@@ -5,10 +5,11 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import fr.iut.alldev.allin.data.model.User
 import fr.iut.alldev.allin.test.TestTags
 import fr.iut.alldev.allin.test.mock.Bets
-import fr.iut.alldev.allin.ui.MainActivity
 import fr.iut.alldev.allin.theme.AllInTheme
+import fr.iut.alldev.allin.ui.MainActivity
 import fr.iut.alldev.allin.vo.bet.displayer.BetTestDisplayer
 import org.junit.Before
 import org.junit.Rule
@@ -33,13 +34,22 @@ class BetVOTest {
     }
 
     @Test
-    fun testDisplayer_shouldDisplayYesNoBetUI(){
+    fun testDisplayer_shouldDisplayYesNoBetUI() {
         //Given
+        val currentUser = User(
+            id = "1",
+            username = "test",
+            email = "test@test.fr",
+            coins = 120
+        )
 
         //When
         composeTestRule.activity.setContent {
-             AllInTheme{
-                 displayer.DisplayBet(Bets.bets[0])
+            AllInTheme {
+                displayer.DisplayBet(
+                    Bets.bets[0],
+                    currentUser
+                )
             }
         }
         //Expect
@@ -49,13 +59,22 @@ class BetVOTest {
     }
 
     @Test
-    fun testDisplayer_shouldDisplayMatchUI(){
+    fun testDisplayer_shouldDisplayMatchUI() {
         //Given
+        val currentUser = User(
+            id = "1",
+            username = "test",
+            email = "test@test.fr",
+            coins = 120
+        )
 
         //When
         composeTestRule.activity.setContent {
-            AllInTheme{
-                displayer.DisplayBet(Bets.bets[1])
+            AllInTheme {
+                displayer.DisplayBet(
+                    Bets.bets[1],
+                    currentUser
+                )
             }
         }
         //Expect
@@ -65,13 +84,22 @@ class BetVOTest {
     }
 
     @Test
-    fun testDisplayer_shouldDisplayCustomBetUI(){
+    fun testDisplayer_shouldDisplayCustomBetUI() {
         //Given
+        val currentUser = User(
+            id = "1",
+            username = "test",
+            email = "test@test.fr",
+            coins = 120
+        )
 
         //When
         composeTestRule.activity.setContent {
-            AllInTheme{
-                displayer.DisplayBet(Bets.bets[2])
+            AllInTheme {
+                displayer.DisplayBet(
+                    Bets.bets[2],
+                    currentUser
+                )
             }
         }
         //Expect

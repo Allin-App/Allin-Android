@@ -24,8 +24,7 @@ class BetViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _isRefreshing by lazy { MutableStateFlow(false) }
-    val isRefreshing: StateFlow<Boolean>
-        get() = _isRefreshing.asStateFlow()
+    val isRefreshing: StateFlow<Boolean> get() = _isRefreshing.asStateFlow()
 
     private val _bets: MutableStateFlow<List<Bet>> by lazy {
         MutableStateFlow(emptyList())
@@ -45,7 +44,7 @@ class BetViewModel @Inject constructor(
         MutableStateFlow(BetFilter.entries)
     }
 
-    val filters by lazy { _filters.asStateFlow() }
+    val filters get() = _filters.asStateFlow()
 
     init {
         viewModelScope.launch {

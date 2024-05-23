@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -16,6 +15,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import fr.iut.alldev.allin.ext.asFallbackProfileUsername
 import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.core.AllInCoinCount
@@ -45,7 +45,10 @@ fun BetCreationScreenFriendLine(
             checked = isSelected,
             modifier = Modifier.padding(end = 7.dp)
         )
-        ProfilePicture(modifier = Modifier.size(25.dp))
+        ProfilePicture(
+            fallback = username.asFallbackProfileUsername(),
+            size = 25.dp
+        )
         Text(
             text = username,
             fontWeight = FontWeight.Bold,

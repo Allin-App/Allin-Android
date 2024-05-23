@@ -96,7 +96,7 @@ class BetCreationViewModel @Inject constructor(
 
             if (!hasError.value) {
                 try {
-                    userRepository.currentUser.value?.let { currentUser ->
+                    userRepository.currentUserState.value?.let { currentUser ->
                         val bet = BetFactory.createBet(
                             id = "",
                             betType = selectedBetType.value,

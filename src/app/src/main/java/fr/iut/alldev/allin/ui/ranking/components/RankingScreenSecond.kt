@@ -22,6 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
+import fr.iut.alldev.allin.ext.asFallbackProfileUsername
 import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.core.AllInCard
@@ -87,8 +88,9 @@ fun RankingScreenSecond(
             }
         }
         ProfilePicture(
+            fallback = username.asFallbackProfileUsername(),
+            size = 56.dp,
             modifier = Modifier
-                .size(56.dp)
                 .align(Alignment.TopCenter)
                 .zIndex(1f),
         )

@@ -6,7 +6,7 @@ import fr.iut.alldev.allin.data.model.bet.MatchBet
 import fr.iut.alldev.allin.data.model.bet.NO_VALUE
 import fr.iut.alldev.allin.data.model.bet.Participation
 import fr.iut.alldev.allin.data.model.bet.YES_VALUE
-import fr.iut.alldev.allin.data.model.bet.YesNoBet
+import fr.iut.alldev.allin.data.model.bet.BinaryBet
 import fr.iut.alldev.allin.data.model.bet.vo.BetAnswerDetail
 import fr.iut.alldev.allin.data.model.bet.vo.BetDetail
 
@@ -60,7 +60,7 @@ class BetDetailPreviewProvider : PreviewParameterProvider<BetDetail> {
                     odds = 2.0f
                 )
             )
-            is YesNoBet -> listOf(
+            is BinaryBet -> listOf(
                 BetAnswerDetail(
                     response = YES_VALUE,
                     totalStakes = 300,

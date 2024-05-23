@@ -20,7 +20,7 @@ class BetFactory {
             ): Bet =
             when (betType) {
                 BetType.BINARY -> {
-                    YesNoBet(
+                    BinaryBet(
                         id = id,
                         theme = theme,
                         creator = creator,

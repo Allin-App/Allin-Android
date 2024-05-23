@@ -5,150 +5,69 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import fr.iut.alldev.allin.data.model.User
+import fr.iut.alldev.allin.data.repository.FriendRepository
+import fr.iut.alldev.allin.keystore.AllInKeystoreManager
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class FriendsScreenViewModel @Inject constructor(
+    private val friendRepository: FriendRepository,
+    private val keystoreManager: AllInKeystoreManager
 ) : ViewModel() {
 
     val search by lazy { mutableStateOf("") }
-    val state by lazy { mutableStateOf<State>(State.Loading) }
+    private val _state by lazy { MutableStateFlow<State>(State.Loading) }
+    val state get() = _state.asStateFlow()
 
     init {
         viewModelScope.launch {
-            state.value = State.Loaded(mockFriends)
+            try {
+                _state.emit(
+                    State.Loaded(
+                        friends = friendRepository.getFriends(
+                            token = keystoreManager.getTokenOrEmpty()
+                        )
+                    )
+                )
+            } catch (e: Exception) {
+                Timber.e(e)
+            }
         }
     }
 
-    sealed class State {
-        data object Loading: State()
+    fun addFriend(username: String) {
+        viewModelScope.launch {
+            try {
+                friendRepository.add(
+                    token = keystoreManager.getTokenOrEmpty(),
+                    username = username
+                )
+            } catch (e: Exception) {
+                Timber.e(e)
+            }
+        }
+    }
 
-        data class Loaded(val friends: List<User>): State()
+    fun removeFriend(username: String) {
+        viewModelScope.launch {
+            try {
+                friendRepository.remove(
+                    token = keystoreManager.getTokenOrEmpty(),
+                    username = username
+                )
+            } catch (e: Exception) {
+                Timber.e(e)
+            }
+        }
+    }
+
+    sealed interface State {
+        data object Loading : State
+        data class Loaded(val friends: List<User>) : State
     }
 }
 
-private val mockFriends by lazy {
-    listOf(
-        User(
-            id = "1",
-            username = "Owen",
-            email = "",
-            coins = 8533
-        ),
-        User(
-            id = "2",
-            username = "Dave",
-            email = "",
-            coins = 6942
-        ),
-        User(
-            id = "3",
-            username = "Lucas",
-            email = "",
-            coins = 3333
-        ),
-        User(
-            id = "4",
-            username = "Louison",
-            email = "",
-            coins = 1970
-        ),
-        User(
-            id = "5",
-            username = "Imri",
-            email = "",
-            coins = 1
-        ),
-        User(
-            id = "12",
-            username = "Owen",
-            email = "",
-            coins = 8533
-        ),
-        User(
-            id = "22",
-            username = "Dave",
-            email = "",
-            coins = 6942
-        ),
-        User(
-            id = "32",
-            username = "Lucas",
-            email = "",
-            coins = 3333
-        ),
-        User(
-            id = "42",
-            username = "Louison",
-            email = "",
-            coins = 1970
-        ),
-        User(
-            id = "52",
-            username = "Imri",
-            email = "",
-            coins = 1
-        ),
-        User(
-            id = "13",
-            username = "Owen",
-            email = "",
-            coins = 8533
-        ),
-        User(
-            id = "23",
-            username = "Dave",
-            email = "",
-            coins = 6942
-        ),
-        User(
-            id = "33",
-            username = "Lucas",
-            email = "",
-            coins = 3333
-        ),
-        User(
-            id = "43",
-            username = "Louison",
-            email = "",
-            coins = 1970
-        ),
-        User(
-            id = "53",
-            username = "Imri",
-            email = "",
-            coins = 1
-        ),
-        User(
-            id = "14",
-            username = "Owen",
-            email = "",
-            coins = 8533
-        ),
-        User(
-            id = "24",
-            username = "Dave",
-            email = "",
-            coins = 6942
-        ),
-        User(
-            id = "34",
-            username = "Lucas",
-            email = "",
-            coins = 3333
-        ),
-        User(
-            id = "44",
-            username = "Louison",
-            email = "",
-            coins = 1970
-        ),
-        User(
-            id = "54",
-            username = "Imri",
-            email = "",
-            coins = 1
-        )
-    )
-}

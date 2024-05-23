@@ -55,6 +55,7 @@ import fr.iut.alldev.allin.data.model.bet.NO_VALUE
 import fr.iut.alldev.allin.data.model.bet.YES_VALUE
 import fr.iut.alldev.allin.data.model.bet.vo.BetAnswerDetail
 import fr.iut.alldev.allin.data.model.bet.vo.BetDetail
+import fr.iut.alldev.allin.ext.asFallbackProfileUsername
 import fr.iut.alldev.allin.ext.asPaddingValues
 import fr.iut.alldev.allin.ext.bottomSheetNavigationBarsInsets
 import fr.iut.alldev.allin.ext.formatToSimple
@@ -295,7 +296,7 @@ class BetStatusBottomSheetBetDisplayer(
     }
 
     @Composable
-    override fun DisplayYesNoBet(betDetail: BetDetail, currentUser: User) {
+    override fun DisplayBinaryBet(betDetail: BetDetail, currentUser: User) {
         DisplayBetDail(
             betDetail = betDetail,
             currentUser = currentUser,
@@ -390,7 +391,10 @@ fun BetStatusParticipant(
         horizontalArrangement = Arrangement.spacedBy(7.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        ProfilePicture(modifier = Modifier.size(25.dp))
+        ProfilePicture(
+            fallback = username.asFallbackProfileUsername(),
+            size = 25.dp
+        )
         Text(
             text = username,
             fontWeight = FontWeight.Bold,

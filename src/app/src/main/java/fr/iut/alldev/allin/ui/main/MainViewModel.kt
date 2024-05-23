@@ -32,7 +32,7 @@ class MainViewModel @Inject constructor(
 
     var loading = mutableStateOf(false)
 
-    val currentUser = userRepository.currentUser
+    val currentUser = userRepository.currentUserState
     val selectedBet = mutableStateOf<BetDetail?>(null)
     val dismissedEvents = mutableStateListOf<AllInEvent>()
     val events = mutableStateListOf<AllInEvent>()

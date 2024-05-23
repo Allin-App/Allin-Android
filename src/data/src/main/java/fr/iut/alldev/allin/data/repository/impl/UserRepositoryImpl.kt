@@ -18,16 +18,15 @@ class UserRepositoryImpl @Inject constructor(
                 password = password
             )
         )
-        _currentUser.emit(response.toUser())
+        currentUser.emit(response.toUser())
         return response.token
     }
 
     override suspend fun login(token: String): String? {
         val response = api.login(token = token.formatBearerToken())
-        _currentUser.emit(response.toUser())
+        currentUser.emit(response.toUser())
         return response.token
     }
-
 
     override suspend fun register(username: String, email: String, password: String): String? {
         val response = api.register(
@@ -37,7 +36,7 @@ class UserRepositoryImpl @Inject constructor(
                 password = password
             )
         )
-        _currentUser.emit(response.toUser())
+        currentUser.emit(response.toUser())
         return response.token
     }
 

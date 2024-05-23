@@ -48,6 +48,10 @@ object Routes {
     const val RANKING = "RANKING"
 }
 
+object Arguments {
+    const val USER_ID = "USER_ID"
+}
+
 private val fadingRoutes
     get() = listOf(
         Routes.WELCOME,

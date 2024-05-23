@@ -15,12 +15,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import fr.iut.alldev.allin.R
+import fr.iut.alldev.allin.data.model.User
 import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.core.AllInBouncyCard
 import fr.iut.alldev.allin.ui.core.RainbowButton
@@ -35,7 +35,7 @@ fun BetScreenCard(
     title: String,
     date: String,
     time: String,
-    players: List<Painter?>,
+    players: List<User>,
     modifier: Modifier = Modifier,
     onClickParticipate: () -> Unit,
     onClickCard: () -> Unit,
@@ -71,7 +71,7 @@ fun BetScreenCard(
                     .padding(7.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                BetProfilePictureRow(pictures = players)
+                BetProfilePictureRow(pictures = players.map { it.username to null })
                 Spacer(modifier = Modifier.width(12.dp))
                 Text(
                     text = pluralStringResource(
@@ -103,7 +103,9 @@ private fun BetScreenCardPreview() {
             title = "Emre va réussir son TP de CI/CD mercredi?",
             date = "12 Sept.",
             time = "13:00",
-            players = List(3) { null },
+            players = listOf(
+                User(id = "", username = "Lucas D", email = "", coins = 0),
+            ),
             onClickParticipate = {},
             onClickCard = {}
         )

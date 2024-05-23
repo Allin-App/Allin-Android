@@ -13,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import fr.iut.alldev.allin.R
+import fr.iut.alldev.allin.ext.asFallbackProfileUsername
 import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.core.AllInButton
@@ -31,6 +32,7 @@ fun FriendsScreenLine(
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         ProfilePicture(
+            fallback = username.asFallbackProfileUsername(),
             size = 50.dp
         )
 

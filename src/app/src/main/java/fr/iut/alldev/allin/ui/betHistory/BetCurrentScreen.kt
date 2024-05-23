@@ -1,10 +1,10 @@
 package fr.iut.alldev.allin.ui.betHistory
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.data.ext.formatToMediumDateNoYear
 import fr.iut.alldev.allin.data.ext.formatToTime
@@ -16,7 +16,7 @@ fun BetCurrentScreen(
     selectBet: (Bet, Boolean) -> Unit,
     viewModel: BetCurrentViewModel = hiltViewModel()
 ) {
-    val bets by viewModel.bets.collectAsState()
+    val bets by viewModel.bets.collectAsStateWithLifecycle()
     GenericHistory(
         title = stringResource(id = R.string.bet_history_current_title),
         bets = bets,

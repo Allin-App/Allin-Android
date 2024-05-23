@@ -6,16 +6,16 @@ import kotlinx.coroutines.flow.asStateFlow
 
 abstract class UserRepository {
 
-    internal val _currentUser by lazy { MutableStateFlow<User?>(null) }
-    val currentUser by lazy { _currentUser.asStateFlow() }
+    internal val currentUser by lazy { MutableStateFlow<User?>(null) }
+    val currentUserState get() = currentUser.asStateFlow()
 
     suspend fun resetCurrentUser() {
-        _currentUser.emit(null)
+        currentUser.emit(null)
     }
 
     suspend fun updateCurrentUserCoins(value: Int) {
-        currentUser.value?.let { user ->
-            _currentUser.emit(
+        currentUserState.value?.let { user ->
+            currentUser.emit(
                 user.copy(
                     coins = value
                 )
@@ -24,9 +24,7 @@ abstract class UserRepository {
     }
 
     abstract suspend fun login(username: String, password: String): String?
-
     abstract suspend fun login(token: String): String?
-
     abstract suspend fun register(username: String, email: String, password: String): String?
     abstract suspend fun dailyGift(token: String): Int
 }

@@ -5,7 +5,7 @@ import java.time.ZonedDateTime
 const val YES_VALUE = "Yes"
 const val NO_VALUE = "No"
 
-data class YesNoBet(
+data class BinaryBet(
     override val id: String,
     override val creator: String,
     override val theme: String,

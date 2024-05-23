@@ -5,12 +5,12 @@ import fr.iut.alldev.allin.data.model.bet.Bet
 import fr.iut.alldev.allin.data.model.bet.BetStatus
 import fr.iut.alldev.allin.data.model.bet.CustomBet
 import fr.iut.alldev.allin.data.model.bet.MatchBet
-import fr.iut.alldev.allin.data.model.bet.YesNoBet
+import fr.iut.alldev.allin.data.model.bet.BinaryBet
 import java.time.ZonedDateTime
 
 class BetPreviewProvider : PreviewParameterProvider<Bet> {
     override val values = sequenceOf(
-        YesNoBet(
+        BinaryBet(
             id = "1",
             theme = "Theme",
             phrase = "Phrase",

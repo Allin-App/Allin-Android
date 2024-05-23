@@ -15,6 +15,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import fr.iut.alldev.allin.ext.asFallbackProfileUsername
 import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.core.AllInCard
@@ -48,7 +49,10 @@ fun RankingScreenItem(
                 modifier = Modifier.size(width = 26.dp, height = 20.dp)
             )
 
-            ProfilePicture(modifier = Modifier.size(38.dp))
+            ProfilePicture(
+                fallback = username.asFallbackProfileUsername(),
+                size = 38.dp
+            )
 
             Spacer(modifier = Modifier.width(8.dp))
 

@@ -21,7 +21,7 @@ import fr.iut.alldev.allin.data.ext.formatToMediumDateNoYear
 import fr.iut.alldev.allin.data.ext.formatToTime
 import fr.iut.alldev.allin.data.model.bet.Bet
 import fr.iut.alldev.allin.data.model.bet.BetStatus
-import fr.iut.alldev.allin.data.model.bet.YesNoBet
+import fr.iut.alldev.allin.data.model.bet.BinaryBet
 import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.betResult.components.BetResultBottomSheetBetCard
@@ -133,7 +133,7 @@ private fun BetResultBottomSheetContentPreview() {
         BetResultBottomSheetContent(
             username = "Pseudo",
             coinAmount = 3976,
-            bet = YesNoBet(
+            bet = BinaryBet(
                 id = "1",
                 theme = "Theme",
                 phrase = "Phrase",
