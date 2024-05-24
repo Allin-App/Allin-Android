@@ -67,12 +67,14 @@ fun RankingScreenContent(
             }
         }
 
-        itemsIndexed(users.subList(1, users.size), key = { _, user -> user.id }) { idx, user ->
-            RankingScreenItem(
-                position = idx + 3,
-                username = user.username,
-                coins = user.coins
-            )
+        if (users.size > 2) {
+            itemsIndexed(users.subList(2, users.size), key = { _, user -> user.id }) { idx, user ->
+                RankingScreenItem(
+                    position = idx + 3,
+                    username = user.username,
+                    coins = user.coins
+                )
+            }
         }
     }
 }
