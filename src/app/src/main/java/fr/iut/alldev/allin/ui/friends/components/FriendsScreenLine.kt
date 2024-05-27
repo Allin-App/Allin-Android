@@ -1,5 +1,6 @@
 package fr.iut.alldev.allin.ui.friends.components
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import fr.iut.alldev.allin.R
+import fr.iut.alldev.allin.data.model.FriendStatus
 import fr.iut.alldev.allin.ext.asFallbackProfileUsername
 import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
@@ -22,7 +24,7 @@ import fr.iut.alldev.allin.ui.core.ProfilePicture
 @Composable
 fun FriendsScreenLine(
     username: String,
-    isFriend: Boolean,
+    status: FriendStatus,
     toggleIsFriend: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -47,25 +49,31 @@ fun FriendsScreenLine(
         )
 
         AllInButton(
-            color = if (isFriend) {
-                AllInTheme.colors.background
-            } else {
-                AllInColorToken.allInPurple
+            color = when (status) {
+                FriendStatus.FRIEND -> AllInTheme.colors.background
+                FriendStatus.NOT_FRIEND -> AllInColorToken.allInPurple
+                FriendStatus.REQUESTED -> AllInTheme.colors.border
             },
-            text = if (isFriend) {
-                stringResource(id = R.string.generic_delete)
-            } else {
-                stringResource(id = R.string.generic_add)
+            text = when (status) {
+                FriendStatus.FRIEND -> {
+                    stringResource(id = R.string.generic_delete)
+                }
+                FriendStatus.NOT_FRIEND -> {
+                    stringResource(id = R.string.generic_add)
+                }
+                FriendStatus.REQUESTED -> {
+                    stringResource(id = R.string.friends_request_sent)
+                }
             },
-            textColor = if (isFriend) {
-                AllInTheme.colors.onBackground
-            } else {
-                AllInColorToken.white
+            textColor = when (status) {
+                FriendStatus.FRIEND -> AllInTheme.colors.onBackground
+                FriendStatus.NOT_FRIEND -> AllInColorToken.white
+                FriendStatus.REQUESTED -> AllInTheme.colors.onBackground2
             },
             isSmall = true,
             textStyle = AllInTheme.typography.sm2,
             onClick = toggleIsFriend,
-            modifier = Modifier.weight(.5f)
+            modifier = Modifier.weight(.8f)
         )
     }
 }
@@ -76,19 +84,33 @@ private fun FriendsScreenLinePreview() {
     AllInTheme {
         FriendsScreenLine(
             username = "Random",
-            isFriend = false,
+            status = FriendStatus.NOT_FRIEND,
             toggleIsFriend = { }
         )
     }
 }
 
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+private fun FriendsScreenLineRequestedPreview() {
+    AllInTheme {
+        FriendsScreenLine(
+            username = "Random",
+            status = FriendStatus.REQUESTED,
+            toggleIsFriend = { }
+        )
+    }
+}
+
+@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun FriendsScreenLineIsFriendPreview() {
     AllInTheme {
         FriendsScreenLine(
             username = "Random",
-            isFriend = true,
+            status = FriendStatus.FRIEND,
             toggleIsFriend = { }
         )
     }

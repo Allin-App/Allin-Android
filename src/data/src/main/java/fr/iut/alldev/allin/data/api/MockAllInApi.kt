@@ -13,6 +13,8 @@ import fr.iut.alldev.allin.data.api.model.ResponseBetResult
 import fr.iut.alldev.allin.data.api.model.ResponseBetResultDetail
 import fr.iut.alldev.allin.data.api.model.ResponseParticipation
 import fr.iut.alldev.allin.data.api.model.ResponseUser
+import fr.iut.alldev.allin.data.model.FriendStatus
+import fr.iut.alldev.allin.data.model.bet.BetFilter
 import fr.iut.alldev.allin.data.model.bet.BetStatus
 import fr.iut.alldev.allin.data.model.bet.BetType
 import fr.iut.alldev.allin.data.model.bet.NO_VALUE
@@ -68,6 +70,20 @@ class MockAllInApi : AllInApi {
                 highestStake = responseParticipations.maxOfOrNull { it.stake } ?: 0,
                 odds = if (participations.isEmpty()) 0.0f else responseParticipations.size / participations.size.toFloat()
             )
+        }
+    }
+
+    private fun getFriendStatus(userId: String, withId: String): FriendStatus {
+        return mockFriends.filter {
+            it.first == userId && it.second == withId
+        }.let {
+            if (it.isEmpty()) FriendStatus.NOT_FRIEND
+            else mockFriends.filter {
+                it.second == userId && it.first == withId
+            }.let {
+                if (it.isEmpty()) FriendStatus.REQUESTED
+                else FriendStatus.FRIEND
+            }
         }
     }
 
@@ -139,7 +155,13 @@ class MockAllInApi : AllInApi {
         val user = getUserFromToken(token) ?: throw MockAllInApiException("Invalid login/password.")
         return mockFriends
             .filter { it.first == user.first.id }
-            .mapNotNull { mockUsers.find { usr -> usr.first.id == it.second }?.first }
+            .mapNotNull { itUser ->
+                mockUsers.find { usr -> usr.first.id == itUser.second }
+                    ?.first
+                    ?.copy(
+                        friendStatus = getFriendStatus(userId = user.first.id, withId = itUser.second)
+                    )
+            }
     }
 
     override suspend fun addFriend(token: String, request: RequestFriend) {
@@ -156,9 +178,51 @@ class MockAllInApi : AllInApi {
         mockFriends.remove(user.first.id to requestUser.first.id)
     }
 
+    override suspend fun searchFriend(token: String, search: String): List<ResponseUser> {
+        val user = getUserFromToken(token) ?: throw MockAllInApiException("Invalid login/password.")
+        return mockUsers.filter { it.first.username.contains(search, ignoreCase = true) }
+            .map { itUser ->
+                itUser.first.copy(
+                    friendStatus = getFriendStatus(userId = user.first.id, withId = itUser.first.id)
+                )
+            }
+    }
+
     override suspend fun getAllBets(token: String, body: RequestBetFilters): List<ResponseBet> {
         getUserFromToken(token) ?: throw MockAllInApiException("Invalid login/password.")
-        return mockBets
+        val filters = body.filters
+        return when {
+            filters.isEmpty() -> mockBets
+
+            filters.size == 1 -> {
+                val filter = filters[0]
+
+                when (filter) {
+                    BetFilter.PUBLIC -> mockBets.filter { !it.isPrivate }
+                    BetFilter.INVITATION -> mockBets.filter { it.isPrivate }
+                    BetFilter.FINISHED -> mockBets.filter { it.status == BetStatus.FINISHED }
+                    BetFilter.IN_PROGRESS -> mockBets.filter {
+                        it.status in listOf(BetStatus.IN_PROGRESS, BetStatus.WAITING, BetStatus.CLOSING)
+                    }
+                }.map { it }
+            }
+
+            else -> {
+                mockBets.filter { bet ->
+                    val public = (BetFilter.PUBLIC in filters) && !bet.isPrivate
+                    val invitation = (BetFilter.INVITATION in filters) && bet.isPrivate
+                    val finished =
+                        (BetFilter.FINISHED in filters) and ((bet.status == BetStatus.FINISHED) or (bet.status == BetStatus.CANCELLED))
+                    val inProgress = (BetFilter.IN_PROGRESS in filters) and (bet.status in listOf(
+                        BetStatus.IN_PROGRESS,
+                        BetStatus.WAITING,
+                        BetStatus.CLOSING
+                    ))
+
+                    (public || invitation) && (finished or inProgress)
+                }.map { it }
+            }
+        }
     }
 
     override suspend fun getToConfirm(token: String): List<ResponseBetDetail> {

@@ -1,6 +1,5 @@
 package fr.iut.alldev.allin.ui.friends
 
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +18,9 @@ class FriendsScreenViewModel @Inject constructor(
     private val keystoreManager: AllInKeystoreManager
 ) : ViewModel() {
 
-    val search by lazy { mutableStateOf("") }
+    private val _search by lazy { MutableStateFlow("") }
+    val search get() = _search.asStateFlow()
+
     private val _state by lazy { MutableStateFlow<State>(State.Loading) }
     val state get() = _state.asStateFlow()
 
@@ -36,6 +37,35 @@ class FriendsScreenViewModel @Inject constructor(
             } catch (e: Exception) {
                 Timber.e(e)
             }
+
+            _search.collect { itSearch ->
+                try {
+                    _state.emit(
+                        if (itSearch.isNotBlank()) {
+                            State.Loaded(
+                                friends = friendRepository.searchNew(
+                                    token = keystoreManager.getTokenOrEmpty(),
+                                    search = itSearch
+                                )
+                            )
+                        } else {
+                            State.Loaded(
+                                friends = friendRepository.getFriends(
+                                    token = keystoreManager.getTokenOrEmpty()
+                                )
+                            )
+                        }
+                    )
+                } catch (e: Exception) {
+                    Timber.e(e)
+                }
+            }
+        }
+    }
+
+    fun setSearch(search: String) {
+        viewModelScope.launch {
+            _search.emit(search)
         }
     }
 

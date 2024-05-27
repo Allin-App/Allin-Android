@@ -27,4 +27,11 @@ class FriendRepositoryImpl @Inject constructor(
             request = RequestFriend(username)
         )
     }
+
+    override suspend fun searchNew(token: String, search: String): List<User> {
+        return api.searchFriend(
+            token = token.formatBearerToken(),
+            search = search
+        ).map { it.toUser() }
+    }
 }

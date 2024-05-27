@@ -1,6 +1,7 @@
 package fr.iut.alldev.allin.data.api.model
 
 import androidx.annotation.Keep
+import fr.iut.alldev.allin.data.model.FriendStatus
 import fr.iut.alldev.allin.data.model.User
 import kotlinx.serialization.Serializable
 
@@ -19,13 +20,15 @@ data class ResponseUser(
     val username: String,
     val email: String,
     var nbCoins: Int,
-    var token: String? = null
+    var token: String? = null,
+    val friendStatus: FriendStatus? = null
 ) {
     fun toUser() = User(
         id = id,
         username = username,
         email = email,
-        coins = nbCoins
+        coins = nbCoins,
+        friendStatus = friendStatus
     )
 }
 

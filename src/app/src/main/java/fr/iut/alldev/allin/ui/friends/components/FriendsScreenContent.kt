@@ -23,6 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import fr.iut.alldev.allin.R
+import fr.iut.alldev.allin.data.model.FriendStatus
 import fr.iut.alldev.allin.data.model.User
 import fr.iut.alldev.allin.ext.asPaddingValues
 import fr.iut.alldev.allin.theme.AllInColorToken
@@ -32,7 +33,8 @@ import fr.iut.alldev.allin.ui.core.AllInTextField
 @Composable
 fun FriendsScreenContent(
     friends: List<User>,
-    deleted: List<User>,
+    deletedUsers: List<String>,
+    requestedUsers: List<String>,
     search: String,
     onToggleDeleteFriend: (User) -> Unit,
     setSearch: (String) -> Unit,
@@ -73,7 +75,11 @@ fun FriendsScreenContent(
         items(friends) {
             FriendsScreenLine(
                 username = it.username,
-                isFriend = it !in deleted,
+                status = if (it.id in deletedUsers) {
+                    FriendStatus.NOT_FRIEND
+                } else if (it.id in requestedUsers) {
+                    FriendStatus.REQUESTED
+                } else it.friendStatus ?: FriendStatus.NOT_FRIEND,
                 toggleIsFriend = { onToggleDeleteFriend(it) }
             )
         }
@@ -87,7 +93,8 @@ private fun FriendsScreenContentPreview() {
     AllInTheme {
         FriendsScreenContent(
             friends = emptyList(),
-            deleted = emptyList(),
+            deletedUsers = emptyList(),
+            requestedUsers = emptyList(),
             search = "",
             setSearch = {},
             onToggleDeleteFriend = {}

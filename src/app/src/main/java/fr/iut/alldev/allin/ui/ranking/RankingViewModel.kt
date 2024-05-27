@@ -3,6 +3,7 @@ package fr.iut.alldev.allin.ui.ranking
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import fr.iut.alldev.allin.data.model.FriendStatus
 import fr.iut.alldev.allin.data.model.User
 import fr.iut.alldev.allin.data.repository.FriendRepository
 import fr.iut.alldev.allin.keystore.AllInKeystoreManager
@@ -27,7 +28,7 @@ class RankingViewModel @Inject constructor(
                     State.Loaded(
                         friends = friendRepository.getFriends(
                             token = keystoreManager.getTokenOrEmpty()
-                        )
+                        ).filter { it.friendStatus == FriendStatus.FRIEND }
                     )
                 )
             } catch (e: Exception) {

@@ -45,7 +45,7 @@ interface AllInApi {
     // FRIENDS
     // ---------------------
 
-    @GET("friends/add")
+    @GET("friends/gets")
     suspend fun getFriends(@Header("Authorization") token: String): List<ResponseUser>
 
     @POST("friends/add")
@@ -59,6 +59,12 @@ interface AllInApi {
         @Header("Authorization") token: String,
         @Body request: RequestFriend
     )
+
+    @GET("friends/search/{search}")
+    suspend fun searchFriend(
+        @Header("Authorization") token: String,
+        @Path("search") search: String
+    ): List<ResponseUser>
 
     // BETS
     // ---------------------

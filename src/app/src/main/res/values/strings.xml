@@ -164,6 +164,7 @@
 
     <!--Friends-->
     <string name="friends_title">Friends</string>
+    <string name="friends_request_sent">Request sent</string>
 
     <!--Daily reward-->
     <string name="daily_reward_title">Daily reward</string>
