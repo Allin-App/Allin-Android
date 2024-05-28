@@ -8,6 +8,7 @@ import fr.iut.alldev.allin.data.repository.FriendRepository
 import fr.iut.alldev.allin.keystore.AllInKeystoreManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -38,28 +39,30 @@ class FriendsScreenViewModel @Inject constructor(
                 Timber.e(e)
             }
 
-            _search.collect { itSearch ->
-                try {
-                    _state.emit(
-                        if (itSearch.isNotBlank()) {
-                            State.Loaded(
-                                friends = friendRepository.searchNew(
-                                    token = keystoreManager.getTokenOrEmpty(),
-                                    search = itSearch
+            _search
+                .debounce(1_000L)
+                .collect { itSearch ->
+                    try {
+                        _state.emit(
+                            if (itSearch.isNotBlank()) {
+                                State.Loaded(
+                                    friends = friendRepository.searchNew(
+                                        token = keystoreManager.getTokenOrEmpty(),
+                                        search = itSearch
+                                    )
                                 )
-                            )
-                        } else {
-                            State.Loaded(
-                                friends = friendRepository.getFriends(
-                                    token = keystoreManager.getTokenOrEmpty()
+                            } else {
+                                State.Loaded(
+                                    friends = friendRepository.getFriends(
+                                        token = keystoreManager.getTokenOrEmpty()
+                                    )
                                 )
-                            )
-                        }
-                    )
-                } catch (e: Exception) {
-                    Timber.e(e)
+                            }
+                        )
+                    } catch (e: Exception) {
+                        Timber.e(e)
+                    }
                 }
-            }
         }
     }
 
