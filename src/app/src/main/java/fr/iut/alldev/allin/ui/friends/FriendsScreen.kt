@@ -22,14 +22,9 @@ fun FriendsScreen(
         is FriendsScreenViewModel.State.Loaded -> {
             var deleted by remember { mutableStateOf(emptyList<String>()) }
             var requested by remember { mutableStateOf(emptyList<String>()) }
-            val filteredFriends = remember(search) {
-                s.friends.filter {
-                    it.username.contains(search, ignoreCase = true)
-                }
-            }
 
             FriendsScreenContent(
-                friends = filteredFriends,
+                friends = s.friends,
                 deletedUsers = deleted,
                 requestedUsers = requested,
                 search = search,
