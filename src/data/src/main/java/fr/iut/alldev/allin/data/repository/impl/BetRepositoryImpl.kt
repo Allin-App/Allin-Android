@@ -54,6 +54,9 @@ class BetRepositoryImpl @Inject constructor(
             RequestBetFilters(filters)
         ).map { it.toBet() }
 
+    override suspend fun getPopularBet(token: String): Bet? =
+        api.getPopularBet(token.formatBearerToken())?.toBet()
+
     override suspend fun getToConfirm(token: String): List<BetDetail> =
         api.getToConfirm(token.formatBearerToken()).map { it.toBetDetail() }
 

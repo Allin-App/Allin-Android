@@ -121,11 +121,13 @@ fun AllInBouncyCard(
 
     AllInCard(
         modifier = modifier
-            .combinedClickable(
-                interactionSource = interactionSource,
-                indication = null,
-                onClick = { onClick?.let { it() } }
-            )
+            .let {
+                if (enabled) it.combinedClickable(
+                    interactionSource = interactionSource,
+                    indication = null,
+                    onClick = { onClick?.let { it() } }
+                ) else it
+            }
             .scale(scale),
         onClick = null,
         radius = radius,

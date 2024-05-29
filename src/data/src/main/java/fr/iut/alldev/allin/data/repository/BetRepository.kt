@@ -13,6 +13,7 @@ abstract class BetRepository {
     abstract suspend fun getBet(id: String, token: String): BetDetail
     abstract suspend fun participateToBet(participation: Participation, token: String)
     abstract suspend fun getAllBets(token: String, filters: List<BetFilter>): List<Bet>
+    abstract suspend fun getPopularBet(token: String): Bet?
     abstract suspend fun confirmBet(token: String, id: String, response: String)
     abstract suspend fun getToConfirm(token: String): List<BetDetail>
     abstract suspend fun getWon(token: String): List<BetResultDetail>

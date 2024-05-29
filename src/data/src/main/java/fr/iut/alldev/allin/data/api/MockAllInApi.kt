@@ -47,7 +47,7 @@ class MockAllInApi : AllInApi {
                     if (date >= bet.endBet) {
                         mockBets[idx] = bet.copy(status = BetStatus.CLOSING)
                     } else {
-                        mockBets[idx] = bet.copy(status = BetStatus.IN_PROGRESS)
+                        mockBets[idx] = bet.copy(status = BetStatus.WAITING)
                     }
                 }
             }
@@ -120,7 +120,7 @@ class MockAllInApi : AllInApi {
                 isPrivate = body.isPrivate,
                 response = body.response,
                 type = BetType.BINARY,
-                status = BetStatus.WAITING,
+                status = BetStatus.IN_PROGRESS,
                 createdBy = getUserFromToken(token)?.first?.username ?: ""
             )
         )
@@ -223,6 +223,10 @@ class MockAllInApi : AllInApi {
                 }.map { it }
             }
         }
+    }
+
+    override suspend fun getPopularBet(token: String): ResponseBet? {
+        return mockBets.firstOrNull()
     }
 
     override suspend fun getToConfirm(token: String): List<ResponseBetDetail> {

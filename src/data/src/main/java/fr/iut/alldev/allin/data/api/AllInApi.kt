@@ -78,6 +78,9 @@ interface AllInApi {
         @Body body: RequestBetFilters
     ): List<ResponseBet>
 
+    @GET("bets/popular")
+    suspend fun getPopularBet(@Header("Authorization") token: String): ResponseBet?
+
     @GET("bets/toConfirm")
     suspend fun getToConfirm(@Header("Authorization") token: String): List<ResponseBetDetail>
 

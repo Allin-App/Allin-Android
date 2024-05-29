@@ -2,8 +2,11 @@ package fr.iut.alldev.allin.ui.core
 
 import android.content.res.Configuration
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,12 +20,12 @@ import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 import racra.compose.smooth_corner_rect_library.AbsoluteSmoothCornerShape
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AllInChip(
     text: String,
     modifier: Modifier = Modifier,
     isSelected: Boolean = false,
+    enabled: Boolean = true,
     onClick: () -> Unit = {},
     radius: Dp = 50.dp,
     selectedColor: Color = AllInColorToken.allInPurple,
@@ -34,10 +37,12 @@ fun AllInChip(
         onClick = onClick,
         border = if (!isSelected) BorderStroke(1.dp, AllInTheme.colors.border) else null,
         colors = CardDefaults.cardColors(
-            containerColor = if (isSelected) selectedColor else unselectedColor
-        )
+            containerColor = if (isSelected) selectedColor else unselectedColor,
+            disabledContainerColor = if (isSelected) selectedColor else unselectedColor
+        ),
+        enabled = enabled
     ) {
-        Box {
+        Box{
             Text(
                 text = text,
                 modifier = Modifier

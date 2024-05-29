@@ -26,7 +26,7 @@ import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.ext.shadow
 import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
-import fr.iut.alldev.allin.ui.core.AllInCard
+import fr.iut.alldev.allin.ui.core.AllInBouncyCard
 import fr.iut.alldev.allin.ui.core.HighlightedText
 import kotlin.math.ceil
 
@@ -36,9 +36,11 @@ fun BetScreenPopularCard(
     points: Float,
     pointUnit: String,
     title: String,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    enabled: Boolean = true
 ) {
-    AllInCard(
+    AllInBouncyCard(
         modifier = modifier
             .let {
                 if (isSystemInDarkTheme()) {
@@ -63,7 +65,9 @@ fun BetScreenPopularCard(
             .fillMaxWidth(),
         backgroundColor = AllInColorToken.allInDark,
         borderWidth = 2.dp,
-        borderBrush = AllInColorToken.allInMainGradient
+        borderBrush = AllInColorToken.allInMainGradient,
+        onClick = onClick,
+        enabled = enabled
     ) {
         Column(modifier = Modifier.padding(13.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -143,7 +147,8 @@ private fun BetScreenPopularCardPreview() {
             nbPlayers = 12,
             points = 2.35f,
             pointUnit = "k",
-            title = "Emre va réussir son TP de CI/CD mercredi?"
+            title = "Emre va réussir son TP de CI/CD mercredi?",
+            onClick = {}
         )
     }
 }
@@ -156,7 +161,8 @@ private fun BetScreenPopularCardSingularPreview() {
             nbPlayers = 1,
             points = 1.0f,
             pointUnit = "",
-            title = "Emre va réussir son TP de CI/CD mercredi?"
+            title = "Emre va réussir son TP de CI/CD mercredi?",
+            onClick = {}
         )
     }
 }

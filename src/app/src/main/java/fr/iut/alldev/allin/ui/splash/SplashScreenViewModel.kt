@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
 import timber.log.Timber
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.seconds
 
 @HiltViewModel
 class SplashScreenViewModel @Inject constructor(
@@ -20,7 +21,7 @@ class SplashScreenViewModel @Inject constructor(
 ) : ViewModel() {
     val state: StateFlow<State> by lazy {
         flow {
-            delay(1_000L)
+            delay(1.seconds)
 
             keystoreManager.getToken()?.let { token ->
                 runCatching {

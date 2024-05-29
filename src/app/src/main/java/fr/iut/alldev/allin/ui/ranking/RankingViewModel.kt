@@ -6,6 +6,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import fr.iut.alldev.allin.data.model.FriendStatus
 import fr.iut.alldev.allin.data.model.User
 import fr.iut.alldev.allin.data.repository.FriendRepository
+import fr.iut.alldev.allin.data.repository.UserRepository
 import fr.iut.alldev.allin.keystore.AllInKeystoreManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,6 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class RankingViewModel @Inject constructor(
     private val friendRepository: FriendRepository,
+    private val userRepository: UserRepository,
     private val keystoreManager: AllInKeystoreManager
 ) : ViewModel() {
     private val _state by lazy { MutableStateFlow<State>(State.Loading) }
@@ -26,9 +28,17 @@ class RankingViewModel @Inject constructor(
             try {
                 _state.emit(
                     State.Loaded(
-                        friends = friendRepository.getFriends(
-                            token = keystoreManager.getTokenOrEmpty()
-                        ).filter { it.friendStatus == FriendStatus.FRIEND }
+                        friends = buildList {
+                            addAll(
+                                friendRepository.getFriends(
+                                    token = keystoreManager.getTokenOrEmpty()
+                                ).filter { it.friendStatus == FriendStatus.FRIEND }
+                            )
+                            
+                            userRepository.currentUserState.value?.let {
+                                add(it)
+                            }
+                        }
                     )
                 )
             } catch (e: Exception) {

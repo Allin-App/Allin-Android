@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.seconds
 
 @HiltViewModel
 class FriendsScreenViewModel @Inject constructor(
@@ -40,7 +41,7 @@ class FriendsScreenViewModel @Inject constructor(
             }
 
             _search
-                .debounce(1_000L)
+                .debounce(1.seconds)
                 .collect { itSearch ->
                     try {
                         _state.emit(

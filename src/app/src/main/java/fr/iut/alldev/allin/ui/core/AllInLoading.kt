@@ -34,13 +34,9 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
-import androidx.compose.ui.window.DialogWindowProvider
 import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 import kotlin.math.PI
@@ -59,34 +55,23 @@ fun AllInLoading(
         enter = fadeIn(),
         exit = fadeOut()
     ) {
-        Dialog(
-            onDismissRequest = {},
-            properties = DialogProperties(
-                dismissOnBackPress = false,
-                dismissOnClickOutside = false,
-                decorFitsSystemWindows = false,
-                usePlatformDefaultWidth = false
-            )
-        ) {
-            (LocalView.current.parent as DialogWindowProvider).window.setDimAmount(0f)
-            Box(
-                modifier = modifier
-                    .fillMaxSize()
-                    .clickable(
-                        interactionSource = interactionSource,
-                        indication = null,
-                        onClick = {}
-                    )
-                    .background(AllInTheme.colors.mainSurface.copy(alpha = .4f))
-            ) {
-                AllInCircularProgressIndicator(
-                    modifier = Modifier
-                        .align(Alignment.Center)
-                        .size(50.dp),
-                    brush = brush,
-                    strokeWidth = 7.dp
+        Box(
+            modifier = modifier
+                .fillMaxSize()
+                .clickable(
+                    interactionSource = interactionSource,
+                    indication = null,
+                    onClick = {}
                 )
-            }
+                .background(AllInTheme.colors.mainSurface.copy(alpha = .4f))
+        ) {
+            AllInCircularProgressIndicator(
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .size(50.dp),
+                brush = brush,
+                strokeWidth = 7.dp
+            )
         }
     }
 }
@@ -112,7 +97,7 @@ fun AllInCircularProgressIndicator(
                 durationMillis = RotationDuration * RotationsPerCycle,
                 easing = LinearEasing
             )
-        )
+        ), label = ""
     )
     val baseRotation = transition.animateFloat(
         0f,

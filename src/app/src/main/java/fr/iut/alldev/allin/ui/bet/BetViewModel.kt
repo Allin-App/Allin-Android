@@ -8,14 +8,13 @@ import fr.iut.alldev.allin.data.model.bet.BetFilter
 import fr.iut.alldev.allin.data.repository.BetRepository
 import fr.iut.alldev.allin.keystore.AllInKeystoreManager
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.seconds
 
 @HiltViewModel
 class BetViewModel @Inject constructor(
@@ -23,33 +22,23 @@ class BetViewModel @Inject constructor(
     private val betRepository: BetRepository
 ) : ViewModel() {
 
-    private val _isRefreshing by lazy { MutableStateFlow(false) }
-    val isRefreshing: StateFlow<Boolean> get() = _isRefreshing.asStateFlow()
+    private val _state: MutableStateFlow<State> by lazy { MutableStateFlow(State.Loading) }
+    val state: StateFlow<State> by lazy { _state.asStateFlow() }
 
-    private val _bets: MutableStateFlow<List<Bet>> by lazy {
-        MutableStateFlow(emptyList())
-    }
-
-    val bets: StateFlow<List<Bet>> by lazy {
-        _bets.asStateFlow()
-            .filterNotNull()
-            .stateIn(
-                viewModelScope,
-                SharingStarted.WhileSubscribed(5_000L),
-                emptyList()
-            )
-    }
-
-    private val _filters: MutableStateFlow<List<BetFilter>> by lazy {
-        MutableStateFlow(BetFilter.entries)
-    }
-
+    private val _filters: MutableStateFlow<List<BetFilter>> by lazy { MutableStateFlow(emptyList()) }
     val filters get() = _filters.asStateFlow()
+
+    private val _refreshing by lazy { MutableStateFlow(false) }
+    val refreshing by lazy { _refreshing.asStateFlow() }
 
     init {
         viewModelScope.launch {
             refreshBets()
-            filters.collect { refreshBets() }
+            filters
+                .debounce(1.seconds)
+                .collect {
+                    refreshBets()
+                }
         }
     }
 
@@ -67,10 +56,18 @@ class BetViewModel @Inject constructor(
 
     private suspend fun refreshBets() {
         try {
-            _bets.emit(
-                betRepository.getAllBets(
-                    token = keystoreManager.getTokenOrEmpty(),
-                    filters = filters.value
+            val token = keystoreManager.getTokenOrEmpty()
+            _state.emit(
+                State.Loaded(
+                    bets = betRepository.getAllBets(
+                        token = token,
+                        filters = filters.value
+                    ),
+                    popularBet = try {
+                        betRepository.getPopularBet(token)
+                    } catch (e: Exception) {
+                        null
+                    }
                 )
             )
         } catch (e: Exception) {
@@ -78,12 +75,17 @@ class BetViewModel @Inject constructor(
         }
     }
 
-    fun refresh() {
+    fun refreshData() {
         viewModelScope.launch {
-            _isRefreshing.emit(true)
+            _refreshing.emit(true)
             refreshBets()
-            _isRefreshing.emit(false)
+            _refreshing.emit(false)
         }
+    }
+
+    sealed interface State {
+        data object Loading : State
+        data class Loaded(val bets: List<Bet>, val popularBet: Bet?) : State
     }
 
 }
