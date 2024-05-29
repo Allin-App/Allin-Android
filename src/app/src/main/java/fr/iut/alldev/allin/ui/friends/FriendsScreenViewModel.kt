@@ -118,7 +118,7 @@ class FriendsScreenViewModel @Inject constructor(
     private suspend fun changeFriendStatus(username: String, newStatus: FriendStatus) {
         (_addTabState.value as? AddTabState.Loaded)?.let { friends ->
             val usrIdx = friends.users.indexOfFirst { it.username == username }
-            val newList = if (usrIdx == -1 && newStatus == FriendStatus.FRIEND) {
+            val newList = if (usrIdx == -1 && newStatus == FriendStatus.REQUESTED) {
                 (_requestsTabState.value as? RequestsTabState.Loaded)?.let { requests ->
                     requests.users.find { it.username == username }
                 }?.let {

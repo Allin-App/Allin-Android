@@ -89,7 +89,7 @@ fun RankingScreenSecond(
         }
         ProfilePicture(
             fallback = username.asFallbackProfileUsername(),
-            size = 56.dp,
+            size = 52.dp,
             modifier = Modifier
                 .align(Alignment.TopCenter)
                 .zIndex(1f),
@@ -97,7 +97,7 @@ fun RankingScreenSecond(
         Box(
             modifier = Modifier
                 .align(Alignment.TopCenter)
-                .padding(vertical = 44.dp)
+                .padding(vertical = 40.dp)
                 .zIndex(500f)
                 .clip(CircleShape)
                 .background(AllInColorToken.allInPurple)
