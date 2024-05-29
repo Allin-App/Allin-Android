@@ -117,14 +117,22 @@ class FriendsScreenViewModel @Inject constructor(
 
     private suspend fun changeFriendStatus(username: String, newStatus: FriendStatus) {
         (_addTabState.value as? AddTabState.Loaded)?.let { friends ->
-
-            val newList = friends.users.toMutableList()
-            newList.replaceAll {
-                if (it.username == username) {
-                    it.copy(friendStatus = newStatus)
-                } else it
+            val usrIdx = friends.users.indexOfFirst { it.username == username }
+            val newList = if (usrIdx == -1 && newStatus == FriendStatus.FRIEND) {
+                (_requestsTabState.value as? RequestsTabState.Loaded)?.let { requests ->
+                    requests.users.find { it.username == username }
+                }?.let {
+                    friends.users + it.copy(friendStatus = FriendStatus.FRIEND)
+                } ?: friends.users
+            } else {
+                friends.users.toMutableList().apply {
+                    replaceAll {
+                        if (it.username == username) {
+                            it.copy(friendStatus = newStatus)
+                        } else it
+                    }
+                }
             }
-
             _addTabState.emit(
                 friends.copy(
                     users = newList
@@ -138,9 +146,7 @@ class FriendsScreenViewModel @Inject constructor(
         (_requestsTabState.value as? RequestsTabState.Loaded)?.let { requests ->
             requests.users.find { it.username == username }?.let {
                 _requestsTabState.emit(
-                    requests.copy(
-                        users = requests.users - it
-                    )
+                    requests.copy(users = requests.users - it)
                 )
             }
         }
