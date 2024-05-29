@@ -14,6 +14,10 @@ class FriendRepositoryImpl @Inject constructor(
         return api.getFriends(token.formatBearerToken()).map { it.toUser() }
     }
 
+    override suspend fun getFriendRequests(token: String): List<User> {
+        return api.getFriendRequests(token.formatBearerToken()).map { it.toUser() }
+    }
+
     override suspend fun add(token: String, username: String) {
         return api.addFriend(
             token = token.formatBearerToken(),

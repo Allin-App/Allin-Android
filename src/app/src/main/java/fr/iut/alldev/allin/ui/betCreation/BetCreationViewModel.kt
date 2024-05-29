@@ -4,12 +4,17 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import fr.iut.alldev.allin.data.model.FriendStatus
+import fr.iut.alldev.allin.data.model.User
 import fr.iut.alldev.allin.data.model.bet.BetFactory
 import fr.iut.alldev.allin.data.model.bet.BetType
 import fr.iut.alldev.allin.data.repository.BetRepository
+import fr.iut.alldev.allin.data.repository.FriendRepository
 import fr.iut.alldev.allin.data.repository.UserRepository
 import fr.iut.alldev.allin.ext.FieldErrorState
 import fr.iut.alldev.allin.keystore.AllInKeystoreManager
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.time.ZonedDateTime
@@ -19,7 +24,8 @@ import javax.inject.Inject
 class BetCreationViewModel @Inject constructor(
     private val betRepository: BetRepository,
     private val keystoreManager: AllInKeystoreManager,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val friendRepository: FriendRepository
 ) : ViewModel() {
 
     private var hasError = mutableStateOf(false)
@@ -34,6 +40,19 @@ class BetCreationViewModel @Inject constructor(
     val phraseError = mutableStateOf<FieldErrorState>(FieldErrorState.NoError)
     val registerDateError = mutableStateOf<FieldErrorState>(FieldErrorState.NoError)
     val betDateError = mutableStateOf<FieldErrorState>(FieldErrorState.NoError)
+
+    private val _friends by lazy { MutableStateFlow<List<User>>(emptyList()) }
+    val friends get() = _friends.asStateFlow()
+
+    init {
+        viewModelScope.launch {
+            _friends.emit(
+                friendRepository.getFriends(
+                    token = keystoreManager.getTokenOrEmpty()
+                ).filter { it.friendStatus == FriendStatus.FRIEND }
+            )
+        }
+    }
 
     private fun initErrorField() {
         themeError.value = FieldErrorState.NoError

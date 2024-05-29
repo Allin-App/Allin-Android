@@ -3,6 +3,7 @@ package fr.iut.alldev.allin.ui.friends
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import fr.iut.alldev.allin.data.model.FriendStatus
 import fr.iut.alldev.allin.data.model.User
 import fr.iut.alldev.allin.data.repository.FriendRepository
 import fr.iut.alldev.allin.keystore.AllInKeystoreManager
@@ -23,19 +24,17 @@ class FriendsScreenViewModel @Inject constructor(
     private val _search by lazy { MutableStateFlow("") }
     val search get() = _search.asStateFlow()
 
-    private val _state by lazy { MutableStateFlow<State>(State.Loading) }
-    val state get() = _state.asStateFlow()
+    private val _addTabState by lazy { MutableStateFlow<AddTabState>(AddTabState.Loading) }
+    val addTabState get() = _addTabState.asStateFlow()
+
+    private val _requestsTabState by lazy { MutableStateFlow<RequestsTabState>(RequestsTabState.Loading) }
+    val requestsTabState get() = _requestsTabState.asStateFlow()
 
     init {
         viewModelScope.launch {
             try {
-                _state.emit(
-                    State.Loaded(
-                        friends = friendRepository.getFriends(
-                            token = keystoreManager.getTokenOrEmpty()
-                        )
-                    )
-                )
+                _addTabState.emit(loadFriends())
+                _requestsTabState.emit(loadRequests())
             } catch (e: Exception) {
                 Timber.e(e)
             }
@@ -44,20 +43,11 @@ class FriendsScreenViewModel @Inject constructor(
                 .debounce(1.seconds)
                 .collect { itSearch ->
                     try {
-                        _state.emit(
+                        _addTabState.emit(
                             if (itSearch.isNotBlank()) {
-                                State.Loaded(
-                                    friends = friendRepository.searchNew(
-                                        token = keystoreManager.getTokenOrEmpty(),
-                                        search = itSearch
-                                    )
-                                )
+                                loadSearch(itSearch)
                             } else {
-                                State.Loaded(
-                                    friends = friendRepository.getFriends(
-                                        token = keystoreManager.getTokenOrEmpty()
-                                    )
-                                )
+                                loadFriends()
                             }
                         )
                     } catch (e: Exception) {
@@ -66,6 +56,28 @@ class FriendsScreenViewModel @Inject constructor(
                 }
         }
     }
+
+    private suspend fun loadFriends() =
+        AddTabState.Loaded(
+            users = friendRepository.getFriends(
+                token = keystoreManager.getTokenOrEmpty()
+            )
+        )
+
+    private suspend fun loadSearch(search: String) =
+        AddTabState.Loaded(
+            users = friendRepository.searchNew(
+                token = keystoreManager.getTokenOrEmpty(),
+                search = search
+            )
+        )
+
+    private suspend fun loadRequests() =
+        RequestsTabState.Loaded(
+            users = friendRepository.getFriendRequests(
+                token = keystoreManager.getTokenOrEmpty()
+            )
+        )
 
     fun setSearch(search: String) {
         viewModelScope.launch {
@@ -80,6 +92,8 @@ class FriendsScreenViewModel @Inject constructor(
                     token = keystoreManager.getTokenOrEmpty(),
                     username = username
                 )
+                changeFriendStatus(username, FriendStatus.REQUESTED)
+                removeRequest(username)
             } catch (e: Exception) {
                 Timber.e(e)
             }
@@ -93,15 +107,53 @@ class FriendsScreenViewModel @Inject constructor(
                     token = keystoreManager.getTokenOrEmpty(),
                     username = username
                 )
+                changeFriendStatus(username, FriendStatus.NOT_FRIEND)
+                removeRequest(username)
             } catch (e: Exception) {
                 Timber.e(e)
             }
         }
     }
 
-    sealed interface State {
-        data object Loading : State
-        data class Loaded(val friends: List<User>) : State
+    private suspend fun changeFriendStatus(username: String, newStatus: FriendStatus) {
+        (_addTabState.value as? AddTabState.Loaded)?.let { friends ->
+
+            val newList = friends.users.toMutableList()
+            newList.replaceAll {
+                if (it.username == username) {
+                    it.copy(friendStatus = newStatus)
+                } else it
+            }
+
+            _addTabState.emit(
+                friends.copy(
+                    users = newList
+                )
+            )
+        }
+    }
+
+
+    private suspend fun removeRequest(username: String) {
+        (_requestsTabState.value as? RequestsTabState.Loaded)?.let { requests ->
+            requests.users.find { it.username == username }?.let {
+                _requestsTabState.emit(
+                    requests.copy(
+                        users = requests.users - it
+                    )
+                )
+            }
+        }
+    }
+
+    sealed interface AddTabState {
+        data object Loading : AddTabState
+        data class Loaded(val users: List<User>) : AddTabState
+    }
+
+    sealed interface RequestsTabState {
+        data object Loading : RequestsTabState
+        data class Loaded(val users: List<User>) : RequestsTabState
     }
 }
 

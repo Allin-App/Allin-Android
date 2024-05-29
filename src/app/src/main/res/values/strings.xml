@@ -165,6 +165,10 @@
     <!--Friends-->
     <string name="friends_title">Friends</string>
     <string name="friends_request_sent">Request sent</string>
+    <string name="friends_add_tab">Add friends</string>
+    <string name="friends_requests_tab">Requests</string>
+    <string name="friends_requests_accept">Accept</string>
+    <string name="friends_requests_decline">Decline</string>
 
     <!--Daily reward-->
     <string name="daily_reward_title">Daily reward</string>

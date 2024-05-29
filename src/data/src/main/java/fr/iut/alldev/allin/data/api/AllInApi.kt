@@ -48,6 +48,9 @@ interface AllInApi {
     @GET("friends/gets")
     suspend fun getFriends(@Header("Authorization") token: String): List<ResponseUser>
 
+    @GET("friends/requests")
+    suspend fun getFriendRequests(@Header("Authorization") token: String): List<ResponseUser>
+
     @POST("friends/add")
     suspend fun addFriend(
         @Header("Authorization") token: String,

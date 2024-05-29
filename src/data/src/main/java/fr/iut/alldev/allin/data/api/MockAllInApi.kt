@@ -164,6 +164,22 @@ class MockAllInApi : AllInApi {
             }
     }
 
+    override suspend fun getFriendRequests(token: String): List<ResponseUser> {
+        val user = getUserFromToken(token) ?: throw MockAllInApiException("Invalid login/password.")
+        return mockFriends
+            .filter {
+                (it.second == user.first.id) &&
+                        mockFriends.none { it2 ->
+                            it2.first == user.first.id && it2.second == it.first
+                        }
+            }
+            .mapNotNull { itUser ->
+                mockUsers.find { usr -> usr.first.id == itUser.first }
+                    ?.first
+                    ?.copy(friendStatus = FriendStatus.NOT_FRIEND)
+            }
+    }
+
     override suspend fun addFriend(token: String, request: RequestFriend) {
         val user = getUserFromToken(token) ?: throw MockAllInApiException("Invalid login/password.")
         val requestUser =

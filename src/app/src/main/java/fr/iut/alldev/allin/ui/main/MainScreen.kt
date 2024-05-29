@@ -181,6 +181,7 @@ fun MainScreen(
         when (val event = it) {
             is ToConfirmBet -> {
                 Timber.d("ToConfirmBet")
+                scope.launch { eventBottomSheetState.show() }
                 event.Display(sheetState = eventBottomSheetState) {
                     mainViewModel.dismissedEvents += it
                     scope.launch {
@@ -193,6 +194,7 @@ fun MainScreen(
 
             is WonBet -> {
                 Timber.d("WonBet")
+                scope.launch { eventBottomSheetState.show() }
                 event.Display(sheetState = eventBottomSheetState) {
                     mainViewModel.dismissedEvents += it
                     scope.launch {

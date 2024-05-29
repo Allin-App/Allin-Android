@@ -8,8 +8,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import fr.iut.alldev.allin.R
-import fr.iut.alldev.allin.data.model.User
 import fr.iut.alldev.allin.data.model.bet.BetType
 import fr.iut.alldev.allin.ext.getIcon
 import fr.iut.alldev.allin.ext.getTitleId
@@ -43,20 +43,8 @@ fun BetCreationScreen(
     val registerDateError by remember { viewModel.registerDateError }
     val betDateError by remember { viewModel.betDateError }
 
-    val friends = remember {
-        buildList {
-            repeat(10) {
-                add(
-                    User(
-                        id = "$it",
-                        username = "Dave",
-                        email = "",
-                        coins = 420
-                    )
-                )
-            }
-        }
-    }
+    val friends by viewModel.friends.collectAsStateWithLifecycle()
+
     val selectedFriends = remember { mutableListOf<String>() }
     var selectionElements by remember { mutableStateOf(listOf<SelectionElement>()) }
     var selectedBetTypeElement by remember { mutableStateOf<SelectionElement?>(null) }

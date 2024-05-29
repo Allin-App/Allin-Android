@@ -1,9 +1,9 @@
 package fr.iut.alldev.allin.ui.betCreation.tabs
 
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -41,39 +41,46 @@ fun BetCreationScreenQuestionTab(
     setEndTimeDialog: (Boolean) -> Unit,
     interactionSource: MutableInteractionSource
 ) {
-    Column(modifier = modifier) {
-        QuestionTabThemePhraseSection(
-            betTheme = betTheme,
-            betThemeError = betThemeError,
-            setBetTheme = setBetTheme,
-            betPhrase = betPhrase,
-            betPhraseError = betPhraseError,
-            setBetPhrase = setBetPhrase,
-            interactionSource = interactionSource
-        )
-        Spacer(modifier = Modifier.height(35.dp))
-        QuestionTabDateTimeSection(
-            registerDate = registerDate.formatToMediumDate(),
-            registerTime = registerDate.formatToTime1(),
-            registerDateError = registerDateError,
-            betDateError = betDateError,
-            endDate = betDate.formatToMediumDate(),
-            endTime = betDate.formatToTime1(),
-            setEndDateDialog = setEndDateDialog,
-            setRegisterDateDialog = setRegisterDateDialog,
-            setRegisterTimeDialog = setRegisterTimeDialog,
-            setEndTimeDialog = setEndTimeDialog,
-            interactionSource = interactionSource,
-        )
-        Spacer(modifier = Modifier.height(35.dp))
-        QuestionTabPrivacySection(
-            isPublic = isPublic,
-            setIsPublic = setIsPublic,
-            friends = friends,
-            selectedFriends = selectedFriends,
-            interactionSource = interactionSource
-        )
-        Spacer(modifier = Modifier.height(120.dp))
+    LazyColumn(
+        modifier = modifier,
+        contentPadding = PaddingValues(start = 20.dp, end = 20.dp, bottom = 120.dp),
+        verticalArrangement = Arrangement.spacedBy(35.dp)
+    ) {
+        item {
+            QuestionTabThemePhraseSection(
+                betTheme = betTheme,
+                betThemeError = betThemeError,
+                setBetTheme = setBetTheme,
+                betPhrase = betPhrase,
+                betPhraseError = betPhraseError,
+                setBetPhrase = setBetPhrase,
+                interactionSource = interactionSource
+            )
+        }
+        item {
+            QuestionTabDateTimeSection(
+                registerDate = registerDate.formatToMediumDate(),
+                registerTime = registerDate.formatToTime1(),
+                registerDateError = registerDateError,
+                betDateError = betDateError,
+                endDate = betDate.formatToMediumDate(),
+                endTime = betDate.formatToTime1(),
+                setEndDateDialog = setEndDateDialog,
+                setRegisterDateDialog = setRegisterDateDialog,
+                setRegisterTimeDialog = setRegisterTimeDialog,
+                setEndTimeDialog = setEndTimeDialog,
+                interactionSource = interactionSource,
+            )
+        }
+        item {
+            QuestionTabPrivacySection(
+                isPublic = isPublic,
+                setIsPublic = setIsPublic,
+                friends = friends,
+                selectedFriends = selectedFriends,
+                interactionSource = interactionSource
+            )
+        }
     }
 }
 

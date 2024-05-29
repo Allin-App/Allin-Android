@@ -1,5 +1,6 @@
 package fr.iut.alldev.allin.ui.core
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -37,14 +38,17 @@ fun AllInButton(
         ),
         modifier = modifier,
         enabled = enabled,
-        onClick = onClick
+        onClick = onClick,
+        contentPadding = if (isSmall) {
+            PaddingValues(horizontal = 8.dp)
+        } else ButtonDefaults.ContentPadding
     ) {
         Text(
             text = text,
             textAlign = TextAlign.Center,
             style = textStyle,
             color = if (enabled) textColor else AllInTheme.colors.disabledBorder,
-            fontSize = if (isSmall) 15.sp else 20.sp,
+            fontSize = if (isSmall) 12.sp else 20.sp,
             modifier = Modifier.padding(vertical = if (isSmall) 0.dp else 8.dp)
         )
     }

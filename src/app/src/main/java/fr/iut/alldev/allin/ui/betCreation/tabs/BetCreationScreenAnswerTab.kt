@@ -2,9 +2,11 @@ package fr.iut.alldev.allin.ui.betCreation.tabs
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -34,37 +36,42 @@ fun BetCreationScreenAnswerTab(
         mutableStateOf(false)
     }
 
-
-    Column(modifier) {
-        AllInSelectionBox(
-            isOpen = isOpen,
-            setIsOpen = { isOpen = it },
-            selected = selected,
-            setSelected = setSelected,
-            elements = elements
-        )
-        Spacer(modifier = Modifier.height(26.dp))
-        when (selectedBetType) {
-            BetType.BINARY -> {
-                Column(
-                    modifier = Modifier.padding(vertical = 20.dp),
-                    verticalArrangement = Arrangement.spacedBy(17.dp)
-                ) {
-                    BetCreationScreenBottomText(text = stringResource(id = R.string.bet_creation_yes_no_bottom_text_1))
-                    BetCreationScreenBottomText(text = stringResource(id = R.string.bet_creation_yes_no_bottom_text_2))
+    LazyColumn(
+        modifier = modifier,
+        contentPadding = PaddingValues(start = 20.dp, end = 20.dp, bottom = 120.dp),
+        verticalArrangement = Arrangement.spacedBy(35.dp)
+    ) {
+        item {
+            AllInSelectionBox(
+                isOpen = isOpen,
+                setIsOpen = { isOpen = it },
+                selected = selected,
+                setSelected = setSelected,
+                elements = elements
+            )
+            Spacer(modifier = Modifier.height(26.dp))
+            when (selectedBetType) {
+                BetType.BINARY -> {
+                    Column(
+                        modifier = Modifier.padding(vertical = 20.dp),
+                        verticalArrangement = Arrangement.spacedBy(17.dp)
+                    ) {
+                        BetCreationScreenBottomText(text = stringResource(id = R.string.bet_creation_yes_no_bottom_text_1))
+                        BetCreationScreenBottomText(text = stringResource(id = R.string.bet_creation_yes_no_bottom_text_2))
+                    }
                 }
-            }
 
-            BetType.MATCH -> {
-                BetCreationScreenBottomText(
-                    text = stringResource(selectedBetType.getTitleId())
-                )
-            }
+                BetType.MATCH -> {
+                    BetCreationScreenBottomText(
+                        text = stringResource(selectedBetType.getTitleId())
+                    )
+                }
 
-            BetType.CUSTOM -> {
-                BetCreationScreenBottomText(
-                    text = stringResource(selectedBetType.getTitleId())
-                )
+                BetType.CUSTOM -> {
+                    BetCreationScreenBottomText(
+                        text = stringResource(selectedBetType.getTitleId())
+                    )
+                }
             }
         }
     }
