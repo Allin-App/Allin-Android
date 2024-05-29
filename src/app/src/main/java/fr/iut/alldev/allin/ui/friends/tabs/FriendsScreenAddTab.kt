@@ -16,12 +16,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.data.model.FriendStatus
 import fr.iut.alldev.allin.data.model.User
 import fr.iut.alldev.allin.ext.asPaddingValues
 import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.core.AllInTextField
+import fr.iut.alldev.allin.ui.core.bet.AllInEmptyView
 import fr.iut.alldev.allin.ui.friends.components.FriendsScreenLine
 
 @Composable
@@ -59,6 +63,19 @@ fun FriendsScreenAddTab(
                 status = it.friendStatus ?: FriendStatus.NOT_FRIEND,
                 toggleIsFriend = { onToggleDeleteFriend(it) }
             )
+        }
+
+        if (friends.isEmpty() && search.isBlank()) {
+            item {
+                AllInEmptyView(
+                    text = stringResource(id = R.string.friends_empty_text),
+                    subtext = stringResource(id = R.string.friends_empty_subtext),
+                    image = painterResource(id = R.drawable.silhouettes),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 24.dp)
+                )
+            }
         }
 
     }

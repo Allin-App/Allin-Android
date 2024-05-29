@@ -30,10 +30,12 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.data.ext.formatToMediumDateNoYear
 import fr.iut.alldev.allin.data.ext.formatToTime
 import fr.iut.alldev.allin.data.model.bet.Bet
@@ -43,6 +45,7 @@ import fr.iut.alldev.allin.data.model.bet.BinaryBet
 import fr.iut.alldev.allin.ext.textId
 import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.core.AllInChip
+import fr.iut.alldev.allin.ui.core.bet.AllInEmptyView
 import java.time.ZonedDateTime
 
 private const val DISABLED_OPACITY = .5f
@@ -150,6 +153,17 @@ fun BetScreenLoadedContent(
                     Spacer(modifier = Modifier.height(24.dp))
                 }
             }
+        }
+
+        if (bets.isEmpty()) {
+            AllInEmptyView(
+                text = stringResource(id = R.string.bet_empty_text),
+                subtext = null,
+                image = painterResource(id = R.drawable.video_game),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.Center)
+            )
         }
 
         PullRefreshIndicator(

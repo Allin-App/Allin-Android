@@ -130,6 +130,7 @@
         <item quantity="other">%s points en jeu</item>
         <item quantity="many">%s points en jeu</item>
     </plurals>
+    <string name="bet_empty_text">Aucun bet ne correspond à votre recherche</string>
 
     <!--Bet status-->
     <string name="bet_status_finished">Terminé !</string>
@@ -164,6 +165,8 @@
 
     <!--Ranking-->
     <string name="ranking_title">Classement</string>
+    <string name="ranking_empty_text">C\'est un peu vide ici</string>
+    <string name="ranking_empty_subtext">Ajoutez des amis pour les afficher dans le classement</string>
 
     <!--Friends-->
     <string name="friends_title">Amis</string>
@@ -172,6 +175,8 @@
     <string name="friends_requests_tab">Demandes</string>
     <string name="friends_requests_accept">Accepter</string>
     <string name="friends_requests_decline">Refuser</string>
+    <string name="friends_empty_text">Vous n\'avez pas encore d\'amis</string>
+    <string name="friends_empty_subtext">Ajoutez des amis depuis cet écran</string>
 
     <!--Daily reward-->
     <string name="daily_reward_title">Récompense quotidienne</string>

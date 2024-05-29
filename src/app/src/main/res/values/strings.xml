@@ -129,6 +129,7 @@
         <item quantity="one">%s point at stake</item>
         <item quantity="other">%s points at stake</item>
     </plurals>
+    <string name="bet_empty_text">No Bet corresponds to your research</string>
 
     <!--Bet status-->
     <string name="bet_status_finished">Finished !</string>
@@ -161,6 +162,8 @@
 
     <!--Ranking-->
     <string name="ranking_title">Ranking</string>
+    <string name="ranking_empty_text">It\'s a bit lonely here</string>
+    <string name="ranking_empty_subtext">Add friends to display them in the ranking</string>
 
     <!--Friends-->
     <string name="friends_title">Friends</string>
@@ -169,6 +172,8 @@
     <string name="friends_requests_tab">Requests</string>
     <string name="friends_requests_accept">Accept</string>
     <string name="friends_requests_decline">Decline</string>
+    <string name="friends_empty_text">You don\'t have any friends yet</string>
+    <string name="friends_empty_subtext">Add new friends from this screen</string>
 
     <!--Daily reward-->
     <string name="daily_reward_title">Daily reward</string>
