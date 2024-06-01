@@ -12,6 +12,8 @@ sealed class Bet(
     open val endBetDate: ZonedDateTime,
     open val isPublic: Boolean,
     open val betStatus: BetStatus,
+    open val totalStakes: Int,
+    open val totalParticipants: Int
 ) {
     abstract fun getBetType(): BetType
     abstract fun getResponses(): List<String>

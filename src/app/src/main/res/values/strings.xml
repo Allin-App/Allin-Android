@@ -169,11 +169,12 @@
     <string name="friends_title">Friends</string>
     <string name="friends_request_sent">Request sent</string>
     <string name="friends_add_tab">Add friends</string>
-    <string name="friends_requests_tab">Requests</string>
+    <string name="friends_requests_tab">Requests (%d)</string>
     <string name="friends_requests_accept">Accept</string>
     <string name="friends_requests_decline">Decline</string>
     <string name="friends_empty_text">You don\'t have any friends yet</string>
     <string name="friends_empty_subtext">Add new friends from this screen</string>
+    <string name="friends_requests_empty_text">No currently pending friend requests</string>
 
     <!--Daily reward-->
     <string name="daily_reward_title">Daily reward</string>

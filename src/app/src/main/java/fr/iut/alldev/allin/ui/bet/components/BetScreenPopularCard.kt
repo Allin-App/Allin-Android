@@ -1,5 +1,6 @@
 package fr.iut.alldev.allin.ui.bet.components
 
+import android.icu.text.CompactDecimalFormat
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,9 +12,11 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
@@ -22,24 +25,29 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.os.ConfigurationCompat
 import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.ext.shadow
 import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.core.AllInBouncyCard
 import fr.iut.alldev.allin.ui.core.HighlightedText
-import kotlin.math.ceil
 
 @Composable
 fun BetScreenPopularCard(
     nbPlayers: Int,
-    points: Float,
-    pointUnit: String,
+    points: Int,
     title: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true
 ) {
+    val configuration = LocalConfiguration.current
+    val numberFormat = remember(configuration) {
+        val locale = ConfigurationCompat.getLocales(configuration).get(0) ?: java.util.Locale.getDefault()
+        CompactDecimalFormat.getInstance(locale, CompactDecimalFormat.CompactStyle.SHORT)
+    }
+
     AllInBouncyCard(
         modifier = modifier
             .let {
@@ -114,15 +122,11 @@ fun BetScreenPopularCard(
                     style = AllInTheme.typography.p1,
                     fontSize = 15.sp
                 )
-                val pointsText = if (points % 1 == 0f) {
-                    stringResource(id = R.string.int_and_unit, points.toInt(), pointUnit)
-                } else {
-                    stringResource(id = R.string.float_and_unit, points, pointUnit)
-                }
+                val pointsText = numberFormat.format(points)
                 HighlightedText(
                     text = pluralStringResource(
                         id = R.plurals.bet_points_at_stake_format,
-                        if (pointUnit.isEmpty()) ceil(points).toInt() else 2,
+                        points,
                         pointsText
                     ),
                     query = pointsText,
@@ -145,8 +149,7 @@ private fun BetScreenPopularCardPreview() {
     AllInTheme {
         BetScreenPopularCard(
             nbPlayers = 12,
-            points = 2.35f,
-            pointUnit = "k",
+            points = 2350,
             title = "Emre va réussir son TP de CI/CD mercredi?",
             onClick = {}
         )
@@ -159,8 +162,7 @@ private fun BetScreenPopularCardSingularPreview() {
     AllInTheme {
         BetScreenPopularCard(
             nbPlayers = 1,
-            points = 1.0f,
-            pointUnit = "",
+            points = 150,
             title = "Emre va réussir son TP de CI/CD mercredi?",
             onClick = {}
         )

@@ -1,6 +1,5 @@
 package fr.iut.alldev.allin.ui.betStatus.components
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,11 +20,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.os.ConfigurationCompat
 import fr.iut.alldev.allin.data.model.bet.Bet
+import fr.iut.alldev.allin.data.model.bet.BinaryBet
 import fr.iut.alldev.allin.data.model.bet.CustomBet
 import fr.iut.alldev.allin.data.model.bet.MatchBet
 import fr.iut.alldev.allin.data.model.bet.NO_VALUE
 import fr.iut.alldev.allin.data.model.bet.YES_VALUE
-import fr.iut.alldev.allin.data.model.bet.BinaryBet
 import fr.iut.alldev.allin.data.model.bet.vo.BetDetail
 import fr.iut.alldev.allin.ext.formatToSimple
 import fr.iut.alldev.allin.theme.AllInColorToken
@@ -152,7 +151,6 @@ fun Bet.getAnswerFromParticipationIdx(idx: Int) =
     }
 
 @Preview
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun ParticipationAnswersPreview(
     @PreviewParameter(BetDetailPreviewProvider::class) bet: BetDetail,

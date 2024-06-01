@@ -11,6 +11,8 @@ data class CustomBet(
     override val endBetDate: ZonedDateTime,
     override val isPublic: Boolean,
     override val betStatus: BetStatus,
+    override val totalStakes: Int,
+    override val totalParticipants: Int,
     val possibleAnswers: List<String>
 ) : Bet(
     id,
@@ -20,7 +22,9 @@ data class CustomBet(
     endRegisterDate,
     endBetDate,
     isPublic,
-    betStatus
+    betStatus,
+    totalStakes,
+    totalParticipants
 ) {
     override fun getBetType() = BetType.CUSTOM
 

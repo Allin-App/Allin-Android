@@ -76,9 +76,8 @@ fun BetScreenLoadedContent(
                 item {
                     Box(Modifier.fillMaxWidth()) {
                         BetScreenPopularCard(
-                            nbPlayers = 12, // Todo : Players
-                            points = 2.35f, // Todo : Points
-                            pointUnit = "k",
+                            nbPlayers = it.totalParticipants,
+                            points = it.totalStakes,
                             title = it.phrase,
                             onClick = { selectBet(it, false) },
                             enabled = !isRefreshing,
@@ -137,6 +136,7 @@ fun BetScreenLoadedContent(
                     date = it.endRegisterDate.formatToMediumDateNoYear(),
                     time = it.endRegisterDate.formatToTime(),
                     players = emptyList(), // TODO : Players
+                    totalParticipants = it.totalParticipants,
                     onClickParticipate = { selectBet(it, true) },
                     onClickCard = { selectBet(it, false) },
                     enabled = !isRefreshing,
@@ -153,17 +153,19 @@ fun BetScreenLoadedContent(
                     Spacer(modifier = Modifier.height(24.dp))
                 }
             }
-        }
 
-        if (bets.isEmpty()) {
-            AllInEmptyView(
-                text = stringResource(id = R.string.bet_empty_text),
-                subtext = null,
-                image = painterResource(id = R.drawable.video_game),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.Center)
-            )
+            if (bets.isEmpty()) {
+                item {
+                    AllInEmptyView(
+                        text = stringResource(id = R.string.bet_empty_text),
+                        subtext = null,
+                        image = painterResource(id = R.drawable.video_game),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .fillParentMaxHeight(.5f)
+                    )
+                }
+            }
         }
 
         PullRefreshIndicator(
@@ -187,7 +189,9 @@ private fun BetScreenLoadedContentPreview() {
                 endRegisterDate = ZonedDateTime.now(),
                 endBetDate = ZonedDateTime.now(),
                 isPublic = false,
-                betStatus = BetStatus.IN_PROGRESS
+                betStatus = BetStatus.IN_PROGRESS,
+                totalParticipants = 200,
+                totalStakes = 2500
             ),
             filters = emptyList(),
             bets = emptyList(),

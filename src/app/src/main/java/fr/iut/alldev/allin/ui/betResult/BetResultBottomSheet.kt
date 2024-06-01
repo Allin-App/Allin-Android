@@ -142,6 +142,8 @@ private fun BetResultBottomSheetContentPreview() {
                 isPublic = true,
                 betStatus = BetStatus.IN_PROGRESS,
                 creator = "creator",
+                totalStakes = 0,
+                totalParticipants = 0
             ),
             stake = 4175,
             winnings = 2600,

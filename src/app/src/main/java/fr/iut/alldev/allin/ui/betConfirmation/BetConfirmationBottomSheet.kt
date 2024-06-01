@@ -44,11 +44,11 @@ import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.data.ext.formatToMediumDateNoYear
 import fr.iut.alldev.allin.data.ext.formatToTime
 import fr.iut.alldev.allin.data.model.bet.BetStatus
+import fr.iut.alldev.allin.data.model.bet.BinaryBet
 import fr.iut.alldev.allin.data.model.bet.CustomBet
 import fr.iut.alldev.allin.data.model.bet.MatchBet
 import fr.iut.alldev.allin.data.model.bet.NO_VALUE
 import fr.iut.alldev.allin.data.model.bet.YES_VALUE
-import fr.iut.alldev.allin.data.model.bet.BinaryBet
 import fr.iut.alldev.allin.data.model.bet.vo.BetAnswerDetail
 import fr.iut.alldev.allin.data.model.bet.vo.BetDetail
 import fr.iut.alldev.allin.ext.formatToSimple
@@ -303,7 +303,9 @@ private fun BetConfirmationBottomSheetContentPreview() {
                     endBetDate = ZonedDateTime.now(),
                     isPublic = true,
                     betStatus = BetStatus.FINISHED,
-                    creator = "creator"
+                    creator = "creator",
+                    totalStakes = 0,
+                    totalParticipants = 0
                 ),
                 answers = listOf(
                     BetAnswerDetail(

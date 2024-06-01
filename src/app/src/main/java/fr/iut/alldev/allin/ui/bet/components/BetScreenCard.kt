@@ -36,6 +36,7 @@ fun BetScreenCard(
     date: String,
     time: String,
     players: List<User>,
+    totalParticipants: Int,
     onClickParticipate: () -> Unit,
     onClickCard: () -> Unit,
     modifier: Modifier = Modifier,
@@ -80,8 +81,8 @@ fun BetScreenCard(
                 Text(
                     text = pluralStringResource(
                         id = R.plurals.bet_players_waiting_format,
-                        players.size,
-                        players.size
+                        totalParticipants,
+                        totalParticipants
                     ),
                     style = AllInTheme.typography.sm2,
                     color = AllInTheme.colors.onBackground2
@@ -108,6 +109,7 @@ private fun BetScreenCardPreview() {
             title = "Emre va réussir son TP de CI/CD mercredi?",
             date = "12 Sept.",
             time = "13:00",
+            totalParticipants = 25,
             players = listOf(
                 User(id = "", username = "Lucas D", email = "", coins = 0),
             ),
@@ -128,6 +130,7 @@ private fun BetScreenCardNoPlayersPreview() {
             title = "Emre va réussir son TP de CI/CD mercredi?",
             date = "12 Sept.",
             time = "13:00",
+            totalParticipants = 25,
             players = emptyList(),
             onClickParticipate = {},
             onClickCard = {}
@@ -146,10 +149,11 @@ private fun BetScreenCardDisabledPreview() {
             title = "Emre va réussir son TP de CI/CD mercredi?",
             date = "12 Sept.",
             time = "13:00",
+            totalParticipants = 25,
             players = emptyList(),
             onClickParticipate = {},
             onClickCard = {},
-            enabled = false
+            enabled = false,
         )
     }
 }

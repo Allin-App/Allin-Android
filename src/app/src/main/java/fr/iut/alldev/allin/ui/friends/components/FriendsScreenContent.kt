@@ -69,7 +69,13 @@ fun FriendsScreenContent(
                         }
                     }
                 },
-                SectionElement(stringResource(id = R.string.friends_requests_tab)) {
+                SectionElement(
+                    stringResource(
+                        id = R.string.friends_requests_tab,
+                        (requestsTabState as? FriendsScreenViewModel.RequestsTabState.Loaded)
+                            ?.users?.size ?: 0
+                    )
+                ) {
 
                     when (requestsTabState) {
                         is FriendsScreenViewModel.RequestsTabState.Loaded -> {

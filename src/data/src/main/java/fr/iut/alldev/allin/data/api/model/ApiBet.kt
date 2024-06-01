@@ -7,11 +7,11 @@ import fr.iut.alldev.allin.data.model.bet.BetResult
 import fr.iut.alldev.allin.data.model.bet.BetResultDetail
 import fr.iut.alldev.allin.data.model.bet.BetStatus
 import fr.iut.alldev.allin.data.model.bet.BetType
+import fr.iut.alldev.allin.data.model.bet.BinaryBet
 import fr.iut.alldev.allin.data.model.bet.CustomBet
 import fr.iut.alldev.allin.data.model.bet.MatchBet
 import fr.iut.alldev.allin.data.model.bet.NO_VALUE
 import fr.iut.alldev.allin.data.model.bet.YES_VALUE
-import fr.iut.alldev.allin.data.model.bet.BinaryBet
 import fr.iut.alldev.allin.data.model.bet.vo.BetAnswerDetail
 import fr.iut.alldev.allin.data.model.bet.vo.BetDetail
 import fr.iut.alldev.allin.data.serialization.ZonedDateTimeSerializer
@@ -30,7 +30,10 @@ data class ResponseBet(
     @Serializable(ZonedDateTimeSerializer::class) var endBet: ZonedDateTime,
     var isPrivate: Boolean,
     var response: List<String>,
-    val createdBy: String
+    val createdBy: String,
+    var popularityscore: Int = 0,
+    val totalStakes: Int = 0,
+    val totalParticipants: Int = 0
 ) {
     fun toBet(): Bet = when {
         response.toSet() == setOf(YES_VALUE, NO_VALUE) -> {
@@ -42,7 +45,9 @@ data class ResponseBet(
                 endBetDate = endBet,
                 isPublic = !isPrivate,
                 betStatus = status,
-                creator = createdBy
+                creator = createdBy,
+                totalStakes = totalStakes,
+                totalParticipants = totalParticipants
             )
         }
 
@@ -57,7 +62,9 @@ data class ResponseBet(
                 betStatus = status,
                 creator = createdBy,
                 nameTeam1 = response.firstOrNull() ?: "",
-                nameTeam2 = response.lastOrNull() ?: ""
+                nameTeam2 = response.lastOrNull() ?: "",
+                totalStakes = totalStakes,
+                totalParticipants = totalParticipants
             )
         }
 
@@ -71,7 +78,9 @@ data class ResponseBet(
                 isPublic = !isPrivate,
                 betStatus = status,
                 creator = createdBy,
-                possibleAnswers = response
+                possibleAnswers = response,
+                totalStakes = totalStakes,
+                totalParticipants = totalParticipants
             )
         }
     }

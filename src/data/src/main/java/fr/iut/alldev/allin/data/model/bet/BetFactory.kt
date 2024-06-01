@@ -15,9 +15,8 @@ class BetFactory {
             isPublic: Boolean,
             nameTeam1: String = "",
             nameTeam2: String = "",
-            possibleAnswers: List<String> = emptyList(),
-
-            ): Bet =
+            possibleAnswers: List<String> = emptyList()
+        ): Bet =
             when (betType) {
                 BetType.BINARY -> {
                     BinaryBet(
@@ -28,7 +27,9 @@ class BetFactory {
                         endRegisterDate = endRegisterDate,
                         endBetDate = endBetDate,
                         isPublic = isPublic,
-                        betStatus = BetStatus.WAITING
+                        betStatus = BetStatus.WAITING,
+                        totalStakes = 0,
+                        totalParticipants = 0
                     )
                 }
 
@@ -43,7 +44,9 @@ class BetFactory {
                         isPublic = isPublic,
                         betStatus = BetStatus.WAITING,
                         nameTeam1 = nameTeam1,
-                        nameTeam2 = nameTeam2
+                        nameTeam2 = nameTeam2,
+                        totalStakes = 0,
+                        totalParticipants = 0
                     )
 
                 }
@@ -58,7 +61,9 @@ class BetFactory {
                         endBetDate = endBetDate,
                         isPublic = isPublic,
                         betStatus = BetStatus.WAITING,
-                        possibleAnswers = possibleAnswers
+                        possibleAnswers = possibleAnswers,
+                        totalStakes = 0,
+                        totalParticipants = 0
                     )
                 }
             }

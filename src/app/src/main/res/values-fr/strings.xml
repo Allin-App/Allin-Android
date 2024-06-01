@@ -172,11 +172,12 @@
     <string name="friends_title">Amis</string>
     <string name="friends_request_sent">Requête envoyée</string>
     <string name="friends_add_tab">Ajouter</string>
-    <string name="friends_requests_tab">Demandes</string>
+    <string name="friends_requests_tab">Demandes (%d)</string>
     <string name="friends_requests_accept">Accepter</string>
     <string name="friends_requests_decline">Refuser</string>
     <string name="friends_empty_text">Vous n\'avez pas encore d\'amis</string>
     <string name="friends_empty_subtext">Ajoutez des amis depuis cet écran</string>
+    <string name="friends_requests_empty_text">Aucunes demandes d\'amis en attentes</string>
 
     <!--Daily reward-->
     <string name="daily_reward_title">Récompense quotidienne</string>
