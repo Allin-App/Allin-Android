@@ -4,6 +4,10 @@ import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -39,7 +43,7 @@ fun FriendsScreenRequestLine(
 
         Text(
             text = username,
-            color = AllInTheme.colors.onBackground2,
+            color = AllInTheme.colors.onMainSurface,
             style = AllInTheme.typography.sm2,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
@@ -47,34 +51,28 @@ fun FriendsScreenRequestLine(
             modifier = Modifier.weight(1f)
         )
 
-        Row(
-            modifier = Modifier.weight(1.5f),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             AllInButton(
                 color = AllInColorToken.allInPurple,
                 text = stringResource(id = R.string.friends_requests_accept),
                 textColor = AllInColorToken.white,
                 isSmall = true,
                 textStyle = AllInTheme.typography.sm2,
-                onClick = accept,
-                modifier = Modifier.weight(1f)
+                onClick = accept
             )
 
-            AllInButton(
-                color = AllInTheme.colors.background,
-                text = stringResource(id = R.string.friends_requests_decline),
-                textColor = AllInTheme.colors.onBackground,
-                isSmall = true,
-                textStyle = AllInTheme.typography.sm2,
-                onClick = decline,
-                modifier = Modifier.weight(1f)
-            )
+            IconButton(onClick = decline) {
+                Icon(
+                    imageVector = Icons.Default.Close,
+                    contentDescription = stringResource(id = R.string.friends_requests_decline),
+                    tint = AllInTheme.colors.onBackground2
+                )
+            }
         }
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun FriendsScreenLinePreview() {

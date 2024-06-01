@@ -125,9 +125,9 @@ fun MainScreen(
         destinations = topLevelDestinations,
         scope = scope,
         username = currentUser?.username ?: "",
-        nbFriends = 5,
-        nbBets = 35,
-        bestWin = 362,
+        nbFriends = currentUser?.nbFriends ?: 0,
+        nbBets = currentUser?.nbBets ?: 0,
+        bestWin = currentUser?.bestWin ?: 0,
         navigateTo = { route ->
             mainViewModel.fetchEvents()
             navController.popUpTo(route, startDestination)

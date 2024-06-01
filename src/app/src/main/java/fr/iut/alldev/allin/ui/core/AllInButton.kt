@@ -40,7 +40,7 @@ fun AllInButton(
         enabled = enabled,
         onClick = onClick,
         contentPadding = if (isSmall) {
-            PaddingValues(horizontal = 8.dp)
+            PaddingValues(horizontal = 12.dp)
         } else ButtonDefaults.ContentPadding
     ) {
         Text(

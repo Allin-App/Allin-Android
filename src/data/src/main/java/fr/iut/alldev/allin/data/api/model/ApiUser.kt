@@ -21,6 +21,9 @@ data class ResponseUser(
     val email: String,
     var nbCoins: Int,
     var token: String? = null,
+    var nbBets: Int,
+    var nbFriends: Int,
+    var bestWin: Int,
     val friendStatus: FriendStatus? = null
 ) {
     fun toUser() = User(
@@ -28,7 +31,10 @@ data class ResponseUser(
         username = username,
         email = email,
         coins = nbCoins,
-        friendStatus = friendStatus
+        friendStatus = friendStatus,
+        nbBets = nbBets,
+        nbFriends = nbFriends,
+        bestWin = bestWin
     )
 }
 

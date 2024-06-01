@@ -105,31 +105,46 @@ private fun RankingScreenContentPreview() {
                     id = "1",
                     username = "Owen",
                     email = "",
-                    coins = 8533
+                    coins = 8533,
+                    nbBets = 0,
+                    nbFriends = 0,
+                    bestWin = 0
                 ),
                 User(
                     id = "2",
                     username = "Dave",
                     email = "",
-                    coins = 6942
+                    coins = 6942,
+                    nbBets = 0,
+                    nbFriends = 0,
+                    bestWin = 0
                 ),
                 User(
                     id = "3",
                     username = "Lucas",
                     email = "",
-                    coins = 3333
+                    coins = 3333,
+                    nbBets = 0,
+                    nbFriends = 0,
+                    bestWin = 0
                 ),
                 User(
                     id = "4",
                     username = "Louison",
                     email = "",
-                    coins = 1970
+                    coins = 1970,
+                    nbBets = 0,
+                    nbFriends = 0,
+                    bestWin = 0
                 ),
                 User(
                     id = "5",
                     username = "Imri",
                     email = "",
-                    coins = 1
+                    coins = 1,
+                    nbBets = 0,
+                    nbFriends = 0,
+                    bestWin = 0
                 )
             )
         )
@@ -146,7 +161,10 @@ private fun RankingScreenContentEmptyPreview() {
                     id = "1",
                     username = "Owen",
                     email = "",
-                    coins = 8533
+                    coins = 8533,
+                    nbBets = 0,
+                    nbFriends = 0,
+                    bestWin = 0
                 )
             )
         )

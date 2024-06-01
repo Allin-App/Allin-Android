@@ -2,9 +2,11 @@ package fr.iut.alldev.allin.ui.betCreation.tabs.sections
 
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -18,11 +20,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -34,6 +38,7 @@ import fr.iut.alldev.allin.ui.betCreation.components.BetCreationScreenFriendLine
 import fr.iut.alldev.allin.ui.core.AllInIconChip
 import fr.iut.alldev.allin.ui.core.AllInRetractableCard
 import fr.iut.alldev.allin.ui.core.AllInTitleInfo
+import fr.iut.alldev.allin.ui.core.bet.AllInEmptyView
 
 @Composable
 fun QuestionTabPrivacySection(
@@ -99,39 +104,53 @@ fun QuestionTabPrivacySection(
                 isOpen = isOpen,
                 setIsOpen = { isOpen = it }
             ) {
-                LazyColumn(
-                    modifier = Modifier
-                        .height(440.dp)
-                        .nestedScroll(object : NestedScrollConnection {
-                            override fun onPostScroll(
-                                consumed: Offset,
-                                available: Offset,
-                                source: NestedScrollSource
-                            ) = available.copy(x = 0f)
-                        })
-                ) {
-                    itemsIndexed(friends, key = { _, it -> it.id }) { idx, it ->
-                        var isSelected by remember {
-                            mutableStateOf(selectedFriends.contains(it.id))
-                        }
-
-                        if (idx != 0) {
-                            HorizontalDivider(color = AllInTheme.colors.border)
-                        }
-                        BetCreationScreenFriendLine(
-                            username = "Dave",
-                            allCoinsAmount = 542,
-                            isSelected = isSelected
-                        ) {
-                            if (isSelected) {
-                                selectedFriends.remove(it.id)
-                            } else {
-                                selectedFriends.add(it.id)
+                Box {
+                    LazyColumn(
+                        modifier = Modifier
+                            .heightIn(max = 440.dp)
+                            .nestedScroll(object : NestedScrollConnection {
+                                override fun onPostScroll(
+                                    consumed: Offset,
+                                    available: Offset,
+                                    source: NestedScrollSource
+                                ) = available.copy(x = 0f)
+                            })
+                    ) {
+                        itemsIndexed(friends, key = { _, it -> it.id }) { idx, it ->
+                            var isSelected by remember {
+                                mutableStateOf(selectedFriends.contains(it.id))
                             }
-                            isSelected = !isSelected
+
+                            if (idx != 0) {
+                                HorizontalDivider(color = AllInTheme.colors.border)
+                            }
+                            BetCreationScreenFriendLine(
+                                username = it.username,
+                                allCoinsAmount = it.coins,
+                                isSelected = isSelected
+                            ) {
+                                if (isSelected) {
+                                    selectedFriends.remove(it.id)
+                                } else {
+                                    selectedFriends.add(it.id)
+                                }
+                                isSelected = !isSelected
+                            }
                         }
                     }
+
+                    if (friends.isEmpty()) {
+                        AllInEmptyView(
+                            text = stringResource(id = R.string.friends_empty_text),
+                            subtext = stringResource(id = R.string.friends_empty_subtext),
+                            image = painterResource(id = R.drawable.silhouettes),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .align(Alignment.Center)
+                        )
+                    }
                 }
+
             }
             Column(
                 modifier = Modifier.padding(vertical = 20.dp),

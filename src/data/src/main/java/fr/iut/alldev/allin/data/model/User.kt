@@ -5,5 +5,8 @@ data class User(
     val username: String,
     val email: String,
     val coins: Int,
+    var nbBets: Int,
+    var nbFriends: Int,
+    var bestWin: Int,
     val friendStatus: FriendStatus? = null
 )

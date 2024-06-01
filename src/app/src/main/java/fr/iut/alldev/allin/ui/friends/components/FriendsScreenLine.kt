@@ -40,7 +40,7 @@ fun FriendsScreenLine(
 
         Text(
             text = username,
-            color = AllInTheme.colors.onBackground2,
+            color = AllInTheme.colors.onMainSurface,
             style = AllInTheme.typography.sm2,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,

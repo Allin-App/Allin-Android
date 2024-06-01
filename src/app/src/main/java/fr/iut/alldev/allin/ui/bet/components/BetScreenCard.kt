@@ -111,7 +111,15 @@ private fun BetScreenCardPreview() {
             time = "13:00",
             totalParticipants = 25,
             players = listOf(
-                User(id = "", username = "Lucas D", email = "", coins = 0),
+                User(
+                    id = "",
+                    username = "Lucas D",
+                    email = "",
+                    coins = 0,
+                    nbBets = 0,
+                    nbFriends = 0,
+                    bestWin = 0,
+                    )
             ),
             onClickParticipate = {},
             onClickCard = {}

@@ -30,6 +30,9 @@ class FriendsScreenViewModel @Inject constructor(
     private val _requestsTabState by lazy { MutableStateFlow<RequestsTabState>(RequestsTabState.Loading) }
     val requestsTabState get() = _requestsTabState.asStateFlow()
 
+    private val _refreshing by lazy { MutableStateFlow(false) }
+    val refreshing by lazy { _refreshing.asStateFlow() }
+
     init {
         viewModelScope.launch {
             try {
@@ -54,6 +57,27 @@ class FriendsScreenViewModel @Inject constructor(
                         Timber.e(e)
                     }
                 }
+        }
+    }
+
+    fun refreshAll() {
+        viewModelScope.launch {
+            try {
+                _refreshing.emit(true)
+                _addTabState.emit(
+                    _search.value.let { itSearch ->
+                        if (itSearch.isNotBlank()) {
+                            loadSearch(itSearch)
+                        } else {
+                            loadFriends()
+                        }
+                    }
+                )
+                _requestsTabState.emit(loadRequests())
+            } catch (e: Exception) {
+                Timber.e(e)
+            }
+            _refreshing.emit(false)
         }
     }
 

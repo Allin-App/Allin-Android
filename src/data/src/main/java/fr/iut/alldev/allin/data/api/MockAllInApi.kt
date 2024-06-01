@@ -103,7 +103,10 @@ class MockAllInApi : AllInApi {
             username = body.username,
             email = body.email,
             nbCoins = 500,
-            token = "${body.username} ${mockUsers.size}"
+            token = "${body.username} ${mockUsers.size}",
+            nbBets = 0,
+            nbFriends = 0,
+            bestWin = 0
         ) to body.password
         mockUsers.add(response)
         return response.first
@@ -369,49 +372,70 @@ class MockAllInApi : AllInApi {
                 username = "User 1",
                 email = "john@doe.fr",
                 nbCoins = 250,
-                token = "token 1"
+                token = "token 1",
+                nbBets = 0,
+                nbFriends = 0,
+                bestWin = 0
             ) to "12345",
             ResponseUser(
                 id = "UUID 2",
                 username = "User 2",
                 email = "john@doe.fr",
                 nbCoins = 250,
-                token = "token 2"
+                token = "token 2",
+                nbBets = 0,
+                nbFriends = 0,
+                bestWin = 0
             ) to "12345",
             ResponseUser(
                 id = "UUID 3",
                 username = "User 3",
                 email = "john@doe.fr",
                 nbCoins = 250,
-                token = "token 3"
+                token = "token 3",
+                nbBets = 0,
+                nbFriends = 0,
+                bestWin = 0
             ) to "12345",
             ResponseUser(
                 id = "UUID 4",
                 username = "User 4",
                 email = "john@doe.fr",
                 nbCoins = 250,
-                token = "token 4"
+                token = "token 4",
+                nbBets = 0,
+                nbFriends = 0,
+                bestWin = 0
             ) to "12345",
             ResponseUser(
                 id = "UUID 5",
                 username = "User 5",
                 email = "john@doe.fr",
                 nbCoins = 250,
-                token = "token 5"
+                token = "token 5",
+                nbBets = 0,
+                nbFriends = 0,
+                bestWin = 0
             ) to "12345",
             ResponseUser(
                 id = "UUID 6",
                 username = "User 6",
                 email = "john@doe.fr",
                 nbCoins = 250,
-                token = "token 6"
+                token = "token 6",
+                nbBets = 0,
+                nbFriends = 0,
+                bestWin = 0
             ) to "12345",
             ResponseUser(
                 id = "UUID 7",
                 username = "User 7",
                 email = "john@doe.fr",
                 nbCoins = 250,
-                token = "token 7"
+                token = "token 7",
+                nbBets = 0,
+                nbFriends = 0,
+                bestWin = 0
             ) to "12345"
         )
 
