@@ -21,6 +21,7 @@ import fr.iut.alldev.allin.ui.main.event.WonBet
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -138,7 +139,11 @@ class MainViewModel @Inject constructor(
 
                             )
 
-                        betRepository.participateToBet(participation, keystoreManager.getTokenOrEmpty())
+                        try {
+                            betRepository.participateToBet(participation, keystoreManager.getTokenOrEmpty())
+                        } catch (e: Exception) {
+                            Timber.e(e)
+                        }
                     }
                 }
                 loading.value = false

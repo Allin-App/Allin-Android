@@ -41,13 +41,13 @@
     <string name="drawer_best_win">Meilleur gain</string>
     <string name="drawer_friends">Amis</string>
     <string name="drawer_friends_subtitle">Défiez vos proches en les ajoutant en amis.</string>
-    <string name="drawer_public_bets">Bets publiques</string>
+    <string name="drawer_public_bets">Participer</string>
     <string name="drawer_public_bets_subtitle">Parcourez les bets les plus populaires du moment.</string>
-    <string name="drawer_create_bet">Créer un bet</string>
+    <string name="drawer_create_bet">Nouveau Bet</string>
     <string name="drawer_create_bet_subtitle">Créez un nouveau bet et faites participer vos amis.</string>
-    <string name="drawer_bet_history">Historique des bets</string>
+    <string name="drawer_bet_history">Historique</string>
     <string name="drawer_bet_history_subtitle">Consultez vos paris en cours et terminés.</string>
-    <string name="drawer_current_bets">Bets en cours</string>
+    <string name="drawer_current_bets">Mes participations</string>
     <string name="drawer_current_bets_subtitle">Gérez vos bets et récompensez les gagnants.</string>
     <string name="drawer_ranking">Classement</string>
     <string name="drawer_ranking_subtitle">Consultez votre classement parmi vos amis.</string>

@@ -49,15 +49,15 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-const val EVENT_DISMISS_DELAY_MS = 150L
+private const val EVENT_DISMISS_DELAY_MS = 150L
 
 private val topLevelDestinations = listOf(
-    TopLevelDestination.PublicBets,
     TopLevelDestination.BetCreation,
+    TopLevelDestination.PublicBets,
+    TopLevelDestination.CurrentBets,
     TopLevelDestination.BetHistory,
     TopLevelDestination.Friends,
     TopLevelDestination.Ranking,
-    TopLevelDestination.CurrentBets
 )
 
 @OptIn(ExperimentalMaterial3Api::class)
