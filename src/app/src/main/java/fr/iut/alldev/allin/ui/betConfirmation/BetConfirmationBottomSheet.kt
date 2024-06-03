@@ -7,15 +7,17 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeContent
 import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Icon
@@ -51,7 +53,12 @@ import fr.iut.alldev.allin.data.model.bet.NO_VALUE
 import fr.iut.alldev.allin.data.model.bet.YES_VALUE
 import fr.iut.alldev.allin.data.model.bet.vo.BetAnswerDetail
 import fr.iut.alldev.allin.data.model.bet.vo.BetDetail
+import fr.iut.alldev.allin.ext.asPaddingValues
+import fr.iut.alldev.allin.ext.bottomSheetNavigationBarsInsets
+import fr.iut.alldev.allin.ext.fadingEdges
 import fr.iut.alldev.allin.ext.formatToSimple
+import fr.iut.alldev.allin.ext.nonLinkedScroll
+import fr.iut.alldev.allin.ext.takeTopOnly
 import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.core.AllInBottomSheet
@@ -148,6 +155,7 @@ fun ConfirmationAnswers(
 ) {
     val configuration = LocalConfiguration.current
     val locale = remember { ConfigurationCompat.getLocales(configuration).get(0) ?: Locale.getDefault() }
+    val scrollState = rememberScrollState()
 
     val possibleAnswers = remember {
         when (val bet = betDetail.bet) {
@@ -157,10 +165,14 @@ fun ConfirmationAnswers(
         }
     }
 
-    LazyColumn(
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+    Column(
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        modifier = Modifier
+            .nonLinkedScroll()
+            .verticalScroll(scrollState)
+            .fadingEdges(scrollState)
     ) {
-        itemsIndexed(possibleAnswers) { idx, it ->
+        possibleAnswers.forEachIndexed { idx, it ->
             betDetail.getAnswerOfResponse(it)?.let {
                 val opacity by animateFloatAsState(
                     targetValue = if (selectedAnswer != null && selectedAnswer != it.response) .5f else 1f,
@@ -182,6 +194,9 @@ fun ConfirmationAnswers(
                 )
             }
         }
+        Spacer(
+            modifier = Modifier.padding(bottomSheetNavigationBarsInsets().asPaddingValues(bottom = 56.dp))
+        )
     }
 }
 
@@ -197,7 +212,11 @@ fun BetConfirmationBottomSheetContent(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .safeContentPadding()
+                .padding(
+                    WindowInsets.safeContent
+                        .takeTopOnly()
+                        .asPaddingValues()
+                )
                 .padding(16.dp)
         ) {
             IconButton(
@@ -283,6 +302,7 @@ fun BetConfirmationBottomSheetContent(
                     modifier = Modifier
                         .fillMaxWidth()
                         .align(Alignment.BottomCenter)
+                        .safeContentPadding()
                 )
             }
         }

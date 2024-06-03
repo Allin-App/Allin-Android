@@ -47,6 +47,13 @@ fun WindowInsets.takeBottomOnly(): WindowInsets {
     return WindowInsets(bottom = this.getBottom(density))
 }
 
+@ReadOnlyComposable
+@Composable
+fun WindowInsets.takeTopOnly(): WindowInsets {
+    val density = LocalDensity.current
+    return WindowInsets(top = this.getTop(density))
+}
+
 @Composable
 fun bottomSheetNavigationBarsInsets(): WindowInsets {
     val density = LocalDensity.current

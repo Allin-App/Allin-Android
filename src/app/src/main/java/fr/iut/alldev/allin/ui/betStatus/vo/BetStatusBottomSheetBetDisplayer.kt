@@ -27,13 +27,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
-import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
-import androidx.compose.ui.input.nestedscroll.NestedScrollSource
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -60,6 +56,7 @@ import fr.iut.alldev.allin.ext.bottomSheetNavigationBarsInsets
 import fr.iut.alldev.allin.ext.formatToSimple
 import fr.iut.alldev.allin.ext.getDateEndLabelId
 import fr.iut.alldev.allin.ext.getDateStartLabelId
+import fr.iut.alldev.allin.ext.nonLinkedScroll
 import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.betStatus.components.BetStatusWinner
@@ -134,13 +131,7 @@ class BetStatusBottomSheetBetDisplayer(
                     modifier = Modifier
                         .fillMaxHeight()
                         .background(AllInTheme.colors.background2)
-                        .nestedScroll(object : NestedScrollConnection {
-                            override fun onPostScroll(
-                                consumed: Offset,
-                                available: Offset,
-                                source: NestedScrollSource
-                            ) = available.copy(x = 0f)
-                        }),
+                        .nonLinkedScroll(),
                     contentPadding = bottomSheetNavigationBarsInsets().asPaddingValues(top = 20.dp, start = 20.dp, end = 20.dp)
                 ) {
 

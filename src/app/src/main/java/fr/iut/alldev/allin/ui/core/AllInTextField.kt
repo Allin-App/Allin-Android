@@ -1,7 +1,6 @@
 package fr.iut.alldev.allin.ui.core
 
 import android.content.res.Configuration
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -59,7 +58,9 @@ fun AllInTextField(
     imeAction: ImeAction = ImeAction.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     borderColor: Color = AllInTheme.colors.onBackground2,
+    disabledBorderColor: Color = AllInTheme.colors.disabledBorder,
     containerColor: Color = AllInTheme.colors.background,
+    disabledContainerColor: Color = AllInTheme.colors.disabled,
     textColor: Color = AllInTheme.colors.onMainSurface,
     placeholderColor: Color = AllInTheme.colors.onBackground2,
     onValueChange: (String) -> Unit,
@@ -117,12 +118,14 @@ fun AllInTextField(
             cursorColor = textColor,
             focusedBorderColor = borderColor,
             unfocusedBorderColor = borderColor,
+            disabledBorderColor = disabledBorderColor,
             focusedTextColor = textColor,
             unfocusedTextColor = textColor,
             errorTextColor = textColor,
             focusedContainerColor = containerColor,
             unfocusedContainerColor = containerColor,
             errorContainerColor = containerColor,
+            disabledContainerColor = disabledContainerColor,
         )
     )
 }
@@ -251,7 +254,6 @@ fun AllInIntTextField(
 }
 
 
-@OptIn(ExperimentalFoundationApi::class)
 @Preview
 @Composable
 private fun AllInTextFieldPlaceholderPreview() {
@@ -264,6 +266,18 @@ private fun AllInTextFieldPlaceholderPreview() {
     }
 }
 
+@Preview
+@Composable
+private fun AllInTextFieldDisabledPreview() {
+    AllInTheme {
+        AllInTextField(
+            placeholder = "Email",
+            value = "",
+            onValueChange = { },
+            enabled = false
+        )
+    }
+}
 
 @Preview
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)

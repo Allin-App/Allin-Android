@@ -36,6 +36,7 @@
     <string name="field_error_already_used">%s is already used.</string>
     <string name="field_error_past_date">The %s should be in the future.</string>
     <string name="field_error_date_order">The %s should come after the %s.</string>
+    <string name="field_error_no_response">The bet should at least have 2 answers.</string>
 
     <!--Drawer-->
     <string name="drawer_bets">Bets</string>
@@ -100,9 +101,12 @@
     <string name="bet_creation_private_bottom_text_2">Only your friends will be able to join the bet.</string>
     <string name="bet_creation_private_bottom_text_3">You can invite friends at any moment during the registration period.</string>
     <string name="bet_creation_yes_no_bottom_text_1">The participants will have to respond with either YES or NO.</string>
+    <string name="bet_creation_custom_bottom_text_1">You will fill in all the possible answers for this bet.</string>
+    <string name="bet_creation_custom_bottom_text_2">Make sure to be clear and to avoir any uncertainties.</string>
     <string name="bet_creation_yes_no_bottom_text_2">No other answer will be accepted.</string>
     <string name="bet_creation_error">Error while creating the bet. Please try again.</string>
     <string name="bet_creation_success_message">Bet created !</string>
+    <string name="bet_creation_max_answers">still %d max.</string>
 
     <!--Bet Page-->
     <string name="bet_popular">Popular</string>

@@ -13,6 +13,7 @@ import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.data.model.bet.BetType
 import fr.iut.alldev.allin.ext.getIcon
 import fr.iut.alldev.allin.ext.getTitleId
+import fr.iut.alldev.allin.ui.betCreation.BetCreationViewModel.BetTypeState.Companion.typeState
 import fr.iut.alldev.allin.ui.betCreation.components.BetCreationScreenContent
 import fr.iut.alldev.allin.ui.core.AllInAlertDialog
 import fr.iut.alldev.allin.ui.core.AllInDatePicker
@@ -42,6 +43,7 @@ fun BetCreationScreen(
     val phraseError by remember { viewModel.phraseError }
     val registerDateError by remember { viewModel.registerDateError }
     val betDateError by remember { viewModel.betDateError }
+    val typeError by remember { viewModel.typeError }
 
     val friends by viewModel.friends.collectAsStateWithLifecycle()
 
@@ -63,7 +65,7 @@ fun BetCreationScreen(
     }
 
     LaunchedEffect(key1 = selectedBetTypeElement) {
-        selectedBetType = betTypes[selectionElements.indexOf(selectedBetTypeElement)]
+        selectedBetType = betTypes[selectionElements.indexOf(selectedBetTypeElement)].typeState()
     }
 
     val (showRegisterDatePicker, setRegisterDatePicker) = remember { mutableStateOf(false) }
@@ -85,6 +87,7 @@ fun BetCreationScreen(
         registerDateError = registerDateError.errorResource(),
         betDate = betDate,
         betDateError = betDateError.errorResource(),
+        typeError = typeError.errorResource(),
         friends = friends,
         selectedFriends = selectedFriends,
         setRegisterDateDialog = setRegisterDatePicker,
@@ -95,6 +98,8 @@ fun BetCreationScreen(
         selectedBetType = selectedBetType,
         setSelectedBetTypeElement = { selectedBetTypeElement = it },
         selectionBetType = selectionElements,
+        addAnswer = { viewModel.addAnswer(it) },
+        deleteAnswer = { viewModel.deleteAnswer(it) },
         onCreateBet = {
             viewModel.createBet(
                 themeFieldName = themeFieldName,

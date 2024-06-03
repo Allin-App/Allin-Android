@@ -34,6 +34,7 @@
     <string name="field_error_already_used">%s est déjà utilisé.</string>
     <string name="field_error_past_date">La %s doit être dans le futur.</string>
     <string name="field_error_date_order">La %s doit venir après %s.</string>
+    <string name="field_error_no_response">Le bet doit au moins avoir 2 réponses.</string>
 
     <!--Drawer-->
     <string name="drawer_bets">Bets</string>
@@ -99,8 +100,11 @@
     <string name="bet_creation_private_bottom_text_3">Vous pourrez inviter des amis à tout moment pendant la période d’inscription.</string>
     <string name="bet_creation_yes_no_bottom_text_1">Les utilisateurs devront répondre au pari avec OUI ou NON.</string>
     <string name="bet_creation_yes_no_bottom_text_2">Aucune autre réponse ne sera acceptée.</string>
+    <string name="bet_creation_custom_bottom_text_1">Vous allez renseiner les différentes réponses disponibles dans ce pari.</string>
+    <string name="bet_creation_custom_bottom_text_2">Faites attention à être clair et éviter toutes incertitudes.</string>
     <string name="bet_creation_error">Erreur lors de la création du bet, veuillez rééssayer.</string>
     <string name="bet_creation_success_message">Bet créé !</string>
+    <string name="bet_creation_max_answers">encore %d max.</string>
 
     <!--Bet Page-->
     <string name="bet_popular">Populaire</string>

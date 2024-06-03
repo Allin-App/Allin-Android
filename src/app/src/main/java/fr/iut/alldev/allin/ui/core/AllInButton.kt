@@ -8,6 +8,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -29,9 +30,10 @@ fun AllInButton(
     enabled: Boolean = true,
     isSmall: Boolean = false,
     radius: Dp = 10.dp,
+    shape: Shape = AbsoluteSmoothCornerShape(radius, smoothnessAsPercent = 100)
 ) {
     Button(
-        shape = AbsoluteSmoothCornerShape(radius, smoothnessAsPercent = 100),
+        shape = shape,
         colors = ButtonDefaults.buttonColors(
             containerColor = color,
             disabledContainerColor = AllInTheme.colors.disabled

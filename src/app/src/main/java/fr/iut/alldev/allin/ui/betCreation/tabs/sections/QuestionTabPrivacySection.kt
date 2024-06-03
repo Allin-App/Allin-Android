@@ -22,16 +22,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
-import androidx.compose.ui.input.nestedscroll.NestedScrollSource
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.data.model.User
+import fr.iut.alldev.allin.ext.nonLinkedScroll
 import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.betCreation.components.BetCreationScreenBottomText
 import fr.iut.alldev.allin.ui.betCreation.components.BetCreationScreenFriendLine
@@ -108,13 +105,7 @@ fun QuestionTabPrivacySection(
                     LazyColumn(
                         modifier = Modifier
                             .heightIn(max = 440.dp)
-                            .nestedScroll(object : NestedScrollConnection {
-                                override fun onPostScroll(
-                                    consumed: Offset,
-                                    available: Offset,
-                                    source: NestedScrollSource
-                                ) = available.copy(x = 0f)
-                            })
+                            .nonLinkedScroll()
                     ) {
                         itemsIndexed(friends, key = { _, it -> it.id }) { idx, it ->
                             var isSelected by remember {

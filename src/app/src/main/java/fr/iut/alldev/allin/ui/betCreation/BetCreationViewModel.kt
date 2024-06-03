@@ -6,8 +6,11 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import fr.iut.alldev.allin.data.model.FriendStatus
 import fr.iut.alldev.allin.data.model.User
-import fr.iut.alldev.allin.data.model.bet.BetFactory
+import fr.iut.alldev.allin.data.model.bet.BetStatus
 import fr.iut.alldev.allin.data.model.bet.BetType
+import fr.iut.alldev.allin.data.model.bet.BinaryBet
+import fr.iut.alldev.allin.data.model.bet.CustomBet
+import fr.iut.alldev.allin.data.model.bet.MatchBet
 import fr.iut.alldev.allin.data.repository.BetRepository
 import fr.iut.alldev.allin.data.repository.FriendRepository
 import fr.iut.alldev.allin.data.repository.UserRepository
@@ -34,12 +37,13 @@ class BetCreationViewModel @Inject constructor(
     val registerDate = mutableStateOf(ZonedDateTime.now())
     val betDate = mutableStateOf(ZonedDateTime.now())
     var isPublic = mutableStateOf(true)
-    var selectedBetType = mutableStateOf(BetType.BINARY)
+    var selectedBetType = mutableStateOf<BetTypeState>(BetTypeState.Binary)
 
     val themeError = mutableStateOf<FieldErrorState>(FieldErrorState.NoError)
     val phraseError = mutableStateOf<FieldErrorState>(FieldErrorState.NoError)
     val registerDateError = mutableStateOf<FieldErrorState>(FieldErrorState.NoError)
     val betDateError = mutableStateOf<FieldErrorState>(FieldErrorState.NoError)
+    val typeError = mutableStateOf<FieldErrorState>(FieldErrorState.NoError)
 
     private val _friends by lazy { MutableStateFlow<List<User>>(emptyList()) }
     val friends get() = _friends.asStateFlow()
@@ -59,6 +63,7 @@ class BetCreationViewModel @Inject constructor(
         phraseError.value = FieldErrorState.NoError
         registerDateError.value = FieldErrorState.NoError
         betDateError.value = FieldErrorState.NoError
+        typeError.value = FieldErrorState.NoError
         hasError.value = false
     }
 
@@ -94,6 +99,19 @@ class BetCreationViewModel @Inject constructor(
                 )
             hasError.value = true
         }
+
+        when (val state = selectedBetType.value) {
+            BetTypeState.Binary -> Unit
+            is BetTypeState.Custom -> if (state.possibleAnswers.size < 2) {
+                typeError.value = FieldErrorState.NoResponse
+                hasError.value = true
+            }
+
+            is BetTypeState.Match -> if (state.team1.isBlank() || state.team2.isBlank()){
+                typeError.value = FieldErrorState.Mandatory
+                hasError.value = true
+            }
+        }
     }
 
 
@@ -116,19 +134,58 @@ class BetCreationViewModel @Inject constructor(
             if (!hasError.value) {
                 try {
                     userRepository.currentUserState.value?.let { currentUser ->
-                        val bet = BetFactory.createBet(
-                            id = "",
-                            betType = selectedBetType.value,
-                            theme = theme.value,
-                            phrase = phrase.value,
-                            endRegisterDate = registerDate.value,
-                            endBetDate = betDate.value,
-                            isPublic = isPublic.value,
-                            nameTeam1 = "",
-                            nameTeam2 = "",
-                            possibleAnswers = listOf(),
-                            creator = currentUser.username
-                        )
+                        val bet =
+
+                            when (val type = selectedBetType.value) {
+                                BetTypeState.Binary -> {
+                                    BinaryBet(
+                                        id = "",
+                                        theme = theme.value,
+                                        creator = currentUser.username,
+                                        phrase = phrase.value,
+                                        endRegisterDate = registerDate.value,
+                                        endBetDate = betDate.value,
+                                        isPublic = isPublic.value,
+                                        betStatus = BetStatus.WAITING,
+                                        totalStakes = 0,
+                                        totalParticipants = 0
+                                    )
+                                }
+
+                                is BetTypeState.Match -> {
+                                    MatchBet(
+                                        id = "",
+                                        theme = theme.value,
+                                        creator = currentUser.username,
+                                        phrase = phrase.value,
+                                        endRegisterDate = registerDate.value,
+                                        endBetDate = betDate.value,
+                                        isPublic = isPublic.value,
+                                        betStatus = BetStatus.WAITING,
+                                        totalStakes = 0,
+                                        totalParticipants = 0,
+                                        nameTeam1 = type.team1,
+                                        nameTeam2 = type.team2
+                                    )
+                                }
+
+                                is BetTypeState.Custom -> {
+                                    CustomBet(
+                                        id = "",
+                                        theme = theme.value,
+                                        creator = currentUser.username,
+                                        phrase = phrase.value,
+                                        endRegisterDate = registerDate.value,
+                                        endBetDate = betDate.value,
+                                        isPublic = isPublic.value,
+                                        betStatus = BetStatus.WAITING,
+                                        totalStakes = 0,
+                                        totalParticipants = 0,
+                                        possibleAnswers = type.possibleAnswers
+                                    )
+                                }
+                            }
+
                         betRepository.createBet(bet, keystoreManager.getTokenOrEmpty())
                         onSuccess()
                     } ?: onError()
@@ -139,5 +196,41 @@ class BetCreationViewModel @Inject constructor(
             }
             setLoading(false)
         }
+    }
+
+    fun addAnswer(value: String) {
+        viewModelScope.launch {
+            selectedBetType.value.let {
+                if (it is BetTypeState.Custom) {
+                    selectedBetType.value = BetTypeState.Custom(possibleAnswers = it.possibleAnswers + value)
+                }
+            }
+        }
+    }
+
+    fun deleteAnswer(value: String) {
+        viewModelScope.launch {
+            selectedBetType.value.let {
+                if (it is BetTypeState.Custom) {
+                    selectedBetType.value = BetTypeState.Custom(possibleAnswers = it.possibleAnswers - value)
+                }
+            }
+        }
+    }
+
+    sealed class BetTypeState(val type: BetType) {
+        data object Binary : BetTypeState(type = BetType.BINARY)
+        data class Match(val team1: String, val team2: String) : BetTypeState(type = BetType.MATCH)
+        data class Custom(val possibleAnswers: List<String>) : BetTypeState(type = BetType.CUSTOM)
+
+        companion object {
+            fun BetType.typeState() =
+                when (this) {
+                    BetType.BINARY -> Binary
+                    BetType.MATCH -> Match(team1 = "", team2 = "")
+                    BetType.CUSTOM -> Custom(emptyList())
+                }
+        }
+
     }
 }

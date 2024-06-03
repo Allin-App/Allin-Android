@@ -18,8 +18,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.data.model.User
-import fr.iut.alldev.allin.data.model.bet.BetType
 import fr.iut.alldev.allin.theme.AllInTheme
+import fr.iut.alldev.allin.ui.betCreation.BetCreationViewModel
 import fr.iut.alldev.allin.ui.betCreation.tabs.BetCreationScreenAnswerTab
 import fr.iut.alldev.allin.ui.betCreation.tabs.BetCreationScreenQuestionTab
 import fr.iut.alldev.allin.ui.core.AllInSections
@@ -49,9 +49,12 @@ fun BetCreationScreenContent(
     setRegisterTimeDialog: (Boolean) -> Unit,
     setEndTimeDialog: (Boolean) -> Unit,
     selectedBetTypeElement: SelectionElement?,
-    selectedBetType: BetType,
+    selectedBetType: BetCreationViewModel.BetTypeState,
+    typeError: String?,
     setSelectedBetTypeElement: (SelectionElement) -> Unit,
     selectionBetType: List<SelectionElement>,
+    addAnswer: (String) -> Unit,
+    deleteAnswer: (String) -> Unit,
     onCreateBet: () -> Unit
 ) {
     val interactionSource = remember { MutableInteractionSource() }
@@ -90,7 +93,10 @@ fun BetCreationScreenContent(
                         selectedBetType = selectedBetType,
                         selected = selectedBetTypeElement,
                         setSelected = setSelectedBetTypeElement,
-                        elements = selectionBetType
+                        elements = selectionBetType,
+                        addAnswer = addAnswer,
+                        deleteAnswer = deleteAnswer,
+                        typeError = typeError
                     )
                 }
             )
@@ -128,6 +134,7 @@ private fun BetCreationScreenContentPreview() {
             betThemeError = null,
             setBetTheme = { },
             betPhrase = "Bryon",
+            typeError = null,
             betPhraseError = null,
             setBetPhrase = { },
             isPublic = false,
@@ -142,10 +149,12 @@ private fun BetCreationScreenContentPreview() {
             setRegisterTimeDialog = { },
             setEndTimeDialog = { },
             selectedBetTypeElement = null,
-            selectedBetType = BetType.BINARY,
+            selectedBetType = BetCreationViewModel.BetTypeState.Binary,
             setSelectedBetTypeElement = { },
             selectionBetType = listOf(),
-            onCreateBet = { }
+            onCreateBet = { },
+            addAnswer = { },
+            deleteAnswer = { }
         )
     }
 }

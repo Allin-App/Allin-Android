@@ -37,6 +37,8 @@ sealed class FieldErrorState(
     data class DateOrder(val fieldName1: String, val fieldName2: String) :
         FieldErrorState(R.string.field_error_date_order, fieldName1, fieldName2)
 
+    data object NoResponse :
+        FieldErrorState(R.string.field_error_no_response)
 
     @Composable
     fun errorResource() = stringResourceOrNull(id = messageId, *messageArgs)
