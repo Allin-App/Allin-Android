@@ -6,7 +6,7 @@
 
 &nbsp; ![Kotlin](https://img.shields.io/badge/Kotlin-B125EA.svg?style=for-the-badge&logo=Kotlin&logoColor=white)
 &nbsp; ![Android](https://img.shields.io/badge/Android-A4C639.svg?style=for-the-badge&logo=Android&logoColor=white)
-&nbsp; ![Jetpack Compose](https://img.shields.io/badge/Compose-4286F5.svg?style=for-the-badge&logo=JetpackCompose&logoColor=white)
+&nbsp; ![Jetpack Compose](https://img.shields.io/badge/Jetpack Compose-4286F5.svg?style=for-the-badge&logo=JetpackCompose&logoColor=white)
 
 ---
 
