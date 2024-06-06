@@ -128,6 +128,9 @@ dependencies {
     // Squircle
     implementation(libs.smoothCornerRect)
 
+    // Coil
+    implementation(libs.coil.compose)
+
     // Tests
     testImplementation(libs.test.junit)
     androidTestImplementation(libs.test.junit)

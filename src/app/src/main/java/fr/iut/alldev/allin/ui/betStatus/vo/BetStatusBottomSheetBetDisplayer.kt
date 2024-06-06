@@ -153,7 +153,8 @@ class BetStatusBottomSheetBetDisplayer(
                         item {
                             BetStatusParticipant(
                                 username = it.username,
-                                allCoinsAmount = it.stake
+                                allCoinsAmount = it.stake,
+                                image = null // TODO : Image
                             )
                             HorizontalDivider(
                                 color = AllInTheme.colors.border,
@@ -165,7 +166,8 @@ class BetStatusBottomSheetBetDisplayer(
                         if (it.username != betDetail.userParticipation?.username) {
                             BetStatusParticipant(
                                 username = it.username,
-                                allCoinsAmount = it.stake
+                                allCoinsAmount = it.stake,
+                                image = null // TODO : Image
                             )
                             Spacer(modifier = Modifier.height(8.dp))
                         }
@@ -374,6 +376,7 @@ class BetStatusBottomSheetBetDisplayer(
 @Composable
 fun BetStatusParticipant(
     username: String,
+    image: String?,
     allCoinsAmount: Int
 ) {
     Row(
@@ -382,6 +385,7 @@ fun BetStatusParticipant(
         verticalAlignment = Alignment.CenterVertically
     ) {
         ProfilePicture(
+            image = image,
             fallback = username.asFallbackProfileUsername(),
             size = 25.dp
         )

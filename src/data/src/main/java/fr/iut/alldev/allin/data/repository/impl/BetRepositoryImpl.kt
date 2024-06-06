@@ -3,6 +3,7 @@ package fr.iut.alldev.allin.data.repository.impl
 import fr.iut.alldev.allin.data.api.AllInApi
 import fr.iut.alldev.allin.data.api.AllInApi.Companion.asRequestBody
 import fr.iut.alldev.allin.data.api.AllInApi.Companion.formatBearerToken
+import fr.iut.alldev.allin.data.api.model.RequestBet
 import fr.iut.alldev.allin.data.api.model.RequestBetFilters
 import fr.iut.alldev.allin.data.model.bet.Bet
 import fr.iut.alldev.allin.data.model.bet.BetFilter
@@ -15,10 +16,10 @@ import javax.inject.Inject
 class BetRepositoryImpl @Inject constructor(
     private val api: AllInApi
 ) : BetRepository() {
-    override suspend fun createBet(bet: Bet, token: String) {
+    override suspend fun createBet(bet: RequestBet, token: String) {
         api.createBet(
             token = token.formatBearerToken(),
-            body = bet.toRequestBet()
+            body = bet
         )
     }
 

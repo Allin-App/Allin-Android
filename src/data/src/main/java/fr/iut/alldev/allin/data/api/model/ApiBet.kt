@@ -95,9 +95,10 @@ data class RequestBet(
     val type: BetType,
     val sentenceBet: String,
     @Serializable(ZonedDateTimeSerializer::class) val endRegistration: ZonedDateTime,
-    @Serializable(ZonedDateTimeSerializer::class) var endBet: ZonedDateTime,
-    var isPrivate: Boolean,
-    var response: List<String>
+    @Serializable(ZonedDateTimeSerializer::class) val endBet: ZonedDateTime,
+    val isPrivate: Boolean,
+    val response: List<String>,
+    val userInvited: List<String>
 )
 
 @Keep

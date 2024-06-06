@@ -26,6 +26,7 @@ import fr.iut.alldev.allin.ui.core.ProfilePicture
 fun RankingScreenItem(
     position: Int,
     username: String,
+    image: String?,
     coins: Int,
     modifier: Modifier = Modifier
 ) {
@@ -50,6 +51,7 @@ fun RankingScreenItem(
             )
 
             ProfilePicture(
+                image = image,
                 fallback = username.asFallbackProfileUsername(),
                 size = 38.dp
             )
@@ -80,6 +82,7 @@ fun RankingScreenItem(
 private fun RankingScreenItemPreview() {
     AllInTheme {
         RankingScreenItem(
+            image = null,
             position = 3,
             username = "Username",
             coins = 420
@@ -93,6 +96,7 @@ private fun RankingScreenItemPreview() {
 private fun RankingScreenItemTenthPreview() {
     AllInTheme {
         RankingScreenItem(
+            image = null,
             position = 10,
             username = "Username",
             coins = 420

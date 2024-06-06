@@ -24,6 +24,7 @@ import fr.iut.alldev.allin.ui.core.ProfilePicture
 @Composable
 fun FriendsScreenLine(
     username: String,
+    image: String?,
     status: FriendStatus,
     toggleIsFriend: () -> Unit,
     modifier: Modifier = Modifier
@@ -34,6 +35,7 @@ fun FriendsScreenLine(
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         ProfilePicture(
+            image = image,
             fallback = username.asFallbackProfileUsername(),
             size = 50.dp
         )
@@ -83,6 +85,7 @@ fun FriendsScreenLine(
 private fun FriendsScreenLinePreview() {
     AllInTheme {
         FriendsScreenLine(
+            image = null,
             username = "Random",
             status = FriendStatus.NOT_FRIEND,
             toggleIsFriend = { }
@@ -96,6 +99,7 @@ private fun FriendsScreenLinePreview() {
 private fun FriendsScreenLineRequestedPreview() {
     AllInTheme {
         FriendsScreenLine(
+            image = null,
             username = "Random",
             status = FriendStatus.REQUESTED,
             toggleIsFriend = { }
@@ -109,6 +113,7 @@ private fun FriendsScreenLineRequestedPreview() {
 private fun FriendsScreenLineIsFriendPreview() {
     AllInTheme {
         FriendsScreenLine(
+            image = null,
             username = "Random",
             status = FriendStatus.FRIEND,
             toggleIsFriend = { }

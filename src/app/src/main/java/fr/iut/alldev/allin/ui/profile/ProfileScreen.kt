@@ -17,6 +17,7 @@ fun ProfileScreen(
         when (val s = state) {
             is ProfileViewModel.State.Loaded -> {
                 ProfileScreenHeader(
+                    image = null,
                     username = s.user.username,
                     totalBets = 333,
                     bestWin = 365,

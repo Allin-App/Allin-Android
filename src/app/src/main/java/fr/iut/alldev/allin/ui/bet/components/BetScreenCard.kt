@@ -75,7 +75,7 @@ fun BetScreenCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 if (players.isNotEmpty()) {
-                    BetProfilePictureRow(pictures = players.map { it.username to null })
+                    BetProfilePictureRow(pictures = players.map { it.username to it.image })
                     Spacer(modifier = Modifier.width(12.dp))
                 }
                 Text(

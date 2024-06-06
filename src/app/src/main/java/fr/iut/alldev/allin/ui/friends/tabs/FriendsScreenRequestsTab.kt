@@ -36,6 +36,7 @@ fun FriendsScreenRequestsTab(
             items(requests) {
                 FriendsScreenRequestLine(
                     username = it.username,
+                    image = it.image,
                     accept = { acceptRequest(it) },
                     decline = { declineRequest(it) }
                 )

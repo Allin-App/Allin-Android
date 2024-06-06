@@ -1,6 +1,5 @@
 package fr.iut.alldev.allin.data.model.bet
 
-import fr.iut.alldev.allin.data.api.model.RequestBet
 import java.time.ZonedDateTime
 
 sealed class Bet(
@@ -17,16 +16,4 @@ sealed class Bet(
 ) {
     abstract fun getBetType(): BetType
     abstract fun getResponses(): List<String>
-    fun toRequestBet(): RequestBet {
-        return RequestBet(
-            id = id,
-            theme = theme,
-            sentenceBet = phrase,
-            endRegistration = endRegisterDate,
-            endBet = endBetDate,
-            isPrivate = !isPublic,
-            response = getResponses(),
-            type = getBetType()
-        )
-    }
 }

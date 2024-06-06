@@ -8,29 +8,26 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.ext.asFallbackProfileUsername
 import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.core.ProfilePicture
 
 @Composable
 fun BetProfilePictureRow(
-    pictures: List<Pair<String, Painter?>>,
+    pictures: List<Pair<String, String?>>,
     modifier: Modifier = Modifier,
     maxLength: Int = 5
 ) {
     val nRepeat = remember{ pictures.size.coerceAtMost(maxLength) }
 
     Box(modifier.width((35 + (nRepeat - 1) * 17).dp)){
-        pictures.take(nRepeat).forEachIndexed { index, (username, painter) ->
+        pictures.take(nRepeat).forEachIndexed { index, (username, image) ->
             ProfilePicture(
                 fallback = username.asFallbackProfileUsername(),
-                image = painter,
+                image = image,
                 size = 35.dp,
                 modifier = Modifier
                     .align(Alignment.CenterEnd)
@@ -65,11 +62,10 @@ private fun BetProfilePictureRowMaxPreview() {
         ) {
             BetProfilePictureRow(
                 pictures = listOf(
-                    "lucas" to painterResource(id = R.drawable.money_with_wings),
                     "lucas" to null,
-                    "lucas" to painterResource(id = R.drawable.money_with_wings),
                     "lucas" to null,
-                    "lucas" to painterResource(id = R.drawable.money_with_wings),
+                    "lucas" to null,
+                    "lucas" to null,
                     "lucas" to null
                 )
             )

@@ -25,6 +25,7 @@ import fr.iut.alldev.allin.ui.core.ProfilePicture
 @Composable
 fun BetCreationScreenFriendLine(
     username: String,
+    image: String?,
     allCoinsAmount: Int,
     isSelected: Boolean,
     onClick: () -> Unit,
@@ -46,6 +47,7 @@ fun BetCreationScreenFriendLine(
             modifier = Modifier.padding(end = 7.dp)
         )
         ProfilePicture(
+            image = image,
             fallback = username.asFallbackProfileUsername(),
             size = 25.dp
         )
@@ -72,6 +74,7 @@ private fun BetCreationScreenFriendLinePreview() {
     AllInTheme {
         BetCreationScreenFriendLine(
             username = "David",
+            image = null,
             allCoinsAmount = 542,
             isSelected = false
         ) {
@@ -87,6 +90,7 @@ private fun BetCreationScreenFriendLineSelectedPreview() {
     AllInTheme {
         BetCreationScreenFriendLine(
             username = "David",
+            image = null,
             allCoinsAmount = 542,
             isSelected = true
         ) {

@@ -30,6 +30,8 @@ espressoCore = "3.5.1"
 room = "2.6.1"
 okHttp = "4.11.0"
 
+coil = "2.4.0"
+
 # Plugins
 gradlePlugin = "8.1.4"
 publishPlugin = "1.1"
@@ -92,6 +94,9 @@ kotlinSerialization-retrofit = { group = "com.jakewharton.retrofit", name = "ret
 
 # Squicle
 smoothCornerRect = { module = "com.github.racra:smooth-corner-rect-android-compose", version = "v1.0.0" }
+
+#Coil
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 
 # Plugins
 plugin-gradle = { module = "com.android.tools.build:gradle", version.ref = "gradlePlugin" }

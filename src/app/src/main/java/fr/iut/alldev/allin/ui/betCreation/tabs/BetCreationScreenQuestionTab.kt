@@ -28,17 +28,18 @@ fun BetCreationScreenQuestionTab(
     betPhrase: String,
     betPhraseError: String?,
     setBetPhrase: (String) -> Unit,
-    isPublic: Boolean,
-    setIsPublic: (Boolean) -> Unit,
+    isPrivate: Boolean,
+    setIsPrivate: (Boolean) -> Unit,
     registerDate: ZonedDateTime,
     registerDateError: String?,
     betDate: ZonedDateTime,
     betDateError: String?,
-    selectedFriends: MutableList<String>,
+    selectedFriends: List<String>,
     setRegisterDateDialog: (Boolean) -> Unit,
     setEndDateDialog: (Boolean) -> Unit,
     setRegisterTimeDialog: (Boolean) -> Unit,
     setEndTimeDialog: (Boolean) -> Unit,
+    toggleFriend: (String) -> Unit,
     interactionSource: MutableInteractionSource
 ) {
     LazyColumn(
@@ -74,11 +75,13 @@ fun BetCreationScreenQuestionTab(
         }
         item {
             QuestionTabPrivacySection(
-                isPublic = isPublic,
-                setIsPublic = setIsPublic,
+                isPrivate = isPrivate,
+                setIsPrivate = setIsPrivate,
                 friends = friends,
                 selectedFriends = selectedFriends,
+                toggleFriend = toggleFriend,
                 interactionSource = interactionSource
+
             )
         }
     }
@@ -96,8 +99,8 @@ private fun BetCreationScreenQuestionTabPreview() {
             betPhrase = "Trinh",
             betPhraseError = null,
             setBetPhrase = { },
-            isPublic = true,
-            setIsPublic = { },
+            isPrivate = true,
+            setIsPrivate = { },
             registerDate = ZonedDateTime.now(),
             registerDateError = null,
             betDate = ZonedDateTime.now(),
@@ -107,6 +110,7 @@ private fun BetCreationScreenQuestionTabPreview() {
             setEndDateDialog = { },
             setRegisterTimeDialog = { },
             setEndTimeDialog = { },
+            toggleFriend = { },
             interactionSource = remember { MutableInteractionSource() }
         )
     }

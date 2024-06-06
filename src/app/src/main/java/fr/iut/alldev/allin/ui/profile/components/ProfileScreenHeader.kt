@@ -21,6 +21,7 @@ import fr.iut.alldev.allin.ui.core.ProfilePicture
 @Composable
 fun ProfileScreenHeader(
     username: String,
+    image: String?,
     totalBets: Int,
     bestWin: Int,
     friends: Int
@@ -30,6 +31,7 @@ fun ProfileScreenHeader(
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         ProfilePicture(
+            image = image,
             fallback = username.asFallbackProfileUsername(),
             size = 68.dp
         )
@@ -97,6 +99,7 @@ private fun ProfileScreenHeaderPreview() {
     AllInTheme {
         ProfileScreenHeader(
             username = "User 1",
+            image = null,
             totalBets = 12,
             bestWin = 365,
             friends = 5

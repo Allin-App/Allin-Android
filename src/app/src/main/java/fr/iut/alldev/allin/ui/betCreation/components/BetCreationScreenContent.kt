@@ -36,14 +36,14 @@ fun BetCreationScreenContent(
     betPhrase: String,
     betPhraseError: String?,
     setBetPhrase: (String) -> Unit,
-    isPublic: Boolean,
-    setIsPublic: (Boolean) -> Unit,
+    isPrivate: Boolean,
+    setIsPrivate: (Boolean) -> Unit,
     registerDate: ZonedDateTime,
     registerDateError: String?,
     betDate: ZonedDateTime,
     betDateError: String?,
     friends: List<User>,
-    selectedFriends: MutableList<String>,
+    selectedFriends: List<String>,
     setRegisterDateDialog: (Boolean) -> Unit,
     setEndDateDialog: (Boolean) -> Unit,
     setRegisterTimeDialog: (Boolean) -> Unit,
@@ -55,7 +55,8 @@ fun BetCreationScreenContent(
     selectionBetType: List<SelectionElement>,
     addAnswer: (String) -> Unit,
     deleteAnswer: (String) -> Unit,
-    onCreateBet: () -> Unit
+    onCreateBet: () -> Unit,
+    toggleFriend: (String) -> Unit
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     val focus = LocalFocusManager.current
@@ -67,8 +68,8 @@ fun BetCreationScreenContent(
             sections = listOf(
                 SectionElement(stringResource(id = R.string.bet_creation_question)) {
                     BetCreationScreenQuestionTab(
-                        isPublic = isPublic,
-                        setIsPublic = setIsPublic,
+                        isPrivate = isPrivate,
+                        setIsPrivate = setIsPrivate,
                         betPhrase = betPhrase,
                         setBetPhrase = setBetPhrase,
                         betTheme = betTheme,
@@ -85,7 +86,8 @@ fun BetCreationScreenContent(
                         betThemeError = betThemeError,
                         betPhraseError = betPhraseError,
                         registerDateError = registerDateError,
-                        betDateError = betDateError
+                        betDateError = betDateError,
+                        toggleFriend = toggleFriend
                     )
                 },
                 SectionElement(stringResource(id = R.string.bet_creation_answer)) {
@@ -118,7 +120,8 @@ fun BetCreationScreenContent(
                     .padding(bottom = 14.dp)
                     .padding(horizontal = 20.dp)
                     .safeContentPadding(),
-                onClick = onCreateBet
+                onClick = onCreateBet,
+                enabled = !isPrivate || selectedFriends.isNotEmpty()
             )
         }
     }
@@ -137,8 +140,8 @@ private fun BetCreationScreenContentPreview() {
             typeError = null,
             betPhraseError = null,
             setBetPhrase = { },
-            isPublic = false,
-            setIsPublic = { },
+            isPrivate = false,
+            setIsPrivate = { },
             registerDate = ZonedDateTime.now(),
             registerDateError = null,
             betDate = ZonedDateTime.now(),
@@ -154,7 +157,8 @@ private fun BetCreationScreenContentPreview() {
             selectionBetType = listOf(),
             onCreateBet = { },
             addAnswer = { },
-            deleteAnswer = { }
+            deleteAnswer = { },
+            toggleFriend = { }
         )
     }
 }

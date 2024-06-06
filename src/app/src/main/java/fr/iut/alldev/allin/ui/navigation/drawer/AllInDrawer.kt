@@ -39,6 +39,7 @@ fun AllInDrawer(
     nbBets: Int,
     bestWin: Int,
     nbFriends: Int,
+    image: String?,
     navigateTo: (String) -> Unit,
     logout: () -> Unit,
     content: @Composable () -> Unit
@@ -55,6 +56,7 @@ fun AllInDrawer(
                     bestWin = bestWin,
                     nbFriends = nbFriends,
                     username = username,
+                    image = image,
                     modifier = Modifier.padding(top = 39.dp, bottom = 26.dp)
                 )
                 destinations.forEach { item ->

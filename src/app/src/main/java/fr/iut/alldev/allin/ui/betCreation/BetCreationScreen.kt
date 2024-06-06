@@ -36,7 +36,7 @@ fun BetCreationScreen(
     var phrase by remember { viewModel.phrase }
     val (registerDate, setRegisterDate) = remember { viewModel.registerDate }
     val (betDate, setBetDate) = remember { viewModel.betDate }
-    var isPublic by remember { viewModel.isPublic }
+    var isPrivate by remember { viewModel.isPrivate }
     var selectedBetType by remember { viewModel.selectedBetType }
 
     val themeError by remember { viewModel.themeError }
@@ -47,7 +47,7 @@ fun BetCreationScreen(
 
     val friends by viewModel.friends.collectAsStateWithLifecycle()
 
-    val selectedFriends = remember { mutableListOf<String>() }
+    val selectedFriends by viewModel.selectedFriends.collectAsStateWithLifecycle()
     var selectionElements by remember { mutableStateOf(listOf<SelectionElement>()) }
     var selectedBetTypeElement by remember { mutableStateOf<SelectionElement?>(null) }
 
@@ -81,15 +81,15 @@ fun BetCreationScreen(
         betPhrase = phrase,
         betPhraseError = phraseError.errorResource(),
         setBetPhrase = { phrase = it },
-        isPublic = isPublic,
-        setIsPublic = { isPublic = it },
+        isPrivate = isPrivate,
+        setIsPrivate = { isPrivate = it },
         registerDate = registerDate,
         registerDateError = registerDateError.errorResource(),
         betDate = betDate,
         betDateError = betDateError.errorResource(),
         typeError = typeError.errorResource(),
         friends = friends,
-        selectedFriends = selectedFriends,
+        selectedFriends = selectedFriends.toList(),
         setRegisterDateDialog = setRegisterDatePicker,
         setEndDateDialog = setEndDatePicker,
         setRegisterTimeDialog = setRegisterTimePicker,
@@ -110,7 +110,8 @@ fun BetCreationScreen(
                     onCreation()
                 }
             )
-        }
+        },
+        toggleFriend = { viewModel.toggleFriend(it) }
     )
 
     if (showRegisterDatePicker || showEndDatePicker) {

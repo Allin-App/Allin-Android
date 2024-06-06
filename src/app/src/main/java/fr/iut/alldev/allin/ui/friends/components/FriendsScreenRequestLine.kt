@@ -27,6 +27,7 @@ import fr.iut.alldev.allin.ui.core.ProfilePicture
 @Composable
 fun FriendsScreenRequestLine(
     username: String,
+    image: String?,
     accept: () -> Unit,
     decline: () -> Unit,
     modifier: Modifier = Modifier
@@ -37,6 +38,7 @@ fun FriendsScreenRequestLine(
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         ProfilePicture(
+            image = image,
             fallback = username.asFallbackProfileUsername(),
             size = 50.dp
         )
@@ -78,6 +80,7 @@ fun FriendsScreenRequestLine(
 private fun FriendsScreenLinePreview() {
     AllInTheme {
         FriendsScreenRequestLine(
+            image = null,
             username = "Xx_Bg_du_63",
             accept = { },
             decline = { }

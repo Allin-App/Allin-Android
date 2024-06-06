@@ -64,6 +64,7 @@ fun FriendsScreenAddTab(
             items(friends) {
                 FriendsScreenLine(
                     username = it.username,
+                    image = it.image,
                     status = it.friendStatus ?: FriendStatus.NOT_FRIEND,
                     toggleIsFriend = { onToggleDeleteFriend(it) }
                 )

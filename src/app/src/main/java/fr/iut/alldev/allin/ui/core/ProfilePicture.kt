@@ -1,38 +1,46 @@
 package fr.iut.alldev.allin.ui.core
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import fr.iut.alldev.allin.R
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 
 @Composable
 fun ProfilePicture(
     fallback: String,
+    image: String?,
     modifier: Modifier = Modifier,
-    image: Painter? = null,
     borderWidth: Dp? = null,
-    size: Dp = 80.dp,
+    size: Dp = 80.dp
 ) {
     val shape = RoundedCornerShape(100)
+    var hasImageloaded by remember { mutableStateOf(false) }
+
     Card(
         modifier = modifier.size(size),
         shape = shape,
@@ -41,14 +49,31 @@ fun ProfilePicture(
     ) {
         Box(Modifier.fillMaxSize()) {
             image?.let {
-                Image(
-                    painter = it,
-                    contentDescription = null,
+                AsyncImage(
                     modifier = Modifier
-                        .align(Alignment.Center)
-                        .fillMaxSize()
-                        .clip(shape)
+                        .width(300.dp)
+                        .height(174.dp)
+                        .clip(RoundedCornerShape(14.dp)),
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data(image)
+                        .crossfade(true)
+                        .build(),
+                    contentDescription = null,
+                    onSuccess = { hasImageloaded = true },
+                    contentScale = ContentScale.Crop
                 )
+
+                if (!hasImageloaded) {
+                    Text(
+                        text = fallback,
+                        style = AllInTheme.typography.p2,
+                        textAlign = TextAlign.Center,
+                        fontSize = with(LocalDensity.current) { (size / 2).toSp() },
+                        color = AllInColorToken.white,
+                        modifier = Modifier.align(Alignment.Center)
+                    )
+                }
+
             } ?: run {
                 Text(
                     text = fallback,
@@ -56,9 +81,7 @@ fun ProfilePicture(
                     textAlign = TextAlign.Center,
                     fontSize = with(LocalDensity.current) { (size / 2).toSp() },
                     color = AllInColorToken.white,
-                    modifier = Modifier
-                        .align(Alignment.Center)
-                        .clip(shape)
+                    modifier = Modifier.align(Alignment.Center)
                 )
             }
         }
@@ -70,7 +93,7 @@ fun ProfilePicture(
 @Composable
 private fun ProfilePictureDefaultPreview() {
     AllInTheme {
-        ProfilePicture("LS")
+        ProfilePicture(image = null, fallback = "LS")
     }
 }
 
@@ -80,7 +103,7 @@ private fun ProfilePicturePreview() {
     AllInTheme {
         ProfilePicture(
             fallback = "LS",
-            image = painterResource(id = R.drawable.money_with_wings)
+            image = "https://cdn.myanimelist.net/s/common/userimages/6076ae8b-54ed-4924-bb81-4d2d51806b1a_225w?s=965262aa50355e917a7ef9579c58fffc"
         )
     }
 }

@@ -33,6 +33,7 @@ import racra.compose.smooth_corner_rect_library.AbsoluteSmoothCornerShape
 @Composable
 fun RankingScreenSecond(
     username: String,
+    image: String?,
     coins: Int,
     modifier: Modifier = Modifier
 ) {
@@ -88,6 +89,7 @@ fun RankingScreenSecond(
             }
         }
         ProfilePicture(
+            image = image,
             fallback = username.asFallbackProfileUsername(),
             size = 52.dp,
             modifier = Modifier
@@ -123,6 +125,7 @@ private fun RankingScreenSecondPreview() {
     AllInTheme {
         RankingScreenSecond(
             username = "Username",
+            image = null,
             coins = 420
         )
     }

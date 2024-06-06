@@ -56,6 +56,7 @@ fun RankingScreenContent(
                     RankingScreenFirst(
                         username = first.username,
                         coins = first.coins,
+                        image = first.image,
                         modifier = Modifier.weight(1f)
                     )
                 }
@@ -64,6 +65,7 @@ fun RankingScreenContent(
                     RankingScreenSecond(
                         username = second.username,
                         coins = second.coins,
+                        image = second.image,
                         modifier = Modifier.weight(1f)
                     )
                 }
@@ -75,6 +77,7 @@ fun RankingScreenContent(
                 RankingScreenItem(
                     position = idx + 3,
                     username = user.username,
+                    image = user.image,
                     coins = user.coins
                 )
             }

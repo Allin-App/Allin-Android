@@ -8,5 +8,6 @@ data class User(
     var nbBets: Int,
     var nbFriends: Int,
     var bestWin: Int,
-    val friendStatus: FriendStatus? = null
+    val friendStatus: FriendStatus? = null,
+    val image: String? = null
 )

@@ -39,11 +39,12 @@ import fr.iut.alldev.allin.ui.core.bet.AllInEmptyView
 
 @Composable
 fun QuestionTabPrivacySection(
-    isPublic: Boolean,
-    setIsPublic: (Boolean) -> Unit,
+    isPrivate: Boolean,
+    setIsPrivate: (Boolean) -> Unit,
     friends: List<User>,
-    selectedFriends: MutableList<String>,
+    selectedFriends: List<String>,
     interactionSource: MutableInteractionSource,
+    toggleFriend: (String) -> Unit
 ) {
     AllInTitleInfo(
         text = stringResource(id = R.string.bet_creation_bet_privacy),
@@ -59,37 +60,23 @@ fun QuestionTabPrivacySection(
         AllInIconChip(
             text = stringResource(id = R.string.bet_public),
             leadingIcon = Icons.Default.Public,
-            onClick = {
-                setIsPublic(true)
-            },
-            isSelected = isPublic
+            onClick = { setIsPrivate(false) },
+            isSelected = !isPrivate
         )
         AllInIconChip(
             text = stringResource(id = R.string.bet_private),
             leadingIcon = Icons.Default.Lock,
-            onClick = {
-                setIsPublic(false)
-            },
-            isSelected = !isPublic
+            onClick = { setIsPrivate(true) },
+            isSelected = isPrivate
         )
     }
 
     Column(
         verticalArrangement = Arrangement.spacedBy(17.dp)
     ) {
-        var isOpen by remember {
-            mutableStateOf(false)
-        }
+        var isOpen by remember { mutableStateOf(false) }
 
-        if (isPublic) {
-            Column(
-                modifier = Modifier.padding(vertical = 20.dp),
-                verticalArrangement = Arrangement.spacedBy(17.dp)
-            ) {
-                BetCreationScreenBottomText(text = stringResource(id = R.string.bet_creation_public_bottom_text_1))
-                BetCreationScreenBottomText(text = stringResource(id = R.string.bet_creation_public_bottom_text_2))
-            }
-        } else {
+        if (isPrivate) {
             AllInRetractableCard(
                 text = pluralStringResource(
                     id = R.plurals.bet_creation_friends_available_format,
@@ -118,13 +105,10 @@ fun QuestionTabPrivacySection(
                             BetCreationScreenFriendLine(
                                 username = it.username,
                                 allCoinsAmount = it.coins,
+                                image = it.image,
                                 isSelected = isSelected
                             ) {
-                                if (isSelected) {
-                                    selectedFriends.remove(it.id)
-                                } else {
-                                    selectedFriends.add(it.id)
-                                }
+                                toggleFriend(it.id)
                                 isSelected = !isSelected
                             }
                         }
@@ -150,6 +134,14 @@ fun QuestionTabPrivacySection(
                 BetCreationScreenBottomText(text = stringResource(id = R.string.bet_creation_private_bottom_text_1))
                 BetCreationScreenBottomText(text = stringResource(id = R.string.bet_creation_private_bottom_text_2))
                 BetCreationScreenBottomText(text = stringResource(id = R.string.bet_creation_private_bottom_text_3))
+            }
+        } else {
+            Column(
+                modifier = Modifier.padding(vertical = 20.dp),
+                verticalArrangement = Arrangement.spacedBy(17.dp)
+            ) {
+                BetCreationScreenBottomText(text = stringResource(id = R.string.bet_creation_public_bottom_text_1))
+                BetCreationScreenBottomText(text = stringResource(id = R.string.bet_creation_public_bottom_text_2))
             }
         }
     }

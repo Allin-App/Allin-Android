@@ -28,6 +28,7 @@ fun DrawerHeader(
     bestWin: Int,
     nbFriends: Int,
     username: String,
+    image: String?,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -35,6 +36,7 @@ fun DrawerHeader(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         ProfilePicture(
+            image = image,
             fallback = username.asFallbackProfileUsername(),
             borderWidth = 1.dp
         )
@@ -69,7 +71,8 @@ private fun DrawerHeaderPreview() {
             nbBets = 114,
             bestWin = 360,
             nbFriends = 5,
-            username = "Pseudo"
+            username = "Pseudo",
+            image = null
         )
     }
 }

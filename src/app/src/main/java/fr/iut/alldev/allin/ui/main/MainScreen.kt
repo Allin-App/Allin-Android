@@ -128,6 +128,7 @@ fun MainScreen(
         nbFriends = currentUser?.nbFriends ?: 0,
         nbBets = currentUser?.nbBets ?: 0,
         bestWin = currentUser?.bestWin ?: 0,
+        image = currentUser?.image,
         navigateTo = { route ->
             mainViewModel.fetchEvents()
             navController.popUpTo(route, startDestination)

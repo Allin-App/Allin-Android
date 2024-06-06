@@ -88,14 +88,14 @@ fun BetCreationScreenAnswerTab(
                             value = currentAnswer,
                             setValue = setCurrentAnswer,
                             onAdd = { addAnswer(currentAnswer) },
-                            enabled = selectedBetType.possibleAnswers.size < BET_MAX_ANSWERS,
-                            buttonEnabled = currentAnswer.isNotBlank() && (currentAnswer !in selectedBetType.possibleAnswers),
+                            enabled = selectedBetType.answers.size < BET_MAX_ANSWERS,
+                            buttonEnabled = currentAnswer.isNotBlank() && (currentAnswer !in selectedBetType.answers),
                             modifier = Modifier.fillMaxWidth()
                         )
                         Text(
                             text = stringResource(
                                 id = R.string.bet_creation_max_answers,
-                                BET_MAX_ANSWERS - selectedBetType.possibleAnswers.size
+                                BET_MAX_ANSWERS - selectedBetType.answers.size
                             ),
                             color = AllInTheme.colors.onMainSurface,
                             style = AllInTheme.typography.sm1,
@@ -107,7 +107,7 @@ fun BetCreationScreenAnswerTab(
                             horizontalArrangement = Arrangement.spacedBy(8.dp),
                             verticalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
-                            selectedBetType.possibleAnswers.fastForEach {
+                            selectedBetType.answers.fastForEach {
                                 BetCreationScreenCustomAnswer(
                                     text = it,
                                     onDelete = { deleteAnswer(it) }
