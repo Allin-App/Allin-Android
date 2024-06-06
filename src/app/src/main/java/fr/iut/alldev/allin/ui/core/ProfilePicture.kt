@@ -53,7 +53,7 @@ fun ProfilePicture(
                     modifier = Modifier
                         .width(300.dp)
                         .height(174.dp)
-                        .clip(RoundedCornerShape(14.dp)),
+                        .clip(shape),
                     model = ImageRequest.Builder(LocalContext.current)
                         .data(image)
                         .crossfade(true)
@@ -94,16 +94,5 @@ fun ProfilePicture(
 private fun ProfilePictureDefaultPreview() {
     AllInTheme {
         ProfilePicture(image = null, fallback = "LS")
-    }
-}
-
-@Preview
-@Composable
-private fun ProfilePicturePreview() {
-    AllInTheme {
-        ProfilePicture(
-            fallback = "LS",
-            image = "https://cdn.myanimelist.net/s/common/userimages/6076ae8b-54ed-4924-bb81-4d2d51806b1a_225w?s=965262aa50355e917a7ef9579c58fffc"
-        )
     }
 }

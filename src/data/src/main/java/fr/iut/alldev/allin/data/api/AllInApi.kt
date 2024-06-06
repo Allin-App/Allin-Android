@@ -42,6 +42,12 @@ interface AllInApi {
     @GET("users/gift")
     suspend fun dailyGift(@Header("Authorization") token: String): Int
 
+    @POST("users/images")
+    suspend fun setImage(
+        @Header("Authorization") token: String,
+        @Body base64: RequestBody
+    )
+
     // FRIENDS
     // ---------------------
 

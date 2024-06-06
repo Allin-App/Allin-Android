@@ -16,6 +16,7 @@ data class ResponseParticipation(
     fun toParticipation() =
         Participation(
             betId = betId,
+            id = id,
             username = username,
             response = answer,
             stake = stake

@@ -1,12 +1,12 @@
 package fr.iut.alldev.allin.ui.preview
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import fr.iut.alldev.allin.data.model.bet.BinaryBet
 import fr.iut.alldev.allin.data.model.bet.CustomBet
 import fr.iut.alldev.allin.data.model.bet.MatchBet
 import fr.iut.alldev.allin.data.model.bet.NO_VALUE
 import fr.iut.alldev.allin.data.model.bet.Participation
 import fr.iut.alldev.allin.data.model.bet.YES_VALUE
-import fr.iut.alldev.allin.data.model.bet.BinaryBet
 import fr.iut.alldev.allin.data.model.bet.vo.BetAnswerDetail
 import fr.iut.alldev.allin.data.model.bet.vo.BetDetail
 
@@ -44,6 +44,7 @@ class BetDetailPreviewProvider : PreviewParameterProvider<BetDetail> {
                     odds = 1.0f
                 )
             )
+
             is MatchBet -> listOf(
                 BetAnswerDetail(
                     response = "The Monarchs",
@@ -60,6 +61,7 @@ class BetDetailPreviewProvider : PreviewParameterProvider<BetDetail> {
                     odds = 2.0f
                 )
             )
+
             is BinaryBet -> listOf(
                 BetAnswerDetail(
                     response = YES_VALUE,
@@ -84,12 +86,14 @@ class BetDetailPreviewProvider : PreviewParameterProvider<BetDetail> {
             participations = listOf(
                 Participation(
                     betId = it.id,
+                    id = "1",
                     username = "User1",
                     response = answers.first().response,
                     stake = 100
                 ),
                 Participation(
                     betId = it.id,
+                    id = "2",
                     username = "User 2",
                     response = answers.last().response,
                     stake = 150
@@ -97,12 +101,14 @@ class BetDetailPreviewProvider : PreviewParameterProvider<BetDetail> {
             ),
             userParticipation = Participation(
                 betId = it.id,
+                id = "1",
                 username = "User1",
                 response = answers.first().response,
                 stake = 100
             ),
             wonParticipation = Participation(
                 betId = it.id,
+                id = "1",
                 username = "User1",
                 response = answers.first().response,
                 stake = 100

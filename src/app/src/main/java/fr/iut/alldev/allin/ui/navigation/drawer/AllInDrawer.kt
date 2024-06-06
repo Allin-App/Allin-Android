@@ -24,17 +24,16 @@ import androidx.compose.ui.unit.sp
 import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
+import fr.iut.alldev.allin.ui.navigation.Routes
 import fr.iut.alldev.allin.ui.navigation.TopLevelDestination
 import fr.iut.alldev.allin.ui.navigation.drawer.components.DrawerCell
 import fr.iut.alldev.allin.ui.navigation.drawer.components.DrawerHeader
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 
 @Composable
 fun AllInDrawer(
     drawerState: DrawerState,
     destinations: List<TopLevelDestination>,
-    scope: CoroutineScope,
+    id: String,
     username: String,
     nbBets: Int,
     bestWin: Int,
@@ -42,7 +41,7 @@ fun AllInDrawer(
     image: String?,
     navigateTo: (String) -> Unit,
     logout: () -> Unit,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     ModalNavigationDrawer(
         drawerState = drawerState,
@@ -57,17 +56,15 @@ fun AllInDrawer(
                     nbFriends = nbFriends,
                     username = username,
                     image = image,
-                    modifier = Modifier.padding(top = 39.dp, bottom = 26.dp)
+                    modifier = Modifier.padding(top = 39.dp, bottom = 26.dp),
+                    navigateToProfile = { navigateTo("${Routes.PROFILE}/$id") }
                 )
                 destinations.forEach { item ->
                     DrawerCell(
                         title = stringResource(item.title).uppercase(),
                         subtitle = stringResource(item.subtitle),
                         emoji = painterResource(id = item.emoji),
-                        onClick = {
-                            scope.launch { drawerState.close() }
-                            navigateTo(item.route)
-                        },
+                        onClick = { navigateTo(item.route) },
                         modifier = Modifier.padding(vertical = 5.dp, horizontal = 13.dp)
                     )
                 }

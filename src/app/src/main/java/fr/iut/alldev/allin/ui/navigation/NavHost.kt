@@ -14,9 +14,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.data.model.bet.Bet
 import fr.iut.alldev.allin.theme.AllInTheme
@@ -29,6 +31,7 @@ import fr.iut.alldev.allin.ui.friends.FriendsScreen
 import fr.iut.alldev.allin.ui.login.LoginScreen
 import fr.iut.alldev.allin.ui.main.MainScreen
 import fr.iut.alldev.allin.ui.main.MainViewModel
+import fr.iut.alldev.allin.ui.profile.ProfileScreen
 import fr.iut.alldev.allin.ui.ranking.RankingScreen
 import fr.iut.alldev.allin.ui.register.RegisterScreen
 import fr.iut.alldev.allin.ui.splash.SplashScreen
@@ -46,6 +49,7 @@ object Routes {
     const val BET_CURRENT = "BET_CURRENT"
     const val FRIENDS = "FRIENDS"
     const val RANKING = "RANKING"
+    const val PROFILE = "PROFILE"
 }
 
 object Arguments {
@@ -164,6 +168,14 @@ internal fun AllInDrawerNavHost(
         ) {
             backHandlers()
             BetCurrentScreen(selectBet = selectBet)
+        }
+
+        composable(
+            route = "${Routes.PROFILE}/{${Arguments.USER_ID}}",
+            arguments = listOf(navArgument(Arguments.USER_ID) { type = NavType.StringType })
+        ) {
+            backHandlers()
+            ProfileScreen()
         }
     }
 }

@@ -57,7 +57,7 @@ private val topLevelDestinations = listOf(
     TopLevelDestination.CurrentBets,
     TopLevelDestination.BetHistory,
     TopLevelDestination.Friends,
-    TopLevelDestination.Ranking,
+    TopLevelDestination.Ranking
 )
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -113,7 +113,8 @@ fun MainScreen(
     )
     val betStatusDisplayer = remember {
         BetStatusBottomSheetBetDisplayer(
-            openParticipateSheet = { setParticipateSheetVisibility(true) }
+            openParticipateSheet = { setParticipateSheetVisibility(true) },
+            getImageUrl = { mainViewModel.getImageUrl(it) }
         )
     }
 
@@ -123,7 +124,7 @@ fun MainScreen(
     AllInDrawer(
         drawerState = drawerState,
         destinations = topLevelDestinations,
-        scope = scope,
+        id = currentUser?.id ?: "",
         username = currentUser?.username ?: "",
         nbFriends = currentUser?.nbFriends ?: 0,
         nbBets = currentUser?.nbBets ?: 0,
@@ -131,6 +132,7 @@ fun MainScreen(
         image = currentUser?.image,
         navigateTo = { route ->
             mainViewModel.fetchEvents()
+            scope.launch { drawerState.close() }
             navController.popUpTo(route, startDestination)
         },
         logout = {

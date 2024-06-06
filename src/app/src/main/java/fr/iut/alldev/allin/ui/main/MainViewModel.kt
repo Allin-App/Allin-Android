@@ -118,6 +118,8 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    fun getImageUrl(id: String) = userRepository.getImageUrl(id)
+
     fun participateToBet(stake: Int, response: String) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
@@ -127,6 +129,7 @@ class MainViewModel @Inject constructor(
                     selectedBet.value?.let {
                         val participation = Participation(
                             betId = it.bet.id,
+                            id = user.id,
                             username = user.username,
                             response = response,
                             stake = stake

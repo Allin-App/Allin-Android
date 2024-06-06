@@ -75,7 +75,8 @@ import fr.iut.alldev.allin.vo.bet.BetDisplayer
 import java.util.Locale
 
 class BetStatusBottomSheetBetDisplayer(
-    val openParticipateSheet: () -> Unit
+    val openParticipateSheet: () -> Unit,
+    val getImageUrl: (id: String) -> String
 ) : BetDisplayer {
     @Composable
     private fun DisplayBetDail(
@@ -154,7 +155,7 @@ class BetStatusBottomSheetBetDisplayer(
                             BetStatusParticipant(
                                 username = it.username,
                                 allCoinsAmount = it.stake,
-                                image = null // TODO : Image
+                                image = getImageUrl(it.id)
                             )
                             HorizontalDivider(
                                 color = AllInTheme.colors.border,
@@ -167,7 +168,7 @@ class BetStatusBottomSheetBetDisplayer(
                             BetStatusParticipant(
                                 username = it.username,
                                 allCoinsAmount = it.stake,
-                                image = null // TODO : Image
+                                image = getImageUrl(it.id)
                             )
                             Spacer(modifier = Modifier.height(8.dp))
                         }
@@ -413,7 +414,8 @@ private fun BetStatusBottomSheetPreview(
 ) {
     AllInTheme {
         BetStatusBottomSheetBetDisplayer(
-            openParticipateSheet = {}
+            openParticipateSheet = {},
+            getImageUrl = { "" }
         ).DisplayBet(
             betDetail = bet,
             currentUser = User(

@@ -1,5 +1,7 @@
 package fr.iut.alldev.allin.ui.navigation.drawer.components
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -30,7 +33,9 @@ fun DrawerHeader(
     username: String,
     image: String?,
     modifier: Modifier = Modifier,
+    navigateToProfile: () -> Unit
 ) {
+    val interactionSource = remember { MutableInteractionSource() }
     Column(
         modifier = modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -38,7 +43,12 @@ fun DrawerHeader(
         ProfilePicture(
             image = image,
             fallback = username.asFallbackProfileUsername(),
-            borderWidth = 1.dp
+            borderWidth = 1.dp,
+            modifier = Modifier.clickable(
+                interactionSource = interactionSource,
+                indication = null,
+                onClick = navigateToProfile
+            )
         )
         Spacer(modifier = Modifier.height(12.dp))
         Text(
@@ -72,7 +82,8 @@ private fun DrawerHeaderPreview() {
             bestWin = 360,
             nbFriends = 5,
             username = "Pseudo",
-            image = null
+            image = null,
+            navigateToProfile = { }
         )
     }
 }

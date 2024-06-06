@@ -154,6 +154,10 @@ class MockAllInApi : AllInApi {
         } else throw MockAllInApiException("Gift already taken today")
     }
 
+    override suspend fun setImage(token: String, base64: RequestBody) {
+        val user = getUserFromToken(token) ?: throw MockAllInApiException("Invalid login/password.")
+    }
+
     override suspend fun getFriends(token: String): List<ResponseUser> {
         val user = getUserFromToken(token) ?: throw MockAllInApiException("Invalid login/password.")
         return mockFriends

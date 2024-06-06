@@ -187,4 +187,7 @@
     <string name="daily_reward_title">Récompense quotidienne</string>
     <string name="daily_reward_subtitle">Votre récompense quotidienne est débloquée tous les jours à 00:00 UTC et vous permets d’obtenir entre 10 et 150 Allcoins.</string>
 
+    <!--Profile-->
+    <string name="profile_pick_profile_picture">Choisissez une nouvelle image de profil</string>
+
 </resources>
