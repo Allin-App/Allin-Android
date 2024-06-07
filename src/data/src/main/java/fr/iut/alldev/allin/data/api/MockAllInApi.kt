@@ -359,6 +359,7 @@ class MockAllInApi : AllInApi {
             mockParticipations.add(
                 ResponseParticipation(
                     id = "",
+                    userId = "",
                     betId = body.betId,
                     username = it.first.username,
                     answer = body.answer,
@@ -446,6 +447,7 @@ class MockAllInApi : AllInApi {
         private val mockParticipations = mutableListOf(
             ResponseParticipation(
                 id = "",
+                userId = "",
                 betId = "UUID1",
                 username = mockUsers[1].first.username,
                 answer = NO_VALUE,
@@ -453,6 +455,7 @@ class MockAllInApi : AllInApi {
             ),
             ResponseParticipation(
                 id = "",
+                userId = "",
                 betId = "UUID1",
                 username = mockUsers[6].first.username,
                 answer = YES_VALUE,
@@ -460,6 +463,7 @@ class MockAllInApi : AllInApi {
             ),
             ResponseParticipation(
                 id = "",
+                userId = "",
                 betId = "UUID2",
                 username = mockUsers[0].first.username,
                 answer = "Answer 1",
@@ -467,6 +471,7 @@ class MockAllInApi : AllInApi {
             ),
             ResponseParticipation(
                 id = "",
+                userId = "",
                 betId = "UUID2",
                 username = mockUsers[2].first.username,
                 answer = "Answer 1",
@@ -474,6 +479,7 @@ class MockAllInApi : AllInApi {
             ),
             ResponseParticipation(
                 id = "",
+                userId = "",
                 betId = "UUID2",
                 username = mockUsers[6].first.username,
                 answer = "Answer 1",
@@ -481,6 +487,7 @@ class MockAllInApi : AllInApi {
             ),
             ResponseParticipation(
                 id = "",
+                userId = "",
                 betId = "UUID3",
                 username = mockUsers[1].first.username,
                 answer = "The Monarchs",

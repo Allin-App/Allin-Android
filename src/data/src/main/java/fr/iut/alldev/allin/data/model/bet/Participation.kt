@@ -4,7 +4,7 @@ import fr.iut.alldev.allin.data.api.model.RequestParticipation
 
 data class Participation(
     val betId: String,
-    val id: String,
+    val userId: String,
     val username: String,
     val response: String,
     val stake: Int

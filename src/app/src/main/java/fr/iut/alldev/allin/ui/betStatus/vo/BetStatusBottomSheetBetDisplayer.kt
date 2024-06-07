@@ -155,7 +155,7 @@ class BetStatusBottomSheetBetDisplayer(
                             BetStatusParticipant(
                                 username = it.username,
                                 allCoinsAmount = it.stake,
-                                image = getImageUrl(it.id)
+                                image = getImageUrl(it.userId)
                             )
                             HorizontalDivider(
                                 color = AllInTheme.colors.border,
@@ -168,7 +168,7 @@ class BetStatusBottomSheetBetDisplayer(
                             BetStatusParticipant(
                                 username = it.username,
                                 allCoinsAmount = it.stake,
-                                image = getImageUrl(it.id)
+                                image = getImageUrl(it.userId)
                             )
                             Spacer(modifier = Modifier.height(8.dp))
                         }

@@ -129,7 +129,7 @@ class MainViewModel @Inject constructor(
                     selectedBet.value?.let {
                         val participation = Participation(
                             betId = it.bet.id,
-                            id = user.id,
+                            userId = user.id,
                             username = user.username,
                             response = response,
                             stake = stake

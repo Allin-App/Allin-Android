@@ -86,14 +86,14 @@ class BetDetailPreviewProvider : PreviewParameterProvider<BetDetail> {
             participations = listOf(
                 Participation(
                     betId = it.id,
-                    id = "1",
+                    userId = "1",
                     username = "User1",
                     response = answers.first().response,
                     stake = 100
                 ),
                 Participation(
                     betId = it.id,
-                    id = "2",
+                    userId = "2",
                     username = "User 2",
                     response = answers.last().response,
                     stake = 150
@@ -101,14 +101,14 @@ class BetDetailPreviewProvider : PreviewParameterProvider<BetDetail> {
             ),
             userParticipation = Participation(
                 betId = it.id,
-                id = "1",
+                userId = "1",
                 username = "User1",
                 response = answers.first().response,
                 stake = 100
             ),
             wonParticipation = Participation(
                 betId = it.id,
-                id = "1",
+                userId = "1",
                 username = "User1",
                 response = answers.first().response,
                 stake = 100
