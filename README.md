@@ -22,7 +22,51 @@
 **Description** : Ce dépôt contient l'ensemble du code pour la partie client Android de l'application *ALL IN*.
 </br>
 
-<img src="" />
+## Lancement du projet 
+
+## Architecture du projet
+
+**Build variants** : 
+ - *Debug* : Version de développement, le code n'est pas minifié donc le build est rapide. Elle permet également d'avoir des fonctionnalités disponibles uniquement en développement. Par exemple, les logs de l'application et des requêtes HTTP ne sont disponibles qu'en debug.
+
+ - *Release* : Le code est minifié et optimisé ce qui résulte en une application bien plus rapide. Cependant, le build est beaucoup plus long.
+
+ **Build flavors** : 
+ - *Dev* : La source de données injectée sont de fausses données locales.
+ 
+ - *Prod* : La source de données injectée est l'API déployée.
+
+ L'application existe donc en 4 versions différentes: 
+ - devDebug
+ - devRelease
+ - prodDebug
+ - progRelease
+
+ Il est possible de choisir la version du projet avant de build dans l'onglet "build variants" d'Android studio : 
+ <img src="doc/Build_variants.png" />
+
+L'icône de l'application change en fonction du build variant, permettant de facilement les différencier lorsque plusieurs variants de l'application sont installés sur un même appareil. Un bandeau rouge "debug" est ajouté en debug, et un encart "dev" est ajouté en dev. 
+
+<div align="center">
+  <figure>
+      <img src="doc/ic_launcher_devDebug.jpg" width="150"/>
+      <figcaption>devDebug</figcaption>
+  </figure>
+  <figure>
+      <img src="doc/ic_launcher_devRelease.jpg" width="150"/>
+      <figcaption>devRelease</figcaption>
+  </figure>
+  <figure>
+      <img src="doc/ic_launcher_prodDebug.jpg" width="150"/>
+      <figcaption>prodDebug</figcaption>
+  </figure>     
+  <figure>
+      <img src="doc/ic_launcher_prodRelease.jpg" width="150"/>
+      <figcaption>prodRelease</figcaption>
+  </figure>    
+
+  <img src="doc/ic_launchers_screenshot.png"/>
+</div>
 
 <div align="center">
 
