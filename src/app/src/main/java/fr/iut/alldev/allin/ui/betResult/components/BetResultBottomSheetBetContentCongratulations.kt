@@ -19,6 +19,7 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import fr.iut.alldev.allin.R
+import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 
 @Composable
@@ -54,18 +55,18 @@ fun BetResultBottomSheetContentCongratulations(
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Text(
-            text= stringResource(id = R.string.bet_result_congratulations),
+            text = stringResource(id = R.string.bet_result_congratulations),
             style = AllInTheme.typography.h1,
             fontSize = 25.sp,
             fontStyle = FontStyle.Italic,
-            color = AllInTheme.colors.white
+            color = AllInColorToken.white
         )
         Text(
             text = "${username.uppercase()} !",
             style = AllInTheme.typography.h1,
             fontSize = 30.sp,
             fontStyle = FontStyle.Italic,
-            color = AllInTheme.colors.white
+            color = AllInColorToken.white
         )
     }
 }

@@ -7,8 +7,18 @@ data class BetDetail(
     val bet: Bet,
     val answers: List<BetAnswerDetail>,
     val participations: List<Participation>,
-    val userParticipation: Participation?
+    val userParticipation: Participation?,
+    val wonParticipation: Participation?
 ) {
     fun getAnswerOfResponse(response: String) =
         answers.find { it.response == response }
+
+    fun getPercentageOfAnswer(answerDetail: BetAnswerDetail): Float =
+        (answerDetail.totalParticipants.toFloat() / answers.sumOf { it.totalParticipants }).let {
+            if (it.isNaN() || it.isInfinite()) {
+                1f / this.answers.size
+            } else {
+                it
+            }
+        }
 }

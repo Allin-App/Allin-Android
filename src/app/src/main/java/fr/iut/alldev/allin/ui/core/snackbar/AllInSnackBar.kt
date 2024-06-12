@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -16,9 +17,9 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.SwipeToDismissBox
-import androidx.compose.material3.SwipeToDismissValue
+import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberSwipeToDismissState
+import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -30,6 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
+import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -40,9 +42,9 @@ fun AllInSnackbar(
     SnackbarHost(
         hostState = snackbarState
     ) { snackbarData ->
-        val dismissState = rememberSwipeToDismissState(
+        val dismissState = rememberSwipeToDismissBoxState(
             confirmValueChange = { value ->
-                if (value != SwipeToDismissValue.Settled) {
+                if (value != SwipeToDismissBoxValue.Settled) {
                     snackbarState.currentSnackbarData?.dismiss()
                     true
                 } else {
@@ -53,7 +55,9 @@ fun AllInSnackbar(
         SwipeToDismissBox(
             state = dismissState,
             backgroundContent = {},
-            modifier = Modifier.padding(8.dp)
+            modifier = Modifier
+                .padding(vertical = 8.dp)
+                .navigationBarsPadding()
         ) {
             val snackbarType = remember {
                 if (snackbarData.visuals is AllInSnackbarVisualsImpl) {
@@ -65,7 +69,7 @@ fun AllInSnackbar(
 
             AllInSnackbarContent(
                 backgroundColor = snackbarType.getBackgroundColor(),
-                contentColor = AllInTheme.colors.white,
+                contentColor = AllInColorToken.white,
                 text = snackbarData.visuals.message,
                 icon = snackbarType.getIcon(),
                 dismiss = { snackbarState.currentSnackbarData?.dismiss() }
@@ -86,6 +90,7 @@ fun AllInSnackbarContent(
     Surface(
         shape = RoundedCornerShape(16.dp),
         shadowElevation = 4.dp,
+        modifier = Modifier.padding(horizontal = 8.dp)
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -138,7 +143,7 @@ private fun AllInSnackbarContentPreview(
     AllInTheme {
         AllInSnackbarContent(
             backgroundColor = snackbarType.getBackgroundColor(),
-            contentColor = AllInTheme.colors.white,
+            contentColor = AllInColorToken.white,
             text = "Lorem Ipsum",
             icon = snackbarType.getIcon(),
             dismiss = {}

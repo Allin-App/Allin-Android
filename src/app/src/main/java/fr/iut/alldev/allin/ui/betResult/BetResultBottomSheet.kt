@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -14,15 +15,14 @@ import androidx.compose.material3.SheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.data.ext.formatToMediumDateNoYear
 import fr.iut.alldev.allin.data.ext.formatToTime
 import fr.iut.alldev.allin.data.model.bet.Bet
 import fr.iut.alldev.allin.data.model.bet.BetStatus
-import fr.iut.alldev.allin.data.model.bet.YesNoBet
+import fr.iut.alldev.allin.data.model.bet.BinaryBet
+import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.betResult.components.BetResultBottomSheetBetCard
 import fr.iut.alldev.allin.ui.betResult.components.BetResultBottomSheetContentCoinAmount
@@ -71,10 +71,11 @@ fun BetResultBottomSheetContent(
     odds: Float,
     onClose: () -> Unit
 ) {
-    AllInMarqueeBox(backgroundBrush = AllInTheme.colors.allInMainGradientReverse) {
+    AllInMarqueeBox(backgroundBrush = AllInColorToken.allInMainGradientReverse) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
+                .safeContentPadding()
                 .padding(16.dp)
         ) {
             IconButton(
@@ -85,16 +86,16 @@ fun BetResultBottomSheetContent(
             ) {
                 Icon(
                     imageVector = Icons.Default.Close,
-                    tint = AllInTheme.colors.white,
+                    tint = AllInColorToken.white,
                     contentDescription = null,
                     modifier = Modifier.size(24.dp)
                 )
             }
 
             Icon(
-                painter = painterResource(R.drawable.allin),
+                painter = AllInTheme.icons.logo(),
                 contentDescription = null,
-                tint = AllInTheme.colors.white,
+                tint = AllInColorToken.white,
                 modifier = Modifier
                     .size(40.dp)
                     .align(Alignment.TopCenter)
@@ -132,7 +133,7 @@ private fun BetResultBottomSheetContentPreview() {
         BetResultBottomSheetContent(
             username = "Pseudo",
             coinAmount = 3976,
-            bet = YesNoBet(
+            bet = BinaryBet(
                 id = "1",
                 theme = "Theme",
                 phrase = "Phrase",
@@ -141,6 +142,8 @@ private fun BetResultBottomSheetContentPreview() {
                 isPublic = true,
                 betStatus = BetStatus.IN_PROGRESS,
                 creator = "creator",
+                totalStakes = 0,
+                totalParticipants = 0
             ),
             stake = 4175,
             winnings = 2600,

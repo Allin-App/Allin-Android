@@ -8,10 +8,10 @@ import fr.iut.alldev.allin.ui.betResult.BetResultBottomSheet
 
 data class WonBet(
     private val user: User,
-    private val betResult: BetResultDetail,
+    val betResult: BetResultDetail,
 ) : AllInEvent() {
     @Composable
-    override fun Display(
+    fun Display(
         sheetState: SheetState,
         onDismiss: () -> Unit
     ) {

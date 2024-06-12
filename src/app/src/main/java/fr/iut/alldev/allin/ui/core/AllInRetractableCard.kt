@@ -23,6 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 
 @Composable
@@ -39,7 +40,7 @@ fun AllInRetractableCard(
     AllInCard(
         modifier = modifier.fillMaxWidth(),
         borderWidth = borderWidth,
-        borderColor = AllInTheme.colors.allInPurple.copy(.5f)
+        borderColor = AllInColorToken.allInPurple.copy(.5f)
     ) {
         Column(
             Modifier.animateContentSize()
@@ -60,10 +61,10 @@ fun AllInRetractableCard(
                     query = boldText,
                     highlightStyle = SpanStyle(
                         fontWeight = FontWeight.Bold,
-                        color = AllInTheme.themeColors.onMainSurface,
+                        color = AllInTheme.colors.onMainSurface,
                         fontStyle = AllInTheme.typography.h2.fontStyle
                     ),
-                    color = AllInTheme.themeColors.onBackground2,
+                    color = AllInTheme.colors.onBackground2,
                     style = AllInTheme.typography.p1,
                     fontSize = 16.sp,
                     modifier = Modifier.weight(1f)
@@ -73,13 +74,13 @@ fun AllInRetractableCard(
                         if (isOpen) ExpandLess else ExpandMore
                     },
                     contentDescription = null,
-                    tint = AllInTheme.colors.allInPurple,
+                    tint = AllInColorToken.allInPurple,
                     modifier = Modifier.size(30.dp)
                 )
             }
             AnimatedVisibility(isOpen) {
                 Column {
-                    HorizontalDivider(color = AllInTheme.themeColors.border)
+                    HorizontalDivider(color = AllInTheme.colors.border)
                     content()
                 }
             }

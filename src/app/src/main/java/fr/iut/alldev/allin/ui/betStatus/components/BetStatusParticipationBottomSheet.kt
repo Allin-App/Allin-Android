@@ -1,10 +1,22 @@
 package fr.iut.alldev.allin.ui.betStatus.components
 
 import android.content.res.Configuration
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.SheetState
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -12,10 +24,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import fr.iut.alldev.allin.R
+import fr.iut.alldev.allin.ext.bottomSheetNavigationBarsPadding
+import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.core.AllInBottomSheet
 import fr.iut.alldev.allin.ui.core.AllInButton
@@ -24,13 +37,13 @@ import fr.iut.alldev.allin.ui.core.AllInIntTextField
 import fr.iut.alldev.allin.ui.core.AllInSelectionBox
 import fr.iut.alldev.allin.ui.core.topbar.AllInTopBarCoinCounter
 import kotlinx.coroutines.launch
+import kotlin.math.ln
 import kotlin.math.roundToInt
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BetStatusParticipationBottomSheet(
     sheetVisibility: Boolean,
-    safeBottomPadding: Dp,
     betPhrase: String,
     coinAmount: Int,
     onDismiss: () -> Unit,
@@ -42,17 +55,17 @@ fun BetStatusParticipationBottomSheet(
     elements: List<@Composable RowScope.() -> Unit>,
     selectedElement: (@Composable RowScope.() -> Unit)?,
     setElement: (Int) -> Unit,
-    onParticipate: () -> Unit
-) {
+    onParticipate: () -> Unit,
+
+    ) {
     val scope = rememberCoroutineScope()
     AllInBottomSheet(
         sheetVisibility = sheetVisibility,
         onDismiss = onDismiss,
         state = state,
-        containerColor = AllInTheme.themeColors.background2
+        containerColor = AllInTheme.colors.background2
     ) {
         BetStatusParticipationBottomSheetContent(
-            safeBottomPadding = safeBottomPadding,
             betPhrase = betPhrase,
             coinAmount = coinAmount,
             elements = elements,
@@ -73,8 +86,7 @@ fun BetStatusParticipationBottomSheet(
 }
 
 @Composable
-private fun ColumnScope.BetStatusParticipationBottomSheetContent(
-    safeBottomPadding: Dp,
+private fun BetStatusParticipationBottomSheetContent(
     betPhrase: String,
     coinAmount: Int,
     enabled: Boolean,
@@ -87,6 +99,12 @@ private fun ColumnScope.BetStatusParticipationBottomSheetContent(
     onButtonClick: () -> Unit
 ) {
     val (answersBoxIsOpen, setAnswersBoxIsOpen) = remember { mutableStateOf(false) }
+    val betStrength by animateFloatAsState(
+        targetValue = if (enabled) {
+            (ln(stake?.toFloat() ?: 0f) / ln(coinAmount.toFloat())).coerceIn(.42f..1f)
+        } else .42f,
+        label = ""
+    )
 
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -94,26 +112,27 @@ private fun ColumnScope.BetStatusParticipationBottomSheetContent(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = stringResource(id = R.string.place_your_bets),
+            text = stringResource(id = R.string.bet_status_place_your_bets),
             style = AllInTheme.typography.h2,
-            color = AllInTheme.themeColors.onMainSurface,
+            color = AllInTheme.colors.onMainSurface,
             fontSize = 20.sp,
             modifier = Modifier.padding(start = 18.dp)
         )
         AllInTopBarCoinCounter(
             amount = coinAmount,
-            backgroundColor = AllInTheme.colors.allInBlue,
-            textColor = AllInTheme.colors.white,
-            iconColor = AllInTheme.colors.white,
+            backgroundColor = AllInColorToken.allInBlue,
+            textColor = AllInColorToken.white,
+            iconColor = AllInColorToken.white,
         )
     }
+
     Column(
         modifier = Modifier.padding(horizontal = 18.dp)
     ) {
         Text(
             text = betPhrase,
             style = AllInTheme.typography.p2,
-            color = AllInTheme.themeColors.onMainSurface,
+            color = AllInTheme.colors.onMainSurface,
             modifier = Modifier.padding(vertical = 30.dp)
         )
         AllInSelectionBox(
@@ -127,20 +146,25 @@ private fun ColumnScope.BetStatusParticipationBottomSheetContent(
         Spacer(modifier = Modifier.height(8.dp))
         AllInIntTextField(
             value = stake,
-            setValue = setStake,
+            setValue = { setStake(it?.coerceAtMost(coinAmount)) },
+            textStyle = AllInTheme.typography.h1.copy(
+                fontSize = 20.sp,
+                color = AllInColorToken.allInPurple
+            ),
             placeholder = stringResource(id = R.string.bet_result_stake),
             trailingIcon = AllInTheme.icons.allCoins(),
+            trailingIconColor = if (enabled) AllInColorToken.allInPurple else null,
+            borderColor = if (enabled) AllInColorToken.allInPurple.copy(alpha = betStrength) else AllInTheme.colors.border,
             modifier = Modifier.fillMaxWidth(),
             maxChar = null
         )
     }
     Spacer(modifier = Modifier.height(100.dp))
-    HorizontalDivider(color = AllInTheme.themeColors.border)
+    HorizontalDivider(color = AllInTheme.colors.border)
     Column(
         modifier = Modifier
-            .background(AllInTheme.themeColors.background)
-            .padding(horizontal = 7.dp)
-            .padding(bottom = safeBottomPadding, top = 7.dp),
+            .background(AllInTheme.colors.background)
+            .padding(7.dp),
         verticalArrangement = Arrangement.spacedBy(7.dp)
     ) {
         Row(
@@ -149,23 +173,26 @@ private fun ColumnScope.BetStatusParticipationBottomSheetContent(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = stringResource(id = R.string.Possible_winnings),
+                text = stringResource(id = R.string.participation_possible_winnings),
                 style = AllInTheme.typography.p1,
-                color = AllInTheme.themeColors.onBackground
+                color = AllInTheme.colors.onBackground
             )
             AllInCoinCount(
-                amount = stake?.let { (it + (it * odds)).roundToInt() } ?: 0,
-                color = AllInTheme.themeColors.onBackground
+                amount = stake?.let { (it * odds).roundToInt() } ?: 0,
+                color = AllInTheme.colors.onBackground
             )
         }
         AllInButton(
             enabled = enabled,
-            color = AllInTheme.colors.allInPurple,
-            text = stringResource(id = R.string.Participate),
-            textColor = AllInTheme.colors.white,
+            color = AllInColorToken.allInPurple,
+            text = stringResource(id = R.string.bet_participate),
+            textColor = AllInColorToken.white,
             radius = 5.dp,
-            onClick = onButtonClick
+            onClick = onButtonClick,
+            modifier = Modifier.fillMaxWidth()
         )
+
+        Spacer(modifier = Modifier.padding(bottomSheetNavigationBarsPadding()))
     }
 }
 
@@ -176,7 +203,6 @@ private fun BetStatusParticipationBottomSheetContentPreview() {
     AllInTheme {
         Column {
             BetStatusParticipationBottomSheetContent(
-                safeBottomPadding = 0.dp,
                 betPhrase = "Bet phrase",
                 coinAmount = 3620,
                 onButtonClick = {},
@@ -185,6 +211,28 @@ private fun BetStatusParticipationBottomSheetContentPreview() {
                 selectedElement = null,
                 enabled = true,
                 stake = 123,
+                odds = 0.42f,
+                setStake = {}
+            )
+        }
+    }
+}
+
+@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+private fun BetStatusParticipationBottomSheetContentEmptyPreview() {
+    AllInTheme {
+        Column {
+            BetStatusParticipationBottomSheetContent(
+                betPhrase = "Bet phrase",
+                coinAmount = 3620,
+                onButtonClick = {},
+                elements = emptyList(),
+                setElement = {},
+                selectedElement = null,
+                enabled = true,
+                stake = null,
                 odds = 0.42f,
                 setStake = {}
             )

@@ -2,16 +2,24 @@ package fr.iut.alldev.allin.ui.core
 
 import android.content.res.Configuration
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.gestures.*
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -20,27 +28,47 @@ import kotlinx.coroutines.launch
 
 class SectionElement(
     val text: String,
-    val content: @Composable ()->Unit
+    val content: @Composable () -> Unit
 )
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun AllInSections(
     sections: List<SectionElement>,
-    interSectionsPadding: Dp = 56.dp,
     modifier: Modifier = Modifier,
-    onLoadSection: ()->Unit = {}
+    interSectionsPadding: Dp = 56.dp,
+    onLoadSection: () -> Unit = { }
 ) {
-    val pagerState = rememberPagerState(pageCount = {
-        sections.size
-    })
+    val pagerState = rememberPagerState(pageCount = { sections.size })
     val scope = rememberCoroutineScope()
-    Column(
-        modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ){
-        LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(interSectionsPadding)
+
+    Box(modifier = modifier) {
+        HorizontalPager(state = pagerState) { page ->
+            LaunchedEffect(key1 = page) { onLoadSection() }
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(top = 40.dp)
+            ) {
+                sections[page].content()
+            }
+        }
+
+        Box(
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .fillMaxWidth()
+                .background(
+                    Brush.verticalGradient(
+                        0.75f to AllInTheme.colors.mainSurface,
+                        1f to Color.Transparent
+                    )
+                ),
+            contentAlignment = Alignment.Center
+        ) {
+            LazyRow(
+                horizontalArrangement = Arrangement.spacedBy(interSectionsPadding),
+                modifier = Modifier.padding(vertical = 12.dp)
             ) {
                 itemsIndexed(sections) { index, section ->
                     AllInSectionButton(
@@ -54,13 +82,6 @@ fun AllInSections(
                     )
                 }
             }
-
-
-        HorizontalPager(state = pagerState) { page ->
-            LaunchedEffect(key1 = page){
-                onLoadSection()
-            }
-            sections[page].content()
         }
     }
 }

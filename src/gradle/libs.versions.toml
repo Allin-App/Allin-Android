@@ -12,11 +12,10 @@ androidxCore = "1.12.0"
 androidxActivity = "1.8.2"
 androidxSecurity = "1.1.0-alpha06"
 
-composeBom = "2023.10.01"
-compose = "1.5.4"
-composePreview = "1.6.0-beta03"
+composeBom = "2024.05.00"
 composeCompiler = "1.5.5"
-composeNavigation = "2.7.6"
+composePreview = "1.6.5"
+composeNavigation = "2.7.7"
 
 hilt = "2.48"
 hiltNavigation = "1.1.0"
@@ -31,10 +30,13 @@ espressoCore = "3.5.1"
 room = "2.6.1"
 okHttp = "4.11.0"
 
+coil = "2.4.0"
+
 # Plugins
 gradlePlugin = "8.1.4"
 publishPlugin = "1.1"
 resgenPlugin = "2.5"
+easylauncherPlugin = "6.1.0"
 
 [libraries]
 
@@ -55,20 +57,20 @@ test-androidx-junit = { group = "androidx.test.ext", name = "junit-ktx", version
 test-espresso = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 hilt-androidTesting = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hilt" }
 hilt-androidCompiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
-ui-test-junit = { group = "androidx.compose.ui", name = "ui-test-junit4", version.ref = "compose" }
-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest", version.ref = "compose" }
+ui-test-junit = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 
 
 # Compose
 compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
 compose-ui = { module = "androidx.compose.ui:ui" }
 compose-ui-graphics = { module = "androidx.compose.ui:ui-graphics" }
-compose-foundation = { module = "androidx.compose.foundation:foundation", version = "1.6.0-beta03" }
+compose-foundation = { module = "androidx.compose.foundation:foundation" }
 compose-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "composePreview" }
 compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 compose-ui-googlefonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts" }
 compose-material = { module = "androidx.compose.material:material" }
-compose-material3 = { group = "androidx.compose.material3", name = "material3", version = "1.2.0-beta01" }
+compose-material3 = { group = "androidx.compose.material3", name = "material3", version = "1.2.1" }
 compose-material-icons = { group = "androidx.compose.material", name = "material-icons-core" }
 compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
 compose-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "composeNavigation" }
@@ -93,11 +95,15 @@ kotlinSerialization-retrofit = { group = "com.jakewharton.retrofit", name = "ret
 # Squicle
 smoothCornerRect = { module = "com.github.racra:smooth-corner-rect-android-compose", version = "v1.0.0" }
 
+#Coil
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
+
 # Plugins
 plugin-gradle = { module = "com.android.tools.build:gradle", version.ref = "gradlePlugin" }
 plugin-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 plugin-kotlinSerialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
 plugin-hilt = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt" }
+plugin-easylauncher = { module = "com.project.starter:easylauncher", version.ref = "easylauncherPlugin" }
 
 [bundles]
 

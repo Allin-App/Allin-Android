@@ -5,7 +5,7 @@ import java.time.ZonedDateTime
 const val YES_VALUE = "Yes"
 const val NO_VALUE = "No"
 
-data class YesNoBet(
+data class BinaryBet(
     override val id: String,
     override val creator: String,
     override val theme: String,
@@ -13,7 +13,9 @@ data class YesNoBet(
     override val endRegisterDate: ZonedDateTime,
     override val endBetDate: ZonedDateTime,
     override val isPublic: Boolean,
-    override val betStatus: BetStatus
+    override val betStatus: BetStatus,
+    override val totalStakes: Int,
+    override val totalParticipants: Int
 ) : Bet(
     id,
     creator,
@@ -22,7 +24,9 @@ data class YesNoBet(
     endRegisterDate,
     endBetDate,
     isPublic,
-    betStatus
+    betStatus,
+    totalStakes,
+    totalParticipants
 ) {
     override fun getBetType() = BetType.BINARY
     override fun getResponses(): List<String> = listOf(YES_VALUE, NO_VALUE)

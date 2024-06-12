@@ -11,6 +11,8 @@ data class MatchBet(
     override val endBetDate: ZonedDateTime,
     override val isPublic: Boolean,
     override val betStatus: BetStatus,
+    override val totalStakes: Int,
+    override val totalParticipants: Int,
     val nameTeam1: String,
     val nameTeam2: String
 ) : Bet(
@@ -21,7 +23,9 @@ data class MatchBet(
     endRegisterDate,
     endBetDate,
     isPublic,
-    betStatus
+    betStatus,
+    totalStakes,
+    totalParticipants
 ) {
     override fun getBetType() = BetType.MATCH
     override fun getResponses(): List<String> = listOf(nameTeam1, nameTeam2)

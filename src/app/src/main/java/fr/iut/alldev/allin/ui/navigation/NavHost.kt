@@ -14,9 +14,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.data.model.bet.Bet
 import fr.iut.alldev.allin.theme.AllInTheme
@@ -25,13 +27,18 @@ import fr.iut.alldev.allin.ui.betCreation.BetCreationScreen
 import fr.iut.alldev.allin.ui.betHistory.BetCurrentScreen
 import fr.iut.alldev.allin.ui.betHistory.BetHistoryScreen
 import fr.iut.alldev.allin.ui.core.snackbar.SnackbarType
+import fr.iut.alldev.allin.ui.friends.FriendsScreen
 import fr.iut.alldev.allin.ui.login.LoginScreen
 import fr.iut.alldev.allin.ui.main.MainScreen
 import fr.iut.alldev.allin.ui.main.MainViewModel
+import fr.iut.alldev.allin.ui.profile.ProfileScreen
+import fr.iut.alldev.allin.ui.ranking.RankingScreen
 import fr.iut.alldev.allin.ui.register.RegisterScreen
+import fr.iut.alldev.allin.ui.splash.SplashScreen
 import fr.iut.alldev.allin.ui.welcome.WelcomeScreen
 
 object Routes {
+    const val SPLASH = "SPLASH"
     const val WELCOME = "WELCOME"
     const val REGISTER = "REGISTER"
     const val LOGIN = "LOGIN"
@@ -41,8 +48,20 @@ object Routes {
     const val BET_HISTORY = "BET_HISTORY"
     const val BET_CURRENT = "BET_CURRENT"
     const val FRIENDS = "FRIENDS"
-
+    const val RANKING = "RANKING"
+    const val PROFILE = "PROFILE"
 }
+
+object Arguments {
+    const val USER_ID = "USER_ID"
+}
+
+private val fadingRoutes
+    get() = listOf(
+        Routes.WELCOME,
+        Routes.DASHBOARD,
+        Routes.SPLASH
+    )
 
 internal fun NavHostController.popUpTo(route: String, baseRoute: String) {
     this.navigate(route) {
@@ -57,29 +76,26 @@ internal fun NavHostController.popUpTo(route: String, baseRoute: String) {
 fun AllInNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    startDestination: String = Routes.WELCOME,
+    startDestination: String = Routes.SPLASH
 ) {
     NavHost(
         navController = navController,
         startDestination = startDestination,
         enterTransition = {
-            if (navController.currentDestination?.route != Routes.DASHBOARD &&
-                navController.currentDestination?.route != Routes.WELCOME
-            ) {
+            if (navController.currentDestination?.route !in fadingRoutes) {
                 slideInHorizontally(initialOffsetX = { it })
             } else fadeIn(animationSpec = tween(1500))
         },
         exitTransition = {
-            if (navController.currentDestination?.route != Routes.DASHBOARD &&
-                navController.currentDestination?.route != Routes.WELCOME
-            ) {
+            if (navController.currentDestination?.route !in fadingRoutes) {
                 slideOutHorizontally(targetOffsetX = { -it / 2 })
             } else fadeOut(animationSpec = tween(1500))
         },
         modifier = modifier
             .fillMaxSize()
-            .background(AllInTheme.themeColors.mainSurface),
+            .background(AllInTheme.colors.mainSurface),
     ) {
+        allInSplashScreen(navController)
         allInWelcomeScreen(navController)
         allInRegisterScreen(navController)
         allInLoginScreen(navController)
@@ -104,7 +120,6 @@ internal fun AllInDrawerNavHost(
         enterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None }
     ) {
-
         composable(route = Routes.PUBLIC_BETS) {
             backHandlers()
             BetScreen(
@@ -115,32 +130,68 @@ internal fun AllInDrawerNavHost(
             backHandlers()
             val creationSuccessMessage = stringResource(id = R.string.bet_creation_success_message)
             BetCreationScreen(
-                setLoading = setLoading,
-                onCreation = {
-                    putSnackbarContent(
-                        MainViewModel.SnackbarContent(
-                            text = creationSuccessMessage,
-                            type = SnackbarType.SUCCESS
-                        )
+                setLoading = setLoading
+            ) {
+                putSnackbarContent(
+                    MainViewModel.SnackbarContent(
+                        text = creationSuccessMessage,
+                        type = SnackbarType.SUCCESS
                     )
-                    navController.popUpTo(Routes.PUBLIC_BETS, Routes.BET_CREATION)
-                }
-            )
+                )
+                navController.popUpTo(Routes.PUBLIC_BETS, Routes.BET_CREATION)
+            }
         }
 
         composable(
             route = Routes.BET_HISTORY
         ) {
             backHandlers()
-            BetHistoryScreen()
+            BetHistoryScreen(selectBet = selectBet)
+        }
+
+        composable(
+            route = Routes.RANKING
+        ) {
+            backHandlers()
+            RankingScreen()
+        }
+
+        composable(
+            route = Routes.FRIENDS
+        ) {
+            backHandlers()
+            FriendsScreen()
         }
 
         composable(
             route = Routes.BET_CURRENT
         ) {
             backHandlers()
-            BetCurrentScreen()
+            BetCurrentScreen(selectBet = selectBet)
         }
+
+        composable(
+            route = "${Routes.PROFILE}/{${Arguments.USER_ID}}",
+            arguments = listOf(navArgument(Arguments.USER_ID) { type = NavType.StringType })
+        ) {
+            backHandlers()
+            ProfileScreen()
+        }
+    }
+}
+
+private fun NavGraphBuilder.allInSplashScreen(
+    navController: NavHostController,
+) {
+    composable(route = Routes.SPLASH) {
+        SplashScreen(
+            navigateToWelcomeScreen = {
+                navController.popUpTo(Routes.WELCOME, Routes.SPLASH)
+            },
+            navigateToDashboard = {
+                navController.popUpTo(Routes.DASHBOARD, Routes.SPLASH)
+            }
+        )
     }
 }
 
@@ -154,9 +205,6 @@ private fun NavGraphBuilder.allInWelcomeScreen(
             },
             navigateToLogin = {
                 navController.popUpTo(Routes.LOGIN, Routes.WELCOME)
-            },
-            navigateToDashboard = {
-                navController.popUpTo(Routes.DASHBOARD, Routes.WELCOME)
             }
         )
     }

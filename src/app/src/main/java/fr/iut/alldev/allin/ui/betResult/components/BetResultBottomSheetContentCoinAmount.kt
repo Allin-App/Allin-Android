@@ -17,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import fr.iut.alldev.allin.R
+import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.core.AllInCoinCount
 import fr.iut.alldev.allin.ui.core.IconPosition
@@ -33,7 +34,7 @@ fun BetResultBottomSheetContentCoinAmount(
         Text(
             text = stringResource(id = R.string.bet_result_you_win),
             style = AllInTheme.typography.sm2,
-            color = AllInTheme.colors.white,
+            color = AllInColorToken.white,
             fontSize = 20.sp
         )
 
@@ -42,7 +43,7 @@ fun BetResultBottomSheetContentCoinAmount(
                 .border(
                     width = 2.dp,
                     shape = RoundedCornerShape(100.dp),
-                    color = AllInTheme.colors.white
+                    color = AllInColorToken.white
                 )
                 .padding(vertical = 22.dp, horizontal = 33.dp)
 
@@ -51,7 +52,7 @@ fun BetResultBottomSheetContentCoinAmount(
                 amount = amount,
                 textStyle = AllInTheme.typography.h1,
                 position = IconPosition.TRAILING,
-                color = AllInTheme.colors.white,
+                color = AllInColorToken.white,
                 size = 60,
                 modifier = Modifier
                     .align(Alignment.Center)
@@ -61,7 +62,7 @@ fun BetResultBottomSheetContentCoinAmount(
                 amount = amount,
                 textStyle = AllInTheme.typography.h1,
                 position = IconPosition.TRAILING,
-                color = AllInTheme.colors.white.copy(alpha = .32f),
+                color = AllInColorToken.white.copy(alpha = .32f),
                 size = 60,
                 modifier = Modifier.align(Alignment.Center)
             )

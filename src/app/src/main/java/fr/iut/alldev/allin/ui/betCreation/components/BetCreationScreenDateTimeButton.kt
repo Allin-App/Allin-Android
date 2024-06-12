@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.core.AllInCard
 
@@ -24,7 +25,7 @@ fun BetCreationScreenDateTimeButton(
     ) {
         Text(
             text = text,
-            color = AllInTheme.colors.allInPurple,
+            color = AllInColorToken.allInPurple,
             style = AllInTheme.typography.h2,
             fontSize = 16.sp,
             modifier = Modifier.padding(horizontal = 23.dp, vertical = 9.dp)

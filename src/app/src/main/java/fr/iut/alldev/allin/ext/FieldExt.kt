@@ -14,29 +14,31 @@ sealed class FieldErrorState(
 ) {
     data object NoError : FieldErrorState()
 
-    data object Mandatory : FieldErrorState(R.string.FieldError_Mandatory)
+    data object Mandatory : FieldErrorState(R.string.field_error_mandatory)
 
 
     data class TooShort(val fieldName: String, val minChar: Int) :
-        FieldErrorState(R.string.FieldError_TooShort, fieldName, minChar)
+        FieldErrorState(R.string.field_error_too_short, fieldName, minChar)
 
     data class BadFormat(val fieldName: String, val format: String) :
-        FieldErrorState(R.string.FieldError_BadFormat, fieldName, format)
+        FieldErrorState(R.string.field_error_bad_format, fieldName, format)
 
-    data object NotIdentical : FieldErrorState(R.string.FieldError_NotIdentical)
+    data object NotIdentical : FieldErrorState(R.string.field_error_not_identical)
 
     data class NoSpecialCharacter(val fieldName: String, val characters: String = ALLOWED_SYMBOLS) :
-        FieldErrorState(R.string.FieldError_NoSpecialCharacter, fieldName, characters)
+        FieldErrorState(R.string.field_error_no_special_character, fieldName, characters)
 
     data class AlreadyUsed(val value: String) :
-        FieldErrorState(R.string.FieldError_AlreadyUsed, value)
+        FieldErrorState(R.string.field_error_already_used, value)
 
     data class PastDate(val fieldName: String) :
-        FieldErrorState(R.string.FieldError_PastDate, fieldName)
+        FieldErrorState(R.string.field_error_past_date, fieldName)
 
     data class DateOrder(val fieldName1: String, val fieldName2: String) :
-        FieldErrorState(R.string.FieldError_DateOrder, fieldName1, fieldName2)
+        FieldErrorState(R.string.field_error_date_order, fieldName1, fieldName2)
 
+    data object NoResponse :
+        FieldErrorState(R.string.field_error_no_response)
 
     @Composable
     fun errorResource() = stringResourceOrNull(id = messageId, *messageArgs)

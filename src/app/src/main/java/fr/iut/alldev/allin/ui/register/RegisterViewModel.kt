@@ -4,7 +4,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import fr.iut.alldev.allin.data.api.interceptors.AllInAPIException
 import fr.iut.alldev.allin.data.repository.UserRepository
 import fr.iut.alldev.allin.ext.ALLOWED_SYMBOLS
 import fr.iut.alldev.allin.ext.FieldErrorState
@@ -14,6 +13,8 @@ import fr.iut.alldev.allin.keystore.AllInKeystoreManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import retrofit2.HttpException
+import timber.log.Timber
 import javax.inject.Inject
 
 private const val MIN_PASSWORD_SIZE = 8
@@ -83,7 +84,8 @@ class RegisterViewModel @Inject constructor(
         usernameFieldName: String,
         emailFieldName: String,
         passwordFieldName: String,
-        navigateToDashboard: () -> Unit
+        navigateToDashboard: () -> Unit,
+        displayNetworkErrorAlert: () -> Unit
     ) {
         viewModelScope.launch {
             loading.value = true
@@ -104,15 +106,25 @@ class RegisterViewModel @Inject constructor(
                                 password.value
                             )
                             ?.let { token -> keystoreManager.putToken(token) }
-                    } catch (e: AllInAPIException) {
-                        usernameError.value = FieldErrorState.AlreadyUsed(username.value)
-                        emailError.value = FieldErrorState.AlreadyUsed(email.value)
-                        hasError.value = true
+
+                        withContext(Dispatchers.Main) {
+                            navigateToDashboard()
+                        }
+                    } catch (e: Exception) {
+                        when {
+                            e is HttpException && e.code() == 409 -> {
+                                usernameError.value = FieldErrorState.AlreadyUsed(username.value)
+                                emailError.value = FieldErrorState.AlreadyUsed(email.value)
+                                hasError.value = true
+                            }
+
+                            else -> {
+                                Timber.e(e)
+                                displayNetworkErrorAlert()
+                            }
+                        }
                     }
                 }
-            }
-            if (!hasError.value) {
-                navigateToDashboard()
             }
             loading.value = false
         }

@@ -4,13 +4,11 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SheetState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableIntState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -37,8 +35,7 @@ fun BetStatusBottomSheet(
     sheetVisibility: Boolean,
     sheetBackVisibility: Boolean,
     betDetail: BetDetail?,
-    paddingValues: PaddingValues,
-    userCoinAmount: MutableIntState,
+    userCoinAmount: Int,
     onParticipate: (stake: Int, response: String) -> Unit,
     onDismiss: () -> Unit,
     participateSheetVisibility: Boolean,
@@ -55,9 +52,7 @@ fun BetStatusBottomSheet(
         )
     ) {
         betDetail?.let {
-            BetStatusBottomSheetBack(
-                status = it.bet.betStatus
-            )
+            BetStatusBottomSheetBack(status = it.bet.betStatus)
         }
     }
 
@@ -82,10 +77,9 @@ fun BetStatusBottomSheet(
                     sheetVisibility = participateSheetVisibility &&
                             betDetail.bet.betStatus == BetStatus.IN_PROGRESS &&
                             state.hasExpandedState,
-                    safeBottomPadding = paddingValues.calculateBottomPadding(),
                     odds = betDetail.answers.getOrNull(selectedAnswer)?.odds ?: 1f,
                     betPhrase = betDetail.bet.phrase,
-                    coinAmount = userCoinAmount.intValue,
+                    coinAmount = userCoinAmount,
                     onDismiss = { setParticipateSheetVisibility(false) },
                     state = rememberModalBottomSheetState(skipPartiallyExpanded = true),
                     elements = elements,
@@ -93,8 +87,7 @@ fun BetStatusBottomSheet(
                     stake = stake,
                     setStake = { stake = it },
                     setElement = { idx -> selectedAnswer = idx },
-                    enabled = stake != null &&
-                            (stake ?: 0) <= userCoinAmount.intValue
+                    enabled = (stake ?: 0) != 0 && (stake ?: 0) <= userCoinAmount
                 ) {
                     stake?.let { stake ->
                         onParticipate(
@@ -103,7 +96,6 @@ fun BetStatusBottomSheet(
                         )
                     }
                 }
-
             }
         }
 

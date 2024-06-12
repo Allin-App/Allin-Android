@@ -15,12 +15,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import fr.iut.alldev.allin.R
+import fr.iut.alldev.allin.data.model.User
 import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.core.AllInBouncyCard
 import fr.iut.alldev.allin.ui.core.RainbowButton
@@ -35,15 +35,18 @@ fun BetScreenCard(
     title: String,
     date: String,
     time: String,
-    players: List<Painter?>,
-    modifier: Modifier = Modifier,
+    players: List<User>,
+    totalParticipants: Int,
     onClickParticipate: () -> Unit,
     onClickCard: () -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true
 ) {
     AllInBouncyCard(
         modifier = modifier.fillMaxWidth(),
         radius = 16.dp,
-        onClick = onClickCard
+        onClick = onClickCard,
+        enabled = enabled
     ) {
         Column(
             Modifier.padding(horizontal = 19.dp, vertical = 11.dp)
@@ -55,15 +58,15 @@ fun BetScreenCard(
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(11.dp))
-            BetDateTimeRow(label = stringResource(id = R.string.Starting), date = date, time = time)
+            BetDateTimeRow(label = stringResource(id = R.string.bet_starting), date = date, time = time)
         }
         HorizontalDivider(
             thickness = 1.dp,
-            color = AllInTheme.themeColors.border
+            color = AllInTheme.colors.border
         )
         Column(
             Modifier
-                .background(AllInTheme.themeColors.background2)
+                .background(AllInTheme.colors.background2)
         ) {
             Row(
                 modifier = Modifier
@@ -71,22 +74,25 @@ fun BetScreenCard(
                     .padding(7.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                BetProfilePictureRow(pictures = players)
-                Spacer(modifier = Modifier.width(12.dp))
+                if (players.isNotEmpty()) {
+                    BetProfilePictureRow(pictures = players.map { it.username to it.image })
+                    Spacer(modifier = Modifier.width(12.dp))
+                }
                 Text(
                     text = pluralStringResource(
-                        id = R.plurals.n_players_waiting,
-                        players.size,
-                        players.size
+                        id = R.plurals.bet_players_waiting_format,
+                        totalParticipants,
+                        totalParticipants
                     ),
                     style = AllInTheme.typography.sm2,
-                    color = AllInTheme.themeColors.onBackground2
+                    color = AllInTheme.colors.onBackground2
                 )
             }
             RainbowButton(
                 modifier = Modifier.padding(6.dp),
-                text = stringResource(id = R.string.Participate),
-                onClick = onClickParticipate
+                text = stringResource(id = R.string.bet_participate),
+                onClick = onClickParticipate,
+                enabled = enabled
             )
         }
     }
@@ -103,9 +109,59 @@ private fun BetScreenCardPreview() {
             title = "Emre va réussir son TP de CI/CD mercredi?",
             date = "12 Sept.",
             time = "13:00",
-            players = List(3) { null },
+            totalParticipants = 25,
+            players = listOf(
+                User(
+                    id = "",
+                    username = "Lucas D",
+                    email = "",
+                    coins = 0,
+                    nbBets = 0,
+                    nbFriends = 0,
+                    bestWin = 0,
+                    )
+            ),
             onClickParticipate = {},
             onClickCard = {}
+        )
+    }
+}
+
+@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+private fun BetScreenCardNoPlayersPreview() {
+    AllInTheme {
+        BetScreenCard(
+            creator = "Lucas",
+            category = "Études",
+            title = "Emre va réussir son TP de CI/CD mercredi?",
+            date = "12 Sept.",
+            time = "13:00",
+            totalParticipants = 25,
+            players = emptyList(),
+            onClickParticipate = {},
+            onClickCard = {}
+        )
+    }
+}
+
+@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+private fun BetScreenCardDisabledPreview() {
+    AllInTheme {
+        BetScreenCard(
+            creator = "Lucas",
+            category = "Études",
+            title = "Emre va réussir son TP de CI/CD mercredi?",
+            date = "12 Sept.",
+            time = "13:00",
+            totalParticipants = 25,
+            players = emptyList(),
+            onClickParticipate = {},
+            onClickCard = {},
+            enabled = false,
         )
     }
 }

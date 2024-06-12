@@ -19,3 +19,9 @@ fun String.toFloatOrNull(locale: Locale): Float? {
     val format = DecimalFormat("0.##", DecimalFormatSymbols.getInstance(locale))
     return format.parse(this)?.toFloat()
 }
+
+fun String.asFallbackProfileUsername() = buildString {
+    this@asFallbackProfileUsername.trim().split("\\s+".toRegex(), limit = 2).forEach {
+        append(it.first().uppercase())
+    }
+}

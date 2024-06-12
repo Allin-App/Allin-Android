@@ -7,6 +7,7 @@ plugins {
     id("kotlin-android")
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
+    id("com.starter.easylauncher")
 }
 
 // Keystore
@@ -74,6 +75,33 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
+    flavorDimensions += listOf("env")
+    productFlavors {
+        create("dev") {
+            dimension = "env"
+            versionNameSuffix = "-dev"
+            applicationIdSuffix = ".dev"
+        }
+
+        create("prod") {
+            dimension = "env"
+        }
+    }
+}
+
+easylauncher {
+    buildTypes {
+        register(BuildType.DEBUG.name).configure {
+            filters(redRibbonFilter())
+        }
+    }
+
+    productFlavors {
+        register("dev") {
+            filters(chromeLike())
+        }
+    }
 }
 
 dependencies {
@@ -99,6 +127,9 @@ dependencies {
 
     // Squircle
     implementation(libs.smoothCornerRect)
+
+    // Coil
+    implementation(libs.coil.compose)
 
     // Tests
     testImplementation(libs.test.junit)

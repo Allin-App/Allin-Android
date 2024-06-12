@@ -7,6 +7,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
+import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 
 @Composable
@@ -14,7 +15,7 @@ fun AllInCoinCount(
     modifier: Modifier = Modifier,
     amount: Int,
     color: Color? = null,
-    brush: Brush?= null,
+    brush: Brush? = null,
     size: Int = 15,
     textStyle: TextStyle = AllInTheme.typography.h1,
     position: IconPosition = IconPosition.TRAILING
@@ -36,6 +37,6 @@ fun AllInCoinCount(
 @Composable
 private fun AllInCoinCountPreview() {
     AllInTheme {
-        AllInCoinCount(amount = 542, color = AllInTheme.colors.allInPurple)
+        AllInCoinCount(amount = 542, color = AllInColorToken.allInPurple)
     }
 }

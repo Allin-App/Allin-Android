@@ -1,20 +1,22 @@
 package fr.iut.alldev.allin.ui.betHistory
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import fr.iut.alldev.allin.R
 import fr.iut.alldev.allin.data.ext.formatToMediumDateNoYear
 import fr.iut.alldev.allin.data.ext.formatToTime
+import fr.iut.alldev.allin.data.model.bet.Bet
 import fr.iut.alldev.allin.ui.betHistory.components.GenericHistory
 
 @Composable
 fun BetHistoryScreen(
+    selectBet: (Bet, Boolean) -> Unit,
     viewModel: BetHistoryViewModel = hiltViewModel()
 ) {
-    val bets by viewModel.bets.collectAsState()
+    val bets by viewModel.bets.collectAsStateWithLifecycle()
     GenericHistory(
         title = stringResource(id = R.string.bet_history_title),
         bets = bets,
@@ -25,6 +27,7 @@ fun BetHistoryScreen(
         getEndBetTime = { it.bet.endBetDate.formatToTime() },
         getStatus = { it.bet.betStatus },
         getNbCoins = { it.amount },
-        getWon = { it.won }
+        getWon = { it.won },
+        onClick = { selectBet(it.bet, false) }
     )
 }

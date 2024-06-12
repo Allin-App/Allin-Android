@@ -19,18 +19,20 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import fr.iut.alldev.allin.R
+import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 
 @Composable
 fun AllInMarqueeBox(
-    backgroundColor: Color = AllInTheme.themeColors.mainSurface,
+    backgroundColor: Color = AllInTheme.colors.mainSurface,
     backgroundBrush: Brush? = null,
     content: @Composable BoxScope.() -> Unit
 
 ) {
     Box(
         modifier = Modifier
-            .fillMaxSize().let { itModifier ->
+            .fillMaxSize()
+            .let { itModifier ->
                 backgroundBrush?.let {
                     itModifier.background(it)
                 } ?: itModifier.background(backgroundColor)
@@ -45,7 +47,7 @@ fun AllInMarqueeBox(
                 .scale(1.2f)
                 .rotate(11f)
                 .basicMarquee(spacing = MarqueeSpacing(0.dp)),
-            tint = AllInTheme.colors.white.copy(alpha = .05f)
+            tint = AllInColorToken.white.copy(alpha = .05f)
         )
         content()
     }
@@ -57,7 +59,7 @@ fun AllInMarqueeBox(
 private fun AllInMarqueeBoxPreview() {
     AllInTheme {
         AllInMarqueeBox(
-            backgroundBrush = AllInTheme.colors.allInMainGradient,
+            backgroundBrush = AllInColorToken.allInMainGradient,
         ) {
             Text("CONTENT")
         }

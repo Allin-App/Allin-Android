@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.sp
 import fr.iut.alldev.allin.data.model.bet.BetStatus
 import fr.iut.alldev.allin.ext.getBetHistoryPhrase
 import fr.iut.alldev.allin.ext.getBetHistoryStatusColor
+import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.preview.BetStatusPreviewProvider
 
@@ -40,7 +41,7 @@ val betHistoryStatusInlineContent = mapOf(
         ) {
             Icon(
                 painter = AllInTheme.icons.allCoins(),
-                tint = AllInTheme.colors.white,
+                tint = AllInColorToken.white,
                 contentDescription = null,
                 modifier = Modifier.size(24.dp)
             )
@@ -70,7 +71,7 @@ fun BetHistoryBetStatus(
                 appendInlineContent(betHistoryStatusModId, "[icon]")
                 append(betHistoryPhrase.substringAfter("[icon]"))
             },
-            color = AllInTheme.colors.white,
+            color = AllInColorToken.white,
             inlineContent = betHistoryStatusInlineContent,
             style = AllInTheme.typography.h1,
             fontSize = 24.sp

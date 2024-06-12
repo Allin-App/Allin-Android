@@ -13,6 +13,7 @@ import fr.iut.alldev.allin.ui.preview.BetStatusPreviewProvider
 @Composable
 fun BetHistoryScreenCard(
     modifier: Modifier = Modifier,
+    onClick: () -> Unit,
     title: String,
     creator: String,
     category: String,
@@ -29,6 +30,7 @@ fun BetHistoryScreenCard(
         date = date,
         time = time,
         status = status,
+        onClick = onClick,
         modifier = modifier
     ) {
         BetHistoryBetStatus(
@@ -47,6 +49,7 @@ private fun BetHistoryScreenCardPreview(
 ) {
     AllInTheme {
         BetHistoryScreenCard(
+            onClick = {},
             creator = "Creator",
             category = "Category",
             title = "Title",

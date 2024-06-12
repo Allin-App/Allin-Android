@@ -17,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import fr.iut.alldev.allin.R
+import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -31,9 +32,9 @@ fun DrawerCell(
     Card(
         onClick = onClick,
         modifier = modifier,
-        border = BorderStroke(width = 1.dp, color = AllInTheme.colors.allInDarkGrey50),
+        border = BorderStroke(width = 1.dp, color = AllInColorToken.allInDarkGrey50),
         shape = RoundedCornerShape(20),
-        colors = CardDefaults.cardColors(containerColor = AllInTheme.colors.allInDarkGrey100)
+        colors = CardDefaults.cardColors(containerColor = AllInColorToken.allInDarkGrey100)
     ) {
         Row(
             modifier = Modifier.padding(horizontal = 10.dp, vertical = 17.dp),
@@ -51,19 +52,19 @@ fun DrawerCell(
                     text = title,
                     style = AllInTheme.typography.h2,
                     fontSize = 13.sp,
-                    color = AllInTheme.colors.white,
+                    color = AllInColorToken.white,
                     fontWeight = FontWeight.W700
                 )
                 Text(
                     text = subtitle,
                     style = AllInTheme.typography.p1,
                     fontSize = 9.sp,
-                    color = AllInTheme.colors.allInLightGrey300,
+                    color = AllInColorToken.allInLightGrey300,
                 )
             }
             Icon(
                 imageVector = Icons.Default.ChevronRight,
-                tint = AllInTheme.colors.allInDarkGrey50,
+                tint = AllInColorToken.allInDarkGrey50,
                 contentDescription = null
             )
 

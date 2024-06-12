@@ -8,6 +8,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 
 @Composable
@@ -17,7 +18,7 @@ fun BetCreationScreenBottomText(
 ) {
     Text(
         text = text,
-        color = AllInTheme.colors.allInPurple,
+        color = AllInColorToken.allInPurple,
         fontWeight = FontWeight.Bold,
         textAlign = TextAlign.Center,
         style = AllInTheme.typography.h2,

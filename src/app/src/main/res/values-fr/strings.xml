@@ -1,118 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--Core-->
-    <string name="username">Pseudo</string>
-    <string name="email">Email</string>
-    <string name="password">Mot de passe</string>
-    <string name="confirm_password">Confirmation du mot de passe</string>
-    <string name="Login">Se connecter</string>
-    <string name="Logout">Déconnexion</string>
-    <string name="already_have_account">Tu as déjà un compte ?</string>
-    <string name="forgot_password">Mot de passe oublié ?</string>
-    <string name="no_account">Pas encore inscrit ?</string>
-    <string name="Register">S\'inscrire</string>
-    <string name="Validate">Valider</string>
-    <string name="Cancel">Annuler</string>
-    <string name="Ok">OK</string>
-    <string name="FieldError_Mandatory">Ce champ est obligatoire.</string>
-    <string name="FieldError_TooShort">Le %s doit contenir au moins %d caractères.</string>
-    <string name="FieldError_BadFormat">Le %s a un mauvais format : %s.</string>
-    <string name="FieldError_NotIdentical">Les champs ne sont pas identiques.</string>
-    <string name="FieldError_NoSpecialCharacter">Le %s doit contenir au moins un caractère spécial : %s.</string>
-    <string name="FieldError_AlreadyUsed">%s est déjà utilisé.</string>
-    <string name="FieldError_PastDate">La %s doit être dans le futur.</string>
-    <string name="FieldError_DateOrder">La %s doit venir après %s.</string>
-    <string name="Yes">Oui</string>
-    <string name="No">Non</string>
-    <string name="Details">Détails</string>
-    <string name="Stake">Mise</string>
-    <string name="Possible_winnings">Gains possibles</string>
+    <string name="generic_username">Pseudo</string>
+    <string name="generic_email">Email</string>
+    <string name="generic_password">Mot de passe</string>
+    <string name="generic_login">Se connecter</string>
+    <string name="generic_logout">Déconnexion</string>
+    <string name="generic_register">S\'inscrire</string>
+    <string name="generic_validate">Valider</string>
+    <string name="generic_cancel">Annuler</string>
+    <string name="generic_ok">OK</string>
+    <string name="generic_yes">Oui</string>
+    <string name="generic_no">Non</string>
+    <string name="generic_search">Rechercher</string>
+    <string name="generic_add">Ajouter</string>
+    <string name="generic_delete">Supprimer</string>
+    <string name="generic_stake">Mise</string>
     <string name="generic_error">Erreur</string>
+    <string name="network_error">Une erreur est survenue</string>
+    <string name="network_error_text">Assurez-vous d\'être bien connecté au réseau puis réessayez.</string>
+
+    <!--Bet type-->
+    <string name="bet_type_binary">Oui / Non</string>
+    <string name="bet_type_match">Match sportif</string>
+    <string name="bet_type_custom">Réponses personnalisées</string>
+
+    <!--Field error-->
+    <string name="field_error_mandatory">Ce champ est obligatoire.</string>
+    <string name="field_error_too_short">Le %s doit contenir au moins %d caractères.</string>
+    <string name="field_error_bad_format">Le %s a un mauvais format : %s.</string>
+    <string name="field_error_not_identical">Les champs ne sont pas identiques.</string>
+    <string name="field_error_no_special_character">Le %s doit contenir au moins un caractère spécial : %s.</string>
+    <string name="field_error_already_used">%s est déjà utilisé.</string>
+    <string name="field_error_past_date">La %s doit être dans le futur.</string>
+    <string name="field_error_date_order">La %s doit venir après %s.</string>
+    <string name="field_error_no_response">Le bet doit au moins avoir 2 réponses.</string>
 
     <!--Drawer-->
-    <string name="bets">Bets</string>
-    <string name="best_win">Meilleur gain</string>
-    <string name="friends">Amis</string>
-    <string name="public_bets">Bets publiques</string>
-    <string name="public_bets_subtitle">Parcourez les bets les plus populaires du moment.</string>
-    <string name="create_a_bet">Créer un bet</string>
-    <string name="create_a_bet_subtitle">Créez un nouveau bet et faites participer vos amis.</string>
-    <string name="bet_history">Historique des bets</string>
-    <string name="bet_history_subtitle">Consultez vos paris en cours et terminés.</string>
-    <string name="friends_subtitle">Défiez vos porches en les ajoutant en amis.</string>
-    <string name="current_bets">Bets en cours</string>
-    <string name="current_bets_subtitle">Gérez vos bets et récompensez les gagnants.</string>
+    <string name="drawer_bets">Bets</string>
+    <string name="drawer_best_win">Meilleur gain</string>
+    <string name="drawer_friends">Amis</string>
+    <string name="drawer_friends_subtitle">Défiez vos proches en les ajoutant en amis.</string>
+    <string name="drawer_public_bets">Participer</string>
+    <string name="drawer_public_bets_subtitle">Parcourez les bets les plus populaires du moment.</string>
+    <string name="drawer_create_bet">Nouveau Bet</string>
+    <string name="drawer_create_bet_subtitle">Créez un nouveau bet et faites participer vos amis.</string>
+    <string name="drawer_bet_history">Historique</string>
+    <string name="drawer_bet_history_subtitle">Consultez vos paris en cours et terminés.</string>
+    <string name="drawer_current_bets">Mes participations</string>
+    <string name="drawer_current_bets_subtitle">Gérez vos bets et récompensez les gagnants.</string>
+    <string name="drawer_ranking">Classement</string>
+    <string name="drawer_ranking_subtitle">Consultez votre classement parmi vos amis.</string>
+
     <!--Welcome Page-->
     <string name="welcome_title">Bienvenue sur</string>
     <string name="welcome_subtitle">Récupère tes Allcoins et viens parier avec tes amis pour prouver qui est le meilleur.</string>
-    <string name="join">Rejoindre</string>
+    <string name="welcome_join_text">Rejoindre</string>
+
     <!--Register Page-->
-    <string name="Hello_x">Bonjour, %s</string>
-    <string name="Register_title">On a besoins de ça!</string>
-    <string name="Register_subtitle">Promis c\'est rapide.</string>
+    <string name="register_hello_format">Bonjour, %s</string>
+    <string name="register_title">On a besoins de ça!</string>
+    <string name="register_subtitle">Promis c\'est rapide.</string>
+    <string name="register_confirm_password">Confirmation du mot de passe</string>
+    <string name="register_already_have_account">Tu as déjà un compte ?</string>
+
     <!--Login Page-->
-    <string name="Login_title">Te revoilà !</string>
-    <string name="Login_subtitle">Bon retour parmis nous tu nous as manqué !</string>
-    <string name="Login_Error_Title">Erreur de connexion</string>
-    <string name="Login_Error_Content">La connexion a échoué\nVeuillez réessayer.</string>
+    <string name="login_title">Te revoilà !</string>
+    <string name="login_subtitle">Bon retour parmis nous tu nous as manqué !</string>
+    <string name="login_error_title">Erreur de connexion</string>
+    <string name="login_error_content">La connexion a échoué\nVeuillez réessayer.</string>
+    <string name="login_no_account">Pas encore inscrit ?</string>
+    <string name="login_forgot_password">Mot de passe oublié ?</string>
+
     <!--Bet Creation Page-->
-    <string name="Theme_tooltip">Le sujet du bet.</string>
-    <string name="Phrase_tooltip">Généralement la question à laquelle les participants devront répondre.</string>
-    <string name="Register_tooltip">Après cette date, plus personne ne pourra s\'inscrire.</string>
-    <string name="BetEnd_tooltip">Après cette date, les résultats seront annoncés.</string>
-    <string name="Privacy_tooltip">Détermine qui pourra voir le bet.</string>
-    <string name="Question">Question</string>
-    <string name="Answer">Réponse</string>
-    <string name="Publish">Publier le bet</string>
-    <string name="Theme">Thème</string>
-    <string name="Theme_placeholder">Études, sport, soirée…</string>
-    <string name="Bet_Phrase">Phrase du bet</string>
-    <string name="Bet_Phrase_placeholder">David sera-il absent lundi matin en cours ?</string>
-    <string name="End_registration_date">Date de fin des inscriptions</string>
-    <string name="End_bet_date">Date de fin du BET</string>
-    <string name="Bet_privacy">Confidentialité du bet</string>
-    <string name="n_friends_available">%d amis disponibles</string>
-    <string name="public_bottom_text_1">Votre bet sera visible par tous les utilisateurs.</string>
-    <string name="public_bottom_text_2">Tout le monde pourra rejoindre le BET.</string>
-    <string name="private_bottom_text_1">Votre bet sera visible uniquement par vos amis.</string>
-    <string name="private_bottom_text_2">Seulement vos amis pourront rejoindre le bet.</string>
-    <string name="private_bottom_text_3">Vous pourrez inviter des amis à tout moment pendant la période d’inscription.</string>
-    <string name="yes_no">Oui / Non</string>
-    <string name="sport_match">Match sportif</string>
-    <string name="yes_no_bottom_text_1">Les utilisateurs devront répondre au pari avec OUI ou NON.</string>
-    <string name="yes_no_bottom_text_2">Aucune autre réponse ne sera acceptée.</string>
-    <string name="custom_answers">Réponses personnalisées</string>
+    <string name="bet_creation_theme_tooltip">Le sujet du bet.</string>
+    <string name="bet_creation_phrase_tooltip">Généralement la question à laquelle les participants devront répondre.</string>
+    <string name="bet_creation_register_end_date_tooltip">Après cette date, plus personne ne pourra s\'inscrire.</string>
+    <string name="bet_creation_bet_end_date_tooltip">Après cette date, les résultats seront annoncés.</string>
+    <string name="bet_creation_privacy_tooltip">Détermine qui pourra voir le bet.</string>
+    <string name="bet_creation_question">Question</string>
+    <string name="bet_creation_answer">Réponse</string>
+    <string name="bet_creation_publish">Publier le bet</string>
+    <string name="bet_creation_theme">Thème</string>
+    <string name="bet_creation_theme_placeholder">Études, sport, soirée…</string>
+    <string name="bet_creation_bet_phrase">Phrase du bet</string>
+    <string name="bet_creation_bet_phrase_placeholder">David sera-il absent lundi matin en cours ?</string>
+    <string name="bet_creation_end_registration_date">Date de fin des inscriptions</string>
+    <string name="bet_creation_end_bet_date">Date de fin du BET</string>
+    <string name="bet_creation_bet_privacy">Confidentialité du bet</string>
+    <plurals name="bet_creation_friends_available_format">
+        <item quantity="one">%d ami disponibles</item>
+        <item quantity="other">%d amis disponibles</item>
+        <item quantity="many">%d amis disponibles</item>
+    </plurals>
+    <string name="bet_creation_public_bottom_text_1">Votre bet sera visible par tous les utilisateurs.</string>
+    <string name="bet_creation_public_bottom_text_2">Tout le monde pourra rejoindre le BET.</string>
+    <string name="bet_creation_private_bottom_text_1">Votre bet sera visible uniquement par vos amis.</string>
+    <string name="bet_creation_private_bottom_text_2">Seulement vos amis pourront rejoindre le bet.</string>
+    <string name="bet_creation_private_bottom_text_3">Vous pourrez inviter des amis à tout moment pendant la période d’inscription.</string>
+    <string name="bet_creation_yes_no_bottom_text_1">Les utilisateurs devront répondre au pari avec OUI ou NON.</string>
+    <string name="bet_creation_yes_no_bottom_text_2">Aucune autre réponse ne sera acceptée.</string>
+    <string name="bet_creation_custom_bottom_text_1">Vous allez renseiner les différentes réponses disponibles dans ce pari.</string>
+    <string name="bet_creation_custom_bottom_text_2">Faites attention à être clair et éviter toutes incertitudes.</string>
     <string name="bet_creation_error">Erreur lors de la création du bet, veuillez rééssayer.</string>
     <string name="bet_creation_success_message">Bet créé !</string>
+    <string name="bet_creation_max_answers">encore %d max.</string>
 
     <!--Bet Page-->
-    <string name="Popular">Populaire</string>
-    <string name="Public">Public</string>
-    <string name="Private">Privé</string>
-    <string name="Invitation">Invitation</string>
-    <string name="Current">En cours</string>
-    <string name="Finished">Terminés</string>
-    <string name="Starting">Commence le</string>
-    <string name="Started">A commencé le</string>
-    <string name="Ends">Prend fin le</string>
-    <string name="Ended">A pris fin le</string>
-    <string name="Participate">Participer</string>
-    <string name="Proposed_by_x">Proposé par %1$s</string>
-    <plurals name="n_players_waiting">
+    <string name="bet_popular">Populaire</string>
+    <string name="bet_public">Public</string>
+    <string name="bet_private">Privé</string>
+    <string name="bet_invitation">Invitation</string>
+    <string name="bet_current">En cours</string>
+    <string name="bet_finished">Terminés</string>
+    <string name="bet_starting">Commence le</string>
+    <string name="bet_started">A commencé le</string>
+    <string name="bet_ends">Prend fin le</string>
+    <string name="bet_ended">A pris fin le</string>
+    <string name="bet_participate">Participer</string>
+    <string name="bet_Proposed_by_format">Proposé par %1$s</string>
+    <plurals name="bet_players_waiting_format">
         <item quantity="one">%d joueur en attente</item>
         <item quantity="other">%d joueurs en attente</item>
         <item quantity="many">%d joueurs en attente</item>
     </plurals>
-    <plurals name="n_players">
+    <plurals name="bet_players_format">
         <item quantity="one">%d joueur</item>
         <item quantity="other">%d joueurs</item>
         <item quantity="many">%d joueurs</item>
     </plurals>
-    <plurals name="n_points_at_stake">
+    <plurals name="bet_points_at_stake_format">
         <item quantity="one">%s point en jeu</item>
         <item quantity="other">%s points en jeu</item>
         <item quantity="many">%s points en jeu</item>
     </plurals>
+    <string name="bet_empty_text">Aucun bet ne correspond à votre recherche</string>
 
     <!--Bet status-->
     <string name="bet_status_finished">Terminé !</string>
@@ -120,8 +142,12 @@
     <string name="bet_status_waiting">En attente…</string>
     <string name="bet_status_closing">Fermeture…</string>
     <string name="bet_status_cancelled">Annulé</string>
-    <string name="place_your_bets">Faites vos paris</string>
+    <string name="bet_status_place_your_bets">Faites vos paris</string>
     <string name="bet_status_participants_list">Liste des participants</string>
+    <string name="bet_status_details_drawer">Détails</string>
+
+    <!--Bet participation-->
+    <string name="participation_possible_winnings">Gains possibles</string>
 
     <!--Bet history-->
     <string name="bet_history_current_title">En cours</string>
@@ -130,10 +156,38 @@
     <string name="bet_history_status_won">%s [icon] gagnés !</string>
     <string name="bet_history_status_lost">%s [icon] perdus !</string>
 
+    <!--Bet confirmation-->
+    <string name="bet_confirmation_text">Ce bet est arrivé à la date de fin. Vous devez à présent distribuer les gains en validant le pari gagnant.</string>
+    <string name="bet_confirmation_choose_response">Veuillez choisir la réponse finale :</string>
+
     <!--Bet result-->
     <string name="bet_result_congratulations">FÉLICITATIONS</string>
     <string name="bet_result_you_win">Vous remportez</string>
     <string name="bet_result_odds">Cote totale</string>
     <string name="bet_result_stake">Mise</string>
     <string name="bet_result_winnings">Gains</string>
+
+    <!--Ranking-->
+    <string name="ranking_title">Classement</string>
+    <string name="ranking_empty_text">C\'est un peu vide ici</string>
+    <string name="ranking_empty_subtext">Ajoutez des amis pour les afficher dans le classement</string>
+
+    <!--Friends-->
+    <string name="friends_title">Amis</string>
+    <string name="friends_request_sent">Requête envoyée</string>
+    <string name="friends_add_tab">Ajouter</string>
+    <string name="friends_requests_tab">Demandes (%d)</string>
+    <string name="friends_requests_accept">Accepter</string>
+    <string name="friends_requests_decline">Refuser</string>
+    <string name="friends_empty_text">Vous n\'avez pas encore d\'amis</string>
+    <string name="friends_empty_subtext">Ajoutez des amis depuis cet écran</string>
+    <string name="friends_requests_empty_text">Aucunes demandes d\'amis en attentes</string>
+
+    <!--Daily reward-->
+    <string name="daily_reward_title">Récompense quotidienne</string>
+    <string name="daily_reward_subtitle">Votre récompense quotidienne est débloquée tous les jours à 00:00 UTC et vous permets d’obtenir entre 10 et 150 Allcoins.</string>
+
+    <!--Profile-->
+    <string name="profile_pick_profile_picture">Choisissez une nouvelle image de profil</string>
+
 </resources>

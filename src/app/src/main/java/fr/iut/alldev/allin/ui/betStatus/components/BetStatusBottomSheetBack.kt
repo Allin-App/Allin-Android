@@ -1,7 +1,11 @@
 package fr.iut.alldev.allin.ui.betStatus.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,6 +23,7 @@ import fr.iut.alldev.allin.data.model.bet.BetStatus
 import fr.iut.alldev.allin.ext.getColor
 import fr.iut.alldev.allin.ext.getTextColor
 import fr.iut.alldev.allin.ext.getTitleId
+import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.betStatus.SHEET_HEIGHT
 import fr.iut.alldev.allin.ui.preview.BetStatusPreviewProvider
@@ -28,7 +33,6 @@ fun BetStatusBottomSheetBack(
     status: BetStatus,
     modifier: Modifier = Modifier,
 ) {
-
     Box(
         modifier
             .fillMaxSize()
@@ -37,7 +41,9 @@ fun BetStatusBottomSheetBack(
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxHeight(1 - SHEET_HEIGHT)
+            modifier = Modifier
+                .background(status.getColor())
+                .fillMaxHeight(1 - SHEET_HEIGHT)
         ) {
             Text(
                 text = stringResource(id = status.getTitleId()),
@@ -50,7 +56,7 @@ fun BetStatusBottomSheetBack(
             )
             Icon(
                 painter = painterResource(id = R.drawable.allin_exit),
-                tint = AllInTheme.colors.white,
+                tint = AllInColorToken.white,
                 contentDescription = null
             )
         }

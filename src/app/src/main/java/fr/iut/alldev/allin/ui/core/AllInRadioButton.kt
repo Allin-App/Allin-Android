@@ -6,6 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 
 @Composable
@@ -16,9 +17,9 @@ fun AllInRadioButton(
 ) {
     AllInCard(
         radius = 100.dp,
-        borderColor = AllInTheme.colors.allInMint,
+        borderColor = AllInColorToken.allInMint,
         borderWidth = if (!checked) 1.dp else null,
-        backgroundColor = if (checked) AllInTheme.colors.allInPurple else unCheckedColor,
+        backgroundColor = if (checked) AllInColorToken.allInPurple else unCheckedColor,
         modifier = modifier.size(12.dp)
     ) {}
 }
@@ -35,7 +36,7 @@ private fun AllInRadioButtonNotCheckedPreview() {
 @Composable
 private fun AllInRadioButtonNotCheckedFilledPreview() {
     AllInTheme {
-        AllInRadioButton(checked = false, unCheckedColor = AllInTheme.colors.allInMint)
+        AllInRadioButton(checked = false, unCheckedColor = AllInColorToken.allInMint)
     }
 }
 

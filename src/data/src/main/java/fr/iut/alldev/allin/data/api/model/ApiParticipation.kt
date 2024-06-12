@@ -9,6 +9,7 @@ import kotlinx.serialization.Serializable
 data class ResponseParticipation(
     val id: String,
     val betId: String,
+    val userId: String,
     val username: String,
     val answer: String,
     val stake: Int
@@ -16,6 +17,7 @@ data class ResponseParticipation(
     fun toParticipation() =
         Participation(
             betId = betId,
+            userId = userId,
             username = username,
             response = answer,
             stake = stake

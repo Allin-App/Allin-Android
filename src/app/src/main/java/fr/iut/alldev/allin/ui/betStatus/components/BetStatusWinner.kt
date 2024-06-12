@@ -29,7 +29,7 @@ fun BetStatusWinner(
     coinAmount: Int,
     username: String,
     multiplier: Float,
-    color: Color = AllInTheme.themeColors.onMainSurface,
+    color: Color = AllInTheme.colors.onMainSurface,
 ) {
     Column {
         HorizontalDivider(color = color.copy(alpha = .4f))
@@ -38,7 +38,7 @@ fun BetStatusWinner(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(color.copy(alpha = .2f))
-                .padding(vertical = 20.dp)
+                .padding(20.dp)
         ) {
             AllInTextIcon(
                 text = answer,

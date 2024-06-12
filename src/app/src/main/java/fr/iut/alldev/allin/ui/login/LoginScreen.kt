@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardActions
@@ -27,11 +28,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import fr.iut.alldev.allin.R
+import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 import fr.iut.alldev.allin.ui.core.AllInAlertDialog
 import fr.iut.alldev.allin.ui.core.AllInGradientButton
@@ -43,7 +46,7 @@ import fr.iut.alldev.allin.ui.core.AllInTextField
 fun LoginScreen(
     navigateToDashboard: () -> Unit,
     navigateToRegister: () -> Unit,
-    loginViewModel: LoginViewModel = hiltViewModel(),
+    loginViewModel: LoginViewModel = hiltViewModel()
 ) {
     val focusManager = LocalFocusManager.current
 
@@ -68,8 +71,9 @@ fun LoginScreen(
     Box(
         Modifier
             .fillMaxSize()
-            .background(AllInTheme.themeColors.mainSurface)
+            .background(AllInTheme.colors.mainSurface)
             .padding(horizontal = 44.dp)
+            .safeContentPadding()
             .verticalScroll(rememberScrollState())
     ) {
         Column(
@@ -77,8 +81,8 @@ fun LoginScreen(
         ) {
             Text(
                 modifier = Modifier.fillMaxWidth(),
-                text = stringResource(id = R.string.Login_title),
-                color = AllInTheme.themeColors.onMainSurface,
+                text = stringResource(id = R.string.login_title),
+                color = AllInTheme.colors.onMainSurface,
                 style = AllInTheme.typography.sm1,
                 textAlign = TextAlign.Center,
                 fontSize = 40.sp
@@ -86,8 +90,8 @@ fun LoginScreen(
             Spacer(modifier = Modifier.height(23.dp))
             Text(
                 modifier = Modifier.fillMaxWidth(),
-                text = stringResource(id = R.string.Login_subtitle),
-                color = AllInTheme.themeColors.onMainSurface,
+                text = stringResource(id = R.string.login_subtitle),
+                color = AllInTheme.colors.onMainSurface,
                 style = AllInTheme.typography.p1,
                 textAlign = TextAlign.Center,
                 fontSize = 23.sp
@@ -97,7 +101,7 @@ fun LoginScreen(
                 verticalArrangement = Arrangement.spacedBy(20.dp)
             ) {
                 AllInTextField(
-                    placeholder = stringResource(id = R.string.username),
+                    placeholder = stringResource(id = R.string.generic_username),
                     value = username,
                     modifier = Modifier.fillMaxWidth(),
                     onValueChange = setUsername,
@@ -105,18 +109,19 @@ fun LoginScreen(
                     keyboardActions = keyboardActions
                 )
                 AllInPasswordField(
-                    placeholder = stringResource(id = R.string.password),
+                    placeholder = stringResource(id = R.string.generic_password),
                     value = password,
                     modifier = Modifier.fillMaxWidth(),
+                    keyboardType = KeyboardType.Password,
                     imeAction = ImeAction.Done,
                     keyboardActions = keyboardActions,
                     onValueChange = setPassword
                 )
             }
             ClickableText(
-                text = AnnotatedString(stringResource(id = R.string.forgot_password)),
+                text = AnnotatedString(stringResource(id = R.string.login_forgot_password)),
                 style = AllInTheme.typography.sm2.copy(
-                    color = AllInTheme.themeColors.onMainSurface,
+                    color = AllInTheme.colors.onMainSurface,
                     fontSize = 15.sp,
                 ),
                 modifier = Modifier
@@ -133,7 +138,7 @@ fun LoginScreen(
                 .padding(bottom = 32.dp)
         ) {
             AllInGradientButton(
-                text = stringResource(id = R.string.Login),
+                text = stringResource(id = R.string.generic_login),
                 onClick = {
                     loginViewModel.onLogin(navigateToDashboard)
                 },
@@ -146,16 +151,16 @@ fun LoginScreen(
                     .fillMaxWidth()
             ) {
                 Text(
-                    text = stringResource(id = R.string.no_account),
-                    color = AllInTheme.themeColors.onMainSurface,
+                    text = stringResource(id = R.string.login_no_account),
+                    color = AllInTheme.colors.onMainSurface,
                     fontSize = 15.sp,
                     style = AllInTheme.typography.p1,
                     modifier = Modifier.padding(end = 5.dp)
                 )
                 ClickableText(
-                    text = AnnotatedString(stringResource(id = R.string.Register)),
+                    text = AnnotatedString(stringResource(id = R.string.generic_register)),
                     style = AllInTheme.typography.p1.copy(
-                        color = AllInTheme.colors.allInPurple,
+                        color = AllInColorToken.allInPurple,
                         fontSize = 15.sp,
                         fontWeight = FontWeight.Bold
                     )
@@ -165,11 +170,13 @@ fun LoginScreen(
             }
         }
     }
+
     AllInLoading(visible = loading)
+
     AllInAlertDialog(
         enabled = hasLoginError,
-        title = stringResource(id = R.string.Login_Error_Title),
-        text = stringResource(id = R.string.Login_Error_Content),
+        title = stringResource(id = R.string.login_error_title),
+        text = stringResource(id = R.string.login_error_content),
         onDismiss = { hasLoginError = false }
     )
 }

@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import fr.iut.alldev.allin.R
+import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.theme.AllInTheme
 import java.time.ZonedDateTime
 import java.util.*
@@ -39,9 +40,9 @@ fun AllInDatePicker(
                 }
             ) {
                 Text(
-                    text = stringResource(id = R.string.Validate),
+                    text = stringResource(id = R.string.generic_validate),
                     style = AllInTheme.typography.h1.copy(
-                        brush = AllInTheme.colors.allInMainGradient
+                        brush = AllInColorToken.allInMainGradient
                     )
                 )
             }
@@ -49,37 +50,37 @@ fun AllInDatePicker(
         dismissButton = {
             TextButton(onClick = onDismiss) {
                 Text(
-                    text = stringResource(id = R.string.Cancel),
-                    color = AllInTheme.themeColors.onBackground2,
+                    text = stringResource(id = R.string.generic_cancel),
+                    color = AllInTheme.colors.onBackground2,
                     style = AllInTheme.typography.sm1
                 )
             }
         },
         colors = DatePickerDefaults.colors(
-            containerColor = AllInTheme.themeColors.mainSurface
+            containerColor = AllInTheme.colors.mainSurface
         )
     ) {
         DatePicker(
             state = datePickerState,
             colors = DatePickerDefaults.colors(
-                todayDateBorderColor = AllInTheme.colors.allInBlue,
-                selectedDayContainerColor = AllInTheme.colors.allInBlue,
-                todayContentColor = AllInTheme.colors.allInBlue,
-                dayContentColor = AllInTheme.colors.allInBlue,
-                dividerColor = AllInTheme.themeColors.border,
-                containerColor = AllInTheme.themeColors.background,
-                titleContentColor = AllInTheme.themeColors.onMainSurface,
-                headlineContentColor = AllInTheme.themeColors.onMainSurface,
-                subheadContentColor = AllInTheme.themeColors.onBackground2,
+                todayDateBorderColor = AllInColorToken.allInBlue,
+                selectedDayContainerColor = AllInColorToken.allInBlue,
+                todayContentColor = AllInColorToken.allInBlue,
+                dayContentColor = AllInColorToken.allInBlue,
+                dividerColor = AllInTheme.colors.border,
+                containerColor = AllInTheme.colors.background,
+                titleContentColor = AllInTheme.colors.onMainSurface,
+                headlineContentColor = AllInTheme.colors.onMainSurface,
+                subheadContentColor = AllInTheme.colors.onBackground2,
                 dateTextFieldColors = OutlinedTextFieldDefaults.colors(
-                    focusedContainerColor = AllInTheme.themeColors.mainSurface,
-                    unfocusedContainerColor = AllInTheme.themeColors.mainSurface,
-                    focusedBorderColor = AllInTheme.colors.allInPurple,
-                    unfocusedBorderColor = AllInTheme.themeColors.border,
-                    focusedTextColor = AllInTheme.themeColors.onMainSurface,
-                    unfocusedTextColor = AllInTheme.themeColors.onMainSurface,
-                    focusedLabelColor = AllInTheme.colors.allInPurple,
-                    unfocusedLabelColor = AllInTheme.themeColors.onMainSurface,
+                    focusedContainerColor = AllInTheme.colors.mainSurface,
+                    unfocusedContainerColor = AllInTheme.colors.mainSurface,
+                    focusedBorderColor = AllInColorToken.allInPurple,
+                    unfocusedBorderColor = AllInTheme.colors.border,
+                    focusedTextColor = AllInTheme.colors.onMainSurface,
+                    unfocusedTextColor = AllInTheme.colors.onMainSurface,
+                    focusedLabelColor = AllInColorToken.allInPurple,
+                    unfocusedLabelColor = AllInTheme.colors.onMainSurface,
                 )
             )
         )

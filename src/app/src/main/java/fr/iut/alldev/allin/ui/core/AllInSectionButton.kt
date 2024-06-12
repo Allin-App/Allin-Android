@@ -21,14 +21,14 @@ fun AllInSectionButton(
 ) {
     val style = if (isSelected) {
         AllInTheme.typography.sm1.copy(
-            color = AllInTheme.themeColors.onMainSurface,
+            color = AllInTheme.colors.onMainSurface,
             fontSize = 15.sp,
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.ExtraBold
         )
     } else {
         AllInTheme.typography.sm1.copy(
-            color = AllInTheme.themeColors.onBackground2,
+            color = AllInTheme.colors.onBackground2,
             fontSize = 15.sp,
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.SemiBold

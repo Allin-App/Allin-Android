@@ -22,10 +22,10 @@ fun HighlightedText(
     text: String,
     query: String,
     highlightStyle: SpanStyle,
+    modifier: Modifier = Modifier,
     fontSize: TextUnit = TextUnit.Unspecified,
     fontStyle: FontStyle? = null,
     fontWeight: FontWeight? = null,
-    modifier: Modifier = Modifier,
     color: Color = Color.Unspecified,
     textAlign: TextAlign? = null,
     style: TextStyle = LocalTextStyle.current

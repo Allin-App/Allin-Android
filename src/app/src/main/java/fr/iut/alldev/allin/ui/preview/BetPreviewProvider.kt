@@ -3,14 +3,14 @@ package fr.iut.alldev.allin.ui.preview
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import fr.iut.alldev.allin.data.model.bet.Bet
 import fr.iut.alldev.allin.data.model.bet.BetStatus
+import fr.iut.alldev.allin.data.model.bet.BinaryBet
 import fr.iut.alldev.allin.data.model.bet.CustomBet
 import fr.iut.alldev.allin.data.model.bet.MatchBet
-import fr.iut.alldev.allin.data.model.bet.YesNoBet
 import java.time.ZonedDateTime
 
 class BetPreviewProvider : PreviewParameterProvider<Bet> {
     override val values = sequenceOf(
-        YesNoBet(
+        BinaryBet(
             id = "1",
             theme = "Theme",
             phrase = "Phrase",
@@ -18,7 +18,9 @@ class BetPreviewProvider : PreviewParameterProvider<Bet> {
             endBetDate = ZonedDateTime.now(),
             isPublic = true,
             betStatus = BetStatus.FINISHED,
-            creator = "creator"
+            creator = "creator",
+            totalStakes = 0,
+            totalParticipants = 0
         ),
         MatchBet(
             id = "2",
@@ -30,7 +32,9 @@ class BetPreviewProvider : PreviewParameterProvider<Bet> {
             betStatus = BetStatus.FINISHED,
             creator = "creator",
             nameTeam1 = "The Monarchs",
-            nameTeam2 = "Climate Change"
+            nameTeam2 = "Climate Change",
+            totalStakes = 0,
+            totalParticipants = 0
         ),
         CustomBet(
             id = "3",
@@ -46,8 +50,9 @@ class BetPreviewProvider : PreviewParameterProvider<Bet> {
                 "Answer 2",
                 "Answer 3",
                 "Answer 4"
-            )
-
+            ),
+            totalStakes = 0,
+            totalParticipants = 0
         ),
     )
 }

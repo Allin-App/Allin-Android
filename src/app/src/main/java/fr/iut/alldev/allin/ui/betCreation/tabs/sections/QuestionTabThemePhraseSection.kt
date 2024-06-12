@@ -14,7 +14,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import fr.iut.alldev.allin.R
-import fr.iut.alldev.allin.theme.AllInTheme
+import fr.iut.alldev.allin.theme.AllInColorToken
 import fr.iut.alldev.allin.ui.core.AllInTextField
 import fr.iut.alldev.allin.ui.core.AllInTitleInfo
 
@@ -30,32 +30,32 @@ internal fun QuestionTabThemePhraseSection(
     interactionSource: MutableInteractionSource
 ) {
     AllInTitleInfo(
-        text = stringResource(id = R.string.Theme),
+        text = stringResource(id = R.string.bet_creation_theme),
         icon = Icons.AutoMirrored.Outlined.HelpOutline,
         modifier = Modifier.padding(start = 11.dp, bottom = 8.dp),
-        tooltipText = stringResource(id = R.string.Theme_tooltip),
+        tooltipText = stringResource(id = R.string.bet_creation_theme_tooltip),
         interactionSource = interactionSource
     )
     AllInTextField(
-        placeholder = stringResource(id = R.string.Theme_placeholder),
+        placeholder = stringResource(id = R.string.bet_creation_theme_placeholder),
         value = betTheme,
         modifier = Modifier.fillMaxWidth(),
         maxChar = 20,
         placeholderFontSize = 13.sp,
         onValueChange = setBetTheme,
         errorText = betThemeError,
-        borderColor = AllInTheme.colors.white
+        borderColor = AllInColorToken.white
     )
     Spacer(modifier = Modifier.height(10.dp))
     AllInTitleInfo(
-        text = stringResource(id = R.string.Bet_Phrase),
+        text = stringResource(id = R.string.bet_creation_bet_phrase),
         icon = Icons.AutoMirrored.Outlined.HelpOutline,
         modifier = Modifier.padding(start = 11.dp, bottom = 8.dp),
-        tooltipText = stringResource(id = R.string.Phrase_tooltip),
+        tooltipText = stringResource(id = R.string.bet_creation_phrase_tooltip),
         interactionSource = interactionSource
     )
     AllInTextField(
-        placeholder = stringResource(id = R.string.Bet_Phrase_placeholder),
+        placeholder = stringResource(id = R.string.bet_creation_bet_phrase_placeholder),
         value = betPhrase,
         modifier = Modifier
             .fillMaxWidth()
@@ -65,6 +65,6 @@ internal fun QuestionTabThemePhraseSection(
         multiLine = true,
         onValueChange = setBetPhrase,
         errorText = betPhraseError,
-        borderColor = AllInTheme.colors.white
+        borderColor = AllInColorToken.white
     )
 }

@@ -10,7 +10,7 @@ data class ToConfirmBet(
     private val onConfirm: (String) -> Unit
 ) : AllInEvent() {
     @Composable
-    override fun Display(
+    fun Display(
         sheetState: SheetState,
         onDismiss: () -> Unit
     ) {

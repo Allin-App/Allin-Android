@@ -2,14 +2,16 @@ package fr.iut.alldev.allin.data.api.model
 
 import androidx.annotation.Keep
 import fr.iut.alldev.allin.data.model.bet.Bet
+import fr.iut.alldev.allin.data.model.bet.BetFilter
 import fr.iut.alldev.allin.data.model.bet.BetResult
 import fr.iut.alldev.allin.data.model.bet.BetResultDetail
 import fr.iut.alldev.allin.data.model.bet.BetStatus
 import fr.iut.alldev.allin.data.model.bet.BetType
+import fr.iut.alldev.allin.data.model.bet.BinaryBet
 import fr.iut.alldev.allin.data.model.bet.CustomBet
+import fr.iut.alldev.allin.data.model.bet.MatchBet
 import fr.iut.alldev.allin.data.model.bet.NO_VALUE
 import fr.iut.alldev.allin.data.model.bet.YES_VALUE
-import fr.iut.alldev.allin.data.model.bet.YesNoBet
 import fr.iut.alldev.allin.data.model.bet.vo.BetAnswerDetail
 import fr.iut.alldev.allin.data.model.bet.vo.BetDetail
 import fr.iut.alldev.allin.data.serialization.ZonedDateTimeSerializer
@@ -28,22 +30,14 @@ data class ResponseBet(
     @Serializable(ZonedDateTimeSerializer::class) var endBet: ZonedDateTime,
     var isPrivate: Boolean,
     var response: List<String>,
-    val createdBy: String
+    val createdBy: String,
+    var popularityscore: Int = 0,
+    val totalStakes: Int = 0,
+    val totalParticipants: Int = 0
 ) {
-    fun toBet(): Bet {
-        if (response.toSet() == setOf(YES_VALUE, NO_VALUE)) {
-            return YesNoBet(
-                id = id ?: "",
-                theme = theme,
-                phrase = sentenceBet,
-                endRegisterDate = endRegistration,
-                endBetDate = endBet,
-                isPublic = !isPrivate,
-                betStatus = status,
-                creator = createdBy
-            )
-        } else {
-            return CustomBet(
+    fun toBet(): Bet = when {
+        response.toSet() == setOf(YES_VALUE, NO_VALUE) -> {
+            BinaryBet(
                 id = id ?: "",
                 theme = theme,
                 phrase = sentenceBet,
@@ -52,10 +46,45 @@ data class ResponseBet(
                 isPublic = !isPrivate,
                 betStatus = status,
                 creator = createdBy,
-                possibleAnswers = response
+                totalStakes = totalStakes,
+                totalParticipants = totalParticipants
+            )
+        }
+
+        type == BetType.MATCH -> {
+            MatchBet(
+                id = id ?: "",
+                theme = theme,
+                phrase = sentenceBet,
+                endRegisterDate = endRegistration,
+                endBetDate = endBet,
+                isPublic = !isPrivate,
+                betStatus = status,
+                creator = createdBy,
+                nameTeam1 = response.firstOrNull() ?: "",
+                nameTeam2 = response.lastOrNull() ?: "",
+                totalStakes = totalStakes,
+                totalParticipants = totalParticipants
+            )
+        }
+
+        else -> {
+            CustomBet(
+                id = id ?: "",
+                theme = theme,
+                phrase = sentenceBet,
+                endRegisterDate = endRegistration,
+                endBetDate = endBet,
+                isPublic = !isPrivate,
+                betStatus = status,
+                creator = createdBy,
+                possibleAnswers = response,
+                totalStakes = totalStakes,
+                totalParticipants = totalParticipants
             )
         }
     }
+
 }
 
 @Keep
@@ -66,9 +95,10 @@ data class RequestBet(
     val type: BetType,
     val sentenceBet: String,
     @Serializable(ZonedDateTimeSerializer::class) val endRegistration: ZonedDateTime,
-    @Serializable(ZonedDateTimeSerializer::class) var endBet: ZonedDateTime,
-    var isPrivate: Boolean,
-    var response: List<String>
+    @Serializable(ZonedDateTimeSerializer::class) val endBet: ZonedDateTime,
+    val isPrivate: Boolean,
+    val response: List<String>,
+    val userInvited: List<String>
 )
 
 @Keep
@@ -96,15 +126,16 @@ data class ResponseBetDetail(
     val bet: ResponseBet,
     val answers: List<ResponseBetAnswerDetail>,
     val participations: List<ResponseParticipation>,
-    val userParticipation: ResponseParticipation? = null
+    val userParticipation: ResponseParticipation? = null,
+    val wonParticipation: ResponseParticipation? = null
 ) {
     fun toBetDetail() =
         BetDetail(
             bet = bet.toBet(),
             answers = answers.map { it.toAnswerDetail() },
             participations = participations.map { it.toParticipation() },
-            userParticipation = userParticipation?.toParticipation()
-
+            userParticipation = userParticipation?.toParticipation(),
+            wonParticipation = wonParticipation?.toParticipation()
         )
 }
 
@@ -137,3 +168,8 @@ data class ResponseBetResultDetail(
             won = won
         )
 }
+
+@Serializable
+data class RequestBetFilters(
+    val filters: List<BetFilter>
+)

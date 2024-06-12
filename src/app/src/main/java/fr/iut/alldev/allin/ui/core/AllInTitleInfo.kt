@@ -66,14 +66,14 @@ fun AllInTitleInfo(
             style = AllInTheme.typography.h2,
             fontWeight = FontWeight.Bold,
             fontSize = 15.sp,
-            color = AllInTheme.themeColors.onMainSurface
+            color = AllInTheme.colors.onMainSurface
         )
         Spacer(modifier = Modifier.width(5.dp))
         AllInTooltip(text = tooltipText, state = tooltipState) {
             Icon(
                 imageVector = icon,
                 contentDescription = null,
-                tint = AllInTheme.themeColors.onMainSurface,
+                tint = AllInTheme.colors.onMainSurface,
                 modifier = Modifier
                     .size(15.dp)
                     .alpha(.8f)
