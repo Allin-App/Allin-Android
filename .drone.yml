@@ -7,17 +7,6 @@
      - push
 
 steps:
-  
-#   - name: build
-#     image: androidsdk/android-30
-#     commands:
-#       - cd src
-#       - chmod +x gradlew
-#       - ./gradlew build
-#     when:
-#       branch:
-#       - master
-
   - name: code-analysis
     image: openjdk:8-jdk
     environment:
