@@ -6,7 +6,7 @@
    event:
      - push
 
-steps:
+ steps:
   - name: code-analysis
     image: openjdk:8-jdk
     environment:
