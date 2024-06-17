@@ -87,7 +87,10 @@ fun BetCreationScreenAnswerTab(
                         BetCreationScreenCustomAnswerTextField(
                             value = currentAnswer,
                             setValue = setCurrentAnswer,
-                            onAdd = { addAnswer(currentAnswer) },
+                            onAdd = {
+                                addAnswer(currentAnswer)
+                                setCurrentAnswer("")
+                            },
                             enabled = selectedBetType.answers.size < BET_MAX_ANSWERS,
                             buttonEnabled = currentAnswer.isNotBlank() && (currentAnswer !in selectedBetType.answers),
                             modifier = Modifier.fillMaxWidth()
