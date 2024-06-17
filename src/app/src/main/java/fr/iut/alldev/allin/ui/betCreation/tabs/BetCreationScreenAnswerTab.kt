@@ -32,7 +32,7 @@ import fr.iut.alldev.allin.ui.core.AllInErrorLine
 import fr.iut.alldev.allin.ui.core.AllInSelectionBox
 import fr.iut.alldev.allin.ui.core.SelectionElement
 
-private const val BET_MAX_ANSWERS = 4
+private const val BET_MAX_ANSWERS = 5
 
 @Composable
 fun BetCreationScreenAnswerTab(
