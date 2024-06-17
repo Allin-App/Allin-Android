@@ -24,6 +24,13 @@
 
 ## Lancement du projet 
 
+Tout d'abord si ce n'est pas fait cloner le dépôt de la branche master/main, pour cela copier le lien URL du dépôt git :
+
+![](doc/Launch_tuto1.png)
+
+Vous pouvez ensuite lancer l'application via l'IDE Android Studio, depuis un émulateur ou un appareil physique :
+![](doc/Launch_tuto2.png)
+
 ## Architecture du projet
 
 **Build variants** : 
